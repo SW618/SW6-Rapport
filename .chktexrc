@@ -1,0 +1,6 @@
+CmdLine { -n6 -n12 -n36 -n13 -n25 }
+VerbEnvir
+{
+    verbatim comment listing lstlisting verbatimtab rawhtml errexam picture texdraw
+    filecontents pgfpicture tikzpicture tabular
+}
