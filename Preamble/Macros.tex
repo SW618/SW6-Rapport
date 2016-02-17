@@ -1,0 +1,118 @@
+\newenvironment{enumberate}{\begin{enumerate}[label=\itshape \arabic*\upshape)]}{\end{enumerate}}
+\newenvironment{eletterate}{\begin{enumerate}[label=\itshape \alph*\upshape)]}{\end{enumerate}}
+
+\newcommand{\filefigure}[3]{
+    \begin{figure}[H]
+        \centering \footnotesize
+        \input{#1}
+        \caption{#2}
+        \label{fig:#3}
+    \end{figure}
+}
+
+\newcommand{\figur}[4]{
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=#2\textwidth]{Figures/#1}
+        \caption{#3}
+        \label{fig:#4}
+    \end{figure}
+}
+
+\newcommand{\wrapfig}[5][5=o]{
+    \begin{wrapfigure}{#5}{#2\textwidth}
+        \centering
+        \includegraphics[width=(#2\textwidth)-10pt]{Figures/#1}
+        \caption{#3}
+        \label{fig:#4}
+    \end{wrapfigure}
+}
+
+\newcommand{\tikzfigure}[3]{
+    \filefigure{Figures/TikZ/#1}{#2}{#3}
+}
+
+\newcommand{\code}[2][c]{
+    \begin{figure}[H]
+        \lstinputlisting[caption=#2, escapechar=, style=custom#1]{CodeExamples/#2}
+    \end{figure}
+}
+
+\newcommandx{\unsure}[2][1=]{
+    \todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}
+}
+
+\newcommandx{\change}[2][1=]{
+    \todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}
+}
+
+\newcommandx{\info}[2][1=]{
+    \todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}
+}
+
+\newcommandx{\improvement}[2][1=]{
+    \todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}
+}
+
+\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
+
+\renewcommand*{\CustomAcronymFields}{%
+  name={\the\glsshorttok},% name is abbreviated form
+  description={\the\glslongtok},% description is long form
+  first={\noexpand\textbf{\the\glslongtok\space(\the\glsshorttok)}},%
+  firstplural={\noexpand\textbf{\the\glslongtok\noexpand\acrpluralsuffix\space(\the\glsshorttok)}},%
+  text={\the\glsshorttok},%
+  plural={\the\glsshorttok\noexpand\acrpluralsuffix}%
+}
+
+\SetCustomStyle
+
+\newcommand{\TITLE}{Timely Wireless Arduino Communication}
+
+\makeatletter
+\def\ifdraft{\ifdim\overfullrule>\z@
+    \expandafter\@firstoftwo\else\expandafter\@secondoftwo\fi}
+\makeatother  
+
+\newcommand\titlepagedecoration{%
+\begin{tikzpicture}[remember picture,overlay,shorten >= -10pt]
+
+\coordinate (aux1) at ([yshift=-15pt]current page.north east);
+\coordinate (aux2) at ([yshift=-410pt]current page.north east);
+\coordinate (aux3) at ([xshift=-4.5cm]current page.north east);
+\coordinate (aux4) at ([yshift=-150pt]current page.north east);
+
+\begin{scope}[aaublue!40,line width=12pt,rounded corners=12pt]
+\draw
+  (aux1) -- coordinate (a)
+  ++(225:5) --
+  ++(-45:5.1) coordinate (b);
+\draw[shorten <= -10pt]
+  (aux3) --
+  (a) --
+  (aux1);
+\draw[opacity=0.6,aaublue,shorten <= -10pt]
+  (b) --
+  ++(225:2.2) --
+  ++(-45:2.2);
+\end{scope}
+\draw[aaublue,line width=8pt,rounded corners=8pt,shorten <= -10pt]
+  (aux4) --
+  ++(225:0.8) --
+  ++(-45:0.8);
+\begin{scope}[aaublue!70,line width=6pt,rounded corners=8pt]
+\draw[shorten <= -10pt]
+  (aux2) --
+  ++(225:3) coordinate[pos=0.45] (c) --
+  ++(-45:3.1);
+\draw
+  (aux2) --
+  (c) --
+  ++(135:2.5) --
+  ++(45:2.5) --
+  ++(-45:2.5) coordinate[pos=0.3] (d);   
+\draw 
+  (d) -- +(45:1);
+\end{scope}
+\end{tikzpicture}%
+}
