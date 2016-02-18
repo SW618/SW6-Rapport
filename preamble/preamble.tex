@@ -149,8 +149,49 @@
 \overfullrule=2cm
 
 
-%%% Chapter headign style
+%%% Chapter headign style1
+%%% \allsectionsfont{\normalfont\sffamily\bfseries} 
 \usepackage{titlesec, blindtext}
 \definecolor{gray75}{gray}{0.75}
 \newcommand{\hsp}{\hspace{20pt}}
-\titleformat{\chapter}[hang]{\Huge\bfseries\vspace{-40pt}}{\thechapter\vspace{-20pt}\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries\vspace{-20pt}}
+\titleformat{\chapter}[hang]{\Huge\sffamily\bfseries\vspace{-40pt}}{\thechapter\vspace{-20pt}\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\sffamily\bfseries\vspace{-20pt}}
+
+
+
+\titleformat{\section}
+{\normalfont\Large\sffamily\bfseries}{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\normalfont\Large\sffamily\bfseries}{\thesection}{1em}{}
+
+\titleformat{\subsubsection}
+{\normalfont\normalsize\sffamily\bfseries}{\thesubsubsection}{1em}{}
+
+
+%%% Page header and footer %%%
+% Define width of header and footer
+\setlength{\headwidth}{\textwidth}
+% Create pagestyle for pages with and without a new chapter
+\makepagestyle{reportPlain}
+\makepagestyle{reportChapter}
+% Pagestyle for chapter pages (Only a footer, of course)
+\makefootrule{reportChapter}{\headwidth}{\normalrulethickness}{\footruleskip}
+\makeevenfoot{reportChapter}{\thepage}{}{}
+\makeoddfoot{reportChapter}{}{}{\thepage}
+% Pagestyle for regular pages
+\makerunningwidth{reportPlain}{\headwidth}
+\makeheadposition{reportPlain}{flushright}{flushleft}{flushright}{flushleft}
+\makeevenhead{reportPlain}{\leftmark}{}{}
+\makeoddhead{reportPlain}{}{}{\rightmark}
+\makeevenfoot{reportPlain}{\thepage}{}{}
+\makeoddfoot{reportPlain}{}{}{\thepage}
+\makeheadrule{reportPlain}{\headwidth}{\normalrulethickness}
+\makefootrule{reportPlain}{\headwidth}{\normalrulethickness}{\footruleskip}
+% Use pagestyles
+\pagestyle{reportPlain}
+\aliaspagestyle{chapter}{reportChapter}
+\aliaspagestyle{part}{reportChapter}
+\aliaspagestyle{title}{empty}
+% Do not stretch pages
+\raggedbottom
+
