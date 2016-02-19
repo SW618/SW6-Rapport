@@ -4,8 +4,6 @@ install:
 
 script:
     - chktex -W # Print version information.
-    - chktex -l .chktexrc -i0 master.tex 2>/dev/null | tee lint.out
+    - sh getOrder.sh master.tex | parallel 'chktex -l .chktexrc -I0 {} 2>/dev/null' | tee lint.out
     # If lint output is non-empty report an error.
-    - test ! -s lint.out
-    - find ./chapters -maxdepth 1 -name '*.tex' | xargs chktex -l .chktexrc 2>/dev/null | tee lint.out
     - test ! -s lint.out
