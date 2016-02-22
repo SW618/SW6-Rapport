@@ -55,6 +55,6 @@ master.thm
 *.brf
 *.tdo
 master.run.xml
-*.bib
+master-blx.bib
 *.fls
 main.pdf
