@@ -13,7 +13,7 @@
 \newcommand{\figur}[4]{
     \begin{figure}[H]
         \centering
-        \includegraphics[width=#2\textwidth]{Figures/#1}
+        \includegraphics[width=#2\textwidth]{figures/#1}
         \caption{#3}
         \label{fig:#4}
     \end{figure}
@@ -22,14 +22,14 @@
 \newcommand{\wrapfig}[5][5=o]{
     \begin{wrapfigure}{#5}{#2\textwidth}
         \centering
-        \includegraphics[width=(#2\textwidth)-10pt]{Figures/#1}
+        \includegraphics[width=(#2\textwidth)-10pt]{figures/#1}
         \caption{#3}
         \label{fig:#4}
     \end{wrapfigure}
 }
 
 \newcommand{\tikzfigure}[3]{
-    \filefigure{Figures/TikZ/#1}{#2}{#3}
+    \filefigure{figures/TikZ/#1}{#2}{#3}
 }
 
 \newcommand{\code}[2][c]{
