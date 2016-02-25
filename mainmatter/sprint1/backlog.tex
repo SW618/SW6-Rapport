@@ -1,0 +1,30 @@
+\subsection{Sprint Backlog}
+The following description contains all the tasks that we are working on for this sprint.
+Most of the tasks were distributed at the Sprint Planning meeting, tasks starting with ``Blocking Task'' are major issues that block other tasks in the sprint backlog and must be resolved, thus they are added to the sprint log as soon as they are found.
+
+\begin{description}
+    \item[Picto Search - it loks like there are no pictograms, until you search for them]
+        \texitit{As a user, i would like to have some pictograms shown, when i add pictograms to a category.}
+        As of now, it looks like there are no categories saved, until you search.
+        A suggestion could be a list of ``latest used'' or ``recommended'' pictograms, just to show some content, indicating that some pictograms already exists.
+    \item[Picto Search - Responsive Search]
+        \textit{As a User I would like the Picto Search application to feel more responsive when I search for pictograms, such that I don't feel like nothing happens.}
+        As of right now the Pictot Search tools is so slow one might think it is not working, maybe implement search on update or improve search algorithm.
+    \item[General - Use conistent file encoding]
+        \textit{As a Developer I would like all files to use UTF-8 encoding}
+        Using different file encoding (charset) can leads to issues. 
+        Currently many files are in ``us-ascii'' aka. windows-1252, but some files (in the same repos) are of UTF-8, i.e. ``ugeplan'' contains 107 files of ``us-ascii'' and 5 files of ``utf-8''. 
+    \item[SequenceViewer - Update dependencies]
+        \texit{As a developer i want all components to use the newest versions of its dependencies.}
+        This component is reliant on other components for which it is using outdated versions that may not be backwards compatible.
+    \item[Sequence - Update dependencies]
+        \texit{As a developer i want all components to use the newest versions of its dependencies.}
+        This component is reliant on other components for which it is using outdated versions that may not be backwards compatible.
+    \item[Picto Search - Update dependencies] 
+        \texit{As a developer i want all components to use the newest versions of its dependencies.}
+        This component is reliant on other components for which it is using outdated versions that may not be backwards compatible.
+    \item[Blocking Task - Custom plugin dk.giraf.lib for gradle breaks build]
+        \textit{As a developer i would like the libraries to be be build-able.}
+        Attempting to run the gradle build for Picto Search provides the error, ``Cannot configure the 'publishing' extension after it has been accessed.''. The error has been identified to originate from the dk.giraf.lib as the following line is the source of the error.
+        \texttt{apply plugin: 'dk.giraf.lib'}
+\end{description}
