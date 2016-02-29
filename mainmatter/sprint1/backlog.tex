@@ -1,48 +1,50 @@
 \subsection{Sprint Backlog}
-The following description contains all the tasks that we are working on for this sprint.
+The following description contains all the tasks that we are working on during the first sprint.
 Most of the tasks were distributed at the Sprint Planning meeting, tasks starting with ``Blocking Task'' are major issues that block other tasks in the sprint backlog and must be resolved, thus they are added to the sprint log as soon as they are found.
 
 In order to estimate how much work is required for a task we use a technique known as Planning Poker.
 The technique aims to create a consensus through discussion and hidden voting of how long a task will take to complete.
 For the sake of our use, we use half work days as our time unit.
+\unsure[inline]{Skal vi forklare hvordan planning poker opnår dette? - Troels}
 
-\begin{description}
-    \item[Picto Search - it loks like there are no pictograms, until you search for them]
-        \textit{As a user, i would like to have some pictograms shown, when i add pictograms to a category.}
+\begin{description}[style=unboxed]
+    \item[Picto Search - It looks like there are no pictograms, until you search for them] \hfill \\ 
+        User story: \textit{``As a user, i would like to have some pictograms shown, when i add pictograms to a category.''}\\
         As of now, it looks like there are no categories saved, until you search.
         A suggestion could be a list of ``latest used'' or ``recommended'' pictograms, just to show some content, indicating that some pictograms already exists.
 
-        This task is esitmated at 8 half work days, the primary concern here lie in not only showing something, but implementing it in a meaningful way such as ``Frequently Used'' or similar ideas.
-    \item[Picto Search - Responsive Search]
-        \textit{As a User I would like the Picto Search application to feel more responsive when I search for pictograms, such that I don't feel like nothing happens.}
+        This task is estimated at 8 half work days, the primary concern here lie in not only showing something, but implementing it in a meaningful way such as ``Frequently Used'' or similar ideas.
+    \item[Picto Search - Responsive Search] \hfill \\
+        User story: \textit{``As a User I would like the Picto Search application to feel more responsive when I search for pictograms, such that I don't feel like nothing happens.''} \\
         As of right now the Picto Search tools is so slow one might think it is not working, maybe implement search on update or improve search algorithm.
 
         This task is estimated at 8 half work days, aside from changing when the search method is called, this task also pertains to changing the GUI as it already does not make sense, and would make less sense if it used a responsive search.
-    \item[General - Use conistent file encoding]
-        \textit{As a Developer I would like all files to use UTF-8 encoding}
+    \item[General - Use consistent file encoding] \hfill \\
+        User story: \textit{``As a Developer I would like all files to use UTF-8 encoding''} \\
         Using different file encoding (charset) can leads to issues. 
-        Currently many files are in ``us-ascii'' aka. windows-1252, but some files (in the same repos) are of UTF-8, i.e. ``ugeplan'' contains 107 files of ``us-ascii'' and 5 files of ``utf-8''. 
+        Currently many files are in ``us-ascii'' aka. windows-1252, but some files (in the same repository) are of UTF-8, i.e. ``ugeplan'' contains 107 files of ``us-ascii'' and 5 files of ``utf-8''. 
 
-        This task is esstimated at 1 half work day, doing this for every repo is bound to give conflicts with other groups working in overlapping repos, as such this task is derived to doing it every time a file has a file-encoding different than UTF-8 is accessed and writing a guide of how to do so, so others can do this for every file they access.
-    \item[SequenceViewer - Update dependencies]
-        \textit{As a developer i want all components to use the newest versions of its dependencies.}
+        This task is estimated at 1 half work day, doing this for every repository is bound to give conflicts with other groups working in overlapping repository, as such this task is derived to doing it every time a file has a file-encoding different than UTF-8 is accessed and writing a guide of how to do so, so others can do this for every file they access.
+    \item[SequenceViewer - Update dependencies] \hfill \\
+        User story: \textit{``As a developer i want all components to use the newest versions of its dependencies.''} \\
         This component is reliant on other components for which it is using outdated versions that may not be backwards compatible.
 
-        This task is estimated at 8 half work days, while all the update dependencies tasks are similar and the update to the gradle.build itself is simple, time is set aside for unforseen complications it may cause, as well as identifying what has changed, in particular for major patches.
-    \item[Sequence - Update dependencies]
-        \textit{As a developer i want all components to use the newest versions of its dependencies.}
+        This task is estimated at 8 half work days, while all the update dependencies tasks are similar and the update to the \texttt{gradle.build} itself is simple, time is set aside for unforeseen complications it may cause, as well as identifying what has changed, in particular for major patches.
+    \item[Sequence - Update dependencies] \hfill \\
+        User story: \textit{``As a developer i want all components to use the newest versions of its dependencies.''} \\
         This component is reliant on other components for which it is using outdated versions that may not be backwards compatible.
 
         This task is estimated at 8 half work days similarly for SequenceViewer.
-    \item[Picto Search - Update dependencies] 
-        \textit{As a developer i want all components to use the newest versions of its dependencies.}
+    \item[Picto Search - Update dependencies] \hfill \\
+        User story: \textit{``As a developer i want all components to use the newest versions of its dependencies.''} \\
         This component is reliant on other components for which it is using outdated versions that may not be backwards compatible.
 
         This task is estimated at 16 half work days, while having the same reasoning as the former update dependencies tasks, for this a complication with retrieving pictograms is already known to be a conflict in the updated version of a dependency, thus it has more time set aside.
-    \item[Blocking Task - Custom plugin dk.giraf.lib for gradle breaks build]
-        \textit{As a developer i would like the libraries to be be build-able.}
-        Attempting to run the gradle build for Picto Search provides the error, ``Cannot configure the 'publishing' extension after it has been accessed.''. The error has been identified to originate from the dk.giraf.lib as the following line is the source of the error.
+    \item[Blocking Task - Custom plugin dk.giraf.lib for gradle breaks build] \hfill \\
+        User story: \textit{``As a developer i would like the libraries to be be build-able.''} \\
+        Attempting to run the gradle build for Picto Search provides the error, ``Cannot configure the 'publishing' extension after it has been accessed.''. 
+        The error has been identified to originate from the dk.giraf.lib as the following line is the source of the error.
         \texttt{apply plugin: 'dk.giraf.lib'}
 
-        This task is an unforseen complication found while working on ``Picto Search - Update Dependencies''
+        This task is an unforeseen complication found while working on ``Picto Search - Update Dependencies''
 \end{description}
