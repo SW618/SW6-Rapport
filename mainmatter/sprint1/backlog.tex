@@ -20,9 +20,9 @@ For the sake of our use, we use half work days as our time unit.
 
         This task is estimated at 8 half work days, aside from changing when the search method is called, this task also pertains to changing the GUI as it already does not make sense, and would make less sense if it used a responsive search.
     \item[General - Use consistent file encoding] \hfill \\
-        User story: \textit{``As a Developer I would like all files to use UTF-8 encoding''} \\
-        Using different file encoding (charset) can leads to issues. 
-        Currently many files are in ``us-ascii'' aka. windows-1252, but some files (in the same repository) are of UTF-8, i.e. ``ugeplan'' contains 107 files of ``us-ascii'' and 5 files of ``utf-8''. 
+        User story: \textit{``As a Developer I would like all files to use UTF-8 encoding, to insure that no conflicts occur.''} \\
+        Using different file encodings (charsets) can lead to issues\footnote{\url{http://tools.android.com/knownissues/encoding}}. 
+        Currently many files are in ``us-ascii'' aka. windows-1252, but some files (in the same repository) are of UTF-8, i.e. ``ugeplan'' contains 107 files of ``us-ascii'' and 5 files of ``utf-8''.    
 
         This task is estimated at 1 half work day, doing this for every repository is bound to give conflicts with other groups working in overlapping repository, as such this task is derived to doing it every time a file has a file-encoding different than UTF-8 is accessed and writing a guide of how to do so, so others can do this for every file they access.
     \item[SequenceViewer - Update dependencies] \hfill \\
