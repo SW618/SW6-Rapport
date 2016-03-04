@@ -19,40 +19,40 @@ For the sake of our use, we use half work days as our time unit.
 \kim{Jeg kan rigtig godt lide den nederstående liste. Overskueligt og klart skrevet. Det eneste jeg mangler er noget om hvordan opgaverne er prioteret.}
 \begin{description}[style=unboxed]
     \item[Picto Search - It looks like there are no pictograms, until you search for them] \hfill \\ 
-        User story: \textit{``As a user, I would like to have some pictograms shown, when I add pictograms to a category.''}\\
+        \userstory{As a user, I would like to have some pictograms shown, when I add pictograms to a category.}
         As of now, it looks like there are no pictograms in the Picto Search library upon opening it. 
         A suggestion could be a list of ``latest used'' or ``recommended'' pictograms, just to show some content, indicating that some pictograms already exists.
 
         This task is estimated at 8 half work days, the primary concern here lies in not only showing something, but implementing it in a meaningful way such as ``Frequently Used'' or similar ideas.
     \item[Picto Search - Responsive Search] \hfill \\
-        User story: \textit{``As a User I would like the Picto Search application to feel more responsive when I search for pictograms, such that I don't feel like nothing happens.''} \\ \kim{"such that I don't feel like nothing happens".. der mangler noget i den sætning. jeg gætter mig til at der bør stå "... happens when I type in the search field.", eller noget lignende.}
+        \userstory{As a User I would like the Picto Search application to feel more responsive when I search for pictograms, such that I don't feel like nothing happens when I type in the search field}
         As of right now the Picto Search tool is slow and one might think it is not working, a search on each keyboard input could be implemented or simply just improve the speed of the search.
 
         This task is estimated at 8 half work days, aside from changing when the search method is called, this task also pertains to changing the GUI as it makes little sense, and would make even less sense if a responsive search was used. \kim{Disse sætninger er lidt uklare, faktisk er det kun sidste sætning der virker lidt mærkelig.}
     \item[General - Use consistent file encoding] \hfill \\
-        User story: \textit{``As a Developer I would like all files to use UTF-8 encoding, to insure that no conflicts occur.''} \\
+        \userstory{As a Developer I would like all files to use UTF-8 encoding, to insure that no conflicts occur.}
         Using different file encodings (charsets) can lead to issues\footnote{\url{http://tools.android.com/knownissues/encoding}}. 
         Currently many files are in ``us-ascii'' aka. windows-1252, but some files (in the same repository) are of UTF-8, i.e. ``ugeplan'' contains 107 files of ``us-ascii'' and 5 files of ``utf-8''.    
 
         This task is estimated at 1 half work day, doing this for every repository is bound to give conflicts with other groups working in overlapping repository, as such this task is derived to doing it every time a file has a file-encoding different than UTF-8 is accessed and writing a guide of how to do so, so others can do this for every file they access. \kim{Dette er en meget lang sætning. Den er lidt svær at forstå.}
     \item[SequenceViewer - Update dependencies] \hfill \\
-        User story: \textit{``As a developer I want all components to use the newest versions of its dependencies.''} \\
+        \userstory{As a developer I want all components to use the newest versions of its dependencies.}
         This component is reliant on other components for which it is using outdated versions that may not be backwards compatible.
 
         This task is estimated at 8 half work days, while all the update dependencies tasks are similar and the update to the \texttt{gradle.build} itself is simple, time is set aside for unforeseen complications it may cause, as well as identifying what has changed, in particular for major patches.
     \item[Sequence - Update dependencies] \hfill \\ 
-        User story: \textit{``As a developer I want all components to use the newest versions of its dependencies.''} \\
+        \userstory{As a developer I want all components to use the newest versions of its dependencies.}
         This component is reliant on other components for which it is using outdated versions that may not be backwards compatible.
 
         This task is estimated at 8 half work days similarly for SequenceViewer.
     \item[Picto Search - Update dependencies] \hfill \\
-        User story: \textit{``As a developer I want all components to use the newest versions of its dependencies.''} \\
+        \userstory{As a developer I want all components to use the newest versions of its dependencies.}
         This component is reliant on other components for which it is using outdated versions that may not be backwards compatible.
 
         This task is estimated at 16 half work days, while having the same reasoning as the former update dependencies tasks, for this a complication with retrieving pictograms is already known to be a conflict in the updated version of a dependency, thus it has more time set aside.
     \item[Blocking Task - Custom plug-in dk.giraf.lib for gradle breaks build] \hfill \\
     \kim{Når i skriver Blocking Task på denne måde så virker det som om at det er et komponent i Giraf. Burde det ikke hedde "Gradle - Custom ...". Så skal i bare skrive at det er en blocking task et andet sted.}
-        User story: \textit{``As a developer I would like the libraries to be be build-able.''} \\
+        \userstory{As a developer I would like the libraries to be be build-able.}
         Attempting to run the gradle build for Picto Search provides the error, ``Cannot configure the 'publishing' extension after it has been accessed.''. 
         The error has been identified to originate from the dk.giraf.lib and this must be fixed before any library in the GIRAF project can be built using gradle. \todo{Skal vi forklare hvad Gradle er ? Nu når vi bare nævner det, eller er det lige meget?}\kim{Jeg ser to løsninger. Hvis i forventer at der kommer flere Gradle relaterede problemer så synes jeg i skal beskrive generelt om hvad det er. Måske kan i udvide afsnittet "Development and Organisational Tools" og skrive det der. Den anden løsning er forklar at kun forklare nok om Gradel til at læseren kan forstå hvad problemet er. Det skal gøres i den sektion som handler om denne task. }
 
