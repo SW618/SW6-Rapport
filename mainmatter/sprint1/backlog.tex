@@ -1,11 +1,11 @@
 At the start of this sprint we attend the Sprint Planning Meeting, where we assign us to tasks, which we afterwards estimate according to the time it takes to complete them.
 Initially tasks are claimed on a ``best estimate'' basis depending on how many EP are available in the sprint.
 Sprint 1 is active from the 24th of february to the 11th of marts. 
-For this sprint allocate 60 EP are available, the estimate is made with time spend on courses in mind, the 60 EP include not only solving our own tasks but also reviewing tasks from other groups and writing the report.
+For this sprint we allocate 60 EP, the estimate is made with time spend on courses in mind, the 60 EP include not only solving our own tasks but also reviewing tasks from other groups and writing the report.
 This chapter explains the process of the initial organisation of the sprint, and also presents the tasks we will be working on in sprint 1.
 
-\subsection*{Sprint Backlog}
-The following description is the sprint backlog for sprint 1 and contains priority, point estimation, user story and an expanded problem explanation for each task.
+\section{Sprint Backlog}
+The following description is the sprint backlog for sprint 1 and contains their priority, point estimation, user story and an expanded problem explanation for each task.
 Most of the tasks were distributed at the Sprint Planning Meeting, tasks starting with ``UNBREAK NOW!'' are major issues found after task distribution that block other tasks in the sprint backlog and must be resolved, thus they are added to the sprint backlog as soon as they are found.
 
 In order to estimate how much work is required for a task we use a technique known as Planning Poker.
@@ -22,7 +22,7 @@ For the sake of our use, we use half work days as our time unit.
         This task is estimated at 8 half work days, the primary concern here lies in not only showing something, but implementing it in a meaningful way such as ``Frequently Used'' or similar ideas.
     \item[{[}HIGH{]} Picto Search - Responsive Search] \hfill \\
         \userstory{As a User I would like the Picto Search application to feel more responsive when I search for pictograms, such that I don't feel like nothing happens when I type in the search field}
-        As of right now the Picto Search tool is slow and one might think it is not working, a search on each keyboard input could be implemented or simply just improve the speed of the search.
+        As of right now the Picto Search tool can seem slow and one might think it is not working, a search on each keyboard input could be implemented or simply just improve the speed of the search.
 
         This task is estimated at 8 half work days, the task includes changing what triggers the search method as well as changing the GUI to be more intuitive.
     \item[{[}HIGH{]} General - Use consistent file encoding] \hfill \\
@@ -49,7 +49,7 @@ For the sake of our use, we use half work days as our time unit.
     \item[{[}UNBREAK NOW!{]} Gradle - Custom plug-in dk.giraf.lib for gradle breaks build] \hfill \\
         \userstory{As a developer I would like the libraries to be be build-able.}
         Attempting to build using gradle, an automated build tool, for Picto Search provides the error, ``Cannot configure the 'publishing' extension after it has been accessed.''. 
-        The error has been identified to originate from the dk.giraf.lib and this must be fixed before any library in the GIRAF project can be built using gradle. 
+        The error has been identified to originate from the \texttt{dk.giraf.lib}--library and this must be fixed before any library in the GIRAF project can be built using gradle. 
         This task is an unforeseen complication found while working on ``Picto Search - Update Dependencies''
 \end{description}
 The combined point value of the tasks for sprint 1 sum to 49 points leaving 11 points for review and report.
