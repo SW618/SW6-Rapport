@@ -8,11 +8,16 @@ This sprint contains three tasks which refer to updating dependencies, the three
     \item meta-database from version 3.2.0 - 3.2.3
     \item oasisLib from version 7.2.0 - 9.0.2
 \end{itemize}
+As can be infered by the version numbers updating oasisLib is likely to provide cause errors as it is two non-backwardscompatible versions behind.
+localDB and meta-database both pertain to the database where meta-database defines all the tables and keys and localDB pertain to symmetricDS. 
+oasisLib contains models and controllers for said models, updating this particular library causes a varierty of errors in the repositories sequence and sequence-viewer.\todo[inline]{Der eksistere ingen dokumentation overhovedet om hvad de 3 depencies er, detter er blot hvad jeg har kunne inferere gennem de methods som er i filerne, what do boys? - M}
+\begin{description}
+    \item[Sequence-Viewer] \hfill \\
+    For sequence-viewer updating the oasisLib removes a method being used in order to retrieve pictograms as a new controller for pictograms.
+    Using the method provided by the new controller provides a nullReference error as the new method for the controller does not work the same as the former method, in order to fix this we explicitly retrieve the name of the pictogram as this is no longer part of retrieving an image and provide a nullcheck, something lacking throughout the system considering the amount of nullReference crashes.
+    \item[Sequence] \todo{Troels diz is fo u}
+\end{description}
 
-
-5.1.2 - 5.1.5
-3.2.0 - 3.2.3
-7.2.0 - 9.0.2
 \subsection{Consistent File Encoding}
 \subsection{Responsive Search}
 \subsection{No Pictograms Prior To Search}
