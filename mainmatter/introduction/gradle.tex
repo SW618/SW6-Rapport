@@ -1,0 +1,9 @@
+\paragraph{Gradle}
+In order to automate and introduce similar work flow when building the different parts of the Giraf project, a build automation system is integrated into said parts of the Giraf project - And that build system is \textbf{Gradle}\footnote{http://www.gradle.org/}.
+Gradle is open source and build upon the strengths and concepts of older build systems, i.e. Apache Ant\footnote{http://ant.apache.org/} and Apache Maven\footnote{https://maven.apache.org/}.
+Moreover Gradle's syntax for project configurations is based on the JVM scripting language Groovy\footnote{http://groovy-lang.org/}.
+Gradle is intended to be used in large projects and multi-part projects which contains numerous dependencies, and the tool intelligently determines which parts of the project already is up-to-date; this ensures that tasks dependent upon said parts does not need to be run again to build the entire project. 
+
+By nature Gradle is plug-in focussed, which enables it to be tailor made to almost any type of build automation.
+The main build confoguration file of a project using Gradle is named \texttt{build.gradle}, and it contains information about dependeicies, versions of said dependencies, and any tasks that are relevant for the given project.
+
