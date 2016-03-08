@@ -1,7 +1,7 @@
 \subsubsection*{Workflow}
-Now that the tools and development method has been presented, we will present how these tools interact with the scrum method we use and also the scrum of scrums.
-To do this we will show the workflow on a task from when it is introduced, until the task has been completed and reviewed.
-Multiple tasks are ofcourse chosen by each group of the multi-project for each sprint, but it is simpler to explain the workflow using only a single task.
+Now that the tools and development method has been presented, we will present how these tools interact with the Scrum method used and also the Scrum of Scrums.
+To do this we will show the workflow on a task from when it is introduced till the task is considered completed through use of a flow diagram.
+Multiple tasks are chosen by each group of the multi-project for each sprint, but it is simpler to explain the workflow using only a single task.
 
 \tikzstyle{box} = [rectangle, draw, fill=green!40, 
     text width=10em, text centered, rounded corners, minimum height=3em]
@@ -37,8 +37,7 @@ Multiple tasks are ofcourse chosen by each group of the multi-project for each s
     \node[block, below = of ready, label]
             (land) {\textbf{The diff is applied to the master branch and the task is marked as completed on phabricator}};
 
-    \node[draw=none, right of = ready, node distance = 6cm] (cornerone){};
-    \node[draw=none, right of = work, node distance = 6cm] (cornertwo){};
+    \node[draw=none, right of = ready, node distance = 6cm] (corneron\\ <two){};
             
     \path[line] (task) -- (triage);
     \path[line] (triage) -- (planning);
