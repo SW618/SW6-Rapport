@@ -1,0 +1,12 @@
+The task was created because the customers expressed concern for the reactiveness of the program, it sometimes felt slow and customers said it felt like nothing was happening.
+It is important that responses from a mobile application happen somewhat quickly, as mentioned in \cite{Roto:2005:NNF:1062745.1062747}, if an application takes more than 4 seconds to load or respond then other feedback than visual should be used.
+Therefore it is decided that almost instantaneous feedback is important such that the users feel like the application is working quickly and effective.
+This resulted in wanting a change of when calls were made in the PictoSearch application.
+
+The current version of the PictoSearch application searches whenever the uses touches the search button on either the keyboard or on the GUI of the application.
+The search button is located in the middle of the screen, to the left of the search field as can be seen on \myref{screenshot_empty}.
+
+This has been changed such that a search happens whenever the text in the searchfield is changed.
+Instead of the big slow search spinner which can be seen on \myref{search_spinner}, a new smaller text message is instead displayed which tells the user that the application is searching and what is is searching for. 
+This search does not remove the software keyboard from the view, neither does it make you unable to type.
+When you do a search for 
