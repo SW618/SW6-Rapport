@@ -1,0 +1,32 @@
+\section{Task Resolution}
+This section will touch on all the tasks handled in this sprint in varying degrees of detail depending on the significance and uniqueness of the solution.
+
+\subsection{Update Dependencies}
+This sprint contains three tasks which refer to updating dependencies, the three repositories that we are responsible for updating all require us to update the same three dependencies.
+\begin{itemize}
+    \item localDB from version 5.1.2 - 5.1.5
+    \item meta-database from version 3.2.0 - 3.2.3
+    \item oasisLib from version 7.2.0 - 9.0.2
+\end{itemize}
+As can be inferred by the version numbers updating oasisLib is likely to cause errors as it is two non backwards-compatible versions behind.
+localDB and meta-database both pertain to the database where meta-database defines all the tables and keys and localDB pertain to querying the database. 
+oasisLib contains models and controllers for said models, updating this particular library causes a variety of errors in the repositories sequence and sequence-viewer.\todo[inline]{Der eksistere ingen dokumentation overhovedet om hvad de 3 depencies er, detter er blot hvad jeg har kunne inferere gennem de methods som er i filerne, what do boys? - M}
+\begin{description}
+    \item[Sequence-Viewer] \hfill \\
+    For sequence-viewer updating the oasisLib removes a method being used in order to retrieve pictograms as a new controller for pictograms.
+    Using the method provided by the new controller provides a nullReference error as the new method for the controller does not work the same as the former method, in order to fix this we explicitly retrieve the name of the pictogram as this is no longer part of retrieving an image and provide a nullcheck, something lacking throughout the system considering the amount of nullReference crashes.
+    \item[Sequence] \hfill \\
+    After upgrading to the newest versions of the libraries mentioned above sequence was unable to build.
+    This was caused by the usage of a deprecated method. 
+    The solution to this issue was fixed by changing a single line to use the correct replacement for the deprecated method.
+    The line in question is responsible for loading the pictograms from the database into the application. 
+    Previously the model had been used directly however in oasisLib 9.0.2 this is unsupported and one should use the \texttt{pictogramHelper} in the \texttt{Helper}--class, for this operation instead.
+    After this replacement was made then we informally verified that the application worked identically to the previous version with the old dependences
+    Then a diff was submitted, approved and landed in the master branch. 
+\end{description}
+\todo[inline]{Nu har vi to rimelig forskellige beskrivelser af hvordan en task er løst, hvilken en vil vi benytte fremadrette? - M}
+\subsection{Consistent File Encoding}
+\subsection{Responsive Search}
+\subsection{No Pictograms Prior To Search}
+\subsection{dk.giraf.lib Breaks Gradle Build}
+\input{mainmatter/sprint1/wikimigration.tex}
