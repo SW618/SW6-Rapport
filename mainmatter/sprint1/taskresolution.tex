@@ -15,7 +15,14 @@ oasisLib contains models and controllers for said models, updating this particul
     \item[Sequence-Viewer] \hfill \\
     For sequence-viewer updating the oasisLib removes a method being used in order to retrieve pictograms as a new controller for pictograms.
     Using the method provided by the new controller provides a nullReference error as the new method for the controller does not work the same as the former method, in order to fix this we explicitly retrieve the name of the pictogram as this is no longer part of retrieving an image and provide a nullcheck, something lacking throughout the system considering the amount of nullReference crashes.
-    \item[Sequence] \todo{Troels diz is fo u}
+    \item[Sequence] \hfill \\
+    After upgrading to the newest versions of the libraries mentioned above sequence was unable to build.
+    This was caused by the usage of a deprecated method. 
+    The solution to this issue was fixed by changing a single line to use the correct replacement for the deprecated method.
+    The line in question is responsible for loading the pictograms from the database into the application. 
+    Previously the model had been used directly however in oasisLib 9.0.2 this is unsupported and one should use the \texttt{pictogramHelper} in the \texttt{Helper}--class, for this operation instead.
+    After this replacement was made then we informally verified that the application worked identically to the previous version with the old dependences
+    Then a diff was submitted, approved and landed in the master branch. 
 \end{description}
 
 \subsection{Consistent File Encoding}
