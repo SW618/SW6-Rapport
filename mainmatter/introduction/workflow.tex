@@ -3,52 +3,51 @@ Now that the tools and development method has been presented, we will present ho
 To do this we will show the workflow on a task from when it is introduced till the task is considered completed through use of a flow diagram.
 Multiple tasks are chosen by each group of the multi-project for each sprint, but it is simpler to explain the workflow using only a single task.
 
-\tikzstyle{box} = [rectangle, draw, fill=green!40, 
-    text width=10em, text centered, rounded corners, minimum height=3em]
-\begin{tikzpicture}[node distance = 5mm,
-    label/.style={align=center, text width=7.5cm},
-    arrow/.style={-stealth, line width=1pt}
-]
-    \node[block, label]
-            (task) at (0,0)
-            {\textbf{Task is introduced on Phabricator without a priority}};
-        
-    \node[block, below = of task, label]
-            (triage) {\textbf{Product owners of the multi-project give the task a priority}};
-            
-    \node[block, below = of triage, label]
-            (planning) {\textbf{Task is claimed by a project group on phabricator}};
-            
-    \node[block, below = of planning, label, label]
-            (estimate) {\textbf{The task is estimated by the project group}};
-            
-    \node[block, below = of estimate, label]
-            (branch) {\textbf{A branch is created in repository involving the task, which uses the id of the task}};
-    
-    \node[block, below = of branch, label, label]
-            (work) {\textbf{The task is completed and is ready for review, so a diff is created on phabricator}};
-            
-    \node[block, below = of work, label]
-            (review) {\textbf{A reviewer is chosen for the task, and he/she reviews the diff and check if the task is completed.}};
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}[node distance = 0.5cm, auto]
+	    \node[wideblock]
+	            (task) at (0,0)
+	            {Task is introduced on Phabricator without a priority};
+	        
+	    \node[wideblock, below = of task]
+	            (triage) {Product owners of the multi-project give the task a priority};
+	            
+	    \node[wideblock, below = of triage]
+	            (planning) {Task is claimed by a project group on Phabricator};
+	            
+	    \node[wideblock, below = of planning]
+	            (estimate) {The task is estimated by the project group};
+	            
+	    \node[wideblock, below = of estimate]
+	            (branch) {A branch is created in repository involving the task, which uses the id of the task};
+	    
+	    \node[wideblock, below = of branch]
+	            (work) {The task is completed and is ready for review, so a diff is created on Phabricator};
+	            
+	    \node[wideblock, below = of work]
+	            (review) {A reviewer is chosen for the task, and he/she reviews the diff and check if the task is completed.};
 
-    \node[decision, below = of review, node distance =1cm]
-            (ready) {Changes?};
+	    \node[decision, below = of review]
+	            (ready) {Changes?};
 
-    \node[block, below = of ready, label]
-            (land) {\textbf{The diff is applied to the master branch and the task is marked as completed on phabricator}};
 
-    \node[draw=none, right of = ready, node distance = 6cm] (corneron\\ <two){};
-            
-    \path[line] (task) -- (triage);
-    \path[line] (triage) -- (planning);
-    \path[line] (planning) -- (estimate);
-    \path[line] (estimate) -- (branch);
-    \path[line] (branch) -- (work);
-    \path[line] (work) -- (review);
-    \path[line] (review) -- (ready);
-    \draw[-] (ready) -- (cornerone.center);
-    \draw[-] (cornerone.center) -- node {yes} (cornertwo.center);
-    \path[line] (cornertwo.center) -- (work);
-    \path[line] (ready) -- node {no} (land);
-    
-\end{tikzpicture}
+	    \node[wideblock, below = of ready]
+	            (land) {The diff is applied to the master branch and the task is marked as completed on Phabricator};
+	            
+	    \path[line] (task) -- (triage);
+	    \path[line] (triage) -- (planning);
+	    \path[line] (planning) -- (estimate);
+	    \path[line] (estimate) -- (branch);
+	    \path[line] (branch) -- (work);
+	    \path[line] (work) -- (review);
+	    \path[line] (review) -- (ready);
+	    \node[draw=none, right of = ready, node distance = 6.5cm] (cornerthree){};
+	    \draw[-] (ready) -- node {yes} (cornerthree.center);
+	    \path[line] (cornerthree.center) |- (work);
+	    \path[line] (ready) -- node {no} (land);
+	    
+	\end{tikzpicture}
+	\caption{Simplified workflow.}
+	\label{fig:workflow}
+\end{figure}
