@@ -44,12 +44,18 @@ For the sake of our use, we use EP as our time unit.
     \item[{[}HIGH{]} Picto Search - Update dependencies] \hfill \\
         \userstory{As a developer I want all components to use the newest versions of its dependencies.}
         This component is reliant on other components for which it is using outdated versions that may not be backwards compatible.
-
+    
         This task is estimated at 16 EP, while having the same reasoning as the former update dependencies tasks, for this a complication with retrieving pictograms is already known to be a conflict in the updated version of a dependency, thus it has more time set aside.
+    \item[{[}HIGH{]} Wiki - Setup new structure and migrate to Phabricator] \hfill \\
+        \userstory{As a developer I want to have a wiki in which I can share information with the other developers.}
+        There has previously been a wiki on the Redmine system previously used in the GIRAF project. 
+        However many groups recommended that we should not use Redmine any more, after switching to Phabricator it is wanted that we preserve the content of the old wiki, and set up a structure such that other developers can easily add more content.
+
+        This task is estimated at 8 EP, 2 of which should be spent on setting up the new structure and 6 of which should be spent on migrating old data and converting it to the markup language used in Phabricator. 
     \item[{[}UNBREAK NOW!{]} Gradle - Custom plug-in dk.giraf.lib for gradle breaks build] \hfill \\
         \userstory{As a developer I would like the libraries to be be build-able.}
         Attempting to build using gradle, an automated build tool, for Picto Search provides the error, ``Cannot configure the 'publishing' extension after it has been accessed.''. 
         The error has been identified to originate from the \texttt{dk.giraf.lib}--library and this must be fixed before any library in the GIRAF project can be built using gradle. 
         This task is an unforeseen complication found while working on ``Picto Search - Update Dependencies''
 \end{description}
-The combined point value of the tasks for sprint 1 sum to 49 points leaving 11 points for review and report.
+The combined point value of the tasks for sprint 1 sum to 57 points leaving 3 points for review and report.
