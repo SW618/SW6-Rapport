@@ -2,22 +2,59 @@
 This chapter will describe all the tasks handled in this sprint in varying degrees of detail depending on the significance and uniqueness of the solution.
 
 \section{Update Dependencies}
-
-This sprint contains three tasks which refer to updating dependencies, the three repositories that we are responsible for updating all require us to update the same three dependencies.
+In the current state of the Giraf project the individual sub-project, which are applications or libraries for Android, uses a series of common libraries made for the Giraf project.
+Their dependencies are not all updated to use the newest version, this might introduce bugs which have already been fixed.
+For this reason the first order of business, should be updating these such that this years Giraf project will start with the fewest issues regarding the dependencies. 
+We have taken three tasks which relates to this, namely upgrading the dependencies of the applications Sequence and the two libraries Sequence-Viewer and Picto Search.
+We took these as they all had the same versions in common to be upgraded, they are:
 \begin{itemize}
-    \item localDB from version 5.1.2 - 5.1.5
-    \item meta-database from version 3.2.0 - 3.2.3
-    \item oasisLib from version 7.2.0 - 9.0.2
+    \item \texttt{localDB} from version 5.1.2 - 5.1.5
+    \item \texttt{meta-database} from version 3.2.0 - 3.2.3
+    \item \texttt{oasisLib} from version 7.2.0 - 9.0.2
 \end{itemize}
-\kim{I like that you combined these tasks. However the problem is kind of difficult to understand. Maybe try explainin why you want to update the dependencies. Maybe make some kind of dependency diagram or just illustrate the problem. How many components depend on these?. Also please write a line or two about what localDB, oasisLib, meta-database etc. are.}
-As can be inferred by the version numbers updating oasisLib is likely to cause errors as it is two non backwards-compatible versions behind.
-localDB and meta-database both pertain to the database where meta-database defines all the tables and keys and localDB pertain to querying the database. 
-oasisLib contains models and controllers for said models, updating this particular library causes a variety of errors in the repositories sequence and sequence-viewer.\todo[inline]{Der eksistere ingen dokumentation overhovedet om hvad de 3 depencies er, detter er blot hvad jeg har kunne inferere gennem de methods som er i filerne, what do boys? - M}
-\kim{Go search some repports for oasisLib until you find an explanation.}
+The first two of these \texttt{localDB} and \texttt{meta-database} only have their patch-number updated, this should indicate a bug-fix or small internal corrections, as such they should not introduce any issues in upgrading. 
+\texttt{localDB} is a library which is used to store information in a local database, most of this data is received when the Giraf Launcher is opened the first time. 
+This is to reduce the inconvenience of having either a slow or no internet connection, however it also introduces some problems regarding keeping the remote database and the local one in sync. 
+\texttt{meta-database} is used to create the \texttt{localDB}, the changes therein does not affect any of the applications we are tasked with upgrading. \texttt{oasisLib} is the connection from the tablet to the remote database.
+In the upgrade from 7.2.0 to 9.0.2, some of the methods used in the applications and libraries to be upgrades was deprecated, and subsequently removed. 
+One such method is the one which is responsible for loading pictograms.
+All uses of this has to be replaced with the new method of loading pictograms. 
+This now uses a helper, pictogramHelper, which has replaced the methods used directly on the model. 
 
 \begin{description}
     \item[Sequence-Viewer] \hfill \\
-    For sequence-viewer updating the oasisLib removes a method being used in order to retrieve pictograms as a new controller for pictograms.
+    The Sequence-Viewer used the model directly to get an image, since this was deprecated when updating \texttt{oasisLib}.
+    This method is used to replace a pictogram in a view after selecting an option from a multiple choice. 
+    To resolve this issue the line shown in \myref{lst:dep-sv-prev} were changed to \myref{lst:dep-sv-upd}. 
+
+\begin{figure}
+    \begin{lstlisting}[language=java]
+pictogram.setImage(
+    helper.pictogramHelper.getById(id).getImage());
+    \end{lstlisting}
+    \caption{Sequence-Viewer deprecated method call. }\label{lst:dep-sv-prev}
+\end{figure}
+\begin{figure}
+    \begin{lstlisting}[language=java]
+/* [...] */
+// The helper setImage function no longer acquires the pictogram name and causes null exception error
+// This check for null and queries the name by ID to get name
+if(helper.pictogramHelper.getById(id).getName() == null) {
+    pictogram.setName("pictogram_name");
+}
+else {
+    pictogram.setName(
+        helper.pictogramHelper.getById(id).getName());
+}
+helper.pictogramHelper.setImage(pictogram, 
+    helper.pictogramHelper.getImage(
+        helper.pictogramHelper.getById(id)));
+/* [...] */
+    \end{lstlisting}
+    \caption{Sequence-Viewer replacement code. }\label{lst:dep-sv-upd}
+\end{figure}
+
+    For sequence-viewer updating the \texttt{oasisLib} removes a method being used in order to retrieve pictograms as a new controller for pictograms.
     \kim{There is some information missing here. I am not an expert on android development, but how can pictograms be a controller?  }
     Using the method provided by the new controller provides a nullReference error as the new method for the controller does not work the same as the former method, in order to fix this we explicitly retrieve the name of the pictogram as this is no longer part of retrieving an image and provide a nullcheck, something lacking throughout the system considering the amount of nullReference crashes.
     \kim{This sentence is way to long, add more dots. In the first part of the sentence then you use provided and provides, try not to use the same word twice.  }
@@ -25,20 +62,19 @@ oasisLib contains models and controllers for said models, updating this particul
     \kim{I assume that you also update the dependency to use the newest version, you do not seem to mention this when you descrube your solution.}
     \kim{I dont understand the last part of the sentence.}
     \item[Sequence] \hfill \\
-    After upgrading to the newest versions of the libraries mentioned above sequence was unable to build. 
-    \kim{Sequence with a captial S please :D}
+    After upgrading to the newest versions of the libraries mentioned above Sequence was unable to build. 
     This was caused by the usage of a deprecated method. 
     The solution to this issue was fixed by changing a single line to use the correct replacement for the deprecated method.
     \kim{Show me what you canged. I crave code ! ;)}
     The line in question is responsible for loading the pictograms from the database into the application. 
-    Previously the model had been used directly however in oasisLib 9.0.2 this is unsupported and one should use the \texttt{pictogramHelper} in the \texttt{Helper}--class, for this operation instead.
+    Previously the model had been used directly however in \texttt{oasisLib} 9.0.2 this is unsupported and one should use the \texttt{pictogramHelper} in the \texttt{Helper}--class, for this operation instead.
     \kim{This sentence is missing some commas. It is not very precise to say that the model was used direcitly, try to describe it more precicly. }
     After this replacement was made then we informally verified that the application worked identically to the previous version with the old dependences
     \kim{missing dot}
     Then a diff was submitted, approved and landed in the master branch. 
     \kim{Is this process that you are refearing to describe somewhere? If not then you properly should.}
 \end{description}
-\kim{Now you explained the oasisLib problem, what about the other two? }
+\kim{Now you explained the \texttt{oasisLib} problem, what about the other two? }
 
 \input{mainmatter/sprint1/wikimigration.tex}
 \section{Consistent File Encoding}
