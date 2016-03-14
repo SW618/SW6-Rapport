@@ -5,6 +5,12 @@
     \textbf{User story:} \textit{\enquote{#1}} \\
 }
 
+\newcommand{\task}[4]{
+    \paragraph{[#3] #1}\hfill\\
+    \textcolor{gray}{\textbf{Effort Points:} \textit{#4}} \\
+    \userstory{#2}
+}
+
 \newcommandx{\unsure}[2][1=]{
     \todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}
 }
