@@ -1,9 +1,9 @@
 
 echo $1
 #grep "\\\chapter{" $1 | cut -d '{' -f2 | cut -d '}' -f1 | xargs -n 1 -I ¤ echo -e \\n% Chapter: ¤
-grep "\\input{" $1 | grep -vi 'preamble\|figures\|^\s*%' | cut -d '{' -f2 | cut -d '}' -f1 | xargs -n 1 -I % ./getOrder.sh %
+grep '\\includegraphics' $1 | grep -v '^\s*%' |  cut -d '{' -f2 | cut -d '}' -f1
+grep '\\input{' $1 | grep -vi '^\s*%' | cut -d '{' -f2 | cut -d '}' -f1 | xargs -n 1 -I % ./getOrder.sh %
 #grep "\\lstinputlisting" $1 | grep -v 'Preamble\|Figures\|^\s*%' | cut -d '{' -f2 | cut -d '}' -f1 # | xargs -n 1 -I % ./getOrder.sh %
-#grep "\\includegraphics" $1 | grep -v '^\s*%' |  cut -d '{' -f2 | cut -d '}' -f1
 #grep "\\tikzfigure" $1 | grep -v '^\s*%' | cut -d '{' -f2 | cut -d '}' -f1 | xargs -I % echo Figures/TikZ/%
 
 

@@ -1,43 +1,6 @@
 \newenvironment{enumberate}{\begin{enumerate}[label=\itshape \arabic*\upshape)]}{\end{enumerate}}
 \newenvironment{eletterate}{\begin{enumerate}[label=\itshape \alph*\upshape)]}{\end{enumerate}}
 
-\newcommand{\filefigure}[3]{
-    \begin{figure}[H]
-        \centering \footnotesize
-        \input{#1}
-        \caption{#2}
-        \label{fig:#3}
-    \end{figure}
-}
-
-\newcommand{\figur}[4]{
-    \begin{figure}[H]
-        \centering
-        \includegraphics[width=#2\textwidth]{figures/#1}
-        \caption{#3}
-        \label{fig:#4}
-    \end{figure}
-}
-
-\newcommand{\wrapfig}[5][5=o]{
-    \begin{wrapfigure}{#5}{#2\textwidth}
-        \centering
-        \includegraphics[width=(#2\textwidth)-10pt]{figures/#1}
-        \caption{#3}
-        \label{fig:#4}
-    \end{wrapfigure}
-}
-
-\newcommand{\tikzfigure}[3]{
-    \filefigure{figures/TikZ/#1}{#2}{#3}
-}
-
-\newcommand{\code}[2][c]{
-    \begin{figure}[H]
-        \lstinputlisting[caption=#2, escapechar=, style=custom#1]{CodeExamples/#2}
-    \end{figure}
-}
-
 \newcommand{\userstory}[1]{
     \textbf{User story:} \textit{\enquote{#1}} \\
 }
