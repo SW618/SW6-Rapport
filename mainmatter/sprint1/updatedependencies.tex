@@ -2,7 +2,9 @@
 In the current state of the Giraf project the individual sub-project, which are applications or libraries for Android, uses a series of common libraries made for the Giraf project. 
 Their dependencies are not all updated to use the newest version, this might introduce bugs which have already been fixed. 
 For this reason the first order of business, should be updating these such that this years Giraf project will start with the fewest issues regarding the dependencies. 
- We have taken three tasks which relates to this, namely upgrading the dependencies of the applications Sequence and the two libraries Sequence-Viewer and Picto Search. 
+For this reason the Product Owner has given these tasks the priority \textbf{HIGH}. 
+We have estimated these tasks to take 8 EP each for Sequence and Sequence-Viewer, and 16 EP for Picto Search. 
+We have taken three tasks which relates to this, namely upgrading the dependencies of the applications Sequence and the two libraries Sequence-Viewer and Picto Search. 
 We took these as they all had the same versions in common to be upgraded, they are: 
 \begin{itemize} 
     \item \texttt{localDB} from version 5.1.2 - 5.1.5 
@@ -10,15 +12,15 @@ We took these as they all had the same versions in common to be upgraded, they a
     \item \texttt{oasisLib} from version 7.2.0 - 9.0.2 
 \end{itemize} 
 The first two of these \texttt{localDB} and \texttt{meta-database} only have their patch-number updated, this should indicate a bug-fix or small internal corrections, as such they should not introduce any issues in upgrading. 
- \texttt{localDB} is a library which is used to store information in a local database, most of this data is received when the Giraf Launcher is opened the first time. 
- This is to reduce the inconvenience of having either a slow or no internet connection, however it also introduces some problems regarding keeping the remote database and the local one in sync. 
- \texttt{meta-database} is used to create the \texttt{localDB}, the changes therein does not affect any of the applications we are tasked with upgrading. 
+\texttt{localDB} is a library which is used to store information in a local database, most of this data is received when the Giraf Launcher is opened the first time. 
+This is to reduce the inconvenience of having either a slow or no internet connection, however it also introduces some problems regarding keeping the remote database and the local one in sync. 
+\texttt{meta-database} is used to create the \texttt{localDB}, the changes therein does not affect any of the applications we are tasked with upgrading. 
   
 \texttt{oasisLib} is the connection from the tablet to the remote database. 
 In the upgrade from 7.2.0 to 9.0.2, some of the methods used in the applications and libraries to be upgrades was deprecated, and subsequently removed. 
- One such method is the one which is responsible for loading pictograms. 
+One such method is the one which is responsible for loading pictograms. 
 All uses of this has to be replaced with the new method of loading pictograms. 
- This now uses a helper, \texttt{pictogramHelper}, which has replaced the methods used directly on the model. 
+This now uses a helper, \texttt{pictogramHelper}, which has replaced the methods used directly on the model. 
   
 \begin{description} 
     \item[Sequence-Viewer] \hfill \\ 
@@ -82,5 +84,11 @@ pictogram.setImageBitmap(
     In other words the \texttt{.getImage()} method have been removed from the pictogram model class in \texttt{oasisLib} 9.0.2. 
      After this replacement was made then we informally verified that the application worked identically to the previous version with the old dependences. 
     Then a diff was submitted, approved and landed in the master branch, following the work flow of the multi-project. 
+    \item[Picto Search] \hfill \\
+    After upgrading to the new dependencies, no issues was found which was not already present in the old version and therefore already on the task list for the multi-project. 
+    Therefore no changes were made to the application itself during the upgrade. 
  \end{description}
  
+ After the completion of these tasks, it is now possible to start working on the tasks using these three applications. 
+ However we overestimated how much time we would spend on these tasks, we spent at total of 15 EP but had allocated 32 EP for it. 
+ This task also gave us a deeper knowledge of how the Giraf project is structured and how Android application internally are structured and written. 
