@@ -1,0 +1,18 @@
+\textbf{User Story:} \textit{As a user I would like to have some information when I open pictosearch, such that it does not look like there is nothing there.} \newline
+
+The task is prioritized as HIGH and has been estimated to 8 EP.
+In the current version, the user is presented with no useful information in the initial view as seen in \myref{fig:screenshot_startup}. 
+The view is completely empty, there is no indication that searching is an option apart from the search button, but it does not indicate what you can search for or how the search is used.
+This is a problem as the users might feel the application is empty, and maybe get confused as they do not know how to proceed.
+When a user uses pictosearch it is to search for pictograms to use in other applications.
+Helping the user by hinting to the user what to do is deemed a good approach in giving information to the user.
+This can be done in two ways, without text and with text:
+\begin{itemize}
+    \item For example when Picto Search is opened the search field could already be in focus and the software keyboard could be shown, effectively reducing the number of actions needed to search, aswell as informing the user that they need to type something.
+    \item The other approach is showing text to the user telling them what to do, but this approach alone is sometimes not enough as according to Nielsen \cite{nielsen2003usability}, a wall of text is deadly for an interactive experience.
+\end{itemize}
+
+Even though for the text solution the text would be very short, it still might not work for all users, so an approach joining both solutions is deemed the better solution.
+Therefore when Picto Search is opened the software keyboard is forced to appear, along with giving focus to the search field; this enables the user to start searching right away without having to tap anything.
+A short description of how Picto Search is operated is also shown in the middle of the screen.
+The new view can be seen on \myref{fig:screenshot_newstartup}.
