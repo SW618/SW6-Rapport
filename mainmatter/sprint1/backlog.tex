@@ -1,7 +1,7 @@
 At the start of this sprint we attend the Sprint Planning Meeting, where we assign us to tasks, which we afterwards estimate according to the time it takes to complete them.
 Initially tasks are claimed on a ``best estimate'' basis depending on how many EP are available in the sprint.
 Sprint 1 is active from the 24th of february to the 11th of marts. 
-For this sprint we allocate 60 EP, the estimate is made with time spend on courses in mind, the 60 EP include not only solving our own tasks but also reviewing tasks from other groups and writing the report.
+For this sprint we allocate 80 EP, the estimate is made with time spend on courses in mind, the 60 EP include not only solving our own tasks but also reviewing tasks from other groups and writing the report.
 This chapter explains the process of the initial organisation of the sprint, and also presents the tasks we will be working on in sprint 1.
 
 \section{Sprint Backlog}
@@ -44,18 +44,36 @@ For the sake of our use, we use EP as our time unit.
     \item[{[}HIGH{]} Picto Search - Update dependencies] \hfill \\
         \userstory{As a developer I want all components to use the newest versions of its dependencies.}
         This component is reliant on other components for which it is using outdated versions that may not be backwards compatible.
-    
         This task is estimated at 16 EP, while having the same reasoning as the former update dependencies tasks, for this a complication with retrieving pictograms is already known to be a conflict in the updated version of a dependency, thus it has more time set aside.
     \item[{[}HIGH{]} Wiki - Setup new structure and migrate to Phabricator] \hfill \\
         \userstory{As a developer I want to have a wiki in which I can share information with the other developers.}
         There has previously been a wiki on the Redmine system previously used in the GIRAF project. 
         However many groups recommended that we should not use Redmine any more, after switching to Phabricator it is wanted that we preserve the content of the old wiki, and set up a structure such that other developers can easily add more content.
 
-        This task is estimated at 8 EP, 2 of which should be spent on setting up the new structure and 6 of which should be spent on migrating old data and converting it to the markup language used in Phabricator. 
+        This task is estimated at 16 EP, 2 of which should be spent on setting up the new structure and 14 of which should be spent on migrating old data and converting it to the markup language used in Phabricator. 
     \item[{[}UNBREAK NOW!{]} Gradle - Custom plug-in dk.giraf.lib for gradle breaks build] \hfill \\
         \userstory{As a developer I would like the libraries to be be build-able.}
         Attempting to build using gradle, an automated build tool, for Picto Search provides the error, ``Cannot configure the 'publishing' extension after it has been accessed.''. 
         The error has been identified to originate from the \texttt{dk.giraf.lib}--library and this must be fixed before any library in the GIRAF project can be built using gradle. 
         This task is an unforeseen complication found while working on ``Picto Search - Update Dependencies''
 \end{description}
-The combined point value of the tasks for sprint 1 sum to 57 points leaving 3 points for review and report.
+The combined point value of the tasks for sprint 1 sum to 65 points leaving 15 points for review and report.
+
+We overestimated the tasks of updating dependencies so in the last week of the sprint we had run out of tasks.
+Therefore we consulted PO and the scrum masters, in order to take another 4 tasks which will be presented now.
+These tasks have not been time estimated.
+
+\begin{description}
+    \item[{[}\phigh{]} Sequence - Sequence wrench should be clickable] \hfill \\
+        \userstory{As a citizen I want to be able to click on the wrench when editing a sequence, to edit which pictogram is chosen. (Same function as when the picture is clicked)} 
+        There is a wrench emblem indicating that the pictogram can be edited, but something went wrong in the development of it as it is not possible to click on the wrench.
+    \item[{[}\phigh{]} Week Schedule - Unmark schedules when delete is canceled] \hfill \\
+        \userstory{In Week Schedule as an administrator, I would like week schedules that I marked while in deletion mode to get unmarked if i cancel the delete. 
+}
+        When marking schedules for deletion they are marked with an orange border which is not removed if the user decides to cancel the deletion.
+    \item[{[}\phigh{]} Week Schedule - Missing borders on pictograms]
+        \userstory{As a citizen I would like the pictograms to have borders, such that I can distinguish the pictograms from eachother, on any background color.}
+        Sunday in the week schedule has a white background, and many pictograms also have a white background which makes it impossible to find the frame of the pictogram.
+    \item[{[}\pigh{]} Week Schedule - Scrolling schedule day]
+        This task was created without a user story, but the problem is that it is difficult to scroll in the week schedules as if you drag the screen while touching a pictogram, you move the pictogram around the screen instead.
+\end{description}
