@@ -1,5 +1,5 @@
 \section{Sequence wrench should be clickable}
-In this section a description os how this high priority task was solved is given, the user story for this task is \textit{As a citizen I want to be able to click on the wrench when editing a sequence, to edit which pictogram is choosen. (Same function as when the picture is clicked)}.
+In this section a description of how this high priority task was solved is given, the user story for this task is \textit{As a citizen I want to be able to click on the wrench when editing a sequence, to edit which pictogram is chosen. (Same function as when the picture is clicked)}.
 The EP required to solve this task is estimated at N/A as this task was taken on during the sprint in response to us running out of tasks.
 
 \myref{fig:seq_wrench} shows how a guardian using the sequence tool views a sequence, as can be seen there is an image of the sequence thumbnail overlayed with a bin, representing the ability to delete, and a wrench, representing the ability to edit.
@@ -25,7 +25,8 @@ Another solution is to find the functionality for when the thumbnail is tabbed a
 In order to provide a proper solution which would provide the correct functionality while also maintaining how the rest of sequence has been implemented one could reverse engineer the delete button and use that to construct the proper structure for implementing the edit button.
 In order to keep the code maintainable the third option is the solution that we will use, despite knowing it will take more time than the others to implement.
 
-\bigskip 
-\noindent
 Through further inspection of the code it shows that buttons in sequence are implemented using listeners.
 They consist of a handler used to specify the type of click, \texttt{setupOnEditClickHandler()}, an interface with the method \texttt{onEditClick()} and lastly a method, \texttt{setOnEditClickListener}, used to set functionality for the button by overriding \texttt{onEditClick()} when used in order to specify what the button should do at any particular instance.
+
+By creating those three methods and subsequently calling and overriding \texttt{onEditClick()} in the previously mentioned method \texttt{setupAdapter()} the issue is fixed without creating any complications.
+4 EP is spend on solving the task, mostly on overriding \texttt{onEditClick()} as finding the correct code segments is a lengthy process for while they exist, they were not used until this fix.
