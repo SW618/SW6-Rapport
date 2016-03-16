@@ -5,14 +5,8 @@
     \textbf{User story:} \textit{\enquote{#1}} \\
 }
 
-\newcommand{\pblocking}{\textcolor{red}{Blocking}}
-\newcommand{\phigh}{\textcolor{orange}{High}}
-\newcommand{\pnormal}{\textcolor{green}{Normal}}
-\newcommand{\pmissing}{\textcolor{plum}{No priority}}
-\newcommand{\pwish}{\textcolor{teal}{Nice to have}}
-
 \newcommand{\task}[4]{
-    \section{[#3] #1}
+    \paragraph{[#3] #1}\hfill\\
     \textcolor{gray}{\textbf{Effort Points:} \textit{#4}} \\
     \userstory{#2}
 }
