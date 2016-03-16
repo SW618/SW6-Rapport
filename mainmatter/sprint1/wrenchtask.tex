@@ -17,7 +17,7 @@ When the wrench is tapped it should start the events that are included in editin
 \noindent
 In order to solve this problem firstly we go through the code looking for the implementation of both the bin and the wrench realising that these are both implemented as buttons.
 These buttons will henceforth be referred to as the delete and the edit button respectively.
-The method \texttt{setupAdapter()}, which creates the button view, also calls and overrides the methods that provide their functionality, however no such method is called for the edit button.
+The method \texttt{setupAdapter(final Sequence seq)}, which creates the button view, also calls and overrides the methods that provide their functionality, however no such method is called for the edit button.
 An inspection of the code reveals that not only is no such method called, but no such method exists despite the following comment to the method ``\/\/Adds a Delete \& Edit Icon to all Frames which deletes or edits the relevant Frame on click.''.
 
 With the point of failure located a number of solutions present themselves, the fast solution would be to simply write the code as part of the \texttt{setupAdapter} method however this would not be in line with the structure that exists within the sequence code.
@@ -26,7 +26,7 @@ In order to provide a proper solution which would provide the correct functional
 In order to keep the code maintainable the third option is the solution that we will use, despite knowing it will take more time than the others to implement.
 
 Through further inspection of the code it shows that buttons in sequence are implemented using listeners.
-They consist of a handler used to specify the type of click, \texttt{setupOnEditClickHandler()}, an interface with the method \texttt{onEditClick()} and lastly a method, \texttt{setOnEditClickListener}, used to set functionality for the button by overriding \texttt{onEditClick()} when used in order to specify what the button should do at any particular instance.
+They consist of a handler used to specify the type of click, \texttt{setupOnEditClickHandler()}, an interface with the method \texttt{onEditClick()} and lastly a method, \texttt{setOnEditClickListener(OnEditClickListener listener)}, used to set functionality for the button by overriding \texttt{onEditClick()} when used in order to specify what the button should do at any particular instance.
 
-By creating those three methods and subsequently calling and overriding \texttt{onEditClick()} in the previously mentioned method \texttt{setupAdapter()} the issue is fixed without creating any complications.
+By creating those three methods and subsequently calling and overriding \texttt{onEditClick()} in the previously mentioned method \texttt{setupAdapter(final Sequence seq)} the issue is fixed without creating any complications.
 4 EP is spend on solving the task, mostly on overriding \texttt{onEditClick()} as finding the correct code segments is a lengthy process for while they exist, they were not used until this fix.
