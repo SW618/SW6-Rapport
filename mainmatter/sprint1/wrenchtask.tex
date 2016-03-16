@@ -1,0 +1,37 @@
+\section{Sequence wrench should be clickable}
+In this section a description of how this high priority task was solved is given, the user story for this task is \textit{As a citizen, I want to be able to click on the wrench when editing a Sequence, to edit which pictogram is chosen. (Same function as when the picture is clicked)}\footnote{Note that this is the user story as written by the PO. This is not correct, as citizens cannot edit sequences, guardians can. And they are called pictograms not pictures. This will also be mentioned in the sprint retrospective. } \todo[inline]{Is this too offensive towards the POs incompetence, should we just edit the user story? - Troels}
+The EP required to solve this task is estimated at N/A as this task was taken on during the sprint in response to us running out of tasks.
+
+\myref{fig:seq_wrench} shows how a guardian using the Sequence tool views a sequence.
+On it there is a pictogram of a shark, and two emblems. 
+The emblem in the upper right corner shows a bin, and tapping it will delete the pictogram from the sequence. 
+The emblem in the lower right corner shows a wrench, indicating that it can be edited.
+However pressing it in the Sequence application does nothing, but pressing the pictogram does edit it. 
+This behavior is inconsistent with the other applications and how the bin emblem works. 
+Therefore when the wrench is tapped it should start the events that are included in editing, as it does if the thumbnail is tapped.
+\begin{wrapfigure}{R}{0.3\textwidth}
+    \centering
+    \includegraphics[width=0.3\textwidth]{figures/img/screenshots/Sequence_pictogram.png} 
+    \caption{A screenshot of a Sequence thumbnail as viewed by a guardian.}
+    \label{fig:seq_wrench} 
+    \vspace{-5pt}
+\end{wrapfigure}
+\bigskip
+\noindent
+In order to solve this problem firstly we go through the code looking for the implementation of both the bin and the wrench realising that these are both implemented as buttons.
+These buttons will henceforth be referred to as the delete and the edit button respectively.
+The method \texttt{setupAdapter(final Sequence seq)}, which creates the button view, also calls and overrides the methods that provide their functionality, however no such method is called for the edit button.
+An inspection of the code reveals that not only is no such method called, but no such method exists despite the following comment to the method ``\texttt{// Adds a Delete \& Edit Icon to all Frames which deletes or edits the relevant Frame on click.}''.
+
+With the point of failure located a number of solutions present themselves, the fast solution would be to simply write the code as part of the \texttt{setupAdapter} method however this would not be in line with the structure that exists within the Sequence code.
+Another solution is to find the functionality for when the thumbnail is tabbed and simply copy that, which would be more in line with the structure of the code, yet not be the proper solution.
+In order to provide a proper solution which would provide the correct functionality while also maintaining how the rest of Sequence has been implemented one could reverse engineer the delete button and use that to construct the proper structure for implementing the edit button.
+In order to keep the code maintainable the third option is the solution that we will use, despite knowing it will take more time than the others to implement.
+
+Through further inspection of the code it shows that buttons in Sequence are implemented using listeners.
+They consist of a handler used to specify the type of click, \texttt{setupOnEditClickHandler()}, an interface with the method \texttt{onEditClick()} and lastly a method, \texttt{setOnEditClickListener(OnEditClickListener listener)}, used to set functionality for the button by overriding \texttt{onEditClick()} when used in order to specify what the button should do at any particular instance.
+
+\todo[inline]{Insert code snippet and add relevant text to it. - Troels}
+
+By creating those three methods and subsequently calling and overriding \texttt{onEditClick()} in the previously mentioned method \texttt{setupAdapter(final Sequence seq)} the issue is fixed without creating any complications.
+4 EP is spent on solving the task.
