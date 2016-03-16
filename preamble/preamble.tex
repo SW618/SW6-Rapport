@@ -3,13 +3,14 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\usepackage[utf8]{inputenc} 
 \usepackage[UKenglish]{babel}  
-\usepackage{lmodern} 
+% \usepackage{lmodern} 
 \usepackage[thin]{roboto}
-\usepackage{inconsolata}
+\usepackage[scaled=0.85]{inconsolata}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}	
 \usepackage{fixltx2e}
 \usepackage{microtype}
+% \renewcommand*\rmdefault{lmr}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Graphics and tables
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -43,14 +44,25 @@
 \SetLabelAlign{parright}{\parbox[t]{\labelwidth}{\raggedleft#1}}
 \usepackage{moreenum}
 \usepackage{setspace}
+\usepackage{multicol}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Page Layout
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[left=28mm, right=41mm]{geometry}
 \usepackage{titlesec}
-\titleformat*{\section}{\normalfont\Large\bfseries\color{aaublue}}
-\titleformat*{\subsection}{\normalfont\large\bfseries\color{aaublue}}
-\titleformat*{\subsubsection}{\normalfont\normalsize\bfseries\color{aaublue}}
+\usepackage{blindtext}
+\newcommand{\hsp}{\hspace{20pt}}
+\titleformat{\chapter}[hang]%
+    {\Huge\sffamily\mdseries\vspace{-40pt}}%
+    {\thechapter\vspace{-20pt}\hsp\textcolor{aaublue}{|}\hsp}%
+    {0pt}%
+    {\Huge\sffamily\mdseries\vspace{-20pt}} 
+\titleformat{\section}
+    {\normalfont\Large\sffamily}{\thesection}{1em}{}
+\titleformat{\subsection}
+    {\normalfont\large\sffamily}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+    {\normalfont\normalsize\sffamily}{\thesubsubsection}{1em}{}
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \fancyhf{}
@@ -67,7 +79,6 @@
 	\fancyhead[LE,RO]{\thepage}
 	\raggedbottom
 }
-
 \usepackage{calc}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
@@ -80,8 +91,6 @@
 \usepackage{varioref}
 \usepackage{hyperref}
 \usepackage{lastpage}
-\usepackage[toc]{glossaries}
-\makeglossaries
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Listings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -99,7 +108,6 @@
 \usepackage{csquotes}
 \usepackage{booktabs}   
 \usepackage{xstring}
-\usepackage{csquotes}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Pseudocode
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
@@ -131,17 +139,6 @@
 
 \headheight 15pt
 
-\usepackage{pgfplots}
-\pgfplotsset{compat=1.8}
-\definecolor{Offline}{HTML}{8B49A6}
-\definecolor{Connecting}{HTML}{2488CB}
-\definecolor{usercode}{HTML}{0EBC31}
-\definecolor{Rx}{HTML}{F1C40E}
-\definecolor{Tx}{HTML}{E74C3C}
-\definecolor{BuzyWaiting}{HTML}{EF44FE}
-\definecolor{EmptySlot}{HTML}{2F2F2F}
-
-
 \tikzstyle{decision} = [diamond, draw, fill=yellow!40, text width=4.5em, text badly centered, inner sep=3pt]
 \tikzstyle{block} = [rectangle, draw, fill=green!40, text width=5em	, rounded corners, minimum height=3em]
 \tikzstyle{wideblock} = [block, text width=0.8\textwidth, align=center]
@@ -150,27 +147,8 @@
 \tikzstyle{cloud_nospace} = [cloud, node distance=1cm]
 \tikzstyle{preDefProc} = [draw,rectangle split, rectangle split horizontal,rectangle split parts=3, fill=green!40,minimum height=4em]
 
-
 \overfullrule=2cm
 
-
-%%% Chapter headign style1
-%%% \allsectionsfont{\normalfont\sffamily\bfseries} 
-\usepackage{titlesec, blindtext}
-\definecolor{gray75}{gray}{0.75}
-\newcommand{\hsp}{\hspace{20pt}}
-\titleformat{\chapter}[hang]{\Huge\sffamily\bfseries\vspace{-40pt}}{\thechapter\vspace{-20pt}\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\sffamily\bfseries\vspace{-20pt}}
-
-
-
-\titleformat{\section}
-{\normalfont\Large\sffamily\bfseries}{\thesection}{1em}{}
-
-\titleformat{\subsection}
-{\normalfont\large\sffamily\bfseries}{\thesubsection}{1em}{}
-
-\titleformat{\subsubsection}
-{\normalfont\normalsize\sffamily\bfseries}{\thesubsubsection}{1em}{}
 
 
 % Pretty lstlistings

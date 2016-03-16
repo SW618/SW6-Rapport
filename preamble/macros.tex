@@ -33,18 +33,8 @@
 
 \newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
 
-\renewcommand*{\CustomAcronymFields}{%
-  name={\the\glsshorttok},% name is abbreviated form
-  description={\the\glslongtok},% description is long form
-  first={\noexpand\textbf{\the\glslongtok\space(\the\glsshorttok)}},%
-  firstplural={\noexpand\textbf{\the\glslongtok\noexpand\acrpluralsuffix\space(\the\glsshorttok)}},%
-  text={\the\glsshorttok},%
-  plural={\the\glsshorttok\noexpand\acrpluralsuffix}%
-}
-
-\SetCustomStyle
-
-\newcommand{\TITLE}{GIRAF Something Something}
+\newcommand{\TITLE}{An Extremely Agile Approach to Developing Software}
+\newcommand{\SUBTITLE}{Developing Complex Software Systems}
 
 \makeatletter
 \def\ifdraft{\ifdim\overfullrule>\z@
