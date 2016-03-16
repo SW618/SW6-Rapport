@@ -21,7 +21,7 @@ Therefore when the wrench is tapped it should start the events that are included
 In order to solve this problem firstly we go through the code looking for the implementation of both the bin and the wrench realising that these are both implemented as buttons.
 These buttons will henceforth be referred to as the delete and the edit button respectively.
 The method \texttt{setupAdapter(final Sequence seq)}, which creates the button view, also calls and overrides the methods that provide their functionality, however no such method is called for the edit button.
-An inspection of the code reveals that not only is no such method called, but no such method exists despite the following comment to the method \texttt{// Adds a Delete \& Edit Icon to all Frames which deletes or edits the relevant Frame on click.}.
+An inspection of the code reveals that not only is no such method called, but no such method exists despite the following comment to the method ``\texttt{// Adds a Delete \& Edit Icon to all Frames which deletes or edits the relevant Frame on click.}''.
 
 With the point of failure located a number of solutions present themselves, the fast solution would be to simply write the code as part of the \texttt{setupAdapter} method however this would not be in line with the structure that exists within the Sequence code.
 Another solution is to find the functionality for when the thumbnail is tabbed and simply copy that, which would be more in line with the structure of the code, yet not be the proper solution.
