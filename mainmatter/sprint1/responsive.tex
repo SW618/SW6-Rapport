@@ -1,53 +1,77 @@
-The task was created because the customers expressed concern for the reactiveness of the PictoSearch application, it sometimes felt slow and customers said it felt like nothing was happening.
-It is important that responses from a mobile application happen somewhat quickly, as mentioned in~\cite{Roto:2005:NNF:1062745.1062747}, if an application takes more than 4 seconds to load or respond then other feedback than visual should be used.
-\kim{It is like this argument was cut short. What should the visual feedback be used for? What would other feedback mechanisms do? I can guess the answer but you should write the entire point not just supply hints.}
-Therefore it is decided that almost instantaneous feedback\kim{Can you be a bit more precise, how fast is almost instantaneous feedback? It should be clear what the goal is and why this goal was chosen.} is important such that the users feel like the application is processing the inputs quickly and effective.
-This resulted in wanting a change of when calls were made in the PictoSearch application.\kim{rephrase last sentence.}
+\textbf{User Story:} \textit{As a User I would like the Picto Search application to feel more responsive when I search for pictograms, such that I don't feel like nothing happens.} \newline
 
-The current version\todo{Er det forvirende at skrive current version når det er en kontinuer historie? Er det klart at der menes den udgave lavet af de tidligere GIRAF projekter? - Troels}\todo{Kim: Det er tydeligt at forstå hvad der menes.} of the PictoSearch application searches whenever the uses touches\kim{press?} the search button on either the keyboard or on the GUI of the application.
+The task is prioritised as HIGH and is estimated at 8 EP.
+The task was created because the customers expressed concern for the reactiveness of the PictoSearch application, it sometimes felt slow and customers said it felt like nothing was happening.
+The PictoSearch application is used whenever the user needs to find a certain pictogram for other applications such as the weekplan or the sequence application.
+It is a problem that the users feel like the application is slow and that it does not react qucikly to what the user is doing, especially in an application used often by other applications of GIRAF.
+It is important that responses from a mobile application are given within a few seconds, as mentioned in~\cite{Roto:2005:NNF:1062745.1062747}, if an application spends more than 4 seconds to load or respond then other feedback than visual should be used.
+Therefore the amount of time spent waiting for the application should be reduced, such that there is no need for using other methods of feedback when the search finally returns.
+According to Constantine and Lockwood in their book ``Software for Use: A Practical Guide to the Models and Methods of Usage-Centered Design'' \cite{DESIGNBOOK}, a design principle regarding feedback is as follows:
+
+\begin{displayquote}
+\textit{Keep users informed of actions or interpretations, changes of state or condition and errors or exceptions that are relevant and of interest to the user through clear, concise, and unambiguous language familiar to users\cite[p.~57]{DESIGNBOOK}.}
+\end{displayquote}
+
+Therefore it is decided that the Picto Search application should give feedback whenever an action occurs.
+The application should respond to the users action more often than what it does now to increase how responsive the application feels to the user.
+
+The current version of the PictoSearch application searches whenever the user taps the search button on either the on-screen keyboard or in the GUI of the application.
 The search button is located in the middle of the screen, to the left of the search field as can be seen on \myref{fig:screenshot_startup}.
+
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/img/screenshots/old_startup.png}
-    \caption{Screenshot of the initial view presented to the user when launching PictoSearch.}\label{fig:screenshot_startup}
+    \caption{Screenshot of the initial view presented to the user when launching PictoSearch, with the search button highlighted.}\label{fig:screenshot_startup}
 \end{figure}
-\kim{Maybe highlight it on the screenshot}
+\noindent
+The screenshot also shows the view of the application as it is opened, completely empty with no information.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/img/screenshots/old_dialog.png}
     \caption{Screenshot of the search spinner shown while searching in PictoSearch.}\label{fig:screenshot_searchspinner}
 \end{figure}
-This has been changed such that a search happens whenever the text in the searchfield is changed.
-Instead of the big slow search spinner which can be seen on \myref{fig:screenshot_searchspinner}, a new smaller text message is instead displayed which tells the user that the application is searching and what is is searching for. 
-This search does not remove the software keyboard from the view, neither does it make you unable to type.
-This is possible because the search is implemented as an async task, because of this any new search is queued behind the current search query.
-This change is implemented by calling \texttt{AsyncTask.cancel()}, which cancels the ongoing search call and makes it possible to start a new call immediately, with the updated search string.
-\kim{I cant help but thinking that this feature have a name, I suggest that you find out what it is called and start using that term.}
-Because of this anytime a keystroke is made on the keyboard something should happen on the display other than simply filling out the search-field, be it a text message explaining what is being searched for, or be it the resulting pictograms returned from the search.
-\kim{So when is what displayed? please elaborate.}
-This means that there is near instantaneous feedback for the user, which should give the feeling that the application is reacting to what the user is doing, and it does no longer feels like nothing is happening.
-\kim{Make sure to test if this have the required effect. There is a high probability that the censor that will be at you exam is very interested in GUI and test of these. So make sure that stuff like this is done by the book. Unfortunately then I have limited knowledge of this area.}
+
+In the new version, a search is made whenever the text in the searchfield is changed.
+Instead of the big slow search spinner, which blackened out and locked the screen, shown on \myref{fig:screenshot_searchspinner}, a new smaller text message is instead displayed which tells the user that the application is searching and what is is searching for. 
+The current version would also remove the on-screen keyboard when it would search, this only happens in the new version whenever the search button is pressed or the user taps somewhere else, i.e. not on the keyboard.
+The application can take input while searching because it is implemented as an async task, i.e. in its own thread.
+Because of this any new search is queued behind the current search query, and as such the results of the latest search will be waiting for the results of the previous searches.
+This is fixed by a simple change of calling \texttt{AsyncTask.cancel()}, which is a thread.cancellation method, that stops the execution of the ongoing thread and makes it possible to start a new call immediately, with the updated search string, and therefore eliminating the queue.
+Because of this anytime a keystroke is made on the keyboard something will happen on the display other than simply filling out the search-field.
+When the user types a letter in the textfield, the application will search for the text currently in the text field and display the text as seen on \myref{fig:screenshot_newsearch} explaining what is being searched for. 
+This fulfills the principle of giving feedback to the user when an action occurs, such that the user knows what is happening behind the scenes.
+When the search returns the pictograms will be shown instead of the text message, with the keyboard still visible.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/img/screenshots/new_dialog.png}
+    \caption{Screenshot of the new search information, while searching.}\label{fig:screenshot_newsearch}
+\end{figure}
+
+This means that there is near instantaneous feedback for the user, which might give the feeling that the application is reacting to whatever the user is doing, and it might no longer feel to users like nothing is happening.
 
 The search button can still be used, and will bring up the old search spinner as usually, but the button has been moved from the middle of the display to the right side of the display as can be seen on \myref{fig:screenshot_newstartup}.
 This is a better fit as it resembles other common search engines such as Google Search, and it is also the recommended way to display a search-field according to the Niels Norman Group\footnote{https://www.nngroup.com/articles/magnifying-glass-icon/}.
-\kim{It would also be easy to find the design principle that says that it is a good thing to use ``structures'' that people recognize. Remember that the theory is very important when doing GUI stuff.}
-It can also be seen on \myref{screenshot_newUI} that the cancel search button is only shown when there is actually something to remove from the search field, this removes the clutter of information otherwise produced from the old view.
-\kim{I think that the structure of this section is a bit off. First there should be an analysis, what is the problem: No/slow user feedback, Search button is difficult to find (I assume that this is a problem identified by some users), cancel/delete is there when field is blank. Then we describe(design) possible solutions and discuss why they are good/ bad solutions. Choose the best solution and then, if it interesting, show the implementation of the solution (might be sufficient with screenshots.) }
+Furthermore according to the principles of Constantine and Lockwood, structuring the interface is important such that it is for example recognisable: 
+
+\begin{displayquote}
+\textit{Organize the user interface purposefully, in meaningful and useful ways based on clear, consistent models that are apparent and recognizable to users, putting related things together and separating unrelated things, differentiating dissimilar things and making similar things resemble one
+another.\cite[p.~51]{DESIGNBOOK}.}
+\end{displayquote}
+\noindent
+Therefore using a familiar position of the button is a better fit than placing it in the middle of the screen as in the current version.
+
+Another thing we noticed was that the clear search field button was visible all the time even though no text was in the search field.
+This has been removed and it is now only visible when there is text in the search field i.e. when the actoion is available, as can be seen on \myref{fig:screenshot_newstartup} and it it still there on \myref{fig:screenshot_newsearch}.
+This has been done because of another design pricinple by Constantine and Lockwood: 
+
+\begin{displayquote}
+\textit{Keep all needed options and materials for a given task visible without distracting the user with extraneous or redundant information \cite[p.~55]{DESIGNBOOK}.}
+\end{displayquote}
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/img/screenshots/new_startup.png}
     \caption{Screenshot of the new initial view in PictoSearch.}\label{fig:screenshot_newstartup}
 \end{figure}
-
-\paragraph{Initial view}
-\kim{What dies this have to do with responsive search? }
-Another change made to PictoSearch involves a task, which describes a need for modifications to be made to the initial view;\kim{instead of describe that there is some mysterious task that have some description, then just reference the tasks name, it is explained two pages above this. Please rephrase.} This is the view that is presented to a user when launching PictoSearch.
-In the current version, the user is presented with no useful information in the initial view as seen in \myref{fig:screenshot_startup}. \kim{Try to be more precise, information is not a very descriptive word, it can be anything. Describe in more detail what the problem actually is (analysis)}
-Initially this task asked for the showing of somewhat random pictograms in the initial view\kim{This sentence is very informal and does not belong in a bachelor report. Please use more formal and precise language.}, however we suspected that users might get confused by this, and believe that the pictograms shown were the only pictograms available in PictoSearch; therefore we simplified the task to assist the user in using PictoSearch. \kim{It is a problem that the task describes a solution rather then a problem. It it should not be necessary that you change a task because you have designed a good solution to the problem.}
-As the aim of the workflow\kim{what workflow? if there is a pictosearch workflow then remember to describe it or reference to a place where it is described.} which involves PictoSearch is to search for pictograms, we set out to reduces the number of actions needed for such an operation. \kim{Why is it a good solution to reduce the number of action that user need to do a good solution to the problem? I see no correlation between this solution and the problem.} 
-Furthermore we want to present some descriptive information to the user at any given time, such that it is clear what he or she should do to advance in the searching.
-The first change\kim{If there is a first change then I assume that there will be more the one change, no second change is described.} is that the keyboard is forced to appear on the screen when launching PictoSearch, along with giving focus to the search field; this enables the user to start searching right away without having to press anything.
-This new initial view, which also includes added informative text can be seen on \myref{fig:screenshot_newstartup}
-\kim{Like the section above then this section suffers from structural problem. Try to follow the analyze, design, implement model/structure}
