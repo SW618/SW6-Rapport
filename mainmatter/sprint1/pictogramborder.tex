@@ -1,24 +1,24 @@
 \section{Week Schedule - Border Around Pictograms}
 \userstory{As a user, I would like to have pictograms shown with a surrounding border, such that they are clearly distinguished from the background.}
-This task was taken after the initial planning therefore it has not been given any estimated EP. 
+This task was taken after the initial planning therefore it has not been does not have an estimated amount of EP. 
 This task was given a \phigh-priority by the product owner. 
 
 In the Week Schedule application it can be hard to distinguish between pictrograms and the background.
-Mostly pictograms with a white background and the Sundays background, which is white.
+Mostly pictograms with a white background and Sunday's background, which is white as can be seen on \myref{fig:before-after-borders}.
 
-Changing the background colour of a weekday is not possible, since the colours are predefined by the costumer, as they represent the current physical version of week schedules in use.
+Changing the background colour of a weekday is not possible since the colours are predefined by the costumer, such that they represent the current physical version of week schedules in use.
 To solve this issue a border will be drawn around each pictogram in Week Schedule.
 Currently the pictograms exists as squares, but are rounded with a radius of 10 pixels.
 To draw a border along the edge of the image, it needs to follow the same path as the rounded pictogram. 
 To implement this we add the drawing of this to the \texttt{onDraw()} method of the \texttt{RoundedImageView} class which renders the pictogram inside the Week Schedule application. 
 Since the same border will be needed for each pictogram, we use the singleton pattern to make it once and reuse the same object as argument for the method call which draws the image on the screen. 
 We refactor the old code to do the same for the rounded corners. 
-This change will also reduce the number of allocations, and can thusly help to reduce the number of garbage collection pauses, which can freeze the system\footnote{\url{http://developer.android.com/training/articles/perf-tips.html\#ObjectCreation}}. 
-Since other methods also uses the \texttt{RoundedImageView} class the singleton should change if called with different dimensions, and thusly requiring a different rounded edge and border. 
+This change will also reduce the number of allocations, and  thusly helps to reduce the number of garbage collection pauses, which can freeze the system\footnote{\url{http://developer.android.com/training/articles/perf-tips.html\#ObjectCreation}}. 
+Since other methods also uses the \texttt{RoundedImageView} class the singleton should change if called with different dimensions as it requires different rounded edges and borders. 
 In this case the objects should be corrected to fit the new dimensions. 
 
-An example of one of the singletons are shown in \myref{lst:singleton_example}.
-These result of these changes are show in \myref{fig:before-after-borders}. 
+An example of one of the singletons is shown in \myref{lst:singleton_example}.
+The result of these changes is show in \myref{fig:before-after-borders}. 
 
 \begin{lstlisting}[float, floatplacement=h, caption={One of the singletons used to solve this task.}, label={lst:singleton_example}] 
 private static Path drawPath;
