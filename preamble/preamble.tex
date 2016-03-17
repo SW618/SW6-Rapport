@@ -10,7 +10,6 @@
 \usepackage[utf8]{inputenc}	
 \usepackage{fixltx2e}
 \usepackage{microtype}
-% \renewcommand*\rmdefault{lmr}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Graphics and tables
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -52,6 +51,11 @@
 \usepackage{titlesec}
 \usepackage{blindtext}
 \newcommand{\hsp}{\hspace{20pt}}
+\titleformat{\part}[display]
+    {\fontsize{38pt}{8pt}\filcenter\sffamily\selectfont\thispagestyle{empty}}
+    {Part \thepart \vspace{6pt}\linebreak \textcolor{aaublue}{\rule{120pt}{1pt}} \linebreak}
+    {0pt}
+    {}
 \titleformat{\chapter}[hang]%
     {\Huge\sffamily\mdseries\vspace{-40pt}}%
     {\thechapter\vspace{-20pt}\hsp\textcolor{aaublue}{|}\hsp}%
