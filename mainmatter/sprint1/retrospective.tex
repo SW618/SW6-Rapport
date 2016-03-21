@@ -3,20 +3,61 @@
 This section will present the scrum retrospective, first presenting how the development process has been for the multi-project, followed by the internal development process.
 
 \subsection*{The Multi Project}
-The multi project retrospective uses a method called: Start, Stop, Continue.
-Which sets up a way to communicate problems 
+
 %start / Stop / Fortsæt
+The multi project retrospective uses a method called: Start, Stop, Continue\footnote{https://www.mountaingoatsoftware.com/agile/scrum/sprint-retrospective}.
+The scrum team will say what they think everyone should start doing, stop doing and also continue doing. 
+This facilitates a way to communicate what is being done in a good way, and what is being done in a bad way, and also helps introduce new methods of working.
+As we are a big scrum team, we split into groups and write these start, stop, and continue notes on stickynotes.
+When some time has passed roughly 15 minutes, the sticky notes are gathered and the scrum masters will help drive a discussion using the stickynotes.
+The discussion should then help shed light on where we can improve.
+\todo{Skal det istedet være under metode i starten det her ???? - Søren}
+
 %PO mangler konsistens i forhold til tasks
+\paragraph{Prioritizing} One of the problems we discovere were that PO's prioritizing seemed random, and it did not seem like they had a general sense of direction regarding where the GIRAF project was heading.
+Therefore we had an extended meeting to try and find some goals for which the GIRAF project should try to reach this semester, and we also encouraged PO to ask the customer's what they specifically would like to be completed first.
+This resulted in the following goals:
+\begin{itemize}
+	\item Stand alone Voice game, such that is can downloaded from the google play, and run without installing any other applications.
+	\item Week schedule should be completed, such that a big part of the customer's everyday can be digitalized.
+\end{itemize}
+These two goals will therefore be the focus for the project for the rest of the semester.
+
 %User stories er ringe formuleret, og alt for specifikke
+\paragraph{User Stories} In the first sprint user stories were either too general or solution specific.
+Therefore it is agreed that the other groups of the project may help rephrasing the user stories such that they are better understood.
+Another thing regarding the user stories were, that the obtaining of them were awkward and not staying true to the scrum methodology.
+Therefore for the second sprint user stories will be introduced rather than a task with a user story.
+These user stories will be given sub tasks to be solved, and a group will then obtain a user story with sub tasks, rather than a task with a user story.
+
 %Code review
-%Git branching
-%Uspecifikke guides, så det er svært at forstå hvad man skal
+\paragraph{Code Review}
+There has been some problems with the way different groups have reviewed their code before pushing pushing it to the master branch of its repository.
+Some groups completely skipped the reviewing process, others had done a poor job, while some did it correctly.
+It seemed that the problem was with the understanding of what code review entailed and when and why it was important.
+This resulted in us taking a small task of rewriting the guide on the wiki page to help groups better understand how to review other people's code, the tools used in the process and how they are to be used.
+One of the problems caused by the misunderstanding was, that a group did not think about using a branch when they wanted to share their code with someone else in their group.
+Rather they applied a diff to the master, without reviewing or testing it, making it so the master branch was very unstable and prone to crashes.
+The new guide will make sure to explain that using the common git techniques like branching is very much allowed, encouraged even.
+
+
 %Build server ændringer lige inden sprint end
+\paragraph{Server Changes}
+One last thing which was discovered after the sprint retrospective meeting, but which will still be included here, was that a change made to the build server right before sprint end caused libraries to be unable to compile as they used the server during compilation.
+This resulted in our work on the PictoSearch application to not being shown to the customers.
+Therefore we want to address this in the next sprint and perhabs make a rule that server changes should not be made so close to the end of a sprint unless necessary, and if done the rest of the project groups should be given a notice so that they can ensure their applications still work as intended.
 
 
 \subsection{Internally}
-
+Internally we have discovered things that should be handled differently and this section will introduce these scenarioes and explain what should have been done instead.
 %Mere estimering
+The estimations we made at the start of the sprint were off and the reasoning for this could be that we did not discuss properly what the user stories' subtasks entailed before estimating.
+The new user stories from the multi project should help us estimate easier and also help facilitate the discussion on how much work a user story requires.
 %vi sku have estimeret de 4 nye
+When we obtained the four additional tasks we should have estimated these aswell rather than hoping we could finish them if we started right away.
+We might have figured that we could not finish all four and then returned one of them.
 %Blive bedre til at adapte til situationen fremfor at at være rigide og blot bruge bureaukratiet
-
+One last thing we agreed upon was that it is okay to not always follow the bureaucracy one hundred percent. 
+If we find something that should be fixed, but it is not necessarily our area of responsibility, if it just something that is fixed quickly we might aswell just do it rather than wasting time explaining and discussing with other people such that they can do the task when they have time.
+If we have the time to do it, it serves the project better if it completed at once.
+\todo{dunno med den sidste del... Er den lidt for meget ? - Søren}
