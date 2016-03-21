@@ -1,9 +1,34 @@
 \chapter{Sprint Planning}
+The product owner decided that the second sprint of this years Giraf project will last from the 18th of March to the 4th of April.
+This is a total of 17 days, during which easter is also set. 
+After the course activity there is three whole days and two half days for Giraf activity. 
+Because of this we estimate a total of 32 EP for this sprint.
+This is much less than last sprint, so for the same reason we will take fewer and smaller user stories. 
 
+To estimate the EP for each user story we firstly split each user story into smaller tasks to easier understand the size of each, and then used planning poker on each user story. 
+We decided to use the Fibonacci numbers for this sprints planning poker, as the powers of two which was used last was too big increments to accurately estimate the effort of each task. \todo[inline]{Hører dette til i retrospective, eller begge stedder? - Troels}
 \section{Sprint Backlog}\label{plan2}
-
+Our tasks for this sprint is focused on the week schedule application as it is part of the proposed minimal viable product. \todo[inline]{Vi skal være sikre på at vi har forklaret hvad dette er? Skal det være her eller i sprint review? - Troels}
 \begin{description}[style=unboxed]
-    \item[{[}\phigh{]} todo - todo] \hfill \\ 
-        \userstory{todo}
-        todo
+    % http://web.giraf.cs.aau.dk/T215
+    \item[{[}\phigh{]} Week Schedule -- Long Schedules] \hfill \\ 
+    \userstory{As a user, I would like to be able to have long schedules which are scrollable, such that I can schedule more in a single day}
+    Currently it is difficult to scroll in the week schedule application.
+    If a user tries to drag on one of the pictograms, then it moves the pictogram and does not scroll as one might expect, since scrolling happens in the Android OS and many other places. 
+    This can be confusing for the users, and thusly it should be changed. 
+    Additionally the ability to reorder the pictograms in the week schedule should not be removed. 
+    \todo[inline]{Skal vi skrive om del opgaver her eller bliver det for meget? - Troels}
+
+    This is a reformulation of a previous tasks, which we took late in the first sprint but did not complete. 
+    It has since been clarified by the product owner after talking to the customer. 
+    We estimate this task at 8 EP, as it might include redesigning parts of the application. 
+    % http://web.giraf.cs.aau.dk/T277
+    \item[{[}\phigh{]} Week Schedule -- Offline Usage] \hfill \\ 
+    \userstory{As a guardian, I would like the week schedule to be used without Internet, such that I can use it in the woods.}
+
+    % http://web.giraf.cs.aau.dk/T273
+    \item[{[}\phigh{]} Week Schedule -- Clear Progress] \hfill \\ 
+    \userstory{As a Guardian I would like to be able to clear the progress of a week schedule, such that I can use it for more than one week.}
+
+
 \end{description}
