@@ -1,4 +1,11 @@
 \subsection*{Workflow}
+In this section we will introduce the workflow for collaboration in the Giraf project, under Scrum of Scrum. 
+Groups takes on user stories on the sprint planning meeting, but can also remove or add more during the sprint.
+This is also a result of task estimation taking place after claiming the user story, which can be problematic, since a group might take too many or too few user stories at the meeting and have to correct it later. 
+If the estimation was done before claiming the user stories, then they might not be accurate as it is not certain that the same people who estimate it would end up doing the user story.
+And if every group took part in estimating every task it would end up wasting a lot of time. 
+
+
 Now that the tools and development method has been presented, we will present how these tools interact with the Scrum method used and also the Scrum of Scrums. \kim{Sounds confusion, please rephrase. Specifically I am unhappy with the ``used and also'' formulation.}
 To do this we will show the workflow on a task from\kim{...of a task, starting from...} when it is introduced\kim{Are task really introduced? try to be more precise.} till\kim{-l} the task is considered completed through use of a flow diagram.
 \kim{I just realized that you never defined what a task is. I am guessing that a user story contains several task or how does it work? However, you say that a backlog contains tasks as oppose to user stories. Please explain.}
@@ -12,25 +19,25 @@ The aforementioned flow diagram is \myref{fig:workflow}. \kim{Aforementioned is 
 	    \footnotesize
 	    \node[wideblock]
 	            (task) at (0,0)
-	            {Task is introduced on Phabricator without a priority};
+	            {User story is introduced on Phabricator without a priority, either by a developer or the customer};
 	        
 	    \node[wideblock, below = of task]
-	            (triage) {Product owners of the multi-project give the task a priority};
+	            (triage) {The PO of the multi-project give the user story a priority or discard it};
 	            
 	    \node[wideblock, below = of triage]
-	            (planning) {Task is claimed by a project group on Phabricator};
+	            (planning) {User story is claimed by a project group on Phabricator};
 	            
 	    \node[wideblock, below = of planning]
-	            (estimate) {The task is estimated by the project group};
+	            (estimate) {The User Story is estimated by the project group};
 	            
 	    \node[wideblock, below = of estimate]
-	            (branch) {A branch is created in repository involving the task, which uses the id of the task};
+	            (branch) {A branch is created in git repository involving the user story, which uses the id of the user story};
 	    
 	    \node[wideblock, below = of branch]
-	            (work) {The task is completed and is ready for review, so a diff is created on Phabricator};
+	            (work) {The user story is completed and is ready for review, so a diff is created on Phabricator};
 	            
 	    \node[wideblock, below = of work]
-	            (review) {A reviewer is chosen for the task, and he/she reviews the diff and check if the task is completed.};
+	            (review) {A reviewer is chosen for the user story, and he/she reviews the diff and check if the user story is completed.};
 
 	    \node[decision, below = of review]
 	            (ready) {Changes?};
