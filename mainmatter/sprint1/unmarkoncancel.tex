@@ -1,45 +1,35 @@
-\section{Week Schedule - Unmark scheduele when delete is cancelled}
-\kim{Please spell check the title. Is it not called ``when deletion is canceled''?}
-\kim{What a crappy filename.}
-\kim{Good section with only minor improvements is needed. }
-Week Schedule is the only component of GIRAF which this task affects; and the problem occurs in the following scenario:
+\section{Week Schedule - Unmark schedule when delete is canceled}
+Week Schedule is the only component of GIRAF which this task affects; and the problem occurs in two scenarios:
 \kim{I guess two scenarios are explained and not only one. Maybe make that clear.}
 When a guardian launches Week Schedule they are first prompted to select the citizen for which he wishes to edit schedules.
 A view consisting of the concerned citizen's schedules is then presented to the guardian.
-In this view the guardian can among others delete one or more schedules related to the citizen.
+In this view the guardian can, among other functions, delete one or more schedules related to the citizen.
 This action is performed by tapping the bin in the upper left corner, followed by tapping schedules to mark them for deletion.
-When the marking is done the guardian must tap the bin again whereby they are prompted with the choice of either completing or canceling the deletion.
+When the marking is done the guardian must tap the bin again prompting them with the choice of either completing or canceling the deletion.
 In the current version of Week Schedule the cancellation of a delete does not unmark the marked schedules, hereby presenting outdated and confusing feedback to the user.
-The same problem is present in the individual schedules when the guardian wants to delete one or more activities from a given schedule.
+The same problem is present in the individual schedules when the guardian wants to delete one or more activities from a given schedule, the workflow is the same.
 This is formulated as the user story: ``In Week Schedule as an administrator, I would like week schedules that I marked while in deletion mode to get unmarked if i cancel the delete.''
-This task was added later during the sprint and has therefore not been a part of the planing poker and not received an estimated EP. 
-\kim{This is very interesting, why dont you just estimate your new tasks? How does this task look on your burndown chart?}
+This task was added later during the sprint and has therefore not been a part of the planing poker and not received an estimated EP.
+2 EP was spent on resolving this task. 
 
 \paragraph{Clearing the data}\hfill\\
-The solution to the problem is almost implemented in the current version of Week Schedule; i.e. the functionality needed is present, but not implemented.
-\kim{Maybe we do not agree on terminology, but for me then this sentence is contradicting itself. When you write the ``functionality is present'' then for me it means that there are executable code able perform a functionality. When you write that it is not implemented. Please rephrase such that the meaning is clear to everybody.}
-In both of the previously described cases\kim{I believe you called them scenarios and not cases.} where wrongful feedback is given, Week Schedule uses two variables respectively called \texttt{markedSchedules} and \texttt{markedActivities} to store the marking.
-The \texttt{markedSchedules} is a \texttt{HashSet} of booleans related to each of the schedules available for selection; and clearing the \texttt{HashSet} is done by simply calling \texttt{.clear()} on the \texttt{HashSet}-object.
-\kim{In this line you call it the selection for the fist time. I think it is a better term then marking. Either way you should be consistent in the use of terms.}
-With the \texttt{markedActivities} variable clearing the marking proved to be more difficult that in the previous case.
-\kim{This sentence sounds like that you already explained how to resolve the first scenario, which is not the case. You have only written how it is done.}
+The solution to the problem is almost implemented in the current version of Week Schedule; i.e. the methods required in order to provide the functionality needed are present, but not implemented.
+In both of the previously described scenarios where wrongful feedback is given, Week Schedule uses two variables respectively called \texttt{markedSchedules} and \texttt{markedActivities} to store the marking.
+The \texttt{markedSchedules} is a \texttt{HashSet} of booleans related to each of the schedules available for marking; and clearing the \texttt{HashSet} is done by simply calling \texttt{.clear()} on the \texttt{HashSet}-object.
+With the \texttt{markedActivities} variable, clearing the marking proved to be more the more difficult scenario.
 Since \texttt{markedActivities} is implemented as an \texttt{ArrayList} with each element being a boolean array, the \texttt{.clear()} did not behave in the same way.
-In the \texttt{ArrayList} each boolean array represents a day on the schedule, which means that clearing the entire \texttt{ArrayList} will remove all existing boolean arrays; this will then cause out of bounds exceptions later on if the user tries to make a new selection, because the boolean arrays have zero elements. 
-Hence a custom implementation of a clear function can solve the issue.
-This is done by filling the \texttt{ArrayList}, \texttt{markedActivities}, with new boolean arrays of appropriate sizes with the default boolean value - false.
-\kim{what does that hyphen mean?}
+In the \texttt{ArrayList} each boolean array represents a day on the schedule, which means that clearing the entire \texttt{ArrayList} will remove all existing boolean arrays; this will then cause out of bounds exceptions later on if the user tries to make a new marking, because the boolean arrays have zero elements. 
+Hence a custom implementation of a clear function is required to solve the issue.
+This is done by filling the \texttt{ArrayList}, \texttt{markedActivities}, with new boolean arrays of appropriate sizes and with the default boolean value being false.
 This ensures that future markings can be made without crashing the application.
-These changes will however not present the user with the appropriate feedback just yet.
-\kim{Make sure to use the proper punctuation when you use the word ``however''.}
-\kim{Instead of just saying that this is not sufficient, then tell the reader what is need to make it work, e.g. update the view. Then you can explain how to update the view afterwards. }
+These changes will are not enough to present the user with the appropriate feedback just yet as the view must also be updated.
 
 \paragraph{Updating the view}\hfill\\
 The part of the view in Week Schedule that displays the schedules and activities consists of \enquote{adapters}.
 These adapters need to be notified when changes occur to their content, such that the visual representation can be re-rendered.
-To notify the adapters in both cases, already implemented functions are used, i.e. \texttt{updateView()} in the schedule selection view, and \texttt{notifyAllAdapters()} in the activity selection view.
-\kim{I am not an expert in the Giraf code base and I do not know what the schedule selection view and activity selection view are. More impotently then I dont know what the difference is, which makes the sentence meaning less for me. I am sure you can assume that censor does not have a deep understanding of the code either. This means if you want to make a point, I am not sure what point you are trying to make because I dont understand the sentence, you have explain the elements of the point first. In this case the elements are the views. (I hope that I made my point clear, otherwise ask me at our meeting :p). }
+To notify the adapters already implemented functions are used, e.g. \texttt{updateView()} and \texttt{notifyAllAdapters()}.
 
-\paragraph{Restructuring} \hfill\\
+\paragraph{Restructuring} \hfill\\ \todo{Sass fix this paragraph}
 \kim{This paragraph is called restructuring, however, it is not clear what you are restructuring.}
 \kim{I actually expected that this section would be about some refactoring of the existing code. You describe two scenarios that suffers from a similar problem. Are these scenarios resolved by the same piece of code?  }
 To avoid introducing duplicated code and poor maintainability, the new functionality is placed in functions called \texttt{exitDeleteMode()}.
@@ -47,9 +37,6 @@ These functions are called when the user cancels or completes a delete, either b
 and their purpose is to return to the default mode, i.e. not delete mode.
 The function used in the activity selection view can be seen in \myref{lst:exitdeletemode}.
 \kim{This code snippet could be used in a better way. When you are explaining how the new implementation works (in the ``clearing the data'' paragraph) then insert references to lines in the code were the actual ``resetting'' of the selection.}
-
-A total of 2 EP was spent on this task. 
-\kim{This is a weird place to mention this. }
 
 \begin{lstlisting}[caption={The \texttt{exitDeleteMode()} function, which returns the application to the default mode}, label={lst:exitdeletemode}]
 private void exitDeleteMode(){
