@@ -5,13 +5,19 @@ This is also a result of task estimation taking place after claiming the user st
 If the estimation was done before claiming the user stories, then they might not be accurate as it is not certain that the same people who estimate it would end up doing the user story.
 And if every group took part in estimating every task it would end up wasting a lot of time. 
 
+We have chosen to include a code review process in this years Giraf project. 
+The reason for this is to increase the quality of the code, and its documentation, such as comments and javadocs. 
+This can reduce the speed at which code is introduced, but we have deemed it reasonable, since a lot of the code currently in the Giraf project is hard to understand, and poorly documented. 
+Code submitted to code review is called a diff, since it is the difference introduced by these changes relative to the current version. 
+The person submitting code to review is responsible for finding suitable reviewers.
+Typically one or more people which have experience in the application or people which have done similar changes to other applications are asked to review.
+A person can refuse to review a diff if they think they are not suited to review it, or the do not have time. 
+A review is over once the one submitting the code for review is confident that what they have made is of a certain quality.
+This quality is hard to define, and is subjective. \todo[inline]{Måske man kunne snakke om linters her? -- Troels}
+It should be noted that not all changes to the source code repositories strictly must go though the code review process.
+Small insignificant changes, such as correcting spelling issues, or small graphical bug fixes can be pushed directly. 
 
-Now that the tools and development method has been presented, we will present how these tools interact with the Scrum method used and also the Scrum of Scrums. \kim{Sounds confusion, please rephrase. Specifically I am unhappy with the ``used and also'' formulation.}
-To do this we will show the workflow on a task from\kim{...of a task, starting from...} when it is introduced\kim{Are task really introduced? try to be more precise.} till\kim{-l} the task is considered completed through use of a flow diagram.
-\kim{I just realized that you never defined what a task is. I am guessing that a user story contains several task or how does it work? However, you say that a backlog contains tasks as oppose to user stories. Please explain.}
-Multiple tasks are chosen by each group of the multi-project for each sprint, but it is simpler to explain the workflow using only a single task. \kim{you alraedy said that on the line above.}
-\kim{Try to add terms such as product backlog and sprint backlog.}
-The aforementioned flow diagram is \myref{fig:workflow}. \kim{Aforementioned is properly one of my favorite words. It is AWESOME.}
+In \myref{fig:workflow} we have constructed a flow diagram for the conceptual workflow for the Giraf multi-project. 
 
 \begin{figure}[H]
 	\centering
@@ -42,7 +48,6 @@ The aforementioned flow diagram is \myref{fig:workflow}. \kim{Aforementioned is 
 	    \node[decision, below = of review]
 	            (ready) {Changes?};
 
-
 	    \node[wideblock, below = of ready]
 	            (land) {The diff is applied to the master branch and the task is marked as completed on Phabricator};
 	            
@@ -59,13 +64,6 @@ The aforementioned flow diagram is \myref{fig:workflow}. \kim{Aforementioned is 
 	    \path[line] (ready) -- node {no} (land);
 	    
 	\end{tikzpicture}
-	\caption{Simplified workflow.}
+	\caption{Simplified workflow for the Giraf multi-project.}
 	\label{fig:workflow}
 \end{figure}
-\kim{I like that you use tikz, being able to use tikz is a good skill to have.}
-\kim{Where do tasks come from? I assume that they either originates from customers or developers. Actually I would assume that customers created user stories (or the product owners created them on their behalf) as oppose to tasks. }
-\kim{What is this repository that you are talking about. This is the first time you mention a repository.}
-\kim{I know that it is out of the scope of this workflow but how do you know how many tasks a group should put on their sprint backlog? }
-\kim{How is a reviewer chosen?}
-\kim{These are some of the questions I had after looking at the workflow diagram. I am not saying that you have to explain every little detail, you need to decide what is important and then make sure to explain that.}
-\kim{Now that you have explained the workflow then I would like to know why you designed it this way. What pros and cons does it have? }
