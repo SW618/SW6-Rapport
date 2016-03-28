@@ -1,0 +1,12 @@
+\section{dk.giraf.lib Breaks the Build}
+This section is written in collaboration with SW615F16.
+
+After starting the first task of upgrading dependencies, we realised that we were unable to build any of the libraries in the Giraf project. 
+We were able to use the built versions of the libraries placed in Artifactory, to build and run the application themselves. 
+Not being able to build any libraries naturally blocks the ability to upgrade them, so this new task of resoving this issue is given the highest priority: \pblocking. 
+% \definecolor{GoogleRed}{HTML}{F44336}
+% \newcommand{\pblocking}{\textcolor{GoogleRed}{Blocking}}
+
+Debugging this issue lead to the conclusion that the source of it was in \texttt{dk.giraf.lib}.
+The purpose of \texttt{dk.giraf.lib} is to allow publishing of Giraf librarys to Artifactory, by the build-server.
+Thus each developer doesn't have to compile all the dependencies for the application or library they are working on. 
