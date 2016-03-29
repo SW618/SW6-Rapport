@@ -10,3 +10,7 @@ Not being able to build any libraries naturally blocks the ability to upgrade th
 Debugging this issue lead to the conclusion that the source of it was in \texttt{dk.giraf.lib}.
 The purpose of \texttt{dk.giraf.lib} is to allow publishing of Giraf librarys to Artifactory, by the build-server.
 Thus each developer doesn't have to compile all the dependencies for the application or library they are working on. 
+The fix to the bug was done by moving existing code around. 
+More specifically the configuration of the publishing was previously done in the \texttt{afterEvaluate}-step, but it must happen before this. 
+
+After this bug-fix the \texttt{dk.giraf.lib} could be used again, the the task is resolved. 
