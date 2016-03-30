@@ -48,11 +48,20 @@ public static Path getDrawPath(RoundedImageView roundedImageView, float cornerRa
 }
 \end{lstlisting} 
 
-\begin{figure}[h]
+\begin{figure*}[h]
     \centering
-    \missingfigure{\Huge Take screenshot of before/after. }
+        \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/img/screenshots/old_week_schedule_no_borders.png}
+        \caption{Without borders}
+    \end{subfigure}\hfill
+        \begin{subfigure}[t]{0.5\textwidth}
+        \centering
+        \includegraphics[width=0.6\textwidth]{figures/img/screenshots/new_week_schedule_with_borders.png}
+        \caption{With borders}
+    \end{subfigure}
     \caption{Comparison of the pictograms in the Week Schedule application before and after adding a border.}
     \label{fig:before-after-borders}
-\end{figure}
+\end{figure*}
 
 Implementing and testing these changes took 3 EP. 
