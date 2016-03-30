@@ -1,10 +1,20 @@
 \subsubsection*{Version Control Policy}
 By enabling the system to work offline, conflicting versions become a reality.
 Without the system working offline the system quite simply just retrieved data on launch, however with offline possibilities there must be someway to determine whether the system should operate on the data stored locally on the tablet, or whether it should retrieve and replace its data with that stored on the database.
-Generally speaking two approaches, each with a variety of specific applications, present themselves; manual and automatic version control.
+In Ian Sommerville's book Software Engineering \citep{SEBOOK} he speaks of pessimistic and optimistic version control.
+Summarising the two; in pessimistic version control resources in use are locked in order to avoid conflicts whereas optimistic version control expects that conflicts can be resolved by some manner of merging.
+
+While we implement a pessimistic approach to version control, first let us consider an optimistic approach.
+
+Generally speaking two approaches, each with a variety of specific applications, present themselves in regards to merging; manual and automatic merging.
 An automatic solution would require some data point as a deciding factor for what version to use the obvious data being a time stamp.
-The issue in doing so is the complexity in the data stored, not to mention several devices accessing the database.
+The issue in doing so is that several devices access the database.
 In the scenario where a device is being used in an offline setting, the time between the changes being saved and the device going online again, another device could have updated the database and thus making the database the most recently used.
-An attempt at merging could be made, but at some point automatic merging is bound to cause merge conflicts which would make for unfamiliar and inconsistent workflow, something that goes directly against what the customer wishes.
+An attempt at merging could be made, but at some point automatic merging is bound to cause merge conflicts which would require the user to handle the merging resulting in unfamiliar and inconsistent workflow, something that goes directly against what the customer wishes.
+Having the merge process being manual might make for a it for a more familiar workflow compared to automatic merging, however the process itself would still be inconsistent compared to the remainder of the available Giraf apps.
+
+\todo{this part is not yet complete}
+On the other hand in pessimistic version control no merging is required as resources are locked.
+Instead another issue must be handled for pessimistic version control
 For this reason we will implement version control such that it becomes part of the workflow thus not surprising the customer in anyway, the way to do this is through manual version control.
 To keep it simple, when an application is accessed and altered offline, it will simply create a copy of the data to work on such that no conflicts arise. \todo{we should expand on this once we done some shit}
