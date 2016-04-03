@@ -39,7 +39,7 @@ The \texttt{onTouch(MotionEvent)} function is called whenever someone touches th
 When the screen is touched the \texttt{MotionEvent\_DOWN} is the one being sent to the function, if the user then moved the finger after having first touched the screen \texttt{MotionEvent\_MOVE} is sent as the parameter to \texttt{onTouch(MotionEvent)}.
 \myref{lst:actionmove} shows the code added in order to implement scrolling while touching the pictograms.
 
-\begin{lstlisting}[float, floatplacement=h, number=left, caption={The code executed when someone performs a move action.}, label={lst:actionmove}] 
+\begin{lstlisting}[float, floatplacement=h, caption={The code executed when someone performs a move action.}, label={lst:actionmove}] 
 if(lastYCoord != -1 && Math.abs(event.getRawY() - lastYCoord) > 2 && !draggable) {
     handler.removeCallbacksAndMessages(null);
     int scrollDistance = (int) (lastYCoord - event.getRawY());
@@ -66,7 +66,7 @@ Next a presentation of how the longpress is implemented.
 It is a function made inside a runnable which means it will be run in its own thread and therefore makes it possible to queue it for execution.
 Lines 3-4 makes it so pictograms can be dragged on the screen and lines 5-7 will if a pictogram is being touched lift it up indicating that the pictogram can be dragged, and the tablet will also vibrate so the user knows they can now drag the pictogram.
 
-\begin{lstlisting}[float, floatplacement=h, number=left, caption={The long press function which is queued upon a \texttt{MotionEvent_Down}.}, label={lst:longpress}] 
+\begin{lstlisting}[float, floatplacement=h, caption={The long press function which is queued upon a \texttt{MotionEvent\_Down}.}, label={lst:longpress}] 
 private Runnable mLongPressed = new Runnable() {
     public void run() {
         adapter.setDraggability(true);
@@ -81,4 +81,3 @@ private Runnable mLongPressed = new Runnable() {
 This function is queued for execution when a down action is performed, 500 miliseconds after the down action is performed.
 As shown in \myref{lst:actionmove} on line 2 the longpress function \texttt{mLongPressed} is cancelled for execution, this is also done when an up action is performed. 
 These fairly small changes results in what seems like a much simpler to navigate week schedule, which hopefully the customer's will agree in.
-
