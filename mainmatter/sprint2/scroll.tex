@@ -1,27 +1,27 @@
-\section{Scrolling in Week schedule}
+\section{Scrolling in Week Schedule}
+\userstory{As a user, I would like to be able to have long schedules which are scroll-able, such that I can schedule more in a single day.}
 
-This section presents the possible solutions for the \phigh~prioritized\userstory{As a user, I would like to be able to have long schedules which are scroll-able, such that I can schedule more in a single day.}
+\begin{wrapfigure}{r}{0.55\textwidth} 
+    \centering
+        \includegraphics[width=0.5\textwidth]{figures/img/screenshots/weekplan_schedule.png}
+    \caption{An example of a week schedule.}
+    \label{fig:weekschedule}
+\end{wrapfigure}
 
-First an explanation of why this is troublesome in the current version will be given, followed by two different ways of solving the problem, and finally how the solution is implemented is presented.
+This section presents the resolution of the user story, which was given a \phigh~priority by the PO.
 
+First we will explain the reason for this user story, then two solutions will be presented and finally the solution we choose to implement is presented. 
 
-\myref{fig:weekschedule} shows a cutout from a weekschedule. 
+\myref{fig:weekschedule} shows a cutout from a week schedule. 
 Before the changes presented in this section it was not possible to scroll while touching a pictogram. 
-It was implemented such that if you were logged in as a guardian and dragged while touching a pictogram you would change the position of the pictogram you were touching rather than scrolling through the view.
+It was implemented such that if you were logged in as a guardian and dragged while touching a pictogram you would change the order of the pictograms rather than scrolling through the view.
 In order to scroll you would have to touch the background in each daily schedule or by touching the scrollbar as seen on \myref{fig:weekschedule}.
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.5\textwidth]{figures/img/screenshots/weekplan_schedule.png}
-\caption{An example of a week schedule.}
-\label{fig:weekschedule}
-\end{figure}
-
-This resulted in scrolling being difficult, and needing to be changed.
+This resulted in scrolling being difficult since it was hard to avoid accidentally tapping a pictogram, and needing to be changed.
 In order to increase the number of possible scrolling areas it was decided to make it possible to scroll while touching a pictogram.
 Because of this choice a new way to drag and change the position of pictograms in the week schedule is also needed, since if dragging on a pictogram is supposed to scroll, the current implementation of dragging pictograms will be removed.
 
-\subsection*{To Button or Not to Button}
+\subsection*{To Button or Not to Button} % That is the question
 Currently the GIRAF application suite uses button in the top of the screen in order to accomplish many things, like saving, copying week schedules, opening other application etc. 
 One possible solution for dragging is to create yet another button to change the current mode of the week schedule application such that dragging on a pictogram results in dragging a pictogram instead of scrolling.
 However, this solution would still be problematic for when you enter the dragging mode and then want to scroll to the pictogram you want to drag.
