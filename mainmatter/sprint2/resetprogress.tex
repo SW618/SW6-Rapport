@@ -2,11 +2,10 @@
 that I can use it for more than one week.}
 The PO group created three tasks from this user story which combined would resolve the user story.
 \begin{itemize}
-    \item T298: Remove redo button from citizen
-    \item T300: Add redo button to guardian UI
-    \item T303: Implement redo buttons behavior
+    \item A: Remove redo button from citizen
+    \item B: Add redo button to guardian UI
+    \item C: Implement redo buttons behavior
 \end{itemize}
-As can be inferred from the tasks quite simply moving the button and its functionality from the citizen view to the guardian view solves both T300 and T303 and thus is how we resolve both tasks.
-For the last task, T298, we believe to have find a better solution than removing it.
-The reasoning for its removal is to avoid the opportunity for citizens to accidentally tap it.
-Rather than deleting it we have made it such that tapping the button prompts a dialogbox requiring the user to confirm that the week should be reset, this way citizens may still reset the week while neither citizens nor guardians can accidentally reset it by a single tap.
+As can be inferred from the task A and B quite simply moving the button and its functionality from the citizen view to the guardian view solves both T300 and T303 and thus is how we resolve both tasks.
+For task C a dialog box is needed such that a guardian do not reset the schedule by accident and has to click accept or cancel.
+As the button has been now been used in both guardian and citizen views the functionality has also been moved to the view which the scheduleview inherits from such that it can easily be added back if needed.
