@@ -1,14 +1,15 @@
 \section{Scrolling in Week Schedule}
 \userstory{As a user, I would like to be able to have long schedules which are scroll-able, such that I can schedule more in a single day.}
 
-\begin{wrapfigure}{r}{0.55\textwidth} 
+\begin{wrapfigure}{r}{0.45\textwidth} 
     \centering
-        \includegraphics[width=0.5\textwidth]{figures/img/screenshots/weekplan_schedule.png}
+        \includegraphics[width=0.4\textwidth]{figures/img/screenshots/weekplan_schedule.png}
     \caption{An example of a week schedule.}
     \label{fig:weekschedule}
+    \vspace{-20pt}
 \end{wrapfigure}
 
-This section presents the resolution of the user story, which was given a \phigh~priority by the PO.
+This section presents the resolution of the user story, which was given a \phigh--priority by the PO.
 
 First we will explain the reason for this user story, then two solutions will be presented and finally the solution we choose to implement is presented. 
 
@@ -19,27 +20,41 @@ In order to scroll you would have to touch the background in each daily schedule
 
 This resulted in scrolling being difficult since it was hard to avoid accidentally tapping a pictogram, and needing to be changed.
 In order to increase the number of possible scrolling areas it was decided to make it possible to scroll while touching a pictogram.
-Because of this choice a new way to drag and change the position of pictograms in the week schedule is also needed, since if dragging on a pictogram is supposed to scroll, the current implementation of dragging pictograms will be removed.
+Because of this choice a new way to change the position of pictograms in the week schedule is also needed, since if dragging on a pictogram is supposed to scroll, the current implementation of reordering pictograms will be removed.
+
+\bigskip \noindent
+At the sprint planning meeting the following tasks were made for this user story:
+\begin{enumberate}
+	\item \subtask{Make the entire days view scrollable}
+	\item \subtask{Redesign the reordering mode}
+\end{enumberate}
 
 \subsection*{To Button or Not to Button} % That is the question
-Currently the GIRAF application suite uses button in the top of the screen in order to accomplish many things, like saving, copying week schedules, opening other application etc. 
+Currently the GIRAF application suite has buttons in the top of the screen which are used for actions such as entering modes for deleting or copying and for saving etc. 
 One possible solution for dragging is to create yet another button to change the current mode of the week schedule application such that dragging on a pictogram results in dragging a pictogram instead of scrolling.
 However, this solution would still be problematic for when you enter the dragging mode and then want to scroll to the pictogram you want to drag.
-The other solution is inspired by how many other applications including the standard android OS and IOS implement dragging of icons.
-Longpressing a button or an icon in order to start dragging an icon is used in both android OS and IOS mainly on the home screen to move change the position of differnet apps launch buttons.
+Another solution is inspired by how many other applications including the standard Android OS and iOS implement dragging of icons.
+Longpressing\footnote{An extended tap for a given period set by the OS} a button or an icon in order to start dragging an icon is used in both Android OS and iOS mainly on the home screen to move change the position of different apps.
 The same technique can be used in the week schedule, a longpress on a pictogram will cause the application to now drag the pictogram along the movement of the user.
 This solution is good as it many users probably associate a longpress with this functionality and therefore we would adhere to the design guideline of recognisable design \cite[p.~51]{DESIGNBOOK}.
-Therefore we decided that this was the best solution, the next subsection will introduce how this was implemented in the application.
+Therefore we deem that this was the best solution, the next subsection will introduce how this was implemented in the application.
 
 \subsection*{The Implementation}
-First we present the implementation for scrolling while touching the pictogram, then a presentation of the longpress functionality will be given.
-In order to stop a guardian from dragging a picogram whenever they dragged one a boolean named \texttt{isDraggable} had to be set to false in many different areas of the application.
-This simple change removed the possibility of dragging the pictograms completely, however, when dragging on a pictogram you would still not be able to scroll through the list.
-The \texttt{onTouch(MotionEvent)} function is called whenever someone touches the screen of the tablet.
-When the screen is touched the \texttt{MotionEvent\_DOWN} is the one being sent to the function, if the user then moved the finger after having first touched the screen \texttt{MotionEvent\_MOVE} is sent as the parameter to \texttt{onTouch(MotionEvent)}.
-\myref{lst:actionmove} shows the code added in order to implement scrolling while touching the pictograms.
+The implementation is separated into two parts, each corresponding to one of the tasks mentioned above. 
+\subsubsection*{\subtask{Make the entire days view scrollable}}
+To do this task, firstly we will disable the previous way to drag pictograms and the make the entire view scrollable. 
+Previously a boolean variable called \texttt{isDraggable}, for each pictogram in the week schedule, was set to true. 
+Changing this to false disabled the reordering of the pictograms by dragging them. 
+However this did not enable scrolling by dragging on top of a pictogram. 
 
-\begin{lstlisting}[float, floatplacement=h, caption={The code executed when someone performs a move action.}, label={lst:actionmove}] 
+The touch information is sent to the touch handler, \texttt{onTouch(MotionEvent)}, for the pictogram, and not the weekday view itself when attempting to drag on-top of a pictogram. 
+Therefore each child view (i.e. a pictogram) has to send the information of the motion to its parent view (i.e. a weekday). 
+The information in question is an amount of pixels for the parent view to scroll. 
+The code calculating this is shown in \myref{lst:actionmove}, and is part of the \texttt{onTouch(MotionEvent)} method, which handles touch input. 
+Line 1 decides if a scroll should happen or not, it should happen if the user dragged more than two pixels. 
+In line 3 the distance to scroll is calculated, and in line 5-6 this information is sent to the parent, which in this case is weekday.  
+
+\begin{lstlisting}[floatplacement=h, caption={The code executed when someone performs a move action.}, label={lst:actionmove}] 
 if(lastYCoord != -1 && Math.abs(event.getRawY() - lastYCoord) > 2 && !draggable) {
     handler.removeCallbacksAndMessages(null);
     int scrollDistance = (int) (lastYCoord - event.getRawY());
@@ -52,21 +67,14 @@ if(lastYCoord != -1 && Math.abs(event.getRawY() - lastYCoord) > 2 && !draggable)
 }
 \end{lstlisting}
 
-Line 1 checks whether the move action has moved the touch point more than a few pixels, this check is to make sure that the move action is indeed the user moving their touch.
-They might not be holding their finger still enough while trying to longpress, so the if check effectively creates a margin of error for longpressing.
-If the user is actually moving the if check passes and line 2 stops any long press currently queued for execution, this will be explained soon.
-Lines 3-6 calculates the scrolling aswell as saving the current move actions end coordinate and scrolling the list by the distance moved in the move action.
-A pictogram is clicked when an \texttt{MotionEvent\_UP} is made soon after the down action has been made.
-Line 7 saves a timestamp of when the last move action was made, so a check can be made if an up action is made whether a scroll had just occured. 
-This is to ensure that a pictogram is not clicked accidentally if quick scroll is made, which happend often upon testing of the application before this functionality was introduced.
+\subsubsection*{\subtask{Redesign the reordering mode}}
 
-All of these lines make the lists scroll fluidly along the finger's movement on the screen.
 Next a presentation of how the longpress is implemented.
 \myref{lst:longpress} shows the code executed upon long pressing.
 It is a function made inside a runnable which means it will be run in its own thread and therefore makes it possible to queue it for execution.
-Lines 3-4 makes it so pictograms can be dragged on the screen and lines 5-7 will if a pictogram is being touched lift it up indicating that the pictogram can be dragged, and the tablet will also vibrate so the user knows they can now drag the pictogram.
+Lines 3-4 makes it so pictograms can be dragged on the screen and lines 5-7 will if a pictogram is being touched lift it up indicating that the pictogram can be dragged, and the tablet will also vibrate briefly so the user knows they can now drag the pictogram.
 
-\begin{lstlisting}[float, floatplacement=h, caption={The long press function which is queued upon a \texttt{MotionEvent\_Down}.}, label={lst:longpress}] 
+\begin{lstlisting}[floatplacement=h, caption={The longpress function which is queued upon a \texttt{MotionEvent\_Down}, i.e. a touch.}, label={lst:longpress}] 
 private Runnable mLongPressed = new Runnable() {
     public void run() {
         adapter.setDraggability(true);
@@ -78,6 +86,8 @@ private Runnable mLongPressed = new Runnable() {
     }
 };
 \end{lstlisting}
-This function is queued for execution when a down action is performed, 500 miliseconds after the down action is performed.
-As shown in \myref{lst:actionmove} on line 2 the longpress function \texttt{mLongPressed} is cancelled for execution, this is also done when an up action is performed. 
-These fairly small changes results in what seems like a much simpler to navigate week schedule, which hopefully the customer's will agree in.
+This function is queued when the initial press begins, and if it lasts for more than 500 milliseconds, then it is executed. 
+If the press is shorter then it is canceled as shown on line 2 in \myref{lst:actionmove}. 
+
+\todo[inline]{Troels: Det er svært at få en god konklusion ind, what to do?}
+These fairly small changes results in what seems like a much simpler way to navigate the week schedule, which hopefully the customers will agree in.
