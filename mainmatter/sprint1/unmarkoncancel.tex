@@ -1,6 +1,5 @@
 \section{Week Schedule - Unmark schedule when delete is canceled}
 Week Schedule is the only component of GIRAF which this task affects; and the problem occurs in two scenarios:
-\kim{I guess two scenarios are explained and not only one. Maybe make that clear.}
 When a guardian launches Week Schedule they are first prompted to select the citizen for which he wishes to edit schedules.
 A view consisting of the concerned citizen's schedules is then presented to the guardian.
 In this view the guardian can, among other functions, delete one or more schedules related to the citizen.
@@ -16,27 +15,26 @@ This task was added later during the sprint and has therefore not been a part of
 The solution to the problem is almost implemented in the current version of Week Schedule; i.e. the methods required in order to provide the functionality needed are present, but not implemented.
 In both of the previously described scenarios where wrongful feedback is given, Week Schedule uses two variables respectively called \texttt{markedSchedules} and \texttt{markedActivities} to store the marking.
 The \texttt{markedSchedules} is a \texttt{HashSet} of booleans related to each of the schedules available for marking; and clearing the \texttt{HashSet} is done by simply calling \texttt{.clear()} on the \texttt{HashSet}-object.
-With the \texttt{markedActivities} variable, clearing the marking proved to be more the more difficult scenario.
+With the \texttt{markedActivities} variable, clearing the marking proved to be the more difficult scenario.
 Since \texttt{markedActivities} is implemented as an \texttt{ArrayList} with each element being a boolean array, the \texttt{.clear()} did not behave in the same way.
 In the \texttt{ArrayList} each boolean array represents a day on the schedule, which means that clearing the entire \texttt{ArrayList} will remove all existing boolean arrays; this will then cause out of bounds exceptions later on if the user tries to make a new marking, because the boolean arrays have zero elements. 
 Hence a custom implementation of a clear function is required to solve the issue.
 This is done by filling the \texttt{ArrayList}, \texttt{markedActivities}, with new boolean arrays of appropriate sizes and with the default boolean value being false.
 This ensures that future markings can be made without crashing the application.
 These changes will are not enough to present the user with the appropriate feedback just yet as the view must also be updated.
+The clearing is handled by the function called on line 2 in \myref{lst:exitdeletemode}.
 
 \paragraph{Updating the view}\hfill\\
 The part of the view in Week Schedule that displays the schedules and activities consists of \enquote{adapters}.
 These adapters need to be notified when changes occur to their content, such that the visual representation can be re-rendered.
 To notify the adapters already implemented functions are used, e.g. \texttt{updateView()} and \texttt{notifyAllAdapters()}.
 
-\paragraph{Restructuring} \hfill\\ \todo{Sass fix this paragraph}
-\kim{This paragraph is called restructuring, however, it is not clear what you are restructuring.}
-\kim{I actually expected that this section would be about some refactoring of the existing code. You describe two scenarios that suffers from a similar problem. Are these scenarios resolved by the same piece of code?  }
-To avoid introducing duplicated code and poor maintainability, the new functionality is placed in functions called \texttt{exitDeleteMode()}.
+\paragraph{Restructuring} \hfill\\
+To avoid introducing duplicated code and poor maintainability, the new functionality is placed in functions called \texttt{exitDeleteMode()}, such that instead of having the same code twice as before it is now inside functions rather than copy and pasted when needed.
 These functions are called when the user cancels or completes a delete, either by tapping \enquote{cancel}, \enquote{delete} or the back button;
 and their purpose is to return to the default mode, i.e. not delete mode.
-The function used in the activity selection view can be seen in \myref{lst:exitdeletemode}.
-\kim{This code snippet could be used in a better way. When you are explaining how the new implementation works (in the ``clearing the data'' paragraph) then insert references to lines in the code were the actual ``resetting'' of the selection.}
+The function used for the scenario which shows teh week schedule and its activities can be seen in \myref{lst:exitdeletemode}, which as mentioned clears the markings of the arrays on line 2, and the rest of the listing shows code which reset the view to the default mode.
+The other scenario did not require chaning the visibility of certain buttons as done on line 5-7 in \myref{lst:exitdeletemode} but rather just clearing the array and afterwards asking the Android OS to update the current view as the data of the views has been changed.
 
 \begin{lstlisting}[caption={The \texttt{exitDeleteMode()} function, which returns the application to the default mode}, label={lst:exitdeletemode}]
 private void exitDeleteMode(){
