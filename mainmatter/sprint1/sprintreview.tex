@@ -1,3 +1,48 @@
+\section{Sprint Review}\label{s1rev}
+This section reviews the completion of the tasks and their related user stories solved throughout sprint 1.
+Firstly\kim{Det er første gang jeg har set nogle bruge ordet firstly, godt gået ;)} we will provide a general overview of tasks and the EP estimated in comparison to EP spent, as well as a brief explanation of the discrepancies between the two.
 
+Many of the user stories solved in sprint 1 by our group have low to no effect on the users, as such only two of the changes made are presented for the customer in order to obtain feedback on changes made, these tasks are \textit{Picto Search - No pictograms until you search} and \textit{Picto Search - Reponsive search}.
 
+The remaining tasks that affects the user experience pertain to smaller quality of life changes to the system, e.g., making the wrench in sequence clickable as it is in the other apps. 
+The task \textit{Week Schedule - Scrolling schedule day} was the only claimed task which was not completed, during development it revealed itself to be a larger problem than initially thought, we will be completing this task in the next sprint if it remains a \phigh~priority.
+Lastly this section will discuss the feedback given, by the customers, about the two aforementioned \textit{Picto Search} related tasks and an assessment of the \textit{Week Schedule} task.
+
+\subsection{EP Distribution}
+\myref{tab:sprint1tasktable} provides an overview of how we have distributed our resources in the first sprint, in comparison to what was expected.
 \input{figures/tables/sprint1tasktable.tex}
+The table is split into three sections.
+\begin{itemize}
+    \item Formal Tasks, these are the tasks claimed at sprint planning.
+    \item Extra Tasks, these are tasks claimed during the sprint as all formal tasks were completed.
+    \item Informal Tasks, these tasks represent work done which has no user story or task on the project backlog.
+\end{itemize}
+As the table shows most of the Formal Tasks are overestimated.
+The \textit{Update Dependencies} related tasks in particular are overestimated as more errors were expected from an initial inspection of the code.
+The estimations in this sprint were made with a low amount of knowledge about the code in the Giraf project.
+After the first sprint we have gained knowledge about the structure and apps in the Giraf project, about the tools used in it e.g. Gradle and Android Studio and we have gained a deep knowledge of the apps Picto Search, Week Schedule and Sequence.
+This knowledge is useful for estimating tasks in the remaining sprints, and will likely make our estimations for tasks in these apps in particular, more accurate.
+
+The \textit{Informal Tasks} section of the table also consumed more time than estimated, although unforseen support is expected to consume less EP in future sprints as more guides are added to the Wiki.
+Furthermore the issues we have helped resolve should not arise again and were mostly related to issues using the tools like Gradle for the multi-project.
+\kim{Why are some of the words in italic? If Informal tasks is highlighted why isn't Formal tasks?}
+\kim{Please also comment on your extra tasks.}
+\kim{Please also comment on how your EP changed. E.g. you assumed that you had 80 EP in this sprint, but you ``spend'' 91. Did you allocate enough EP to write report etc. What did you learn. (I know much of this information is in the table, but that is not enough). }
+
+\subsection{Picto Search}
+This subsection pertains to the two tasks \textit{Picto Search - No pictograms until you search} and \textit{Picto Search - Reponsive search}.
+The changes for Picto Search were meant to be presented for the users by letting them try thew revised version, however problems doing so occured.
+Both tasks successfully passed the review process prior to sprint end, and were pushed to master and ready for use.
+Each build of the Giraf product is dependent on the server, between our completion and the customer meeting the server infrastructure had been altered, breaking the build and in the process making the product owners unable to show the customers a demo of our work.
+This problem was discovered too late and was therefore not solved before the meeting.
+
+In order to still obtain some feedback on Picto Search, we provided the product owners with the screenshots seen in \myref{untilSearch} \& \myref{RSearch}.
+In doing so some feedback is obtained, although the changes will have to be presented through a demo for the next customer meeting, as such a more complete description of how the changes are received is to be part of sprint 2 review.   
+In regard to the changes the customers said that \enquote{The changes seem very intuitive} while being adamant about an intuitive workflow promoting \textit{easy use} which they value highly.
+
+\subsection{Week Schedule}
+In the Week Schedule app we made some minor changes, one is visual and one is a bug-fix. 
+However we did not solve the task of making each day easier to scroll in, as this task proved itself to require more changes than initially thought.
+Adding a scroll function to week days creates conflicts with the already developed functionality as currently the user can change the order of pictograms by dragging them.
+This happens to be implemented in the same way as scroll is commonly implemented, by holding and dragging.
+Therefore the task will be completed in the next sprint, sprint 2.
