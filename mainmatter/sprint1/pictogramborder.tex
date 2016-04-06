@@ -2,6 +2,7 @@
 \userstory{As a user, I would like to have pictograms shown with a surrounding border, such that they are clearly distinguished from the background.}
 This task was taken after the initial planning therefore it has not been does not have an estimated amount of EP. 
 This task was given a \phigh-priority by the product owner. 
+Implementing and testing the changes described below took 3 EP. 
 
 In the Week Schedule application it can be hard to distinguish between pictrograms and the background.
 Mostly pictograms with a white background and Sunday's background, which is white as can be seen on \myref{fig:before-after-borders}.
@@ -48,7 +49,7 @@ public static Path getDrawPath(RoundedImageView roundedImageView, float cornerRa
 }
 \end{lstlisting} 
 
-\begin{figure*}[h]
+\begin{figure*}[ht]
     \centering
         \begin{subfigure}[t]{0.5\textwidth}
         \centering
@@ -64,4 +65,3 @@ public static Path getDrawPath(RoundedImageView roundedImageView, float cornerRa
     \label{fig:before-after-borders}
 \end{figure*}
 
-Implementing and testing these changes took 3 EP. 
