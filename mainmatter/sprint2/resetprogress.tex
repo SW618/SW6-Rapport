@@ -1,11 +1,10 @@
-\subsection{As a Guardian, I would like to be able to clear the progress of a week schedule, such
-that I can use it for more than one week.}
+\subsection{As a Guardian, I would like to be able to clear the progress of a week schedule, such that I can use it for more than one week.}
 The PO group created three tasks from this user story which combined would resolve the user story.
 \begin{itemize}
     \item A: Remove redo button from citizen
     \item B: Add redo button to guardian UI
     \item C: Implement redo buttons behavior
 \end{itemize}
-As can be inferred from the task A and B quite simply moving the button and its functionality from the citizen view to the guardian view solves both T300 and T303 and thus is how we resolve both tasks.
+As can be inferred from the task A and B quite simply moving the button and its functionality from the citizen view to the guardian view solves both task A and task B and thus is how we resolve both tasks.
 For task C a dialog box is needed such that a guardian do not reset the schedule by accident and has to click accept or cancel.
-As the button has been now been used in both guardian and citizen views the functionality has also been moved to the view which the scheduleview inherits from such that it can easily be added back if needed.
+As the button has been now been used in both guardian and citizen views the functionality has also been moved to the view which the \texttt{ScheduleView} inherits from such that it can easily be added back if needed.
