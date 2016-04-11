@@ -25,8 +25,8 @@ Because of this choice a new way to change the position of pictograms in the wee
 \bigskip \noindent
 At the sprint planning meeting the following tasks were made for this user story:
 \begin{enumberate}
-	\item \subtask{Make the entire day's view scrollable}
-	\item \subtask{Redesign the reordering mode}
+    \item \subtask{Make the entire day's view scrollable}
+    \item \subtask{Redesign the reordering mode}
 \end{enumberate}
 \kim{This listing of tasks seems like a new thing. Are you going to add these to all user stories?}
 \kim{I think that introduction is require before you can start a new subsection. Like ``In the next section we discuss ...''}
@@ -63,10 +63,10 @@ if(lastYCoord != -1 && Math.abs(event.getRawY() - lastYCoord) > 2 && !draggable)
     int scrollDistance = (int) (lastYCoord - event.getRawY());
     lastYCoord = event.getRawY();
     ((ScrollView)this.getParent()).scrollTo(0,((ScrollView)this.getParent())
-    		.getScrollY() + scrollDistance);
-	scrollTime = new Date();
+            .getScrollY() + scrollDistance);
+    scrollTime = new Date();
 
-	return true;
+    return true;
 }
 \end{lstlisting}
 
