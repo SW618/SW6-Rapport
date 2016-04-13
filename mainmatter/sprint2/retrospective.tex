@@ -1,7 +1,31 @@
+\chapter{Sprint End}
+As in the first sprint we will again evaluate the work we have done in this sprint aswell as evaluating our development process, and talk about any changes made to the process.
+This evaluation of the process will be divided into two parts, one for the multi project and one for our own group.
+\section{Sprint Review}
+
+\section{Sprint Retrospective}
+This section will introduce the evaluation from the sprint retrospective meeting with the entire multi-project, followed by a sprint retrospective of our internal development.
 %Multi
+\subsection*{Multiproject Retrospective}
 % Documentation - all diffs
+In this sprint we have had problems with the differentials being poorly used to look for proper documentation in the code.
+We had discussed earlier in the project that each funtion made should at least have some javadocs for it.
+This does not include very simple functions such as a simple getter and setter for different objects.
+Therefore we decided as the documentation group this could be our responsibility to make sure all changes made to the code contains proper documentation.
+We defined proper documentation as filling out the javadocs such that an explanation of what a function does is available.
+In order to achieve this we used what is called a herald on phabricator.
+A herald can be used to perform certain actions when other certain actions occur on phabricator.
+We created a herald which would add our group as reviewers to any new creation of differentials on phabricator.
+This way we will be notified when new differentials are created, and we can quickly scroll through them and see if they fulfill the requirements of proper documentation.
 % Rewrote guide since ppl didn't understand still
-%Intern
+We wrote in \myref{retro1} that we would rewrite the guide of using our code review process as there were troubles understanding the current process.
+Instead of doing this we discussed the process at a scrum meeting, since there were some inconsistencies in how we were doing it.
+As this was discussed we put off rewriting the guide for some time until some of the same problems came back, such as not making differentials to the master branch, or updating the differential in a bad way, or finally simply how to code review other's code.
+We hope this will fix some of the issuses and that the proper commands for updating a differential will now be used.
+
+Beside these troubles, the sprint has worked well in the multi-project, we all knew what everyone else were doing and the communication between groups were better than in the first sprint.
+
+\subsection{Internal Retrospective}%Intern
 % 2 ppl did almost all the programming
 % Easter holyday ruined workflow
 % Onwards try to use scrum method better
