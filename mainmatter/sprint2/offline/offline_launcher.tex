@@ -32,17 +32,11 @@ Schedules and pictograms are also stored in the local database, the second of wh
 Taking the afforementioned issues and conflicts into account we deem it necessary to modify the launcher, such that using it without an internet connection not is an inconvineance.
 However, in a scenatio where the GIRAF launcher is started without a populated local database, the user should be stopped and forced to obtain an internet connection in order to continue the use of GIRAF.
 
-\begin{figure}[h!]
-\footnotesize    
-\begin{tikzpicture}[xshift=5cm, on grid]
+\bigskip
 
-\node[block]                                (setup) at (0,0)    {Setup application};
-\node[decision, right = of setup]           (offline)           {is offline?};
-\node[decision, above right = of offline]   (hasprofiles)       {profiles in local db?};
-\node[block,    right = of offline]         (stopuser)          {Hello dawg placeholder};
-\node[block,    right = of hasprofiles]     (login)             {Login screen};
-\node[cloud,    right = of login]           (home)              {Home screen};
-
-\end{tikzpicture}
-\caption{Shake it off, shake it off --- T. Swiffy}
+\begin{figure}[h]
+    \centering
+    \input{figures/tikz/offline_launcher_flow.tex}
+    \caption{Hejsa}
+    \label{fig:helloooooo}
 \end{figure}

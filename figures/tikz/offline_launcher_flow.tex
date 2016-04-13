@@ -1,0 +1,31 @@
+\tikzstyle{decision} = [diamond, draw, fill=yellow!20, 
+    text width=4.5em, text badly centered, inner sep=3pt]
+\tikzstyle{block} = [rectangle, draw, fill=green!40, 
+    text width=6em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20,
+    minimum height=2em, align=center]
+\tikzstyle{preDefProc} = [draw,rectangle split, rectangle split horizontal,rectangle split parts=3, fill=green!40,minimum height=4em]
+\resizebox{1\textwidth}{!}{
+\begin{tikzpicture}[auto]
+    \node [cloud, align=center] (start) {Start};
+    \node [block, below = of start] (setup) {Setup application};
+    \node [decision, right = of setup] (network) {Is offline?};
+    \node [decision, right = of network] (hasprofiles) {Has profiles?};
+    \node [block, right = of hasprofiles] (download) {Download profiles};
+    \node [block, above = of download] (stopuser) {Wait for network connection};
+    \node [block, below = of download] (cont) {Continue to login screen};
+    \node [draw=none, left = of cont] (network_) {};
+    \node [preDefProc, above right = of cont] (home) {\nodepart{two}{Go to homescreen}};
+
+    \draw [line] (start) -- (setup);
+    \draw [line] (setup) -- (network);
+    \draw [line] (network) -- node {yes} (hasprofiles);
+    \draw [line] (network) |- node [above right] {no} (cont);
+    \draw [line] (hasprofiles) -- node {yes} (cont);
+    \draw [line] (hasprofiles) -- node {no} (stopuser);
+    \draw [line] (stopuser) -- (download);
+    \draw [line] (cont) -| (home);
+
+\end{tikzpicture}                                   
+}
