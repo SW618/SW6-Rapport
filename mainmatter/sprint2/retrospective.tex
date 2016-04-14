@@ -1,47 +1,49 @@
 \chapter{Sprint End}
-As in the first sprint we will again evaluate the work we have done in this sprint aswell as evaluating our development process, and talk about any changes made to the process.
-This evaluation of the process will be divided into two parts, one for the multi project and one for our own group.
+As in the first sprint we will again evaluate the work we have done in this sprint as well as evaluating our development process, and discuss any changes made to the process as a result of this evaluation.
+This evaluation of the process, the retrospective, will be divided into two parts, one for the multi project and one for our own group.
 \section{Sprint Review}
 
 \section{Sprint Retrospective}
 This section will introduce the evaluation from the sprint retrospective meeting with the entire multi-project, followed by a sprint retrospective of our internal development.
 %Multi
-\subsection*{Multiproject Retrospective}
+\subsection*{Multi-project Retrospective}
 This section will discuss the development process of the multi-project.
 % Documentation - all diffs
 \paragraph{Documentation}
-In this sprint we have had problems with the differentials being poorly used to look for proper documentation in the code.
-We had discussed earlier in the project that each funtion made should at least have some javadocs for it.
-This does not include very simple functions such as a simple getter and setter for different objects.
+In this sprint we have had problems with the differentials (the code reviews though Phabricator), as the submitted code was lacking proper documentation in the source code, i.e. Javadocs and comments. 
+We had discussed earlier in the project that each new method made should at least have some Javadocs for it.
+This does not include very simple methods such as a simple getter and setter for different objects.
 Therefore we decided as the documentation group this could be our responsibility to make sure all changes made to the code contains proper documentation.
-We defined proper documentation as filling out the javadocs such that an explanation of what a function does is available.
-In order to achieve this we used what is called a herald on phabricator.
-A herald can be used to perform certain actions when other certain actions occur on phabricator.
-We created a herald which would add our group as reviewers to any new creation of differentials on phabricator.
+We defined proper documentation as filling out the Javadocs such that it contains a brief explanation of what a method does.
+In order to achieve this we used what is called the tool Herald on Phabricator.
+The Herald tool can be used to automatically perform actions based on triggers inside occur in Phabricator.
+We created a Herald rule which would add our group as reviewers to the creation of any new differential on Phabricator.
 This way we will be notified when new differentials are created, and we can quickly scroll through them and see if they fulfill the requirements of proper documentation.
 % Rewrote guide since ppl didn't understand still
+
 \paragraph{Workflow Guide}
 We wrote in \myref{retro1} that we would rewrite the guide of using our code review process as there were troubles understanding the current process.
-Instead of doing this we discussed the process at a scrum meeting, since there were some inconsistencies in how we were doing it.
+Instead of doing this we discussed the process at a Scrum meeting, since there were some inconsistencies in how we were doing it.
 As this was discussed we put off rewriting the guide for some time until some of the same problems came back, such as not making differentials to the master branch, or updating the differential in a bad way, or finally simply how to code review other's code.
-We hope this will fix some of the issuses and that the proper commands for updating a differential will now be used.
+We hope this will fix some of the issues and that the proper commands for updating a differential will now be used.
 
 Beside these troubles, the sprint has worked well in the multi-project, we all knew what everyone else were doing and the communication between groups were better than in the first sprint.
-
+\todo[inline]{Dette afsnit herover er lidt uklart for mig. Vi skrev ikke guiden med det samme men ventede til at nye folk havde problemer? Og det var efter vi havde diskuteret det til Scrum mødet? -- Troels}
 \subsection{Internal Retrospective}
 This section will discuss the internal development process.
 \paragraph{Programming}
-We had some problems with how we estimated tasks and who did what tasks.
-We estimated as if we would be pair programming as we did for most of the tasks in sprint 1, but this was not the case for this sprint.
+We had some problems with how we estimated tasks and assigning tasks in a balanced way.
+Our estimated was based on the assumption that we would do pair programming, like we had done in sprint 1, however there were some complications. 
 The sprint was during easter, and thus we had many vacation days.
-During this period two members of the group had a tablet, and these two members ended up completing the tasks during this period leaving mostly debugging and testing left.
-We had not estimated that we would do any work during easter and since no pair programming was used the tasks took less time total than first anticipated.
-This resulted in the work flow of daily scrum, and talking about the tasks were a bit off.
-Therefore we agreed that we would solely spend time on programming when together at the university and instead spend our efforts at home writing for this paper.
-This should help improve the cooperation on the programming tasks, aswell as making pair programming much easier.
+During this period only two members of the group had access to a tablet, and these two members ended up completing most of the tasks during this period leaving mostly debugging, polishing and testing to be done.
+We had not estimated that we would do any work during easter and since no pair programming was used the tasks took less time total than first anticipated.\todo[inline]{Er lidt usikker på argumentet her ang. pair programming. -- Troels}
+As a result of this, we had little to no internal discussion about the best way to solve these tasks. 
+Since we believe that collaboration in the group can lead to higher quality software we decided that we would mostly spend time when together pair programming at the university, and leave writing the report as a task to do at home. 
+This should help improve the cooperation on the programming tasks, as well as making pair programming much easier.
 
 \paragraph{Scrum}
-Because of the problems mentioned above we ended up not following scrum as well as we could have.
-Daily scrum was some days neglected completely, and the scrum board was not used as rigorously as wanted.
-The decision to use most of our time programming when we are grouped at the university should also help in this regard as we are all working on the same type of tasks and thus the daily scrum seems more natural.
+Because of the problems mentioned above we ended up not following Scrum as well as we could have.
+Daily Scrum was some days neglected completely, and the Scrum board was not used as rigorously as wanted.
+The decision to use most of our time programming when we are grouped at the university should also help in this regard as we are all working on the same type of tasks and thus the daily Scrum seems more natural.
 This is not to say that we did not talk about our tasks during this sprint, but rather that we did not follow the procedure described in \myref{scrum}.
+\todo[inline]{Skal vi skrive at vi vil forsøge at holde os til proceduren? -- Troels}
