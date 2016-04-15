@@ -9,7 +9,7 @@ This is because of the process which takes place when the launcher is started.
     \item Show the home screen
 \end{enumberate}
 Since step~\ref{itm:sync} requires a connection to the remote server, the launcher halts if no such connection is available, hereby preventing any action or continuation.
-While halted the laucher repeatedly tries to connect to the remote database, and will continue when said connection is established.
+While halted the launcher repeatedly tries to connect to the remote database, and will continue when said connection is established.
 Moreover the current version of the GIRAF launcher will not allow reverting to step~\ref{itm:sync}, which implicates that once the fetching of data is done, one can only reach said state again by forcing the launcher to terminate and restart.
 This is far from optimal, since GIRAF is meant to replace any existing launcher on a given Android tablet, and forcing the launcher to restart in such a scenario would for most users mean restarting the entire tablet.
 
@@ -19,24 +19,94 @@ A solution which could enable offline mode in the launcher, would be to introduc
 This would notify the user that certain actions and workflows might not be available, and hereby prepare the user to take a different approach to GIRAF than he normally would.
 
 Nevertheless the long-term intent is for GIRAF to be usable in identical scenarios regardless of whether a connection to the internet is available or not.
-One might image a use case where a users connection drops for short amount of time, and this should not affect whatever taks is being executed on the device.
+One might image a use case where a users connection drops for short amount of time, and this should not affect whatever task is being executed on the device.
 Consequently the launcher should not prompt the user with obtrusive dialogs because no internet is available; instead the GIRAF launcher should attempt to proceed the start up phase as normal and only if a problem arise should the user be prompted.
 One such problem is when the launcher is started for the first time after installation or after the existing data has been erased --- i.e.\ simulating a clean installation. 
-In this case the launcher and specificly its underlying local database contains no profiles to login with, thus preventing virtually any part of GIRAF to be used.
-The foundation of this complication lies in the organisatorial and admistrative restrictions on GIRAF; and mainly the launcher which encapsulates the local database used by a majority of the GIRAF apps.
-GIRAF is designed to be used by institutions, hence creating user profiles is not possible from within GIRAF, but is instead intented to be initialised when a given institution engages in workflow revolving around GIRAF --- In other words the creation of profiles and other initial administrative tasks will be done from a web-interface.
+In this case the launcher and specifically its underlying local database contains no profiles to login with, thus preventing virtually any part of GIRAF to be used.
+The foundation of this complication lies in the organisatorial and administrative restrictions on GIRAF; and mainly the launcher which encapsulates the local database used by a majority of the GIRAF apps.
+GIRAF is designed to be used by institutions, hence creating user profiles is not possible from within GIRAF, but is instead intended to be initialised when a given institution engages in workflow revolving around GIRAF --- In other words the creation of profiles and other initial administrative tasks will be done from a web-interface.
 Schedules and pictograms are also stored in the local database, the second of which is fetched from the remote server at the initial launch along side user profiles.
 
 \bigskip
 
-Taking the afforementioned issues and conflicts into account we deem it necessary to modify the launcher, such that using it without an internet connection not is an inconvineance.
-However, in a scenatio where the GIRAF launcher is started without a populated local database, the user should be stopped and forced to obtain an internet connection in order to continue the use of GIRAF.
+Taking the aforementioned issues and conflicts into account we deem it necessary to modify the launcher, such that using it without an internet connection not is an inconvenience.
+However, in a scenario where the GIRAF launcher is started without a populated local database, the user should be stopped and forced to obtain an internet connection in order to continue the use of GIRAF.
 
-\bigskip
+We design the flow diagram in \myref{fig:launcher_offline_flow} to present the use case of starting the launcher.
+Two decisions are added to make offline use possible when the local database is populated with usable profiles.
+Firstly the launcher checks if a connection to the internet is available, and if not it checks whether any user profiles are present in the local database.
+We need to perform both checks since offline use of GIRAF is allowed, but impossible without locally stored user profiles.
 
 \begin{figure}[h]
     \centering
     \input{figures/tikz/offline_launcher_flow.tex}
-    \caption{Hejsa}
-    \label{fig:helloooooo}
+    \caption{Flow diagram of how the GIRAF launcher behaves upon launch.}\label{fig:launcher_offline_flow}
 \end{figure}
+
+To easily enable other parts of GIRAF to check if a connection to the internet is available, we implement the actual checking in the \texttt{giraf-component} library as seen in \myref{lst:networkutil}.
+This is also to encurrage reuse of code aswell as a unified way of determining connection status.
+We use the Android API to determine if any network interface has a connection e.g.\ if a cellular connection is available or is the device is connected to a WiFi network.
+However this does not provide any information about a connection to the internet, only that a LAN is available.
+To perform this check we utilize a shell command called \texttt{ping} which test the reachability of any host with a given IP address.
+In our implementation as seen on line~\ref{lst:networkutil_ping}, we ping the Google nameserver.
+The Google nameserver is chosen because of ist uptime, however pinging the service which GIRAF uses to synchronise would be ideal, because this is the only connection we care about.
+Because of future architectural changes to GIRAF and especially the way it synchronises with the remote database, we choose to use the Google nameserver for now.
+
+\begin{lstlisting}[float, caption={The class from the \texttt{giraf-component} library where network utilities are implemented, such as the method used to check if a connection to the internet is available}, label={lst:networkutil}]
+public abstract class NetworkUtilities {
+    /**
+     * Checks whether or not the device is connected to the internet
+     *
+     * @param thisActivity references the activity, used to get connectivity manager
+     * @return true or false based on the connection status
+     */
+    public static boolean isNetworkAvailable(Activity thisActivity) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) thisActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        if (activeNetworkInfo != null && activeNetworkInfo.isConnected()) {
+            Runtime runtime = Runtime.getRuntime();
+            try {
+                Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");(*@\label{lst:networkutil_ping}@*)
+                int     exitValue = ipProcess.waitFor();
+                return (exitValue == 0);
+            } catch (Exception e)  { e.printStackTrace(); }
+        }
+        return false;
+    }
+}
+\end{lstlisting}
+
+\bigskip
+
+Once the user continues to the home screen of the launcher, i.e. where the GIRAF apps can be launched, there should be some indication of which apps can be used in offline mode. 
+As stated previously the intent for GIRAF is that all functionality should be available in offline mode, however as of now it is not all GIRAF apps that are ready for and functional in offline mode.
+Moreover the user story asks for Week Schedule specifically to be used in offline mode, therefore we deem it to be \enquote{out of the scope} of the resolution to this user story.
+To indicate which applications currently are available in offline mode, we blur out the ones which should be disabled.
+This is done so that users of GIRAF still are able to see all applications installed on the device, since merely removing the app icons may cause certain users to believe that some applications have been uninstall.
+As well as avoiding confusion among users, this also adheres to the principle of offline mode being as convenient as possible.
+
+
+\begin{figure*}[h]
+    \centering
+    \begin{subfigure}[t]{0.47\textwidth}
+        \includegraphics[width=\textwidth]{figures/img/screenshots/reg_homescreen.png}
+        \caption{The home screen in online mode.}\label{fig:online_homescreen}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{0.47\textwidth}
+        \includegraphics[width=\textwidth]{figures/img/screenshots/offline_homescreen.png}
+        \caption{The home screen in offline mode.}\label{fig:offline_homescreen}
+    \end{subfigure}
+    \\
+    \begin{subfigure}[t]{0.47\textwidth}
+        \includegraphics[width=\textwidth]{figures/img/screenshots/offline_initstart.png}
+        \caption{Dialog which notifies the user that GIRAF must be started with an internet connection the first time.}\label{fig:offline_initstart}
+    \end{subfigure}%
+    ~
+    \begin{subfigure}[t]{0.47\textwidth}
+        \includegraphics[width=\textwidth]{figures/img/screenshots/offline_disabled.png}
+        \caption{Dialog which notifies the user that a given application cannot be used in offline mode.}\label{fig:offline_disabled}
+    \end{subfigure}
+    \caption{Screenshots from typical usage of the GIRAF launcher in both online and offline mode.}\label{fig:launcher_screenshots}
+\end{figure*}
+    
