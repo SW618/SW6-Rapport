@@ -13,8 +13,7 @@ While halted the launcher repeatedly tries to connect to the remote database, an
 Moreover the current version of the GIRAF launcher will not allow reverting to step~\ref{itm:sync}, which implicates that once the fetching of data is done, one can only reach said state again by forcing the launcher to terminate and restart.
 This is far from optimal, since GIRAF is meant to replace any existing launcher on a given Android tablet, and forcing the launcher to restart in such a scenario would for most users mean restarting the entire tablet.
 
-\bigskip
-
+\subsubsection{Solutions and Design}
 A solution which could enable offline mode in the launcher, would be to introduce a \textit{Check if offline, then prompt}--step, which request the user to decide if GIRAF should be started even though a connection to the internet is not available.
 This would notify the user that certain actions and workflows might not be available, and hereby prepare the user to take a different approach to GIRAF than he normally would.
 
@@ -43,6 +42,7 @@ We need to perform both checks since offline use of GIRAF is allowed, but imposs
     \caption{Flow diagram of how the GIRAF launcher behaves upon launch.}\label{fig:launcher_offline_flow}
 \end{figure}
 
+\subsubsection{Implementation of Internet Connection Check}
 To easily enable other parts of GIRAF to check if a connection to the internet is available, we implement the actual checking in the \texttt{giraf-component} library as seen in \myref{lst:networkutil}.
 This is also to encurrage reuse of code aswell as a unified way of determining connection status.
 We use the Android API to determine if any network interface has a connection e.g.\ if a cellular connection is available or is the device is connected to a WiFi network.
@@ -55,7 +55,7 @@ Moreover, if the launcher reaches the blocking state of \enquote{offline without
 If a connection to the internet is made, the launcher is then forced to restart, thus initiating the startup process again to fetch data from the remote server.
 %Should I talk about how? (Maybe irrelevant)
 
-\begin{lstlisting}[float, caption={The class from the \texttt{giraf-component} library where network utilities are implemented, such as the method used to check if a connection to the internet is available}, label={lst:networkutil}]
+\begin{lstlisting}[float, floatplacement=h!, caption={The class from the \texttt{giraf-component} library where network utilities are implemented, such as the method used to check if a connection to the internet is available}, label={lst:networkutil}]
 public abstract class NetworkUtilities {
     /**
      * Checks whether or not the device is connected to the internet
@@ -79,8 +79,7 @@ public abstract class NetworkUtilities {
 }
 \end{lstlisting}
 
-\bigskip
-
+\subsubsection{Home Screen in Offline Mode}
 Once the user continues to the home screen of the launcher, i.e. where the GIRAF apps can be launched, there should be some indication of which apps can be used in offline mode. 
 As stated previously the intent for GIRAF is that all functionality should be available in offline mode, however as of now it is not all GIRAF apps that are ready for and functional in offline mode.
 Moreover the user story asks for Week Schedule specifically to be used in offline mode, therefore we deem it to be \enquote{out of the scope} of the resolution to this user story.
