@@ -1,7 +1,7 @@
 \subsection{Changes to the launcher}
 \label{sub:changes_to_the_launcher}
 In the current version of the launcher it is not possible to do anything without internet access let alone use Week Schedule.
-This is because of the process which takes place when the launcher is started.
+This is due to the process which takes place when the launcher is started.
 \begin{enumberate}
     \item Setup of the application; this includes graphics and the context
     \item\label{itm:sync} Fetch data from the remote server
@@ -18,8 +18,7 @@ A solution which could enable offline mode in the launcher, would be to introduc
 This would notify the user that certain actions and workflows might not be available, and hereby prepare the user to take a different approach to GIRAF than he normally would.
 
 Nevertheless the long-term intent is for GIRAF to be usable in identical scenarios regardless of whether a connection to the internet is available or not.
-One might image a use case where a users connection drops for short amount of time, and this should not affect whatever task is being executed on the device.
-Consequently the launcher should not prompt the user with obtrusive dialogs because no internet is available; instead the GIRAF launcher should attempt to proceed the start up phase as normal and only if a problem arise should the user be prompted.
+One might imagine launcher should not prompt the user with obtrusive dialogs because no internet is available; instead the GIRAF launcher should attempt to proceed the start up phase as normal and only if a problem arise should the user be prompted.
 One such problem is when the launcher is started for the first time after installation or after the existing data has been erased --- i.e.\ simulating a clean installation. 
 In this case the launcher and specifically its underlying local database contains no profiles to login with, thus preventing virtually any part of GIRAF to be used.
 The foundation of this complication lies in the organisatorial and administrative restrictions on GIRAF; and mainly the launcher which encapsulates the local database used by a majority of the GIRAF apps.
