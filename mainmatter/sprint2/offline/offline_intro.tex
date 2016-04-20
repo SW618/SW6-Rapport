@@ -1,14 +1,14 @@
-This section describes how we design and implement \enquote{Offline Mode} capabilities in GIRAF; and throughout the rest of the project \textit{offline} and \textit{offline mode} will be defined as \enquote{without internet connection}.
+This section describes how we design and implement \enquote{Offline Mode} capabilities in GIRAF; throughout the rest of the project \textit{offline} and \textit{offline mode} will be defined as \enquote{without internet connection}.
 The following user story adresses the problem and was given a \phigh~priority by the PO.
 
 \begin{center}
 \userstory{As a guardian I would like to be able to use Week Schedule without internet access, such that I can use it in the woods.}
 \end{center}
 
-We will introduce multiple changes to both Week Schedule and the Launcher, along side policies about how possible conflicts between server-- and client--side versions should be handled.
+We will introduce multiple changes to both Week Schedule and the Launcher, along side policies on how possible conflicts between server-- and client--side versions should be handled.
 These conflicts arise when a user who is offline makes changes in GIRAF, concurrently with a user who is online.
-When the first user then regains internet connection and synchronises with the remote database, the changes made by the second user may be overwritten if a proper conflict handling is not set up.
-Because of this said conflicts have a pivotal role in a scenario that includes offline use of GIRAF.
+When the first user then regains internet connection and synchronises with the remote database, the changes made by the second user may be overwritten if a proper policy for conflict handling is established.
+Because of this conflicts have a pivotal role in a scenario that includes offline use of GIRAF.
 While the user story only concerns the use of Week Schedule while offline, the Launcher from GIRAF is also affected.
 
 The following subsections will elaborate on the aforementioned two components of GIRAF especially the changes needed to enable offline use cases.
