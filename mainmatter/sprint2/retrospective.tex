@@ -1,7 +1,48 @@
 \chapter{Sprint End}
-As in the first sprint we will again evaluate the work we have done in this sprint as well as evaluating our development process, and discuss any changes made to the process as a result of this evaluation.
-This evaluation of the process, the retrospective, will be divided into two parts, one for the multi project and one for our own group.
+As in the first sprint we will again evaluate the work we have done in this sprint as well as our development process.
+Furthermore we will discuss any changes made to the process as a result of this review process.
+The evaluation of the process, the retrospective, is divided into two parts, one for the multi project and one for our own group.
 \section{Sprint Review}
+This section evaluates the work we have done for this sprint and presents the customers opinion on the additions and modifications.
+The next section will address how we have worked.
+The user stories for this sprint were all completed, however the tasks were completed faster than anticipated, the reason for which is touched upon in the next section.
+The amount of time estimated and spent on the different tasks can be seen in \myref{sprint_review2}.
+At the sprint review meeting with the customers, they expressed that they were happy with the changes made to GIRAF.
+
+Regarding the offline functionality they seemed happy with the solution of making a copy of a week schedule in the case where changes were made while offline.
+They were generally just happy that they could use the application without the need for being online.
+The changes made to Week Schedule in order to implement scrolling were greatly appreciated, and they very extremely happy with the choice of vibrating on long press to help them know when a pictogram is ready to reorder.
+We spent less time than estimated on these tasks, and thus the rest of the time during the sprint has been spent on writing this paper.
+Last sprint we included the estimation of writing the paper, but this was not done this sprint as we knew we had one week after the sprint to work on the paper.
+We ended up having two members do most of the work on the user stories this sprint during the Easter, which is why the other two members spent a significant amount of time writing the paper during the sprint.
+We had planned to work on the user stories using pair programming but since the work regarding offline mode was done alone, we spent less total time on the tasks as it was done by one person, this is the reason the task required almost half of the estimated points.
+This problem will be adressed further in \myref{internal2}.
+
+\begin{table}[h]
+    {\setlength{\extrarowheight}{.75ex}%
+        \begin{tabular}{llrr}
+        && \multicolumn{2}{c}{Points}\\
+        \multicolumn{2}{c}{User Story}		& Estimated & Spent \\
+		\midrule
+        \tblgrpsep
+        \multicolumn{2}{l}{Formal tasks}								\\
+        \cline{1-2}
+        &Offline in Week Schedules   & 21               & 12                \\
+        &Progress clearing           & 2                & 2                 \\
+        &Scrolling in Week Schedules & 8                & 7                 \\
+        \tblgrpsep 
+        \multicolumn{2}{l}{Extra tasks}										\\
+        \cline{1-2}
+        &Jenkins Support             & N/A              & 3                 \\
+        \tblgrpsep 
+        \midrule
+        \multicolumn{2}{l}{Total}    & 31               & 24                \\
+	\end{tabular}}
+	\centering
+	\caption{This table shows the estimated effort points for the different user stories titled with short stories, along with the amount of points actually spent. Time spent on writing the paper is not included in this table.}
+	\label{sprint_review2}
+\end{table}
+
 
 \section{Sprint Retrospective}
 This section will introduce the evaluation from the sprint retrospective meeting with the entire multi-project, followed by a sprint retrospective of our internal development.
@@ -29,7 +70,7 @@ The guide was therefore rewritten, showing more of the commands to be used in th
 We hope this will fix some of the issues and that the proper commands for updating a differential will now be used.
 
 Beside these troubles, the sprint has worked well in the multi-project, we all knew what everyone else were doing and the communication between groups were better than in the first sprint.
-\subsection{Internal Retrospective}
+\subsection{Internal Retrospective}\label{internal2}
 This section will discuss the internal development process.
 \paragraph{Programming}
 We had some problems with how we estimated tasks and assigning tasks in a balanced way.
