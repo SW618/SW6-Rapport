@@ -1,14 +1,14 @@
 \subsubsection*{Version Control Policy}
 In its current state GIRAF does not support synchronisation of data, when GIRAF is initially launched on a device is downloads all data in the database, however any changes or additions made are only stored locally.
-Having no way to synchronise data is a horrible and idea, and since synchronising is something the users want it is also a significant problem.
-A way of synchronising data has previously been developed for GIRAF albeit not working.
+Having no way to synchronise data is a horrible for the use of GIRAF and since synchronising is something the users want it is also a significant problem.
+A way of synchronising data has previously been developed for GIRAF albeit not working yet.
 With offline access a policy for handling offline copies and avoiding conflicts specifically for offline versions is required.
 The implemented solution is inspired from the way dropbox handles conflicting files.
 
 \bigskip
-For the following ideas, considerations and decisions we will consider GIRAF to be RESTful, something which is currently being worked on, lastly a temporary solution since GIRAF is not yet RESTful is described.
+For the following ideas, considerations, and decisions we will consider GIRAF to have a RESTful APIb, something which is currently being worked on, lastly a temporary solution since GIRAF is not yet RESTful is described.
 
-By enabling offline use synchronisation becomes more complex and requires version control to determine whether the system should upload the data stored locally while offline or retrieve and replace its data with that stored on the database.
+By enabling offline use, synchronisation becomes more complex and requires version control to determine whether the system should upload the data that was stored locally while offline or retrieve and replace its data with the data stored on the database.
 In Ian Sommerville's book Software Engineering \citep{SEBOOK} he speaks of pessimistic and optimistic version control.
 Summarising the two; in pessimistic version control resources in use are locked in order to avoid conflicts whereas optimistic version control expects that should conflicts arise while merging, they can be resolved by the user.
 
@@ -20,7 +20,7 @@ Generally speaking two approaches, each with a variety of specific applications,
 An automatic solution would require some data point as a deciding factor for what version to use, the obvious data being a time stamp.
 The issue in doing so is that several devices access the database.
 In the scenario where a device is being used in an offline setting, the time between the changes being saved and the device going online again, another device could have updated the database and thus making the database the most recently altered.
-Alternatively one could save a hidden copy on the device if something is altered when offline and them compare that version to the database once online. 
+Alternatively one could save a the old timestamp on the device if something is altered when offline and them compare that timestamp to the one on the database once online. 
 If they have the same timestamps the offline version should be uploaded to the database, however if they are not the same both the database and the data on the device has been altered and some merge is required.
 An attempt at merging could be made, but at some point automatic merging is bound to require manual labor to fix merge conflicts which would result in unfamiliar and inconsistent workflow, something that goes directly against what the customer wishes.
 Having the merge process being manual might make for a slightly more familiar workflow compared to automatic merging, however the process itself would still be hard to simplify and feel unfamiliar to any other functionality.
@@ -31,11 +31,13 @@ On the other hand in pessimistic version control no merging is required as resou
 As it happens locking resources provide its own issue when it is coupled with offline availability as there is no way to announce that a resource must be locked.
 With the inability to lock resources a pessimistic approach is out of the question, yet we still want to stay away from manual merging as we believe there is no way to make the process consistent and intuitive.
 
-In order to avoid merging we return to how dropbox handles conflicts, if a file is simply updated, the file is overwritten however if there are conflicts, i.e. more than one person has changed the file independently of each other, a copy is created.
-A similar approach is wanted for GIRAF, making an invisible copy, as mentioned earlier, would allow for easy comparison.
-Once the tablet is online and synchronised this copy should be deleted from the tab.
+In order to avoid merging we turn to how dropbox handles conflicts, if a file is updated, the file is overwritten however if there are conflicts, i.e. more than one person has changed the file independently of each other, a copy is created.
+A similar approach is wanted for GIRAF, saving the old timestamp, as mentioned earlier, would allow for easy comparison.
+If the timestamps are identical the changes made offline are uploaded to the server, if not a copy is made just like in dropbox.
+Once the tablet is online and synchronised the timestamp should be deleted from the tablet.
 
 \bigskip
 While this is the solution which is wanted once some sort of synchronisation exists, currently when an application is accessed and altered offline, it will simply create a copy of the data to work on such that no conflicts arise.
 The copy will receive a name with a prefix that clarifies that it is the offline version such as \enquote{Copy <scheduleName>}.
 This has no impact on GIRAF in its current state but allows for an easier change once synchronisation is enabled, by simply having to ensure that the data is stored on the server and deleting unnecessary copies.
+Once the synchronisation features of GIRAF is up and running this functionality should be moved to the server, so that unnecessary copies are not made.
