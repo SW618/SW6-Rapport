@@ -1,0 +1,14 @@
+This section describes how we design and implement \enquote{Offline Mode} capabilities in GIRAF; throughout the rest of the project \textit{offline} and \textit{offline mode} will be defined as \enquote{without internet connection}.
+The following user story addresses the problem and was given a \phigh~priority by the PO.
+
+\begin{center}
+\userstory{As a guardian I would like to be able to use Week Schedule without internet access, such that I can use it in the woods.}
+\end{center}
+
+We will introduce multiple changes to both the Week Schedule and the Launcher, alongside policies on how possible conflicts between server-- and client--side versions should be handled.
+These conflicts arise when a user who is offline makes changes in GIRAF, concurrently with another user.
+When the first user then regains internet connection and synchronises with the remote database, the changes made by the second user may be overwritten if a proper policy for conflict handling is not established.
+Because of this, conflicts have a pivotal role in a scenario that includes offline use of GIRAF.
+While the user story only concerns the use of Week Schedule while offline, the Launcher from GIRAF is also affected prompting changes to both components.
+
+The following subsections will elaborate on the aforementioned two components of GIRAF especially the changes needed to enable offline use cases.
