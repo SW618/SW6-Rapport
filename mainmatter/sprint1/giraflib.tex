@@ -1,16 +1,14 @@
-\section{dk.giraf.lib Breaks the Build}
-This section is written in collaboration with SW615F16.
+\section{dk.giraf.lib Breaks the Build}\label{sec:breaking}
+The work performed in this section was done in collaboration with SW615F16.
 
-After starting the first task of upgrading dependencies, we realised that we were unable to build any of the libraries in the Giraf project. 
-We were able to use the built versions of the libraries placed in Artifactory, to build and run the application themselves. 
-Not being able to build any libraries naturally blocks the ability to upgrade them, so this new task of resoving this issue is given the highest priority: \pblocking. 
-% \definecolor{GoogleRed}{HTML}{F44336}
-% \newcommand{\pblocking}{\textcolor{GoogleRed}{Blocking}}
+After starting our first task, which consists of, upgrading dependencies, we realised that we were unable to build any of the libraries in the Giraf project. 
+We were however able to build the apps which does depend on the libaries, since they can use precompiled versions called artifacts, which is stored from last years Giraf project in Artifactory. 
+Not being able to build any libraries naturally blocks the ability to develop on them, so this new task of resoving this issue is given the highest priority: \pblocking. 
 
-Debugging this issue lead to the conclusion that the source of it was in \texttt{dk.giraf.lib}.
+Debugging this issue lead to the conclusion that the source of it was in \texttt{dk.giraf.lib}, which is a meta-library in Giraf.
 The purpose of \texttt{dk.giraf.lib} is to allow publishing of Giraf librarys to Artifactory, by the build-server.
-Thus each developer doesn't have to compile all the dependencies for the application or library they are working on. 
-The fix to the bug was done by moving existing code around. 
-More specifically the configuration of the publishing was previously done in the \texttt{afterEvaluate}-step, but it must happen before this. 
-
-After this bug-fix the \texttt{dk.giraf.lib} could be used again, the the task is resolved. 
+Thus each developer does not have to compile all the dependencies for the app or library they are working on every time they build something. 
+The issue were isolated to the code which configures the publishing, which was done in an \texttt{afterEvaluate}-step. 
+However the configuration were supposed to be used before this step and thus it caused it not to work. 
+After moving the code to a more appropriate location, the problem was resolved and the Giraf libraries could be built.
+How this code worked for the previous years project is unknown. 
