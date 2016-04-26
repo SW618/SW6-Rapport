@@ -5,7 +5,7 @@
 \usepackage[UKenglish]{babel}  
 \usepackage{lmodern} 
 \usepackage[thin]{roboto}
-\usepackage[scaled=0.85]{inconsolata}
+\usepackage{inconsolata}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}	
 \usepackage{fixltx2e}
@@ -99,6 +99,11 @@
 % Listings
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{listings}
+\lstset{
+  numbers=left,    
+  firstnumber=1,
+  numberfirstline=true
+}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Misc
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -153,25 +158,24 @@
 
 \overfullrule=2cm
 
-
-
 % Pretty lstlistings
-\definecolor{pblue}{rgb}{0.13,0.13,1}
-\definecolor{pgreen}{rgb}{0,0.5,0}
-\definecolor{pred}{rgb}{0.9,0,0}
-\definecolor{pgrey}{rgb}{0.46,0.45,0.48}
-
 \lstset{language=Java,
-	frame=tblr,
-	showspaces=false,
-	showtabs=false,
-	breaklines=true,
-	showstringspaces=false,
-	breakatwhitespace=true,
-	commentstyle=\color{pgreen},
-	keywordstyle=\color{pblue},
-	stringstyle=\color{pred},
-	basicstyle=\ttfamily\footnotesize,
-	moredelim=[il][\textcolor{pgrey}]{$$},
-	moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+  captionpos=b,
+  frame=single,
+  keepspaces=true,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\bfseries\color{blue},
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{orange},
+  numberstyle=\tiny\color{gray},
+  numbers=left,
+  numbersep=5pt,
+  tabsize=1,
+  escapeinside={(*@}{@*)},
+  breakatwhitespace=true,
+  moredelim=[il][\textcolor{pgrey}]{$$},
+  moredelim=[is][\textcolor{pgrey}]{\%\%}{\%\%}
 }

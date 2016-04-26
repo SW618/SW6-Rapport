@@ -1,9 +1,16 @@
 \newenvironment{enumberate}{\begin{enumerate}[label=\itshape \arabic*\upshape)]}{\end{enumerate}}
+\newenvironment{enumberate*}{\begin{enumerate*}[label=\itshape \arabic*\upshape)]}{\end{enumerate*}}
 \newenvironment{eletterate}{\begin{enumerate}[label=\itshape \alph*\upshape)]}{\end{enumerate}}
 
 \newcommand{\userstory}[1]{
     \textbf{User story:} \textit{\enquote{#1}} \\
 }
+
+\newcommand{\subtask}[1]{
+    \textit{\enquote{#1}}
+}
+
+\newcommand{\tblgrpsep}{\noalign{\vspace{.75em}}}
 
 \newcommand{\pblocking}{\textcolor{GoogleRed}{Blocking}}
 \newcommand{\phigh}{\textcolor{GoogleOrange}{High}}

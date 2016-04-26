@@ -1,4 +1,4 @@
-At the start of this sprint we attend the Sprint Planning Meeting, where we assign us to tasks, which we afterwards estimate according to the time it takes to complete them.
+At the start of this sprint we attend the Sprint Planning Meeting where we claim tasks that we want to resolve, which we afterwards estimate according to the time it takes to complete them.
 Initially tasks are claimed on a ``best estimate'' basis depending on how many EP are available in the sprint.
 Sprint 1 is active from the 24th of february to the 11th of marts. 
 For this sprint we allocate 80 EP, the estimate is made with time spend on courses in mind, the 60 EP include not only solving our own tasks but also reviewing tasks from other groups and writing the report.
@@ -13,47 +13,46 @@ The technique aims to create a consensus through discussion and hidden voting of
 Once all participants have voted the same time estimation one a task, the task has reached an estimation, and the group moves onto the next task.
 For the sake of our use, we use EP as our time unit.
 
-\kim{I just realized that you use hyphen in your task titles. Hyphen is used to mark that two words are connected, e.g. if a word is broken by a new line. You want to use em-dash. Be aware that there is a difference between en-dash and em-dash and each have their uses. The rules for en-dash and em-dash are less precicly defined but a general use of thump is that en-dash is used to sympolize a range, e.g. this report is between 1 -- 5647 pages long. }
 \begin{description}[style=unboxed]
-    \item[{[}\phigh{]} Picto Search - It looks like there are no pictograms, until you search for them] \hfill \\ 
+    \item[{[}\phigh{]} Picto Search --- It looks like there are no pictograms, until you search for them] \hfill \\ 
         \userstory{As a user I would like to have some information when I open pictosearch, such that it does not look like there is nothing there.}
         As of now, it looks like there are no pictograms in the Picto Search library upon opening it. 
         A suggestion could be a list of ``latest used'' or ``recommended'' pictograms, just to show some content, indicating that some pictograms already exists.
         Or maybe simply adding information about what/how to use Picto Search.
 
         This task is estimated at 8 EP, the primary concern here lies in not only showing something, but implementing it in a meaningful way such as ``Frequently Used'' or similar ideas.
-    \item[{[}\phigh{]} Picto Search - Responsive Search] \hfill \\
+    \item[{[}\phigh{]} Picto Search --- Responsive Search] \hfill \\
         \userstory{As a User I would like the Picto Search application to feel more responsive when I search for pictograms, such that I don't feel like nothing happens when I type in the search field}
         As of right now the Picto Search tool can seem slow and one might think it is not working, a search on each keyboard input could be implemented or simply just improve the speed of the search.
 
         This task is estimated at 8 EP, the task includes changing what triggers the search method as well as changing the GUI to be more intuitive.
-    \item[{[}\phigh{]} General - Use consistent file encoding] \hfill \\
+    \item[{[}\phigh{]} General --- Use consistent file encoding] \hfill \\
         \userstory{As a Developer I would like all files to use UTF-8 encoding, to insure that no conflicts occur.}
         Using different file encodings (charsets) can lead to issues\footnote{\url{http://tools.android.com/knownissues/encoding}}. 
         Currently many files are in ``us-ascii'' aka. windows-1252, but some files (in the same repository) are of UTF-8, i.e. ``ugeplan'' contains 107 files of ``us-ascii'' and 5 files of ``utf-8''.    
 
         This task is estimated at 1 EP, doing this for every repository is bound to give conflicts with other groups working in overlapping repository, as such this task is derived to writing a guide such that others can change the encoding of a file when they access a file that is not using UTF-8 encoding.
-    \item[{[}\phigh{]} SequenceViewer - Update dependencies] \hfill \\
+    \item[{[}\phigh{]} SequenceViewer --- Update dependencies] \hfill \\
         \userstory{As a developer I want all components to use the newest versions of its dependencies.}
         This component is reliant on other components for which it is using outdated versions that may not be backwards compatible.
 
         This task is estimated at 8 EP, while all the update dependencies tasks are similar and the update to the \texttt{gradle.build} itself is simple, time is set aside for unforeseen complications it may cause, as well as identifying what has changed, in particular for major patches.
-    \item[{[}\phigh{]} Sequence - Update dependencies] \hfill \\ 
+    \item[{[}\phigh{]} Sequence --- Update dependencies] \hfill \\ 
         \userstory{As a developer I want all components to use the newest versions of its dependencies.}
         This component is reliant on other components for which it is using outdated versions that may not be backwards compatible.
 
         This task is estimated at 8 EP similarly for SequenceViewer.
-    \item[{[}\phigh{]} Picto Search - Update dependencies] \hfill \\
+    \item[{[}\phigh{]} Picto Search --- Update dependencies] \hfill \\
         \userstory{As a developer I want all components to use the newest versions of its dependencies.}
         This component is reliant on other components for which it is using outdated versions that may not be backwards compatible.
         This task is estimated at 16 EP, while having the same reasoning as the former update dependencies tasks, for this a complication with retrieving pictograms is already known to be a conflict in the updated version of a dependency, thus it has more time set aside.
-    \item[{[}\phigh{]} Wiki - Setup new structure and migrate to Phabricator] \hfill \\
+    \item[{[}\phigh{]} Wiki --- Setup new structure and migrate to Phabricator] \hfill \\
         \userstory{As a developer I want to have a wiki in which I can share information with the other developers.}
         There has previously been a wiki on the Redmine system previously used in the GIRAF project. 
         However many groups recommended that we should not use Redmine any more, after switching to Phabricator it is wanted that we preserve the content of the old wiki, and set up a structure such that other developers can easily add more content.
         This task is estimated at 16 EP, 2 of which should be spent on setting up the new structure and 14 of which should be spent on migrating old data and converting it to the markup language used in Phabricator. 
 
-    \item[{[}\pblocking{]} Gradle - Custom plug-in dk.giraf.lib for gradle breaks build] \hfill \\
+    \item[{[}\pblocking{]} Gradle --- Custom plug-in dk.giraf.lib for gradle breaks build] \hfill \\
         \userstory{As a developer I would like the libraries to be be build-able.}
         Attempting to build using gradle, an automated build tool, for Picto Search provides the error, ``Cannot configure the 'publishing' extension after it has been accessed.''. 
         The error has been identified to originate from the \texttt{dk.giraf.lib}--library and this must be fixed before any library in the GIRAF project can be built using gradle. 
@@ -63,20 +62,19 @@ The combined point value of the tasks for sprint 1 sum to 65 points leaving 15 p
 
 We overestimated the tasks of updating dependencies so in the last week of the sprint we had run out of tasks.
 Therefore we consulted PO and the scrum masters, in order to take another 4 tasks which will be presented now.
-These tasks have not been time estimated.
+These tasks have not been time estimated as we deemed it better to simply complete them rather than spend time estimating the EP they would require.
 
 \begin{description}
-    \item[{[}\phigh{]} Sequence - Sequence wrench should be clickable] \hfill \\
+    \item[{[}\phigh{]} Sequence --- Sequence wrench should be clickable] \hfill \\
         \userstory{As a citizen I want to be able to click on the wrench when editing a sequence, to edit which pictogram is chosen. (Same function as when the picture is clicked)} 
         There is a wrench emblem indicating that the pictogram can be edited, but something went wrong in the development of it as it is not possible to click on the wrench.
-    \item[{[}\phigh{]} Week Schedule - Unmark schedules when delete is canceled] \hfill \\
+    \item[{[}\phigh{]} Week Schedule --- Unmark schedules when delete is canceled] \hfill \\
         \userstory{In Week Schedule as an administrator, I would like week schedules that I marked while in deletion mode to get unmarked if i cancel the delete. 
 }
         When marking schedules for deletion they are marked with an orange border which is not removed if the user decides to cancel the deletion.
-    \item[{[}\phigh{]} Week Schedule - Missing borders on pictograms] \hfill \\
+    \item[{[}\phigh{]} Week Schedule --- Missing borders on pictograms] \hfill \\
         \userstory{As a citizen I would like the pictograms to have borders, such that I can distinguish the pictograms from eachother, on any background color.}
         Sunday in the week schedule has a white background, and many pictograms also have a white background which makes it impossible to find the frame of the pictogram.
-    \item[{[}\phigh{]} Week Schedule - Scrolling schedule day] \hfill\\
+    \item[{[}\phigh{]} Week Schedule --- Scrolling schedule day] \hfill\\
         This task was created without a user story, but the problem is that it is difficult to scroll in the week schedules as if you drag the screen while touching a pictogram, you move the pictogram around the screen instead.
 \end{description}
-

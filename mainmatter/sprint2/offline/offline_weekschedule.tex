@@ -1,0 +1,57 @@
+\subsection{Changes to Week Schedule}
+The first obstacle in making Week Schedule offline capable is to establish some policies about how conflicts between offline uses should be handled.
+Because of the goal of the entirety of GIRAF being usable without a connection to the internet, these policies can be adapted to every aspect of GIRAF which involves synchronisation.
+\kim{I think this is a weird place to have this descussion. For me then a policy is something that applies for the entire application/ecosystem (GIRAF), each app then need to implement this policy, but the policy should apply to all the apps. In the introduction section of this user story then the policy problem was the first problem mentioned, however it does not placed as the first subsection. I think this is confusing and should be aligned. }
+\input{mainmatter/sprint2/offline/policy.tex}
+
+\subsubsection{Implementation of Offline Copy}
+To implement a mechanism which adheres to the aforementioned policies, we modify the method which is used to save a weekschedule.
+In \myref{lst:saveschedule} the changes to \texttt{saveSchedule()} can be seen and consists of an added branch in the if chain from line~\ref{lst:ss_beginchange} to line~\ref{lst:ss_endchange}.
+In a scenario where Week Schedule is started in offline mode and the user is trying to save changes to an existing week schedule, the solution is intended to do the following: 
+\begin{enumberate}
+\item Make a copy of the original week schedule;
+\item Prepend \enquote{Copy ---~} to the title of the changed week schedule; and
+\item Save the changed week schedule to the local database.  
+\end{enumberate}
+
+To make sure that a copy is not saved of the copy created in step 1) a boolean is usedto indicate if the week schedule already is a copy for offline saving such that another copy is not made in step 3).
+When online~\ref{lst:ss_flagtrue} this boolean is set to true, thus preventing a new call to \texttt{saveSchedule()} from reaching the branch for offline saving; hereby performing a regular save.
+Furthermore the user is notified during the offline saving process that the changed week schedule will be saved as a copy.
+
+\begin{lstlisting}[float, floatplacement=h, caption={Method which is called to save a week schedule, \texttt{[...]} denotes omitted code},label={lst:saveschedule}]
+public boolean saveSchedule() {
+    /* Setup code and check if title is already used */
+    [...] 
+    if (isNew) {        
+        /* Save as a new week schedule */
+        [...]        
+    } else if(offlineMode() && !offlineModeCopy) { (*@\label{lst:ss_beginchange}@*)
+        //If week schedule is launched in offlinemode and this is not an offline copy
+        //do the following:
+        actionHelper = new ActionHelper(this);
+
+        //Restore the original name and save a copy of the new name
+        String tmpName = scheduleName.getText().toString();
+        oldSchedule.setName(oldName);
+        //then make a copy of the original schedule
+        actionHelper.copySchedule(oldSchedule, selectedChild);
+        //Go back to the new name and prepend an indication of it being a copy
+        scheduleName.setText(tmpName);
+        schedule.setName(getString(R.string.offline_copy) + " - " + scheduleName.getText());
+        scheduleName.setText(schedule.getName());
+        //Set a flag that indicates that the current schedule is a copy i.e. should be saved
+        //and show a notify dialog that informs the user of the offline copy
+        //when the dialog is dismissed the saveSchedule() is called again
+        offlineModeCopy = true;(*@\label{lst:ss_flagtrue}@*)
+        notifyDialog = GirafNotifyDialog.newInstance(
+                getString(R.string.dialog_offline_copy_title),
+                getString(R.string.dialog_offline_copy_message),
+                METHOD_OFFLINE_COPY_ID);
+        notifyDialog.show(getSupportFragmentManager(), NOTIFY_DIALOG_TAG);
+        return true;(*@\label{lst:ss_endchange}@*)
+    } else {
+        /* Regular saving i.e. overwrite existing week schedule */
+        [...]
+    }
+} 
+\end{lstlisting}

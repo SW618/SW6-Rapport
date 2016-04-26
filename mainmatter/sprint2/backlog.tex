@@ -1,9 +1,43 @@
 \chapter{Sprint Planning}
+The product owner decided that the second sprint of this years GIRAF project should last from the 18th of March to the 4th of April.
+This is a total of 17 days, during which Easter is also set. 
+After the course activity there is three whole days and two half days for GIRAF activity per group member. 
+Because of this we estimate a total of 32 EP for this sprint.
+This is much less than last sprint, hence  we will take fewer and smaller user stories. 
 
+To estimate the EPs for each user story we firstly split each story into smaller tasks to easier understand the size of each, then we used Planning Poker on each user story. 
+We decided to use the Fibonacci numbers for this sprints Planning Poker, as the powers of two which was used last had too big increments to accurately estimate the effort of each task.
 \section{Sprint Backlog}\label{plan2}
-
+Our tasks for this sprint are focused on the Week Schedule application as it is a core part of the semester goals for GIRAF as presented in \myref{retro1}.
 \begin{description}[style=unboxed]
-    \item[{[}\phigh{]} todo - todo] \hfill \\ 
-        \userstory{todo}
-        todo
+    % http://web.giraf.cs.aau.dk/T215
+    \item[{[}\phigh{]} As a user, I would like to be able to have long schedules which are scroll-able, such that I can schedule more in a single day.] \hfill \\ 
+    Currently it is difficult to scroll in the week schedule application.
+    If a user tries to drag one of the pictograms it moves the pictogram and does not scroll as one might expect, since scrolling is a feature in almost all other applications on a tablet, this should also be the case in GIRAF. 
+    This can be confusing for the users, and thusly it should be changed. 
+    Additionally the ability to reorder the pictograms in the week schedule should not be removed by making scrolling easier. 
+
+    This is a user story which has been created from the task we did not finish last sprint.
+    It has been reworded because we use user stories now to show what features are being worked on rather than having tasks.
+    This newly created user story has since been clarified by the Product Owner after they talked to the customer about the feature at the sprint review meeting. 
+    We estimate this task at 8 EP, as it might include redesigning parts of the application. 
+    % http://web.giraf.cs.aau.dk/T277
+    \item[{[}\phigh{]} As a guardian, I would like the week schedule to be used without Internet, such that I can use it in the woods.] \hfill \\ 
+    During the sprint review meeting the customer expressed the wish to use parts of Giraf without connection to the Internet. 
+    Currently the Giraf launcher will display an error message when launched without an Internet connection. 
+    This in turn disables use of any Giraf application, and thusly week schedule. 
+    In order to allow Week Schedule to be used while offline, firstly the launcher must also be allowed to open without internet access as it is currently unable to do so. 
+    Since the customer, in the long run, wants more of the functionality to work while offline, a well designed solution for this issue would be ideal. 
+
+    We have estimated this task at 21 EP, mainly because of the large amount of unpredictability in a task like this. 
+
+    % http://web.giraf.cs.aau.dk/T273
+    \item[{[}\phigh{]} As a Guardian, I would like to be able to clear the progress of a week schedule, such that I can use it for more than one week.] \hfill \\ 
+    After a week schedule have been used once the customer would like the ability to reuse it. 
+    However if a choice have been included in the schedule or one of the tasks have been canceled, they would like the ability to clear such a state. 
+    They also expressed the wish for a dialog confirmation, such that they do not mistakenly clear the state.
+
+    Some of this functionality have already been implemented, however it is shown to the user and not the guardian, and the icon of it resembles a undo/redo action not a clear or reset. 
+
+    We have estimated this task at 2 EP, since it is almost already implemented. 
 \end{description}

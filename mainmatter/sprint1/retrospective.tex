@@ -1,0 +1,58 @@
+\section{Sprint Retrospective}\label{s1retro}
+This section will present the results of the Scrum retrospective meeting, first presenting how the development process has been changed for the multi-project, followed by changes the internal development process.
+
+\subsection{The Multi Project}\label{retro1}
+%start / Stop / Fortsæt
+The multi project retrospective uses a method called: Start, Stop, Continue\footnote{https://www.mountaingoatsoftware.com/agile/Scrum/sprint-retrospective}.
+The Scrum team will write down what they think everyone should start doing, stop doing and also continue doing. 
+This facilitates a way to communicate what is being done in a good way, and what is being done in a bad way, and also helps introduce new methods of working.
+As the multi project is a big Scrum team, it is split into groups at the retrospective in order to write these start, stop, and continue notes on sticky notes.
+The groups are not the project groups but instead mixed to force everyone to speak with people they might not do daily.
+When some time has passed, roughly 15 minutes, the sticky notes are gathered and the Scrum masters will help run a discussion using the sticky notes.
+The discussion should then help shed light on where the multi project can improve.
+
+%PO mangler konsistens i forhold til tasks
+\paragraph{Prioritising} One of the problems discovered was that PO's prioritising seemed random, and it did not seem like they had a general sense of direction regarding where the GIRAF project was heading.
+Therefore the multi project had an extended meeting to try and find some goals for which the GIRAF project should try to reach this semester, and we also encouraged PO to ask the customer's what they specifically would like to be completed first.
+This resulted in the following goals:
+\begin{itemize}
+	\item Stand alone Voice game, such that it can be installed and run without installing any other applications.
+	\item Week schedule should be completed, such that a big part of the customer's everyday can be digitalised.
+\end{itemize}
+These two goals will therefore be the focus for the project for the rest of the semester. 
+
+%User stories er ringe formuleret, og alt for specifikke
+\paragraph{User Stories} In the first sprint user stories were either too general or solution specific.
+Therefore it is agreed that the other groups of the project may help rephrase the user stories such that they are more understandable and adhere to the user story template.
+Another issue regarding the user stories was that obtaining them was awkward and did not stay true to the Scrum methodology.
+In order to resolve that issue user stories will henceforth be introduced rather than a task with a user story.
+These user stories will be given sub-tasks to be solved, and a group will then obtain a user story with sub-tasks, rather than a task with a user story.
+
+%Code review
+\paragraph{Code Review}
+There have been some problems with the way different groups have reviewed their code before pushing it to the master branch of its repository.
+Some groups completely skipped the reviewing process, others had done a poor job, while some did it correctly.
+It seemed that the problem was grounded in a misunderstanding of what code review entailed, why it was important and when it was needed.
+This resulted in us taking a small task of rewriting the guide on the wiki page to help groups better understand how to review other people's code, the tools used in the process and how they are to be used.
+One of the problems caused by the misunderstanding was, that a group did not think of using a branch when they wanted to share their code with someone else in their group.
+Instead they applied a diff to the master, without reviewing or testing it, making it so the master branch was very unstable and prone to crashes.
+The new guide will make sure to explain that using the common git techniques like branching is very much allowed, encouraged even.
+
+%Build server ændringer lige inden sprint end
+\paragraph{Server Changes}
+One last thing which was discovered after the sprint retrospective meeting, but which is still be included here, was that a change made to the build server right before sprint end caused libraries to be unable to compile as they used the server during compilation.
+This resulted in our work on the PictoSearch application to not presented for the customers.
+We want to address this in the next sprint and perhaps make a rule that server changes should not be made so close to the end of a sprint unless absolutely necessary, and if done the rest of the project groups should be given a notice such that they can ensure their applications still work as intended.
+
+\subsection{Internally}
+Internally we have discovered things that should be handled differently and this section will introduce these scenarios and explain what should have been done instead.
+%Mere estimering
+The estimations we made at the start of the sprint were off and the reasoning for this could be that we did not discuss properly what the user stories' sub-tasks entailed before estimating.
+The new user stories from the multi project should help us estimate easier and also help facilitate the discussion on how much work a user story requires.
+%vi sku have estimeret de 4 nye
+When we obtained the four additional tasks we should have estimated these as-well rather than hoping we could finish them if we started right away.
+This may have helped us realise that we could not finish all four and then returned one of them.
+%Blive bedre til at adapte til situationen fremfor at at være rigide og blot bruge bureaukratiet
+One last thing we agreed upon was that it is okay to not always follow the bureaucracy one hundred percent. 
+If we find something that should be fixed, but it is not necessarily our area of responsibility, if it just something that is fixed quickly, e.g. updating a minor or patch dependency, we might as well just do it rather than wasting time explaining and discussing it with other people such that they can resolve the task when they have time.
+If we have the time to do it, it serves the project better if it completed at once.

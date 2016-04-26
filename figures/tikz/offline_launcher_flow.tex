@@ -1,0 +1,24 @@
+\resizebox{1\textwidth}{!}{
+\begin{tikzpicture}[auto]
+    \node [cloud, align=center] (start) {Start};
+    \node [block, below = of start] (setup) {Setup application};
+    \node [decision, right = of setup] (hasprofiles) {Has profiles?};
+    \node [decision, right = of hasprofiles] (network) {Is offline?};
+    \node [block, right = of network] (download) {Download profiles};
+    \node [block, above = of download] (stopuser) {Wait for network connection};
+    \node [block, below = of download] (cont) {Continue to login screen};
+    \node [draw=none, left = of cont] (network_) {};
+    \node [preDefProc, above right = of cont] (home) {\nodepart{two}{Go to homescreen}};
+
+    \draw [line] (start) -- (setup);
+    \draw [line] (setup) -- (hasprofiles);
+    \draw [line] (hasprofiles) -- node {no} (network);
+    \draw [line] (hasprofiles) |- node [above right] {yes} (cont);
+    \draw [line] (network) -- node {no} (download);
+    \draw [line] (network) -- node {yes} (stopuser);
+    \draw [line] (stopuser) -- (download);
+    \draw [line] (cont) -| (home);
+    \draw [line] (download) -- (cont);
+
+\end{tikzpicture}                                   
+}
