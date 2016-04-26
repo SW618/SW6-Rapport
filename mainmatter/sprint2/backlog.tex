@@ -8,25 +8,25 @@ This is much less than last sprint, hence  we will take fewer and smaller user s
 To estimate the EPs for each user story we firstly split each story into smaller tasks to easier understand the size of each, then we used Planning Poker on each user story. 
 We decided to use the Fibonacci numbers for this sprints Planning Poker, as the powers of two which was used last had too big increments to accurately estimate the effort of each task.
 \section{Sprint Backlog}\label{plan2}
-Our tasks for this sprint are focused on the Week Schedule application as it is a core part of the semester goals for GIRAF\kim{I dont think I have read about any semester goals, if I have then they are located in the start of the report. please add a reference to the section where these goals are explained.}.
+Our tasks for this sprint are focused on the Week Schedule application as it is a core part of the semester goals for GIRAF as presented in \myref{retro1}.
 \begin{description}[style=unboxed]
     % http://web.giraf.cs.aau.dk/T215
     \item[{[}\phigh{]} As a user, I would like to be able to have long schedules which are scroll-able, such that I can schedule more in a single day.] \hfill \\ 
     Currently it is difficult to scroll in the week schedule application.
-    If a user tries to drag one of the pictograms it moves the pictogram and does not scroll as one might expect, since scrolling happens in the Android OS and many other places. \kim{Who do you mean by scrolling happens in the OS? I dont understand.}
+    If a user tries to drag one of the pictograms it moves the pictogram and does not scroll as one might expect, since scrolling is a feature in almost all other applications on a tablet, this should also be the case in GIRAF. 
     This can be confusing for the users, and thusly it should be changed. 
-    Additionally the ability to reorder the pictograms in the week schedule should not be removed. 
-    \todo[inline]{Skal vi skrive om del opgaver (tasks) her eller bliver det for meget? - Troels}
+    Additionally the ability to reorder the pictograms in the week schedule should not be removed by making scrolling easier. 
 
-    This is a reformulation\kim{What does a reformulation entail?} of a previous tasks, which we took late in the first sprint but did not complete. 
-    It\kim{It is not clear what ``it'' referes to, I am guessing that it is this task or the pervious one? In general then relative pronominer (henførende stedord) i.e. ``it'', refers to the last sentence i.e. `` which we took late in the first sprint but did not complete'', however this is not the case here and it makes the sentence onclear. } has since been clarified by the Product Owner after talking to the customer\kim{How taled to the customer, you or the product owner?}. 
+    This is a user story which has been created from the task we did not finish last sprint.
+    It has been reworded because we use user stories now to show what features are being worked on rather than having tasks.
+    This newly created user story has since been clarified by the Product Owner after they talked to the customer about the feature at the sprint review meeting. 
     We estimate this task at 8 EP, as it might include redesigning parts of the application. 
     % http://web.giraf.cs.aau.dk/T277
     \item[{[}\phigh{]} As a guardian, I would like the week schedule to be used without Internet, such that I can use it in the woods.] \hfill \\ 
     During the sprint review meeting the customer expressed the wish to use parts of Giraf without connection to the Internet. 
     Currently the Giraf launcher will display an error message when launched without an Internet connection. 
     This in turn disables use of any Giraf application, and thusly week schedule. 
-    In order to allow Week Schedule to be used while offline, firstly the launcher must allow the same \kim{the same what?}. 
+    In order to allow Week Schedule to be used while offline, firstly the launcher must also be allowed to open without internet access as it is currently unable to do so. 
     Since the customer, in the long run, wants more of the functionality to work while offline, a well designed solution for this issue would be ideal. 
 
     We have estimated this task at 21 EP, mainly because of the large amount of unpredictability in a task like this. 
