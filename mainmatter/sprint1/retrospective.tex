@@ -35,14 +35,14 @@ Some groups completely skipped the reviewing process, others had done a poor job
 It seemed that the problem was grounded in a misunderstanding of what code review entailed, why it was important and when it was needed.
 This resulted in us taking a small task of rewriting the guide on the wiki page to help groups better understand how to review other people's code, the tools used in the process and how they are to be used.
 One of the problems caused by the misunderstanding was, that a group did not think of using a branch when they wanted to share their code with someone else in their group.
-Instead they applied a diff to the master, without reviewing or testing it, making it so the master branch was very unstable and prone to crashes.
+Instead they applied a diff to the master, without reviewing or testing it, making it so the code in the master branch was unstable and prone to crashes.
 The new guide will make sure to explain that using the common git techniques like branching is very much allowed, encouraged even.
 
 %Build server ændringer lige inden sprint end
 \paragraph{Server Changes}
 One last thing which was discovered after the sprint retrospective meeting, but which is still be included here, was that a change made to the build server right before sprint end caused libraries to be unable to compile as they used the server during compilation.
 This resulted in our work on the PictoSearch application to not presented for the customers.
-We want to address this in the next sprint and perhaps make a rule that server changes should not be made so close to the end of a sprint unless absolutely necessary, and if done the rest of the project groups should be given a notice such that they can ensure their applications still work as intended.
+We want to address this in the next sprint and perhaps make a rule that server changes should not be made so close to the end of a sprint unless necessary, and if done the rest of the project groups should be given a notice such that they can ensure their applications still work as intended.
 
 \subsection{Internally}
 Internally we have discovered things that should be handled differently and this section will introduce these scenarios and explain what should have been done instead.
@@ -57,7 +57,7 @@ One last thing we agreed upon was that it is okay to not always follow the burea
 If we find something that should be fixed, but it is not necessarily our area of responsibility, if it just something that is fixed quickly, e.g. updating a minor or patch dependency, we might as well just do it rather than wasting time explaining and discussing it with other people such that they can resolve the task when they have time.
 If we have the time to do it, it serves the project better if it completed at once.
 
-During our programming session we found much use in pair programming as it helped solve issue quickly. 
-Often one person would have an answer to a problem that the other person didn't know, and this helped getting though obstacles quickly. 
-This is especially true since none of us have had any previous experience with developing for Android before, and thusly there is a lot of new knowledge to gain. 
-For this reason we will attempt to continue with pair programming for the next sprint. 
+During our programming sessions we found much use in pair programming as it helped solve issue quickly. 
+Often one person would have an answer to a problem that the other person did not know, which helped getting past obstacles. 
+This is especially true since none of us have had any previous experience with developing for Android, thus there is a lot of new knowledge to gain. 
+For this reason we will attempt to continue with pair programming in the next sprint. 
