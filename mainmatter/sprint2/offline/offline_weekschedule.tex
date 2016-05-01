@@ -1,8 +1,5 @@
 \subsection{Changes to Week Schedule}
-The first obstacle in making Week Schedule offline capable is to establish some policies about how conflicts between offline uses should be handled.
-Because of the goal of the entirety of GIRAF being usable without a connection to the internet, these policies can be adapted to every aspect of GIRAF which involves synchronisation.
-\kim{I think this is a weird place to have this descussion. For me then a policy is something that applies for the entire application/ecosystem (GIRAF), each app then need to implement this policy, but the policy should apply to all the apps. In the introduction section of this user story then the policy problem was the first problem mentioned, however it does not placed as the first subsection. I think this is confusing and should be aligned. }
-\input{mainmatter/sprint2/offline/policy.tex}
+Now that the policies of conflict handling have been established we can implement the temporary policy in the week schedule.
 
 \subsubsection{Implementation of Offline Copy}
 To implement a mechanism which adheres to the aforementioned policies, we modify the method which is used to save a weekschedule.
