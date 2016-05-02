@@ -1,13 +1,11 @@
-\textbf{User Story:} \textit{As a User I would like the Picto Search application to feel more responsive when I search for pictograms, such that I don't feel like nothing happens.} \newline
+\userstory{As a User I would like the Picto Search application to feel more responsive when I search for pictograms, such that I don't feel like nothing happens.}
 
-\kim{Having read this section then there are one important element that I am missing, you argue that the real problem is that the user is not getting the right kind of feedback and that is what curses the uses to feel that ``noting is happening''. In order to fully believe that argument then I would like to see some numbers on how long a search takes. Just make some small test to see if the average search time is actually below 4 seconds. If not then I think you need to argue that there are two problems, and in this sprint you only address the ``wrong feedback'' problem.}
-The task is prioritised as HIGH and is estimated at 8 EP.
-The task was created because the customers expressed concern for the reactiveness of the PictoSearch application, it sometimes felt slow and customers said it felt like nothing was happening.
+The task is prioritised as \phigh,is estimated at 8 EP, and was created because the customers expressed concern for the reactiveness of the PictoSearch application --- it sometimes felt slow and customers said it felt like nothing was happening.
 The PictoSearch application is used whenever the user needs to find a certain pictogram for other applications such as the week schedule or the sequence application.
-It is a problem that the users feel like the application is slow and that it does not react qucikly to what the user is doing, especially in an application used often by other applications of GIRAF.
+It is a problem that the users feel like the application is slow and that it does not react quickly to what the user is doing, especially in an application used often by other applications of GIRAF.
 It is important that responses from a mobile application are given within a few seconds, as mentioned in~\cite{Roto:2005:NNF:1062745.1062747}, if an application spends more than 4 seconds to load or respond then other feedback than visual should be used.
 Therefore the amount of time spent waiting for the application should be reduced, such that there is no need for using other methods of feedback when the search finally returns\kim{Just below you argue the exact opposite and decide that there should be feedback. This is very confusing for the read}.
-According to Constantine and Lockwood in their book ``Software for Use: A Practical Guide to the Models and Methods of Usage-Centered Design'' \cite{DESIGNBOOK}, a design principle regarding feedback is as follows:
+According to Constantine and Lockwood in their book \enquote{Software for Use: A Practical Guide to the Models and Methods of Usage-Centered Design} \cite{DESIGNBOOK}, a design principle regarding feedback is as follows:
 
 \begin{displayquote}
 \textit{Keep users informed of actions or interpretations, changes of state or condition and errors or exceptions that are relevant and of interest to the user through clear, concise, and unambiguous language familiar to users\cite[p.~57]{DESIGNBOOK}.}
@@ -50,7 +48,10 @@ When the search returns the pictograms will be shown instead of the text message
     \caption{Screenshot of the new search information, while searching.}\label{fig:screenshot_newsearch}
 \end{figure}
 
-This means that there is near instantaneous feedback for the user, which might give the feeling that the application is reacting to whatever the user is doing, and it might no longer feel to users like nothing is happening. \kim{It seems an obvious question to ask if you tested this, or do you plan to test this?}
+This means that there is near instantaneous feedback for the user, which might give the feeling that the application is reacting to whatever the user is doing, and it might no longer feel to users like nothing is happening.
+Previously the user would be waiting forever if he thought a search would be performed, when text was entered into the search--field, such as Google does. 
+The new approach hereby provides search feedback significantly closer to the aforementioned 4 second limit.
+Actually, the query which results in the largest amount of pictograms is a search for the character \enquote{s}, it returns X pictograms and takes approximately X seconds on the relatively slow Lenovo tablet provided by the University. 
 
 The search button can still be used, and will bring up the old search spinner as usually, but the button has been moved from the middle of the display to the right side of the display as can be seen on \myref{fig:screenshot_newstartup}. \kim{Why does the search button not just evoke the responsive search functionality? If the problem was that the old search feedback felt slow and unresponsive! }
 This is a better fit as it resembles other common search engines such as Google Search, and it is also the recommended way to display a search-field according to the Niels Norman Group\footnote{https://www.nngroup.com/articles/magnifying-glass-icon/}. \kim{Here you might also refer to the gestalt principles in particular the similarity principle. }
@@ -66,7 +67,6 @@ Therefore using a familiar position of the button is a better fit than placing i
 Another thing we noticed was that the clear search field button was visible all the time even though no text was in the search field.
 This has been removed and it is now only visible when there is text in the search field i.e. when the actoion is available, as can be seen on \myref{fig:screenshot_newstartup} and it it still there on \myref{fig:screenshot_newsearch}.
 This has been done because of another design pricinple by Constantine and Lockwood: 
-\kim{you ``missspelled'' the following words: recognisable, actoion, pricinple, qucikly. Just FYI.}
 
 \begin{displayquote}
 \textit{Keep all needed options and materials for a given task visible without distracting the user with extraneous or redundant information \cite[p.~55]{DESIGNBOOK}.}
@@ -78,5 +78,4 @@ This has been done because of another design pricinple by Constantine and Lockwo
     \caption{Screenshot of the new initial view in PictoSearch.}\label{fig:screenshot_newstartup}
 \end{figure}
 
-\kim{I love the clear analysis and design of this section. It is well grounded in theory. }
 \kim{No implementation details? If you do not think that it is of interest then you should not add any implementation details.}
