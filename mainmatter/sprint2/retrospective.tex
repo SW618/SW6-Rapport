@@ -2,21 +2,24 @@
 As in the first sprint we will again evaluate the work we have done in this sprint as well as our development process.
 Furthermore we will discuss any changes made to the process as a result of this review process.
 The evaluation of the process, the retrospective, is divided into two parts, one for the multi project and one for our own group.
-\section{Sprint Review}
-This section evaluates the work we have done for this sprint and presents the customers opinion on the additions and modifications.
-The next section will address how we have worked.
-The user stories for this sprint were all completed, however the tasks were completed faster than anticipated, the reason for which is touched upon in the next section.
-The amount of time estimated and spent on the different tasks can be seen in \myref{sprint_review2}. \kim{As you write in your caption then the items in the table is user stories.}
-At the sprint review meeting with the customers, they expressed that they were happy with the changes made to GIRAF. \
 
-Regarding the offline functionality they seemed happy with the solution of making a copy of a week schedule in the case where changes were made while offline. \kim{It just dawned on my that it is the actual schedule that you make a copy of, I still dont understand how you handle the merging.}
+\section{Sprint Review}
+This section evaluates the work we have done in this sprint and presents the customers opinion on the additions and modifications.
+The next section, \myref{sec:sprint2retro}, will address how we have worked.
+The user stories in this sprint were all completed, however the tasks were completed faster than anticipated, the reason for which is touched upon in the next section.
+The amount of time estimated and spent on the different user stories can be seen in \myref{sprint_review2}. 
+At the sprint review meeting with the customers, they expressed that they were happy with the changes made to GIRAF. 
+
+Regarding the offline functionality they seemed happy with the solution of making a copy of a week schedule in the case where changes were made while offline. 
 They were generally just happy that they could use the application without the need for being online.
-The changes made to Week Schedule in order to implement scrolling were greatly appreciated, and they very extremely happy with the choice of vibrating on long press to help them know when a pictogram is ready to reorder. \kim{I am not sure how, but I think that you should elaborate on this evaluation. They is the only feedback you get on your solutions, it is very important.} \kim{Newline here.}
+The changes made to Week Schedule in order to implement scrolling were greatly appreciated, and they very extremely happy with the choice of vibrating on long press to help them know when a pictogram is ready to reorder. 
+Unfortunately the information we have received from the PO is very sparse and not very detailed, even after asking them to elaborate on what they have written in the summary of the customer meeting. \todo[inline]{Too offensive?}
+
 We spent less time than estimated on these tasks, and thus the rest of the time during the sprint has been spent on writing this paper.
 Last sprint we included the estimation of writing the paper, but this was not done this sprint as we knew we had one week after the sprint to work on the paper.
-We ended up having two members do most of the work on the user stories this sprint during the Easter, which is why the other two members spent a significant amount of time writing the paper during the sprint.
-We had planned to work on the user stories using pair programming but since the work regarding offline mode was done alone, we spent less total time on the tasks as it was done by one person, this is the reason the task required almost half of the estimated points. 
-This problem will be adressed further in \myref{internal2}.
+We ended up having two members do most of the work on the user stories this sprint during the Easter break, which is why the other two members spent a significant amount of time writing the paper during the sprint.
+We had planned to work on the user stories using pair programming, as explained in \myref{subsubsec:pairprogramming}, but since the work regarding offline mode was done alone, we spent less total time on the tasks as it was done by one person, this is the reason the task required almost half of the estimated points. 
+This problem will be addressed further in \myref{internal2}.
 
 \begin{table}[h]
     {\setlength{\extrarowheight}{.75ex}%
@@ -39,17 +42,17 @@ This problem will be adressed further in \myref{internal2}.
         \multicolumn{2}{l}{Total}    & 31               & 24                \\
 	\end{tabular}}
 	\centering
-	\caption{This table shows the estimated effort points for the different user stories titled with short stories, along with the amount of points actually spent. Time spent on writing the paper is not included in this table.}
+	\caption{This table shows the estimated effort points for the different user stories titled with short stories, along with the amount of points we actually spent. Time spent on writing the paper is not included in this table.}
 	\label{sprint_review2}
 \end{table}
 
 
 
-\section{Sprint Retrospective}
-This section will introduce the evaluation from the sprint retrospective meeting with the entire multi-project, followed by a sprint retrospective of our internal development. \kim{When you say that this is only an introduction then i expect a greater elaboration of the topic later.}
-%Multi
-\subsection*{Multi-project Retrospective}
-This section will discuss the development process of the multi-project.
+\section{Sprint Retrospective}\label{sec:sprint2retro}
+This section will evaluate the sprint retrospective meeting with the entire multi-project, followed by a sprint retrospective of our internal development. 
+
+\subsection{Multi-project Retrospective}
+This section evaluates the development process of the multi-project.
 % Documentation - all diffs
 \paragraph{Documentation}
 In this sprint we have had problems with the differentials (the code reviews through Phabricator), as the submitted code was lacking proper documentation in the source code, i.e. Javadocs and comments. 
@@ -72,24 +75,18 @@ We hope this will fix some of the issues and that the proper commands for updati
 
 Beside these troubles, the sprint has worked well in the multi-project, we all knew what everyone else were doing and the communication between groups were better than in the first sprint.
 \subsection{Internal Retrospective}\label{internal2}
-This section will discuss the internal development process.
+This section evaluates our internal development process.
 \paragraph{Programming}
-We had some problems with how we estimated tasks and assigning tasks in a balanced way.
-Our estimated was based on the assumption that we would do pair programming, like we had done in sprint 1, however there were some complications. \kim{This is the first time you mention this. Please make it clear earlier in the report that you use pair programming and why you choose to do so.}
-The sprint was during easter, and thus we had many vacation days.
-During this period only two members of the group had access to a tablet, and these two members ended up completing most of the tasks during this period leaving mostly debugging, polishing and testing to be done.
-We had not estimated that we would do any work during easter and since no pair programming was used the tasks took less time total than first anticipated.
-This is because while pair programming you effectively use the time of two persons, resulting in more total time used. 
-The tasks might be solved quicker, but not as quick so that the total time would be the same as if one person was programming. \kim{If that is always the case, then why would you ever use pair programming?}
-We believe this to be why our time estimations of the tasks seem a bit off, and strange.
-As a result of this, we had little to no internal discussion about the best way to solve these tasks. 
-Since we believe that collaboration in the group can lead to higher quality software we decided that we would mostly spend time when together pair programming at the university, and leave writing the report as a task to do at home. \kim{This argument should be stated as a reason for choosing to do pair programming, since you used pair programming in sprint 1 then I expect that it is described in section 2.1 }
-This should help improve the cooperation on the programming tasks, as well as making pair programming much easier.
+This sprint was relatively short compared to the first sprint, and it overlapped with easter which causeed some problems. 
+Since we had a lot of course activity during the start of the sprint we had little time to do pair programming, and when easter came around we decided that we should try to do some of the tasks at home, such that we could complete them in time. 
+Since we only had two tablets and two big user stories only two people in the group ended up doing the programming work during easter.
+The programming tasks was mostly done at this point, leaving only debugging a few small issue, polising the code and finaly verification. 
+We would have liked to have included everyone in the programming and decision making, but during this sprint we did not. 
+For this reason we would we will during the next sprint try harder to do pair programming. 
 
 \paragraph{Scrum}
 Because of the problems mentioned above we ended up not following Scrum as well as we could have.
 Daily Scrum was some days neglected completely, and the Scrum board was not used as rigorously as wanted.
 The decision to use most of our time programming when we are grouped at the university should also help in this regard as we are all working on the same type of tasks and thus the daily Scrum seems more natural.
 This is not to say that we did not talk about our tasks during this sprint, but rather that we did not follow the procedure described in \myref{scrum}.
-Therefore in the next sprint we will strive to use the process much more rigid, in order to obtain the benefits of using scrum. \kim{It is not clear why you choose to use Scrum in the first place let alone what benefits you expect to gain from using it.}
-
+Therefore in the next sprint we will strive to use the process much more rigid, in order to obtain the benefits of using scrum. \kim{It is not clear why you choose to use Scrum in the first place let alone what benefits you expect to gain from using it.} \todo[inline]{Skal tilføjes i starten af rapporten. }
