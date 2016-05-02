@@ -1,14 +1,14 @@
 \section{dk.giraf.lib Breaks the Build}\label{sec:breaking}
 The work performed in this section was done in collaboration with SW615F16.
 
-After starting our first task, which consists of, upgrading dependencies, we realised that we were unable to build any of the libraries in the Giraf project. 
+After starting our first task, upgrading dependencies, we realised that we were unable to build any of the libraries in the Giraf project. 
 We were however able to build the apps which does depend on the libaries, since they can use precompiled versions called artifacts, which is stored from last years Giraf project in Artifactory. 
 Not being able to build any libraries naturally blocks the ability to develop on them, so this new task of resoving this issue is given the highest priority: \pblocking. 
 
 Debugging this issue lead to the conclusion that the source of it was in \texttt{dk.giraf.lib}, which is a meta-library in Giraf.
 The purpose of \texttt{dk.giraf.lib} is to allow publishing of Giraf librarys to Artifactory, by the build-server.
 Thus each developer does not have to compile all the dependencies for the app or library they are working on every time they build something. 
-The issue were isolated to the code which configures the publishing, which was done in an \texttt{afterEvaluate}-step. 
-However the configuration were supposed to be used before this step and thus it caused it not to work. 
-After moving the code to a more appropriate location, the problem was resolved and the Giraf libraries could be built.
+The issue was isolated to the code which configures the publishing, which was done in an \texttt{afterEvaluate}-step. 
+The configuration is supposed to be used before this step and thus it breaks the build. 
+After moving the code to a more appropriate location, the problem was resolved and the Giraf libraries are once again buildable.
 How this code worked for the previous years project is unknown. 
