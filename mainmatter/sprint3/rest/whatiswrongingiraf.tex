@@ -1,2 +1,24 @@
-\section{What is wrong currently in GIRAF?}
-EVERYTHING.
+\section{What is wrong currently in GIRAF?} % Everything
+It was decided at a multi--group meeting that we would replace the current database connection with a REST--API.
+This section will explain the motivation behind developing a REST-API for GIRAF by highlighting some of the issues currently present in GIRAF.
+
+Currently in GIRAF there exist both a remote database, hosted by ITS (AAU IT-Services), and a local database hosted on the device.
+When the GIRAF launcher is opened it will download the contents of the remote database into its local database.
+The local database is made by the ``meta-database''--library, and the content is downloaded by the ``local-db''--library.
+
+During last semester one of the project groups, SW610F15, attempted to setup SymmetricDS\footnote{More details at: \url{http://www.symmetricds.org/}} to synchronise the remote- and local--databases.
+They claim to implement this, however they note some serious problems; since SymmetricDS is a bi-directional database replication tool, used to synchronise row-wise, any deletion on one device will delete on every device.
+Additionally GIRAF contains a large number of foreign key constraints which further complicates this issue.
+Their prototype for doing this was never enabled in GIRAF because of these issues.
+So currently there are only a one way transfer from the remote database to the local database and no transfer the other way.
+
+\bigskip
+There are huge issues with the aforementioned solution, most significantly security and synchronisation issues.
+Since the customer of the GIRAF project are institutions under Aalborg Municipality, there are rather strict confidentiality and security measures which must be met.
+These are encryption of the files, password protection, strict privacy etc., which are part of the ``Persondataloven''\footnote{\url{https://www.retsinformation.dk/forms/r0710.aspx?id=828}}.
+This means that we can not synchronise the entire database to each client which downloads it from the Google Play Store, as this would breach the privacy of our users.
+Furthermore the server host will have access to the files which are owned by the other clients, which is not allowed either.
+The previous solution additionally required a database user with read/write permissions to be included in the GIRAF Launcher which is in the Google Play Store.
+In addition to this, if any new platform were to be adopted, i.e. iOS or a web--interface, they would also have to be directly connected to the database server.
+
+To resolve these issues, we deem it necessary to replace the current solution entirely.
