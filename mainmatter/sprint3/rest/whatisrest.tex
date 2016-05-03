@@ -38,14 +38,44 @@ Next we will mention each of the constraints and how they relate to the aforemen
         \item Portability: By removing concerns between server and client specific details, significantly improving the portability of client side code, as only the language between the two is important.
     \end{itemize}
     %Scalability, Simplicity, Portability 
-    \item [Stateless] 
+    \item [Stateless] Adding to the constraints we further require that communication between client and server must be stateless.
+    In making communication stateless, all requests must contain every bit of information required to perform the request, i.e. no context stored on the server can be used.
+    As with most choices this also has its downside, with no context available the overhead for each request may be higher for repetitive requests.
+    Making the communication stateless does however improve visibility, reliability and scalability.
+    \begin{itemize}
+        \item Visibility: Visibility is increased as there is no need to look beyond the request in order to discern the purpose of the request contrary to RCP.
+        \item Reliability: Reliability is increased as partial failures are more recoverable by completely removing the chance for invalid states.
+        \item Scalability: Scalability is improved by not having to store information regarding temporary states
+    \end{itemize}
     %Performance, Scalability, Simplicity, Visibility, Reliability
     \item [Cacheable] 
+    In order to increase efficiency the constraint of cacheable data is added.
+    The constraint requires that when a response to a request specifies whether the data is cacheable or non-cacheable which may remove the need for a later request.
+    When a response is noted as cacheable, a timeout is also required which the client must adhere to.
+    This constraint may slightly reduce reliability if the data in the cache becomes outdated before timeout, however for GIRAF this should not be an issue.
+    Other non-functional properties that are positively affected are scalability and performance.
+    \begin{itemize}
+        \item Scalability: By clients not having to always request, the server can service more clients within a given timeframe.
+        \item Performance: With some requests not needing a response from the server but can be partially or completely handled through the cache, average latency is improved.
+    \end{itemize}
     %Performance, Scalability, Reliability
     \item [Uniform Interface] 
+    As with all generalisation efficiency is affected as one cannot tailor the interface to a systems unique needs.
+    \begin{itemize}
+        \item 
+        \item 
+    \end{itemize}
     %Simplicity, Visibility
-    \item [Layered System] 
+    \item [Layered System]
+    \begin{itemize}
+        \item 
+        \item 
+    \end{itemize} 
     %Performance, Scalability, Simplicity
-    \item [Code on Demand]  
+    \item [Code on Demand] 
+    \begin{itemize}
+        \item 
+        \item 
+    \end{itemize} 
     %Simplicity, Visibility 
 \end{description}
