@@ -1,0 +1,51 @@
+%http://www.restapitutorial.com/lessons/whatisrest.html
+%https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm
+%http://rest.elkstein.org/
+%https://en.wikipedia.org/wiki/Representational_state_transfer
+%https://smartbear.com/learn/api-design/what-is-hypermedia/
+%http://www.beabetterdeveloper.com/2013/07/why-rest-is-so-important.html
+%https://www.ibm.com/developerworks/community/wikis/home?lang=en#!/wiki/W0ca2fa980cd2_4596_8e7b_92f8f0c1fa05/page/REST+Principles+Review+(v.62)
+
+Why Rest? State transfer > Remote Procedure Calls(RPC)/SOAP - less complexity
+Rest low overhead
+
+\section{What Is REST}
+REST is an architectural style for distributed hypermedia systems.
+Rest is also defined as a hybrid style due to its constraints being derived from several other network-based architectural styles.
+The idea is that rather than using complex protocols such as Remote Procedure Calls (\textbf{RPC}) to connect between entities, the simpler HTTP requests are used instead.
+Originally defined in 2000 by Roy Fielding in his doctoral dissertation, \citep{fielding2000rest}, REST establishes a set of constraints that when adhered to positively impacts the following set of non-functional properties.
+\begin{itemize}
+    \item Performance
+    \item Scalability
+    \item Simplicity
+    \item Visibility
+    \item Portability
+    \item Reliability
+\end{itemize}
+An application that adheres to the constraints of REST is considered to be RESTful.
+Next we will mention each of the constraints and how they relate to the aforementioned non-functional properties.
+
+\begin{description}
+    \item [Client-Server] The first constraint we will discuss is derived from the hierarchical style client-server.
+    Separation of concern is the underlying concept for client-server architecture, in essence the client serves as a trigger process, and the server as a reactive process.
+    As the reactive process the server more often than not a non-terminating process waiting for a request from a trigger.
+    When a client requests data, the client cares not for how the data is acquired, nor for how it is stored, as long as it is received in the agreed upon format.
+    Likewise the server cares not for how the client represents the data, nor for which state the client is in as long as requests are made in the agreed upon format.
+    This separation of concern affects three of the aforementioned non-functional properties.
+    \begin{itemize}
+        \item Simplicity: By not having to consider client specific data, components are easier to represent.
+        \item Scalability: Simpling the server components and also increase the scalability of the server. Furthermore the separation allows for components to evolve independently
+        \item Portability: By removing concerns between server and client specific details, significantly improving the portability of client side code, as only the language between the two is important.
+    \end{itemize}
+    %Scalability, Simplicity, Portability 
+    \item [Stateless] 
+    %Performance, Scalability, Simplicity, Visibility, Reliability
+    \item [Cacheable] 
+    %Performance, Scalability, Reliability
+    \item [Uniform Interface] 
+    %Simplicity, Visibility
+    \item [Layered System] 
+    %Performance, Scalability, Simplicity
+    \item [Code on Demand]  
+    %Simplicity, Visibility 
+\end{description}
