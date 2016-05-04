@@ -1,14 +1,3 @@
-%http://www.restapitutorial.com/lessons/whatisrest.html
-%https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm
-%http://rest.elkstein.org/
-%https://en.wikipedia.org/wiki/Representational_state_transfer
-%https://smartbear.com/learn/api-design/what-is-hypermedia/
-%http://www.beabetterdeveloper.com/2013/07/why-rest-is-so-important.html
-%https://www.ibm.com/developerworks/community/wikis/home?lang=en#!/wiki/W0ca2fa980cd2_4596_8e7b_92f8f0c1fa05/page/REST+Principles+Review+(v.62)
-
-Why Rest? State transfer > Remote Procedure Calls(RPC)/SOAP - less complexity
-Rest low overhead
-
 \section{What Is REST}
 REST is an architectural style for distributed hypermedia systems.
 Rest is also defined as a hybrid style due to its constraints being derived from several other network-based architectural styles.
@@ -38,7 +27,7 @@ Next we will mention each of the constraints and how they relate to the aforemen
         \item Portability: By removing concerns between server and client specific details, significantly improving the portability of client side code, as only the language between the two is important.
     \end{itemize}
     %Scalability, Simplicity, Portability 
-    \item [Stateless] Adding to the constraints we further require that communication between client and server must be stateless.
+    \item [Stateless] adding to the constraints we further require that communication between client and server must be stateless.
     In making communication stateless, all requests must contain every bit of information required to perform the request, i.e. no context stored on the server can be used.
     As with most choices this also has its downside, with no context available the overhead for each request may be higher for repetitive requests.
     Making the communication stateless does however improve visibility, reliability and scalability.
@@ -48,34 +37,50 @@ Next we will mention each of the constraints and how they relate to the aforemen
         \item Scalability: Scalability is improved by not having to store information regarding temporary states
     \end{itemize}
     %Performance, Scalability, Simplicity, Visibility, Reliability
-    \item [Cacheable] 
-    In order to increase efficiency the constraint of cacheable data is added.
+    \item [Cacheable] in order to increase efficiency the constraint of cacheable data is added.
     The constraint requires that when a response to a request specifies whether the data is cacheable or non-cacheable which may remove the need for a later request.
     When a response is noted as cacheable, a timeout is also required which the client must adhere to.
     This constraint may slightly reduce reliability if the data in the cache becomes outdated before timeout, however for GIRAF this should not be an issue.
     Other non-functional properties that are positively affected are scalability and performance.
     \begin{itemize}
-        \item Scalability: By clients not having to always request, the server can service more clients within a given timeframe.
+        \item Scalability: By clients not having to always request, the server can service more clients within a given time frame.
         \item Performance: With some requests not needing a response from the server but can be partially or completely handled through the cache, average latency is improved.
     \end{itemize}
     %Performance, Scalability, Reliability
-    \item [Uniform Interface] 
+    \item [Uniform Interface] is the fourth constraint, and one that Fielding expresses as \enquote{The central feature that distinguishes the REST architectural style from other network-based styles}\citep{fielding2000rest}.
+    Applying the principle of generality to the interface between server and client achieves low coupling between components allowing components to evolve independently, as long as the interface persists. 
+    The interface itself follows four main principles.
+
+    Firstly it is resource based using resource identifiers to request resources, the resources themselves are also represented differently in requests than the way it is stored, for GIRAF we use JSON format to communicate.
+    Secondly clients must be able to manipulate resources through representations, this means that when a client has a representation of a resource, the representation contains enough data such that the client may alter the resource, given the client is allowed to do so.
+    Thirdly messages must be self-descriptive such that the a process can be executed as intended without further inquiry.
+    The last principle is Hypermedia as the Engine of Application State (HATEOAS), simply put interaction by the client with a network application is through hypermedia provided by the server.
+    The client needs no knowledge of available actions on any given data, as the server will only provide hypermedia for actions that are available in the state the resource is in.
+
     As with all generalisation efficiency is affected as one cannot tailor the interface to a systems unique needs.
+    This generalisation is however not without its perks, both simplicity and visibility is also affected.
     \begin{itemize}
-        \item 
-        \item 
+        \item Simplicity: By adhering to generalisation the overall structure of the system architecture is simplified.
+        \item Visibility: Through simplified architecture the visibility of interactions is also increased.
     \end{itemize}
     %Simplicity, Visibility
-    \item [Layered System]
+    \item [Layered System] the fifth constraint adds hierarchical layers to the architecture, containing the behavior of a layer to itself and its immediately used layers.
+    By layering the system we acquire low coupling while also keeping the overall system complexity low.
+    Layers can serve a variety of purposes from protecting legacy services to simplifying components by isolating less used services.
+    Combined with the system being cacheable shared caches can also be used to positive effect.
     \begin{itemize}
-        \item 
-        \item 
+        \item Performance: While the layers themselves increase overhead and thus increasing latency, shared caches can be used to counter this by reducing latency.
+        \item Scalability: Intermediary layers can be used for load balancing thus improving scalability.
+        \item Simplicity: Layers can be used to simplify components by separating less frequently used functionality from often used functionality.
     \end{itemize} 
     %Performance, Scalability, Simplicity
-    \item [Code on Demand] 
+    \item [Code-On-Demand] is the last constraint and is also the only constraint that can be considered optional.
+    Code-On-Demand allows clients to download executable code, increasing extensibility of the system by allowing features to be downloaded post-deployment.
+    This constraint is optional as benefits are only gained when the entire system is known to benefit from the downloadable code, otherwise it turns into a disadvantage.
     \begin{itemize}
-        \item 
-        \item 
+        \item Visibility: Visibility is reduced as features may not be included in the client despite them being available if downloaded.
+        \item Simplicity: The client is simplified by lowering the requirement for pre-implementing features prior to deployment, however this benefit is only relevant if the downloadable features are useable by all clients who require them.
+        Firewalls or other security measures may not allow executable code to be downloaded.
     \end{itemize} 
     %Simplicity, Visibility 
 \end{description}
