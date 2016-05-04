@@ -1,46 +1,53 @@
-\subsubsection*{Version Control Policy}
-In its current state GIRAF does not support synchronisation of data, when GIRAF is initially launched on a device is downloads all data in the database, however any changes or additions made are only stored locally.
-Having no way to synchronise data is a horrible \kim{a horrible what?} for the use of GIRAF and since synchronising is something the users want it is also a significant problem \kim{i think some punctuation is missing in this sentence. please rephrase.}.
-A way of synchronising data has previously been developed for GIRAF albeit not working yet\kim{I am not sure how the word ``albeit'' should be used in this sentence, but I am sure that this is wrong. There should always be a comma in front of it and I think you also need a relative pronouns (henførende stedord)}.
-With offline access a policy for handling offline copies and avoiding conflicts specifically for offline versions is required. \kim{rephrase, did not understand.}
-The implemented solution is inspired from the way dropbox handles conflicting files. \kim{Dropbox with a capital letter.} \kim{please provide a source that describe their policy.}
+\subsection{Version Control Policy}
+In its current state GIRAF does not support synchronisation of data; when GIRAF is initially launched on a device is downloads all data in the database, this is the only interaction between the device and the database resulting in any changes or additions made being stored locally.
+Having no way to synchronise data is a big problem for the use of GIRAF, and since synchronising is something the users want it is also a significant problem.
+A way of synchronising data has previously been developed for GIRAF although it is not working yet and therefore has been disabled.
+With offline access, a policy for handling conflicts created by work being done while not connected to the internet, is required.
+For this discussion we define a conflict as if two persons, A and B, both work on the same version, v1, of a week schedule.
+Person A is offline and makes a version, v1a, of the week schedule, while person B is online and creates another version, v2, from version v1 and uploads it to the server.
+When Person A regains an internet connection the two versions, v2 and v1a, will be in write conflict with each other. 
+The implemented solution is inspired from the way Dropbox handles conflicting files \footnote{Information on Dropbox conflict handling can be found here: \url{https://www.dropbox.com/en/help/36}}. 
 
-\bigskip
-For the following ideas, considerations, and decisions we will consider GIRAF to have a RESTful APIb, something which is currently being worked on, lastly a temporary solution since GIRAF is not yet RESTful is described. \kim{I dont understand the last sentence.}
+\bigskip \noindent
+Currently another group of the GIRAF project is working on a RESTful API, which would help synchronise the data on tablets.
+The discussion in this subsection will touch upon conflict handling in GIRAF as if the REST API is already implemented; as this is not the case we will also present a temporary solution to be used until the REST API is integrated into the GIRAF apps.
 
-By enabling offline use, synchronisation becomes more complex \kim{consider explaining why it is more complex.} and requires version control to determine whether the system should upload the data that was stored locally while offline or retrieve and replace its data with the data stored on the database.
+By enabling offline use, synchronisation becomes more complex, as GIRAF will be more conflict--prone and thus requires version control to determine whether the system should upload the data that was stored locally while offline, or retrieve and replace its data with the data stored in the database.
 In Ian Sommerville's book Software Engineering \citep{SEBOOK} he speaks of pessimistic and optimistic version control.
-Summarising the two; in pessimistic version control resources in use are locked in order to avoid conflicts whereas optimistic version control expects that should conflicts arise while merging, they can be resolved by the user.
+Summarising the two; in pessimistic version control the resources being worked on are locked in order to avoid conflicts whereas optimistic version control expects that should conflicts arise while merging, they can be resolved by the user.
+We cannot lock a resource if the user is offline, therefore a pessimistic approach is impossible.
+It is also not a good idea to develop a system with inconsistent workflow, such as manual merging, for users which we are told are not skilled with technology; this in turn puts an optimistic approach out of the running.
+The following paragraphs will explain this in further detail.
 
-\bigskip  \noindent
-While we implement neither a pessimistic nor optimistic approach to version control, first, let us consider how they would work in GIRAF. \kim{I am missing a discussion of why none of these approaches are applicable to your situation. Please elaborate.}
+\bigskip \noindent
+While we implement neither a pessimistic nor optimistic approach to version control, first, let us consider how they would work in GIRAF. 
 
-\kim{It is quite hard to follow the arguments in this section. What kind of conflicts are we discussing,  I think it is write conflict between two clients, but I am not sure.}
 For optimistic version control merging is required. 
-Generally speaking two approaches, each with a variety of specific applications, present themselves in regards to merging; manual and automatic merging.
+Generally speaking two approaches, each with a variety of specific applications, present themselves in regard to merging; manual and automatic merging.
 An automatic solution would require some data point as a deciding factor for what version to use, the obvious data being a time stamp.
-The issue in doing so is that several devices access the database.
-In the scenario where a device is being used in an offline setting, the time between the changes being saved and the device going online again, another device could have updated the database and thus making the database the most recently altered. \kim{I think this is a very extreme view on the situation, nobody would lock and entire database. Try to change your arguments such they apply to records in stead of the entire database.} 
-Alternatively one could save a the old timestamp on the device if something is altered when offline and them compare that timestamp to the one on the database once online. 
-If they have the same timestamps the offline version should be uploaded to the database, however if they are not the same both the database and the data on the device has been altered and some merge is required. 
-An attempt at merging could be made, but at some point automatic merging is bound to require manual labor to fix merge conflicts which would result in unfamiliar and inconsistent workflow, something that goes directly against what the customer wishes \kim{if this is a requirement then put it in the start of the section, first make an analysis of the problem, then discuss design solution. You need to present all the facts before you can make a good discussion.}.
-Having the merge process being manual might make for a slightly more familiar workflow compared to automatic merging, however the process itself would still be hard to simplify and feel unfamiliar to any other functionality. \kim{It is not trivial for me as a reader to know which scenarios need manual merging. I think it makes sense first to present the scenarios/cases where conflicts can occur., then discuss how these should be handled.}
+The issue in doing so is that several devices access the database, and therefore this might create a conflict.
+Alternatively one could save the old timestamp on the device if something is altered when offline and then compare that timestamp to the one on the database once online. 
+If they have the same timestamps the offline version should be uploaded to the database, however if they are not the same both the database and the data on the device has been altered and some merging is required. 
+An attempt at merging could be made, but at some point automatic merging is bound to require manual labor to fix merge conflicts resulting in unfamiliar and inconsistent workflow, something that goes directly against the wishes of the customer.
+A manual merge might be required if for instance the two versions have made changed to the same weekday of a schedule, if two versions have not changed the same weekday, merging should be simple and could be made automatic.
+Having the merge process being manual every time might make for a slightly more familiar workflow compared to automatic merging where they have to manually merge sometimes, however the process itself would still be hard to simplify and feel unfamiliar to any other functionality. 
 Since both automatic and manual merging both become an inconvenience for the user, neither one works and therefore optimistic version control is not a possibility.
-\kim{I do not understand why automatics merging is inconvenient for the user, you only argue that merging is required! Please elaborate.} \kim{This section was difficult to understand, I know it is difficult material to convey. I suggest a change of structure to make your arguments more clear.}
 
-\bigskip
-On the other hand in pessimistic version control no merging is required as resources are locked.
+\bigskip \noindent
+On the other hand in pessimistic version control no merging is required as resources are locked when being changed.
 As it happens locking resources provide its own issue when it is coupled with offline availability as there is no way to announce that a resource must be locked.
 With the inability to lock resources a pessimistic approach is out of the question, yet we still want to stay away from manual merging as we believe there is no way to make the process consistent and intuitive.
 
-In order to avoid merging we turn to how dropbox handles conflicts, if a file is updated, the file is overwritten however if there are conflicts, i.e. more than one person has changed the file independently of each other, a copy is created.
-A similar approach is wanted for GIRAF, saving the old timestamp, as mentioned earlier, would allow for easy comparison.
-If the timestamps are identical the changes made offline are uploaded to the server, if not a copy is made just like in dropbox.
-Once the tablet is online and synchronised the timestamp should be deleted from the tablet. \kim{So how do you merge these files? I dont understand how this solves the problem.}
+In order to avoid manual merging we turn to how Dropbox handles conflicts, if a file is updated, the file is overwritten however if there are conflicts, i.e. more than one person has changed the file independently of each other, a copy is created.
+A similar approach is wanted for GIRAF, when a conflict is present and the offline tablet regains internet connection, the server will try to automatically merge the two versions, if a merge conflict occurs, i.e. the same week day of the week schedule has been changed the server will instead create a copy of the offline version to be saved, such that there now are two versions of the same week schedule on the server.
+A time stamp can be used to check if a conflict has occurred, if the time stamp on the server is the same as the time stamp saved before making changes offline are the same, the offline version can just be uploaded to the server without merging.
+The guardian will be notified if a copy is saved, and will then have to figure out what to do, maybe redoing the work on the servers version.
+This scenario should rarely happen as the main idea of using the week schedule while offline is for the citizen to be able to see their week schedule, and therefore not editing week schedules.
 
-\bigskip
-While this is the solution which is wanted once some sort of synchronisation exists, currently when an application is accessed and altered offline, it will simply create a copy of the data to work on such that no conflicts arise. \kim{dont understand this line.}
+\bigskip \noindent
+While this is the solution which is wanted once the RESTful API is launched, currently when an application is accessed and altered offline, it will simply create a copy of the data to work on to simulate the conflict handling as the server is unable to do any of the work in the proposed solution, until it has been launched.
 The copy will receive a name with a prefix that clarifies that it is the offline version such as \enquote{Copy <scheduleName>}.
-This has no impact on GIRAF in its current state but allows for an easier change once synchronisation is enabled, by simply having to ensure that the data is stored on the server and deleting unnecessary copies.
+This has no impact on GIRAF in its current state but allows for an easier transition once synchronisation is enabled.
 Once the synchronisation features of GIRAF is up and running this functionality should be moved to the server, so that unnecessary copies are not made.
-\kim{I dont see how this solves the problem.}
+
+The next subsection will present the changes made to Week Schedule to adhere to the new temporary solution.
