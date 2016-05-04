@@ -1,2 +1,37 @@
-\section{What is wrong currently in GIRAF?}
-EVERYTHING.
+\section{What is currently wrong in GIRAF?} \label{sec:current} % Everything
+As previously mentioned it was decided at a multi--group meeting that we would replace the current database connection with a REST--API for GIRAF.
+This section will explain the motivation behind this decision by highlighting some of the issues currently present in GIRAF.
+
+In GIRAF there currently exist both a remote database, hosted by ITS (AAU IT-Services), and a local database hosted on the devices.
+When the GIRAF launcher is opened it will download the contents of the remote database into its local database.
+The local database is made by the ``meta-database''--library, and the content is downloaded by the ``local-db''--library.
+
+During last semester one of the project groups, SW610F15, attempted to setup SymmetricDS\footnote{More details at: \url{http://www.symmetricds.org/}} to synchronise the remote- and local--databases.
+They claim to implement this, however they note some serious problems; since SymmetricDS is a bi-directional database replication tool, used to synchronise row-wise, any deletion on one device will delete on every device.
+Additionally GIRAF contains a large number of foreign key constraints which further complicates this issue.
+Their prototype for doing this was never enabled in GIRAF because of these issues.
+So currently there is only a one way transfer from the remote database to the local database and no transfer the other way.
+
+\bigskip
+There are huge issues with the aforementioned solution, most significantly security and synchronisation issues.
+Since the customer of the GIRAF project are institutions under Aalborg Municipality, there are rather strict confidentiality and security measures which must be met.
+These measueres are encryption of files, password protection, strict privacy etc., which are part of ``Persondataloven''\footnote{\url{https://www.retsinformation.dk/forms/r0710.aspx?id=828}}.
+This means that GIRAF cannot be allowed synchronise the entire database to each client which downloads it from the Google Play Store, as this would breach the privacy of our users.
+Furthermore the server host will have access to the files which are owned by the other clients, which is not allowed either.
+The previous solution additionally required a database user with read/write permissions to be included in the GIRAF Launcher which is in the Google Play Store.
+In addition to this, if any new platform were to be adopted, i.e. iOS or a web--interface, they would also have to be directly connected to the database server.
+
+Another issue with the current version of the database and its model is that many parts of the logic used in the different apps of GIRAF are placed in the views rather than on the model they are altering.
+An example is the progression system used in the week schedule where users can mark their progression of a week schedule.
+This is currently saved in a file on a device and controlled in the view, which means that the current database could not share progression from device to device, which is a work-flow wished for by the customers as the citizen's do not always use the same tablets.
+The new database will have to be designed with the different workflows of each of the applications in mind, such that any data which might need to be shared between devices are actually able to do so.
+
+This means that a new system will need to adhere to the following requirements:
+\begin{itemize}
+	\item Adhere to the requirements of ``Persondataloven''.
+	\item Only receiving data which is allowed for their users.
+	\item Actually having a two-way connection such that the servers database can be altered, thus allowing synchronisation.
+	\item Modelling the required data, such that all data which needs to be synchronised is able to do so.
+\end{itemize}
+
+To resolve these issues, we deem it necessary to replace the current solution entirely.
