@@ -12,7 +12,7 @@ For this sprint we have a total of 68 EP to spend.
     This can be changed in a number of ways, e.g. adding applications to guardians on start up and/or creating a tutorial which shows the users how to add applications.
     The user story has been estimated to take 5 EP.
 \end{description}
-The other work we will be doing this sprint is working on a RESTful API.
+\kim{Everything below is structured in a wierd way. As a reader then I am able to follow what you are explaining, but it is a bit confusing. The problem you seem to have is that you have several user stories that all require the RESTful API and other major tasks to be completed. in such a case it is normal to split the userstory into small user stories (there are different theories on how big these stories should be). The main difference is that you (the programmers) are the creator of the user story and not the customers (or PO). Lets discuss this more at our meeting.}
 There is no formal user story defining the need for a RESTful API, developing such an API would however help solve several larger user stories referring to both the lack of synchronisation and security.
 One of the user stories the work is derived form is the following:
 
@@ -37,6 +37,7 @@ We present some examples to show that the REST-API needs to be finished as quick
 These are just some examples from the backlog which are now all blocked by the task of creating the REST-API.
 We have chosen to help with creating the REST-API, and will therefore try to complete the following API endpoints for this sprint: 
 
+\kim{I think the three ``tasks'' below should be upgraded to user stories.}
 \begin{description}[style=unboxed]
 	\item [Endpoint for Pictograms] The endpoint to retrieve pictograms, this will be used in the PictoSearch library.
 	Creating this endpoint is estimated at 13 EP.
@@ -45,10 +46,12 @@ We have chosen to help with creating the REST-API, and will therefore try to com
 	\item [Endpoint for Week Schedules] This is the endpoint to retrieve week schedules from the database.
 	Creating this endpoint is estimated at 31 EP.
 \end{description}
-These estimations are very fragile as we base them on vere little knowledge of how much time is needed to test, and design the solutions, while also getting to know the new technologies which will be used for the REST-API.
+\kim{Dont put this list here, put them in the appendix or in another section. Also, you should not only list some of the blocked user stories, list all of them.}
+These estimations are very fragile as we base them on vere little knowledge of how much time is needed to test, and design the solutions, while also getting to know the new technologies which will be used for the REST-API. \kim{even more reason to break down the userstory into small ones.}
 Further descriptions and analysis of each task will be given in a section for these end-points.
 
-We will be collaborating on the tasks with group SW615 throughout the sprint, both in the design process but also in implementing the different parts of the API.
+We will be collaborating on the tasks with group SW615 throughout the sprint, both in the design process but also in implementing the different parts of the API. \kim{You also need to explain how this collaboration was conducted. In the retrospective then you should also evaluate this collaboration (highlight problems, and how you resolved them)}
 
-In total this estimates the work for this sprint to be 62 EP which is 6 EP short of the 68, where these 6 are estimated as to write on the report.
+In total this estimates the work for this sprint to be 62 EP which is 6 EP short of the 68, where these 6 are estimated as to write on the report. \kim{Dident understand the last part.}
 The following chapter will further investigate the problems with the current database system, and provide motivation for creating a new system using a REST-API.
+\kim{I am a bit surprised that you use all your EP on development, what about meetings, writing report and such?}
