@@ -1,5 +1,5 @@
 \section{The Architechture of the REST API}
-Before developing the endpoints which the clients will connect to a proper architecture for the REST API will be established. 
+Before developing the concrete code which creates the API endpoints, there should first be a proper architechture. 
 Since it can be costly to go back and change central decisions made in this phase, a big amount of time have been spent thinking about the design. 
 Most of this design was made by SW615F16 during sprint 1 and 2, but some refinements have been made by us during the resulutions of our tasks on the REST API. 
 The full list of technologies used in the REST API will be listed in \myref{sec:techstack}, in this section we will introduce the architecture used for the REST API. 
@@ -27,7 +27,10 @@ In the figure we introduce the 3 layers of the REST API; \textbf{Core}, \textbf{
     \label{fig:rest-architecture}
 \end{figure}
 
+\todo[inline]{Maybe we should put some of the technologies we use directly in the figure?}
+
 \subsection{Testing}
+\todo[inline]{Not sure how to make this fit in the context, it is one of the goals of the architechture}
 During the development we want to ensure that we can test the REST API such that we know that is working as intended. 
 The Core and Persistance layers each have a test which contains unit tests to ensure the correctness of the design. 
 The tests in the persistance layer work as an integration test since it relies on the consistancy of the Core, the SQL which creates the database and the DAOs.  
