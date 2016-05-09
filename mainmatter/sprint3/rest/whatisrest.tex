@@ -23,7 +23,7 @@ Next we will present each of the constraints and how they relate to the aforemen
     This separation of concern affects three of the aforementioned non-functional properties.
     \begin{itemize}
         \item Simplicity: By not having to consider client specific data, components are easier to represent.
-        \item Scalability: By simplifying the server components, it becomes scalable because any amount or kind of clients can perform requests as long as their requests adhere to the specified format. \kim{No, client-server is not very scalable because the server is a bottleneck. Please provide a better argument.}
+        \item Scalability: By simplifying the server components, the server components becomes scalable by allowing them to evolve independantly.
         \item Portability: By removing concerns between server and client specific details, significantly improving the portability of client side code, as only the language between the two is important.
     \end{itemize}\todo[inline]{Tikz Figure of client server architechture?}
     %Scalability, Simplicity, Portability 
@@ -40,7 +40,7 @@ Next we will present each of the constraints and how they relate to the aforemen
     \item [Cacheable] In order to increase efficiency the constraint of cacheable data is added.
     The constraint requires that when a response to a request specifies whether the data is cacheable or non-cacheable which may remove the need for computing a later request.
     When a response is noted as cacheable, a timeout is also required which the client must adhere to.
-    This constraint may slightly reduce reliability if the data in the cache becomes outdated before timeout, however for GIRAF this should not be an issue. \kim{Why not?}
+    This constraint may slightly reduce reliability if the data in the cache becomes outdated before timeout, however for GIRAF this should only rarely if ever be an issue as two users working in parallel will rarely affect each other and in that case it is only at the point of synchronising.
     Other non-functional properties that are instead positively affected are scalability and performance.
     \begin{itemize}
         \item Scalability: By clients not having to always request, the server can handlre more requests from more clients within a given time frame.
@@ -50,8 +50,7 @@ Next we will present each of the constraints and how they relate to the aforemen
     \item [Uniform Interface] The fourth constraint Uniform Interface is expressed by Fielding as \enquote{The central feature that distinguishes the REST architectural style from other network-based styles}\citep{fielding2000rest}.
     Applying the principle of generality to the interface between server and client achieves low coupling between components allowing components to evolve independently, as long as the interface persists. 
     The interface itself follows four main principles.
-
-    Firstly it is\kim{-is} uses resource identifiers to request resources from the server, the resources themselves are represented differently in requests than the way they are stored, for GIRAF we use JSON format to communicate \kim{You use the http protocol to communicate, however the data might be formatted as JSON.}, but the data is not stored in this format.
+    Firstly it uses resource identifiers to request resources from the server, the resources themselves are represented differently in requests than the way they are stored, e.g. for GIRAF we represent our data using the JSON format, but the data is not stored in this format.
     Secondly clients must be able to manipulate resources through representations, this means that when a client has a representation of a resource, the representation contains enough data such that the client can and may alter or delete the resource, given the client is allowed to do so.
     Thirdly messages must be self-descriptive such that a process can be executed as intended without further inquiry.
     The last principle is Hypermedia as the Engine of Application State (HATEOAS), simply put interaction by the client with a network application is through hypermedia provided by the server.

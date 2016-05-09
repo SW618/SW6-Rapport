@@ -1,39 +1,35 @@
-\section{Motivation for Creating the REST-API} \label{sec:current} % Everything
-As previously mentioned it was decided at a multi--group meeting that we would replace the current database connection with a REST--API for GIRAF.
+\section{Motivation for Creating the REST-API} \label{sec:current} 
+As previously mentioned it was decided at a multi group meeting that we would replace the current database connection with a REST API for GIRAF.
 This section will explain the motivation behind this decision by highlighting some of the issues currently present in GIRAF.
 
-In GIRAF there currently exist both a remote database, hosted by ITS (AAU IT-Services), and a local database hosted on the devices.
-When the GIRAF launcher is opened it will download the contents of the remote database into its local database.
-The local database is made by the ``meta-database''--library, and the content is downloaded by the ``local-db''--library.
+An instance of GIRAF currently uses two databases; a remote database hosted by ITS (AAU IT-Services) and a local database hosted on the device in use.
+When the GIRAF launcher is opened with an empty local database it will download the contents of the remote database into its local database.
+The local database is made by the \textit{meta-database}--library, and the content is downloaded by the \textit{local-db}--library.
 
 During last semester one of the project groups, SW610F15, attempted to setup SymmetricDS\footnote{More details at: \url{http://www.symmetricds.org/}} to synchronise the remote- and local--databases.
-They claim to implement this, however they note some serious problems; since SymmetricDS is a bi-directional database replication tool, used to synchronise row-wise, any deletion on one device will delete on every device. \kim{Why is this a problem?}
-Additionally GIRAF contains a large number of foreign key constraints which further complicates this issue. \kim{What does it complicate the issues? Please be more explicit.}
-Their prototype for doing this\kim{what? please rephrase.} was never enabled in GIRAF because of these issues. \kim{It is not clear for the reader what these issues are.}
+They claim to implement this, however they note some serious problems; since SymmetricDS is a bi-directional database replication tool, used to synchronise row-wise, any deletion on one device will delete on every device which can cause conflicts, the same kind that we explained in \myref{sec:offline_giraf}
+Their prototype using SymmetricDS was never enabled in GIRAF because of the dificulties of conflict handling when using the tool on multiple devices. 
 So currently there is only a one way transfer from the remote database to the local database and no transfer the other way.
 
 \bigskip
-There are huge issues with the aforementioned solution, most significantly security and synchronisation issues. \kim{I dont think the concepts security and synchonisation is on the same conceptual level, security is a much more high level concept. My point is that it is wierd to list them together like that.}
-Since the customer of the GIRAF project are institutions under Aalborg Municipality, there are rather strict confidentiality and security measures which must be met.
-These measueres are encryption of files, password protection, strict privacy etc., which are part of ``Persondataloven''\footnote{\url{https://www.retsinformation.dk/forms/r0710.aspx?id=828}}.
+There are significant issues with the aforementioned solution, most importantly for us is the issues the system causes for security and synchronisation as they directly relate to current user stories. 
+Since the customer of the GIRAF project are institutions in Aalborg Municipality, there are rather strict confidentiality and security measures which must be met.
+These measures are encryption of files, password protection, strict privacy, encryption of all out going communication, which are part of ``Persondataloven''\footnote{\url{https://www.retsinformation.dk/forms/r0710.aspx?id=828}}.
+The biggest points for GIRAF is that all users must have a log-in, all communication has to be encrypted, and the data saved locally must also be encrypted.
 This means that GIRAF cannot be allowed synchronise the entire database to each client which downloads it from the Google Play Store, as this would breach the privacy of our users.
-Furthermore the server host will have access to the files which are owned by the other clients, which is not allowed either.
-The previous solution additionally required a database user with read/write permissions to be included in the GIRAF Launcher which is in the Google Play Store. \kim{I understand where you are going with this argument, but please make it implicit.}
-In addition to this, if any new platform were to be adopted, i.e. iOS or a web--interface, they would also have to be directly connected to the database server. \kim{Again, state why this is a problem.}
+Furthermore as there currently is no encryption the server host will have access to the files which are owned by the other clients, which is not allowed.
+The previous solution additionally required a database user with read/write permissions to be included in the GIRAF Launcher which is downloadable from the Google Play Store, allowing the average user access to what should be restricted information.
 
-\kim{Why does a new paragraph start here, you are still listing problem with the current design.}
-Another issue with the current version of the database and its model is that many parts of the logic used in the different apps of GIRAF are placed in the views \kim{view as in MVC views?} rather than on the model they are altering. \kim{again please make it clear why this is a problem. If I understand you correctly then I strongly disagree.}
-An example is the progression system \kim{make sure to explain this progression system when you explain this app the first time. Otherwise use an example of something that you did actually explain.} used in the week schedule where users can mark their progression of a week schedule \kim{Dont you make the progression on a day schedule? This sentence is a bit difficult to understand, try to make it clear when you tall about the app ``week schedule'', the schedule of the week, and a schedule of a day.}. 
-This is currently saved in a file on a device and controlled in the view, which means that the current database could not share progression from device to device, which is a work-flow\kim{write workflow in a consistent way. This is the first time you talk about workflows for the users. Maybe just call it a story to keep your terminology clear.} wished for by the customers as the citizen's do not always use the same tablets.
-The new database will have to be designed with the different workflows \kim{It is not clear what the workflow of an app is, the only work flow I know of, as a reader, is the workflow of the giraf multiproject.} of each of the applications in mind, such that any data which might need to be shared between devices are actually able to do so.
+Yet another issue is that logic is not contained to some definite area, e.g. for most of the system the logic is coupled closely with the view providing high coupling, despite the existence of an MVC type structure with view, model and helper classes acting as controllers.
+An example of where this causes a problem is in the WeekSchedule app.
+Progressionof a week schedule; whether an activity has been completed, is currently being worked on,is yet to be done, or canceled; is saved on a local file controlled by the view, meaning that even if synchronisation were to be implemented atop the current system, progress would not be synchronised as it has no relation to the model.
 
-This means that a new system will need to adhere to the following requirements:
+For the new database we will consider how each application is used such that we can model the relevant data, and therefore not end up lacking a way to keep track of progress in Week Schedule.
+This means that a new database system will need to adhere to the following requirements:
 \begin{itemize}
-	\item Adhere to the requirements of ``Persondataloven''. \kim{It would be very useful to elaborate these more then you did.}
-	\item Only receiving data which is allowed for their users. \kim{maybe change the wording such that it is about permissions.}
-	\item Actually having a two-way connection such that the servers database can be altered, thus allowing synchronisation. \kim{this sentence is a bit passive-aggressive, please make it more neutral.}
-	\item Modelling the required data \kim{what is the required data}, such that all data which needs to be synchronised is able to do so. \kim{I dont understand this line}.
+	\item Adhere to the requirements of ``Persondataloven'' such that the system adheres to danish law and by extension may eventually be hosted by danish institutions.
+	\item A user may only receive data which is either publicly available, available to the institution they are a part of, or their own private information.
+	\item Have a two-way connection such that the server's database can be altered, thus allowing synchronisation.
+	\item Modelling and synchronising all relevant data for each application, such that a user can use an arbitrary tablet without losing data.
 \end{itemize}
-\kim{These requirements should be much more clear and sharply formulated.}
-
 To resolve these issues, we deem it necessary to replace the current solution entirely.
