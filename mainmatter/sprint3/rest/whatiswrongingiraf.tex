@@ -1,37 +1,35 @@
-\section{Motivation for Creating the REST-API} \label{sec:current} % Everything
-As previously mentioned it was decided at a multi--group meeting that we would replace the current database connection with a REST--API for GIRAF.
+\section{Motivation for Creating the REST-API} \label{sec:current} 
+As previously mentioned it was decided at a multi group meeting that we would replace the current database connection with a REST API for GIRAF.
 This section will explain the motivation behind this decision by highlighting some of the issues currently present in GIRAF.
 
 An instance of GIRAF currently uses two databases; a remote database hosted by ITS (AAU IT-Services) and a local database hosted on the device in use.
-When the GIRAF launcher is opened it will download the contents of the remote database into its local database.
-The local database is made by the ``meta-database''--library, and the content is downloaded by the ``local-db''--library.
+When the GIRAF launcher is opened with an empty local database it will download the contents of the remote database into its local database.
+The local database is made by the \textit{meta-database}--library, and the content is downloaded by the \textit{local-db}--library.
 
 During last semester one of the project groups, SW610F15, attempted to setup SymmetricDS\footnote{More details at: \url{http://www.symmetricds.org/}} to synchronise the remote- and local--databases.
 They claim to implement this, however they note some serious problems; since SymmetricDS is a bi-directional database replication tool, used to synchronise row-wise, any deletion on one device will delete on every device which can cause conflicts, the same kind that we explained in \myref{sec:offline_giraf}
-
-\todo[inline]{Troels udpensl lige følgende, forklar hvorfor det et problem med foreign keys, of hvad det er for en prototype du refere til -M}
-Additionally GIRAF contains a large number of foreign key constraints which further complicates this issue. \kim{What does it complicate the issues? Please be more explicit.}
-Their prototype for doing this\kim{what? please rephrase.} was never enabled in GIRAF because of these issues. \kim{It is not clear for the reader what these issues are.}
+Their prototype using SymmetricDS was never enabled in GIRAF because of the dificulties of conflict handling when using the tool on multiple devices. 
 So currently there is only a one way transfer from the remote database to the local database and no transfer the other way.
 
 \bigskip
-There are significant issues with the aforementioned solution, most importantly for us is the issues this causes for security and synchronisation as they directly relate to current user stories. 
-Since the customer of the GIRAF project are institutions under Aalborg Municipality, there are rather strict confidentiality and security measures which must be met.
-These measures are encryption of files, password protection, strict privacy etc., which are part of ``Persondataloven''\footnote{\url{https://www.retsinformation.dk/forms/r0710.aspx?id=828}}.
+There are significant issues with the aforementioned solution, most importantly for us is the issues the system causes for security and synchronisation as they directly relate to current user stories. 
+Since the customer of the GIRAF project are institutions in Aalborg Municipality, there are rather strict confidentiality and security measures which must be met.
+These measures are encryption of files, password protection, strict privacy, encryption of all out going communication, which are part of ``Persondataloven''\footnote{\url{https://www.retsinformation.dk/forms/r0710.aspx?id=828}}.
+The biggest points for GIRAF is that all users must have a log-in, all communication has to be encrypted, and the data saved locally must also be encrypted.
 This means that GIRAF cannot be allowed synchronise the entire database to each client which downloads it from the Google Play Store, as this would breach the privacy of our users.
-Furthermore the server host will have access to the files which are owned by the other clients, which is not allowed either.
-The previous solution additionally required a database user with read/write permissions to be included in the GIRAF Launcher which is in the Google Play Store allowing the average user access to what should be restricted information.
+Furthermore as there currently is no encryption the server host will have access to the files which are owned by the other clients, which is not allowed.
+The previous solution additionally required a database user with read/write permissions to be included in the GIRAF Launcher which is downloadable from the Google Play Store, allowing the average user access to what should be restricted information.
 
-Yet another issue is that logic is not contained to some definite area, e.g. for most of the system the logic is coupled closely with the view providing high coupling, despite there being an MVC type structure with view, model and helper classes acting as controllers.
+Yet another issue is that logic is not contained to some definite area, e.g. for most of the system the logic is coupled closely with the view providing high coupling, despite the existence of an MVC type structure with view, model and helper classes acting as controllers.
 An example of where this causes a problem is in the WeekSchedule app.
-Progression; whether an activity has been completed, is currently being worked on, is yet to be done or canceled; is saved on a local file controlled by the view meaning that even if synchronisation were to be implemented atop the current system, progress would not be synchronised as it has no relation to the model.
+Progressionof a week schedule; whether an activity has been completed, is currently being worked on,is yet to be done, or canceled; is saved on a local file controlled by the view, meaning that even if synchronisation were to be implemented atop the current system, progress would not be synchronised as it has no relation to the model.
 
-For the new database we will consider how each application is used such that we can model the relevant data such that we do not end up lacking such things as a way to track progress in Week Schedule.
-This means that a new system will need to adhere to the following requirements:
+For the new database we will consider how each application is used such that we can model the relevant data, and therefore not end up lacking a way to keep track of progress in Week Schedule.
+This means that a new database system will need to adhere to the following requirements:
 \begin{itemize}
 	\item Adhere to the requirements of ``Persondataloven'' such that the system adheres to danish law and by extension may eventually be hosted by danish institutions.
 	\item A user may only receive data which is either publicly available, available to the institution they are a part of, or their own private information.
 	\item Have a two-way connection such that the server's database can be altered, thus allowing synchronisation.
-	\item Modelling and synchronising all data relevant for each application, such that a user can use an arbitrary tablet without losing data.
+	\item Modelling and synchronising all relevant data for each application, such that a user can use an arbitrary tablet without losing data.
 \end{itemize}
 To resolve these issues, we deem it necessary to replace the current solution entirely.

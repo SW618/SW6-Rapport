@@ -18,48 +18,52 @@ For the remainder of the sprint we will be working on a developer defined user s
 \userstory{As a developer I would like GIRAF to support synchronisation and increase security such that the quality of the system is enhanced and conforms to danish privacy law} \todo[inline]{denne kan eventuelt splittes til 2? --M}
 \userstory{As a developer I would like a RESTful API for GIRAF such that synchronisation and security can be developed}
 
-These two user stories would help to resolve several other user stories currently on the backlog one of them being pertaining to persistence and information security.
+These two user stories would help to resolve several other user stories currently on the backlog, one of them being pertaining to persistence and information security.
 \textbf{\textit{As a user I would like to have my personal information secure such that other users cannot see my information.}}
 
-
 Currently all personal information is downloaded when a device starts the GIRAF launcher for the first time.
-This is the only transaction the device will ever have with the server, i.e. all use creation of new data is confined to the device it is performed on.
-From the customers we know that the citizens do not always use the same tablet which makes it a major problem.
-It was decided by the multi project in sprint 1 that a REST--API can help with privacy issues by implementing a different login system, as well as creating a way to synchronise the data on the tablets.
-In sprint 2 group SW615 started development on the REST--API.
-Developing the API is no simple task and as such our group will from this sprint also be working on the API.
-Beyond the API itself the user story also requires that a new database is set up to support the new model of the system that we will be developing.
-Why a REST--API is created is explained further in \myref{sec:current}.
+This is the only transaction the device will ever have with the server, i.e. all creation of new data is confined to the device it is created on.
+We know from the customers that the citizens do not always use the same tablet which makes this minimal server transaction a major problem.
+It was decided by the multi project in sprint 1 that a REST API can help with the privacy issues by implementing a different login system, as well as creating a way to synchronise the data on the tablets.
+Group SW615 started developent of the REST API in sprint 1.
+Developing the API is no simple task and as such our group will for this sprint work on the API aswell.
+Beyond the API itself it is also decides that a new database is set up to support the new model of the system that we will be developing.
+There is a lot of data in the old system and rather than working with the old models and restricting the design of the API to this model, we want to rethink the model and have the freedom to easily redo what has been done previous years.
+Why a REST API is created is explained further in \myref{sec:current}.
 
-Many user stories on the project backlog is in some way affected by this REST--API and many are blocked by it.
-We present some examples to show that the REST--API needs to be finished as quickly as possible, such that the other tasks can start being worked upon.
-A list of the blocked tasks can be found in \myref{restBlock}. \todo{lav Bilag}
+Many user stories on the project backlog is in some way affected by this REST API and many are blocked by it.
+We present some examples to show that the REST API needs to be finished as quickly as possible, such that the other tasks can start being worked upon.
+A complete list of the blocked tasks can be found in \myref{app:blockedtasks}. 
 
-As the REST--API user story is so big, we define smaller user stories with subsequent tasks in order to attain a better overview of the work to be done.
-The following three user stories is the three REST--API related user stories we will be working on.
+As the REST API user story is big compared to other user stories, we define smaller user stories with subsequent tasks in order to attain a better overview of the work to be done.
+The following five user stories is the five REST API related user stories we will be working on.
 
 \begin{itemize}[style=unboxed]
+	\item \userstory{As a developer, I want a design of the model for Sequence and a guideline for implementing this, such that I can concentrate on actually implementing the model.} 
+	Designing this is estimated at 8 EP.
+	\item \userstory{As a developer, I want a design of the model for WeekSchedule and a guideline for implementing this, such that I can concentrate on actually implementing the model.}
+	Designing this is estimated at 10 EP.
 	\item \userstory{As a developer i would like an endpoint for Pictograms, such that i can retrieve them from GIRAF.}
-	Creating this endpoint is estimated at 13 EP.
+	Creating this endpoint is estimated at 7 EP.
 	\item \userstory{As a developer i would like an endpoint for Sequences, such that i can retrieve them from GIRAF.}
-	Creating this endpoint is estimated at 13 EP.
+	Creating this endpoint is estimated at 7 EP.
 	\item \userstory{As a developer i would like an endpoint for Week Schedules, such that i can retrieve them from GIRAF.}
-	Creating this endpoint is estimated at 31 EP.
+	Creating this endpoint is estimated at 21 EP.
 \end{itemize}
-These estimations are very fragile as we base them on very little knowledge of how much time is needed to test, and design the solutions, while also getting to know the new technologies which will be used for the REST--API.
-Each of the user stories above is divided into three tasks that must be resolved for them to be finished, the tasks are as follows for each.
+These estimations are very fragile as we base them on very little knowledge of how much time is needed to test, and design the solutions, while also getting to know the new technologies which will be used for the REST API.
+Each of the user stories above regarding the creation of endpoints, is divided into three tasks that must be resolved for them to be finished, the tasks are as follows for each.
 \begin{itemize}
-    \item Create Core part of the endpoint.
-    \item Create Persistence part of the endpoint.
-    \item Create Services part of the endpoint.
+    \item Create Core layer of the endpoint.
+    \item Create Persistence layer of the endpoint.
+    \item Create Services layer of the endpoint.
 \end{itemize}
-Core, Persistence and Services are all explained in further detail in \myref{}\todo[inline]{indsæt rigtig ref}, but in short; Core is the model, Persistence is tables for the database and Services is the interface for retrieving data.
+Core, Persistence and Services are all explained in further detail in \myref{}\todo[inline]{indsæt rigtig ref}, but in short; Core is the model, Persistence is the creation of tables for the database and how to query them and Services is the interface for retrieving data.
 More detail on the endpoints themselves will also follow in their individual sections.
 
-As aforementioned SW615 has already started development on the REST--API as such we will be working in collaboration with them throughout the sprint.
-While we have made a split, we focus mainly on endpoints and they focus mainly on login, collaboration will still take place.
-The collaborative parts will be focused mainly on the overall design ideas, modeling of the system, code conduct, technologies used and access levels for users while also reviewing each others code.
+As aforementioned SW615 has already started development on the REST API as such we will be working in collaboration with them throughout the sprint.
+While we have made a split of work areas, we focus mainly on endpoints and they focus mainly on login, collaboration will still take place.
+The collaborative parts will be focused mainly on the overall design ideas, modeling of the system, code conduct, technologies used and how access levels for users should work, while also reviewing each others code.
 
-In total we have estimated that 62 EP will be spend of the REST--API leaving 6 to write our paper.
-Between sprint end and sprint 4 start however we have 20 EP which will be spend mainly on tying up loose ends if any remain, and the paper.
-Before resolving tasks the following section first explains what is currently wrong with GIRAF and why we believe a RESTful--API can solve it, as well as what a RESTful--API is.
+In total we have estimated that 62 EP will be spend on the REST API leaving 6 to write our paper.
+However, between sprint end and sprint 4 start we have 20 EP, which will be spend mainly on tying up loose ends if any remain, and the paper.
+Before resolving tasks the following section first explains what is currently wrong with the database interaction of GIRAF and why we believe a RESTful API can solve the problems, as well as investigating what a RESTful API is.
