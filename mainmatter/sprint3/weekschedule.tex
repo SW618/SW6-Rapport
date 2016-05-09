@@ -1,1 +1,37 @@
-\section{Weekschedule Endpoint}
+\section{REST API: Week Schedule}\label{sec:restws}
+
+One of the focus points for this years GIRAF project have been the Week Schedule app.
+The data for this application should be shared across devices, and some information across users.
+Therefore it is crucial that the Week Schedule part of GIRAF is also part of its REST API.
+This Section will explain the parts of the Week Schedule we developed during this sprint; the Core (model) and Persistence. 
+
+\subsection{Model}
+In this subsection we will introduce the model we made for the Week Schedule.
+First we will explain what this is meant to be used for, that is the Week Schedule app, then we will explain our solution to the problem. 
+
+In the Week Schedule app the view is split into seven views, one for each weekday. 
+Each of these views contains an ordered list of a combination of pictograms, sequences and choices.
+As explained earlier we model these as the \texttt{Frame}--superclass, from which they all inherit. % They inherit despite noone dies. 
+Each frame in a week schedule additionally have a progress, which indicates the status of the frame. 
+The progress' currently in use in the app are: Complete, Active, NotComplete and Canceled. 
+The progress information is currently not stored on the server. \todo{This is correct right??? - T}
+Since the progress information is personal, each user needs to separately have this information stored. 
+
+\todo[inline]{WeekSchedule}
+
+\todo[inline]{Weekday + Day enum}
+
+\todo[inline]{WeekdayFrame}
+
+\todo[inline]{WeekdayFrameProgress}
+
+\subsection{Persistence}
+
+\todo[inline]{SQL}
+
+\todo[inline]{Unittests}
+
+\subsection{Work to do} % Rename ... 
+
+\todo[inline]{Endpoint}
+
