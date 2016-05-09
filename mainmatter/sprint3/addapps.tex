@@ -20,7 +20,7 @@ It should be noted that citizens needs to have applications added to their home 
 \label{sub:pseudo_application}
 Instead of using the aforementioned \enquote{showcase} guide, we deem it more simplistic and intuitive to implement a solution which introduces a new icon to the home screen.
 This icon will look like a regular application, but act as a simple shortcut to the specific tab in the settings menu which deals with adding and removing apps.
-By solving the problem using this pseudo application, there is a clear coherence between where the apps are viewed and where the apps are managed.
+By solving the problem using this pseudo application, there is a clear coherence between where the apps are viewed and where the apps are managed; an example of this can be seen on~\myref{fig:addapps}.
 
 The pseudo app is implemented by injecting it into the task which loads the applications.
 However we must modify the constructor of this class such that the applications can be loaded both with and without the new pseudo app.
@@ -47,3 +47,8 @@ public LoadApplicationTask(final Context context,
 
 \bigskip
 The result of the solution to this user story will be evaluated at the costumer meeting at the end of this sprint.
+
+\begin{figure}[h!]
+    \includegraphics[width=\textwidth]{figures/img/screenshots/addapps_icon.png}
+    \caption{Screenshot of the homescreen shown to a guardian. The new pseudo application for managing apps, can be seen in the buttom row on the far right.}\label{fig:addapps}
+\end{figure}
