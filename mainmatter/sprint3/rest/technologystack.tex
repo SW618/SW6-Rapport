@@ -2,22 +2,18 @@
 
 % The 3 modes should be explained (local only, local rest, remote db, and remote remote dev)
 
-\section{Technologies and Tools Used in the REST API and the Development Hereof}\label{sec:techstack}
+\section{Technologies and Tools}\label{sec:techstack}
 \todo[inline]{Maybe this should be moved to appendix, such that we can refer to them when we talk about them. Only introduce the core few: Hibernate/Jackson/Spring ?}
 In this section the technologies used in the GIRAF REST API and the developent of it will be introduced.
 In sprint 1 and 2, group SW615F16 worked on the REST API and they had decided on most of the technology stack to be used, however a few were introduced while we also are working on it. 
-We briefly introduce the technologies we use below:
+Below, we briefly introduce the technologies and tools used to develop and run the REST API:
+\subsubsection{Technologies}
 \begin{description}
     \item[Java] \hfill \\
         It was firstly decided that the REST API would be written in the Java programming language.
         This is most importantly to mirror the language used to develop the applications in GIRAF.
         Java is also a very popular language, it is number on 1 TIOBEs Index\footnote{\url{http://www.tiobe.com/tiobe_index}} as of writing this. 
         Java also has a big set of tools, frameworks etc. which makes it a good candidate for writing a REST API.
-
-    \item[Gradle] \hfill \\
-        We use the Gradle Build system\footnote{\url{http://gradle.org/}} to automate our builds. 
-        As with the rest of the GIRAF project Gradle is used for build automation. 
-        We have previously explained what Gradle is in \myref{subsec:gradle}.
 
     \item[Hibernate] \hfill \\
         Hibernate\footnote{\url{http://hibernate.org/}} is a framework for object-relational mapping (ORM) which allows us to utilize high level objects while also storing them in a relational database. 
@@ -30,6 +26,18 @@ We briefly introduce the technologies we use below:
     \item[Spring] \hfill \\ 
         Spring\footnote{\url{https://spring.io/}} is a framework for dependency injection. 
         This allows us to decouple the configuration from the logic of the programs. 
+
+    \item[MariaDB] \hfill \\ 
+        MariaDB\footnote{\url{https://mariadb.org/}} is a drop in replacement for MySQL and was started as a fork of MySQL by its original developer when Oracle acquired MySQL.
+        We use MariaDB on the database server as the back-end of the REST API.
+        In it we will store all the persistent data. 
+\end{description}
+\subsubsection{Tools}
+\begin{description}
+    \item[Gradle] \hfill \\
+        We use the Gradle Build system\footnote{\url{http://gradle.org/}} to automate our builds. 
+        As with the rest of the GIRAF project Gradle is used for build automation. 
+        We have previously explained what Gradle is in \myref{subsec:gradle}.
 
     \item[Wildfly] \hfill \\
         WildFly\footnote{\url{http://wildfly.org/}} is the application server which will run the REST API. 
@@ -46,11 +54,6 @@ We briefly introduce the technologies we use below:
         In order to verify the correctness of the code we unit test our code. 
         We have decided to use JUnit\footnote{\url{http://junit.org}} as our unit testing framework.
         JUnit is the de-facto standard for unit testing in Java\footnote{\url{http://www.methodsandtools.com/tools/tools.php?junit}}, and thusly is has good support within most IDEs and tools. 
-
-    \item[MariaDB] \hfill \\ 
-        MariaDB\footnote{\url{https://mariadb.org/}} is a drop in replacement for MySQL and was started as a fork of MySQL by its original developer when Oracle acquired MySQL.
-        We use MariaDB on the database server as the back-end of the REST API.
-        In it we will store all the persistent data. 
 
     \item[H2 DB] \hfill \\
         The H2 Database Engine\footnote{\url{http://www.h2database.com/html/main.html}} is a low footprint local database written in Java. 
