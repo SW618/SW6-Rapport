@@ -1,5 +1,9 @@
 \section{REST API: Week Schedule}\label{sec:restws}
+This section pertains to the following user story: \\
+\userstory{As a developer i would like an endpoint for Week Schedules, such that i can retrieve them from GIRAF.} \\
+Specifically the two sub tasks regarding the core layer and the persistance layer.
 
+\noindent
 One of the focus points for this years GIRAF project have been the Week Schedule app.
 The data for this application should be shared across devices, and some information across users.
 Therefore it is crucial that the Week Schedule part of GIRAF is also part of its REST API.
@@ -7,15 +11,109 @@ This Section will explain the parts of the Week Schedule we developed during thi
 
 \subsection{Model}
 In this subsection we will introduce the model we made for the Week Schedule.
-First we will explain what this is meant to be used for, that is the Week Schedule app, then we will explain our solution to the problem. 
+First we will explain what this is meant to be used for and how it is currently modelled, that is the Week Schedule app, then we will explain our solution to the problem. 
 
-In the Week Schedule app the view is split into seven views, one for each weekday. 
+In the Week Schedule app the view is split into seven views, each representing a day of the week.
+In the current version this is modelled as the Week Schedule being a sequence containing seven sequences.
 Each of these views contains an ordered list of a combination of pictograms, sequences and choices.
-As explained earlier we model these as the \texttt{Frame}--superclass, from which they all inherit. % They inherit despite noone dies. 
-Each frame in a week schedule additionally have a progress, which indicates the status of the frame. 
-The progress' currently in use in the app are: Complete, Active, NotComplete and Canceled. 
-The progress information is currently not stored on the server. \todo{This is correct right??? - T}
+As explained earlier we model these as the \texttt{Frame}--superclass, from which they all inherit. % They inherit despite noone dying. 
+Each frame in a week schedule additionally have a number of boolean values that determine their progress, which indicates the status of the frame. 
+The booleans that currently exist denote the progress are: Complete, Active, NotComplete and Canceled. 
+As mentioned this progress is not stored on the server, but on a locally saved file.
 Since the progress information is personal, each user needs to separately have this information stored. 
+As we believed some of the design choices to be odd, for our own design choices we decided to base it upon how the Week Schedule app is used, and disregard the current model.
+
+\subsubsection{Week Schedule}
+The table seen in \myref{tbl:WeekSchedule} provides an overview and a short description of how we model a WeekSchedule in the REST API.
+For some of the fields further details and thoughts behind their creation is provided.
+
+\begin{table}[]
+\centering
+\caption{Table that represents the WeekSchedule class}
+\label{tbl:WeekSchedule}
+\begin{tabular}{lll}
+\multicolumn{3}{c}{Class: WeekSchedule}                                                                      \\
+Field Name & Type                                    & Short Description                                     \\
+id         & long                                    & Unique ID                                             \\
+name       & string                                  & Name of the WeekSchedule                              \\
+thumbnail  & Pictogram                               & The pictogram shown as thumbnail                      \\
+lastEdit   & Date                                    & Timestamp for when the WeekSchedule was last edited   \\
+department & Department                              & The department that owns the WeekSchedule             \\
+users      & Collection\textless User\textgreater    & All users for whom the WeekSchedule is available      \\
+days       & Collection\textless Weekday\textgreater & The weekdays belonging to the WeekSchedule           
+\end{tabular}
+\end{table}
+\todo[inline]{Lækkerfy this table Sass}
+
+\noindent
+The fields id, name and thumbnail are fairly straight forward and thus will not be discussed further.
+\begin{description}
+    \item [lastEdit] \hfill \\ 
+    The \texttt{lastEdit} field serves the same purpose as \texttt{lastEdit} described in \myref{pictogramendpoint}.
+    \item [department] \hfill \\
+    The \texttt{department} field is used to restrict access such that only users that are part of the department that owns the week schedule, can access that week schedule.
+    \item [users] \hfill \\
+    The \texttt{users} field defines what users the WeekSchedule is available to.
+    The users in this collection pertains specifically to citizens as all guardians within a department can edit week schedules belonging to that department.
+    This field allows for several citizens to use the same week schedule such that if the department goes on a trip, rather than having to create a week schedule for each individual citizen, they can use a shared one for shared activities.
+    This is a feature not available in the live version of the system, yet it is something that the customers expressed a want for in our first meeting with them \citep{GIRAF20161stMeeting}.
+    \item [days] \hfill \\
+    The \texttt{days} field contains at most seven days which are represented by their own class, Weekday, described next.
+    If a day is without activity it may be represented as either a Weekday, or lack thereof as an empty day does not require any information to create the view in the app.
+\end{description}
+
+\subsubsection{Weekday}
+The table seen in \myref{tbl:Weekday} provides an overview and a short description of how we model a Weekday in the REST API.
+
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{my-label1}
+\begin{tabular}{lll}
+\multicolumn{3}{c}{Class: Weekday}                                                                           \\
+Field Name   & Type                                   & Short Description                                    \\
+id           & long                                   & Unique ID                                            \\
+day          & Enum\textless Day\textgreater          & Defines which day of the week the Weekday represents \\
+lastEdit     & Date                                   & Timestamp for when the Weekday was last edited       \\
+weekSchedule & WeekSchedule                           & The WeekSchedule the Weekday belongs to              \\
+frames       & List\textless WeekdayFrame\textgreater & Timestamp for when the WeekSchedule was last edited 
+\end{tabular}
+\end{table}
+
+
+\subsubsection{WeekdayFrame}
+
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{my-label2}
+\begin{tabular}{lll}
+\multicolumn{3}{c}{Class: WeekdayFrame}                                                                    \\
+Field Name & Type                                  & Short Description                                     \\
+id         & long                                  & Unique ID                                             \\
+weekday    & Weekday                               & The Weekday that a Frame should be added to           \\
+frame      & Frame                                 & The Frame that should be added to the Weekday         \\
+index      & int                                   & The order for which Frames are stored                 \\
+frames     & List\textless WeekdayFrame\textgreater & The list that stores all Frames, ordered by ascending
+\end{tabular}
+\end{table}
+
+\subsubsection{WeekdayFrameProgress}
+
+
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{my-label}
+\begin{tabular}{lll}
+\multicolumn{3}{c}{Class: WeekdayFrameProgress}                                                     \\
+Field Name   & Type                              & Short Description                                \\
+id           & long                              & Unique ID                                        \\
+user         & User                              & The user for which progress is specified         \\
+weekdayFrame & WeekdayFrame                      & The WeekdayFrame for which progress is specified \\
+progress     & Enum\textless Progress\textgreater & The Progress for the specified WeekdayFrame     
+\end{tabular}
+\end{table}
 
 \todo[inline]{WeekSchedule}
 
@@ -26,12 +124,13 @@ Since the progress information is personal, each user needs to separately have t
 \todo[inline]{WeekdayFrameProgress}
 
 \subsection{Persistence}
+\subsubsection{SQL}
+\subsubsection{Unittests}
 
 \todo[inline]{SQL}
 
 \todo[inline]{Unittests}
 
-\subsection{Work to do} % Rename ... 
+\subsection{Work Remaining} % Rename ... 
 
 \todo[inline]{Endpoint}
-
