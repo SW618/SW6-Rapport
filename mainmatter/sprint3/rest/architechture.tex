@@ -1,6 +1,6 @@
-\section{Architechture of the REST API}
+\section{Architecture of the REST API}
 Before developing the code which creates the API endpoints, a proper architecture should be established.
-Since it can be costly to backtrace\todo{Måske ikke det bedste ord?} and change central decisions made in this phase, a big amount of time have been spent thinking about the design.
+Since it can be costly to go back and change central decisions made in this phase, a big amount of time have been spent thinking about the design.
 Most of this design was made by \textit{SW615F16} during sprint 1 and 2, but some refinements have been made by us during the resolutions of our tasks regarding the REST API.
 The full list of technologies used in the REST API and the development hereof will be listed in \myref{sec:techstack}, however in this section we will introduce the architecture used in the REST API.
 
@@ -33,7 +33,7 @@ The 3 layers depicted in the figure are: \textbf{Core}, \textbf{Persistence} and
 \subsection{Testing}
 One of the benefits of separating the REST API into the aforementioned layered architecture, is the ability to easily unit test the different components.
 During the development we want to be able to test the REST API such that we can ensure whether or not the code works as intended.
-The Core and Persistance layers each have a test package which contains unit tests to ensure the correctness of the implementation.
+The Core and Persistence layers each have a test package which contains unit tests to ensure the correctness of the implementation.
 The tests in the persistence layer works as integration tests since it relies on the consistency of the Core, the SQL which creates the database, and the DAOs.
 With sufficient unit testing we can also easily do refactoring and change implementations details, meanwhile guaranteeing that the codes behaves as expected.
 However one must contemplate the false security which unit testing can give; the correctness of the code which is tested using unit tests, heavily relies on the correctness of the tests themselves.
