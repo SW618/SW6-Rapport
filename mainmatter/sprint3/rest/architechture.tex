@@ -1,29 +1,28 @@
 \section{Architechture of the REST API}
-Before developing the code which creates the API endpoints, a proper architechture should be establish. 
-Since it can be costly to backtrace and change central decisions made in this phase, a big amount of time have been spent thinking about the design. 
-Most of this design was made by \textit{SW615F16} during sprint 1 and 2, but some refinements have been made by us during the resulutions of our tasks regarding the REST API. 
-The full list of technologies used in the REST API and the development hereof will be listed in \myref{sec:techstack}, however in this section we will introduce the architecture used in the REST API. 
+Before developing the code which creates the API endpoints, a proper architecture should be established.
+Since it can be costly to backtrace\todo{Måske ikke det bedste ord?} and change central decisions made in this phase, a big amount of time have been spent thinking about the design.
+Most of this design was made by \textit{SW615F16} during sprint 1 and 2, but some refinements have been made by us during the resolutions of our tasks regarding the REST API.
+The full list of technologies used in the REST API and the development hereof will be listed in \myref{sec:techstack}, however in this section we will introduce the architecture used in the REST API.
 
 When we speak of the REST API were talking about the system which is located between the client and the database.
-Its job is to serv content from the database to the client. 
-\myref{fig:rest-architecture} contains a diagram which explains the basic layers of the architecture alongside the connections between said layers. 
-The 3 layers depicted in the figure are: \textbf{Core}, \textbf{Persistance} and \textbf{Service}, the meaning of these are as follows:
+Its job is to serve content from the database to the client.
+\myref{fig:rest-architecture} contains a diagram which explains the basic layers of the architecture alongside the connections between said layers.
+The 3 layers depicted in the figure are: \textbf{Core}, \textbf{Persistence} and \textbf{Service}, the meaning of these are as follows:
 \begin{description}
     \item[Core] \hfill \\
     The core layer contains the model of the REST API, a full class diagram will be shown later in \todo{ref her}.
 
-    \item[Persistance] \hfill \\ 
-    In the persistance layer we define and implement the data access objects (DAOs) which define how the objects in the database are accessed, as well as write and read files from the disk such as images. 
-    Additionally we contstruct the tables for the relational database and some localdata which is used for unit tests and test data during development. 
+    \item[Persistence] \hfill \\
+    In the persistence layer we define and implement the data access objects (DAOs) which define how the objects in the database are accessed, as well as write and read files from the disk such as images.
+    Additionally we construct the tables for the relational database and some localdata which is used for unit tests and test data during development.
 
-    \item[Service] \hfill \\ 
+    \item[Service] \hfill \\
     The service layer contains the code which is accessed by clients.
-    Here we construct the endpoints which the clients can connect to; we use the DAOs in the persistance layer to access and manipulate data if the client is allowed to do so. 
+    Here we construct the endpoints which the clients can connect to; we use the DAOs in the persistence layer to access and manipulate data if the client is allowed to do so.
 \end{description}
 
 \begin{figure}[h]
     \centering
-    % \includegraphics[width=0.8\textwidth]{figures/wip-stack.png}
     \input{figures/tikz/architecture_diagram.tex}
     \caption{REST API architecture}
     \label{fig:rest-architecture}
@@ -32,14 +31,14 @@ The 3 layers depicted in the figure are: \textbf{Core}, \textbf{Persistance} and
 \todo[inline]{Maybe we should put some of the technologies we use directly in the figure?}
 
 \subsection{Testing}
-One of the benifits of seperating the REST API into the aforementioned layered architecture, is the ability to easily unit test the different components.
-During the development we want to be able to test the REST API such that we can ensure whether or not the code works as intented. 
-The Core and Persistance layers each have a test package which contains unit tests to ensure the correctness of the implementation. 
-The tests in the persistance layer works as integration tests since it relies on the consistancy of the Core, the SQL which creates the database, and the DAOs.
-With sufficient unit testing we can also easily do refactoring and change implementations details, meanwhile guarenteeing that the codes behaves as expected.
-However one must comtemplate the false security which unit testing can give; the correctness of the code which is tested usign unit tests, heavily relies on the correctness of the tests themselves.
-Because of the it is important that unit tests are relatively simple and unambigious, such that a programmer easily can comprehend whether or not the test itself is correct.
+One of the benefits of separating the REST API into the aforementioned layered architecture, is the ability to easily unit test the different components.
+During the development we want to be able to test the REST API such that we can ensure whether or not the code works as intended.
+The Core and Persistance layers each have a test package which contains unit tests to ensure the correctness of the implementation.
+The tests in the persistence layer works as integration tests since it relies on the consistency of the Core, the SQL which creates the database, and the DAOs.
+With sufficient unit testing we can also easily do refactoring and change implementations details, meanwhile guaranteeing that the codes behaves as expected.
+However one must contemplate the false security which unit testing can give; the correctness of the code which is tested using unit tests, heavily relies on the correctness of the tests themselves.
+Because of the it is important that unit tests are relatively simple and unambiguous, such that a programmer easily can comprehend whether or not the test itself is correct.
 Moreover the code coverage of the unit tests is also an important factor, i.e. how many lines and effectively branches of the code is tested.
-A codebase may have a dusin unit test which passed, but if only 50 \% of the code is tested, the unit tests cannot be used to conclude if the program behaves correctly.
+A codebase may have a dozen unit test which passed, but if only 50 \% of the code is tested, the unit tests cannot be used to conclude if the program behaves correctly.
 Furthermore, it is important to keep in mind that testing only helps discover errors in a given piece of software, it cannot guarantee that there are no remaining faults in present. For more on software testing see Chapter 8 in \textit{Software Engineering (Tenth Edition)} By Ian Sommerville~\cite[Chapter~8]{SEBOOK}.
 
