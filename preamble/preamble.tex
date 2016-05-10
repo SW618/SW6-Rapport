@@ -15,8 +15,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[table, dvipsnames]{xcolor}
 \input{preamble/colors.tex}
-\definecolor{aaublue}{RGB}{33,26,82}
-\definecolor{OliveGreen}{rgb}{0,0.6,0}
 \usepackage{graphicx}
 \usepackage{subcaption}
 \usepackage{sidecap}
@@ -58,9 +56,10 @@
     {}
 \titleformat{\chapter}[hang]%
     {\Huge\sffamily\mdseries\vspace{-40pt}}%
-    {\thechapter\vspace{-20pt}\hsp\textcolor{aaublue}{|}\hsp}%
+    {\thechapter\hsp\textcolor{aaublue}{|}\hsp}%
     {0pt}%
-    {\Huge\sffamily\mdseries\vspace{-20pt}} 
+    {\Huge\sffamily\mdseries}%
+    [\vspace{-20pt}] 
 \titleformat{\section}
     {\normalfont\Large\sffamily}{\thesection}{1em}{}
 \titleformat{\subsection}
@@ -148,6 +147,9 @@
 
 \headheight 15pt
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% TikZ
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \tikzstyle{decision} = [diamond, draw, fill=yellow!40, text width=4.5em, text badly centered, inner sep=3pt]
 \tikzstyle{block} = [rectangle, draw, fill=green!40, text width=5em	, rounded corners, minimum height=3em]
 \tikzstyle{wideblock} = [block, text width=0.8\textwidth, align=center]
