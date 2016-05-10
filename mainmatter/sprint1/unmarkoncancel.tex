@@ -7,11 +7,12 @@ This action is performed by tapping the bin in the upper left corner, followed b
 When the marking is done the guardian must tap the bin again prompting them with the choice of either completing or canceling the deletion.
 In the current version of Week Schedule the cancellation of a delete does not unmark the marked schedules, hereby presenting outdated and confusing feedback to the user.
 The same problem is present in the individual schedules when the guardian wants to delete one or more activities from a given schedule, the workflow is the same.
-This is formulated as the user story: ``In Week Schedule as an administrator, I would like week schedules that I marked while in deletion mode to get unmarked if I cancel the delete.''
+This is formulated as follows: 
+\userstory{In Week Schedule as an administrator, I would like week schedules that I marked while in deletion mode to get unmarked if I cancel the delete.}
 This task was added later during the sprint and has therefore not been a part of the planing poker and not received an estimated EP.
 2 EP was spent on resolving this task. 
 
-\paragraph{Clearing the data}\hfill\\
+\subsubsection{Clearing the data}
 Most of the prerequisites to solve this issue is already implemented in the current version of Week Schedule for other purposes. 
 Thus reusing methods which already exist can mostly solve this issue. 
 In both of the previously described scenarios where wrongful feedback is given, Week Schedule uses two variables respectively called \texttt{markedSchedules} and \texttt{markedActivities} to store the marking.
@@ -25,12 +26,12 @@ This ensures that future markings can be made without crashing the application.
 These changes will are not enough to present the user with the appropriate feedback just yet as the view must also be updated.
 The clearing is handled by the method called on line 2 in \myref{lst:exitdeletemode}.
 
-\paragraph{Updating the view}\hfill\\
+\subsubsection{Updating the view}
 The part of the view in Week Schedule that displays the schedules and activities consists of \enquote{adapters}.
 These adapters need to be notified when changes occur to their content, such that the visual representation can be re-rendered.
 To notify the adapters we use methods which are already implemented, e.g. \texttt{updateView()} and \texttt{notifyAllAdapters()}.
 
-\paragraph{Restructuring} \hfill\\
+\subsubsection{Restructuring}
 To avoid introducing duplicated code and poor maintainability, the new functionality is placed in a method called \texttt{exitDeleteMode()}, such that instead of having the same code twice as before it is now inside methods rather than copy and pasted when needed.
 These methods are called when the user cancels or completes a delete, either by tapping \enquote{cancel}, \enquote{delete} or the back button;
 and their purpose is to return to the default mode, i.e. not delete mode.
