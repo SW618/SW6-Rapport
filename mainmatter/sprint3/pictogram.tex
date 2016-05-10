@@ -1,7 +1,39 @@
-\section{Pictogram Endpoint}
+\section{Pictogram Endpoint}\label{pictogramendpoint}
+This section will solve the \userstory{As a developer i would like an endpoint for Pictograms, such that i can retrieve them from GIRAF.}
+
+The Pictogram endpoint is used for the PictoSearch library to find different pictograms, as well as to get specific pictograms which have not been downloaded yet.
+Currently in the PictoSearch library a user searches for some string, and the local database is queried using \texttt{... LIKE \%searchstring\%} and as such this will also be used for the REST API.
+Therefore a goal of the REST API for pictograms is to provide a search method, such that PictoSearch will result in the same results as before.
+The endpoint will also be used in the case that a user opens, e.g. a week schedule which contains a pictogram that the device have not saved locally, the endpoint will then retrieve this single pictogram rather than returning a list of pictograms.
+
+The model that was described in \myref{restapimodel} was the complete model of the REST API \myref{fig:screenshot_newsearch} shows the model regarding pictograms along with the fields of these classes.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/diagram-pictogram.png}
-    \caption{Screenshot of the new search information, while searching.}\label{fig:screenshot_newsearch}
-\end{figure}
+    \includegraphics[width=0.5\textwidth]{figures/diagram-pictogram.png}
+    \caption{Class-diagram including fields of the classes involved in Pictograms}\label{fig:screenshot_newsearch}
+\end{figure}\todo{Update accordingly in the end}
+
+Here a brief description of the purpose for each field of the classes on the figure will be given.
+\subsubsection*{Frame}
+	\begin{description}
+		\item[id] This is the id of the Frame which is saved in the database.
+		\item[lastEditAt] This is a time stamp of when the Frame was last edited. 
+		It is to be used for conflict handling as e.g. pictograms can be altered in the PictoCreator tool, and a need for conflict handling is therefore needed.
+		\item[partofSequences] This is a collection if sequences this frame is used in, and why this collection is here will be further explained in \todo[inline]{sequenceendpointref}
+	\end{description}
+\subsubsection*{PictoFrame}
+	\begin{description}
+		\item[title] Title of the \texttt{PictoFrame}, it is used to search for and also to show what the \texttt{PictoFrame} is called when shown with its title in different parts of GIRAF.
+		\item[owner] The user which owns the \texttt{PictoFrame}. 
+		This is used to accommodate the need for creating private \texttt{Pictograms} and \texttt{Sequences}.
+		Private means that only the user who is owner can access them.
+		\item[accessLevel] This is an Enumeration which specifies whether the \texttt{PictoFrame} is Public, shared on department or private.
+		\item[department] Specifies which apartment the \texttt{PictoFrame} belongs to, and is used when the accessLevel is specified as shared on department.
+		\item[optionOn] A collection of all \texttt{Choice}s which contain the \texttt{PictoFrame}.
+		This is needed for hibernate to create the many-to-many relationship between \texttt{PictoFrame} and \texttt{Choice}, and will probably not be used for anything else.
+	\end{description}
+\subsubsection*{Pictogram}
+	\begin{description}
+		\item[titlePictogramOn] A collection of the \texttt{Sequence}s which this \texttt{Pictogram} is the titlePictogram of.
+	\end{description}
