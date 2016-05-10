@@ -1,1 +1,62 @@
 \chapter{Sprint End}
+
+\section{Sprint Review}\label{sec:sprintreview3}
+This section will review the work we have done in this sprint and discuss what needs more work to be completed.
+We took some big tasks this sprint regarding the REST API, and we underestimated how much work is needed in creating these tasks.
+We spent a lot more time discussing the design of Week Schedule with the other groups, especially about how to solve the security aspects of GIRAF.
+We tried to catch up on the work as we saw we were falling behind, which is why we spent more time than we had for this sprint, as can be seen on \myref{tbl:sprint_review3}.
+We had underestimated the amount of time it took to learn how to use the tools and technologies which we described in  \todo{TECHSTACK REF}.
+This ended up costing a lot of time reading documentation and seeking help from SW615F16, as they already had experience with the tools and technologies.
+We did neither finish the REST API for Sequence nor for Week schedule, as the Service layers still needs to be implemented, but the rest of the layers, Core and Persistence, are both complete with unit tests and integrations tests, giving us a sense of security in the implementation so far.
+Since these changes does not affect the customers yet, they have not been reviewed by them.
+
+We have also completed a user story regarding the addition of apps on the home screen of GIRAF.
+The customers were very happy with the result and thought that is was very intuitive, and new guardians would not be in doubt of what to do in order to add more applications to the device.
+
+As we did not finish two of the REST API user stories, we will continue on implementing these in the next and final sprint, but as described above it is only the Service layers that are missing, which does seem to be the smallest layer of the 3.
+
+\begin{table}[h]
+    {\setlength{\extrarowheight}{.75ex}%
+        \begin{tabular}{llrr}
+        && \multicolumn{2}{c}{Points}\\
+        \multicolumn{2}{c}{User Story}      & Estimated & Spent \\
+        \midrule
+        \tblgrpsep
+        \multicolumn{2}{l}{Formal tasks}                        \\
+        \cline{1-2}
+        & Design of Sequence                &  8    & 12        \\
+        & Design of Week Schedule           & 10    & 16        \\
+        & REST API Pictogram                &  7    & 10        \\
+        & REST API Sequence                 & 11    & 16        \\
+        & REST API Week Schedule            & 21    & 20        \\
+        & Add Applications                  &  5    &  5        \\
+        \tblgrpsep
+        \midrule
+        \multicolumn{2}{l}{Total}           & 62    & 79        \\
+    \end{tabular}}
+    \centering
+    \caption{This table shows the estimated effort points for the different user stories titled with short stories, along with the amount of points we actually spent. Time spent on writing the paper is not included in this table.}
+    \label{tbl:sprint_review3}
+\end{table}
+
+\section{Sprint Retrospective}
+This section will be a sprint retrospective separated into two parts, a part for the multi project and one internally in the group.
+
+\subsection*{Multi Project Retrospective}
+The multi project is running smoothly now and as such it is minimal what changes we are doing to the process.
+It was discussed that people left quickly at the weekly Scrum meeting and because of this sometimes when another group had planned to talk with someone, the someone had left the room before they had a chance to do so.
+Therefore, we decided that having the Scrum master ask if we needed to speak with someone at the Scrum meeting would be great such that they do not leave as soon as possible.
+
+One last thing was that the differentials which are uploaded to Phabricator sometimes became too big \textasciitilde 1000 lines of code, which makes it very difficult to review in a reasonable amount of time.
+To make it easier to grasp what a differential is about we decided that they should be smaller and removed the rule that a differential had to be a fully completed user story, as long as the changes does not break the application.
+
+\subsection*{Internal Project Retrospective}
+This sprint we made sure to have a Scrum meeting daily, and we also used the Scrum board at these meetings, which had been neglected in sprint 2.
+This gave everyone in the group a larger overview of our progress, and even helped us produce more work.
+The user stories for this sprint have been more difficult than the other sprints but we are happy with our results.
+We used pair programming for every single user story and only worked on the programming assignments when at the university while other tasks like reviewing code or writing for the report was done at home.
+This greatly improved the quality of our work and also helped our productivity because no one was doing nothing at any one time.
+Pair programming for the REST API is also especially relevant as the code is more complex than the application code which we have previously written, the design is more thorough and the pair programming aspects brings much more discussion of the design.
+Additionally it greatly helped spreading knowledge inside the group.
+
+We will continue to pair program through sprint 4 and also do daily Scrum and utilise Scrum board, as we all agree that this is the most successful sprint yet, even though we did not finish the user stories as explained in \myref{sec:sprintreview3}.
