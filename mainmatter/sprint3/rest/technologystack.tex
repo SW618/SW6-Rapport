@@ -4,7 +4,7 @@
 
 \section{Technologies and Tools}\label{sec:techstack}
 \todo[inline]{Maybe this should be moved to appendix, such that we can refer to them when we talk about them. Only introduce the core few: Hibernate/Jackson/Spring ?}
-In this section the technologies used in the GIRAF REST API and the developent of it will be introduced.
+In this section the technologies used in the GIRAF REST API and the development of it will be introduced.
 In sprint 1 and 2, group SW615F16 worked on the REST API and they had decided on most of the technology stack to be used, however a few were introduced while we also are working on it. 
 Below, we briefly introduce the technologies and tools used to develop and run the REST API:
 \subsubsection{Technologies}
@@ -26,6 +26,11 @@ Below, we briefly introduce the technologies and tools used to develop and run t
     \item[Spring] \hfill \\ 
         Spring\footnote{\url{https://spring.io/}} is a framework for dependency injection. 
         This allows us to decouple the configuration from the logic of the programs. 
+
+    \item[RESTEasy] \hfill \\
+        RESTEasy\footnote{\url{http://resteasy.jboss.org/}} is JBoss' (which also makes Wildfly) implementation of the JAX-RS 2.0 standard, which is a Java API used to make RESTful Web Services.
+        RESTEasy provides annotations, according to the standard, which gives meaning to the methods in the service layer.
+        Examples of these are: \texttt{@GET}, \texttt{@POST} and \texttt{@Produces}, these will be further explained when we use them in \todo[inline]{ref til brug her.}
 
     \item[MariaDB] \hfill \\ 
         MariaDB\footnote{\url{https://mariadb.org/}} is a drop in replacement for MySQL and was started as a fork of MySQL by its original developer when Oracle acquired MySQL.
