@@ -7,7 +7,7 @@ First a presentation of the steps involved in developing the different layers fo
 This is followed by the design of the model as a class diagram.
 
 \subsection{Developing an Endpoint and its Constituents}
-As stated in \myref{architechture} a single endpoint consists of three layers.
+As stated in \myref{sec:architecture} a single endpoint consists of three layers.
 A core layer which is where the classes of the model are implemented and tested.
 A persistence layer which is where the tables for the model, defined in the core, are created; the annotations from hibernate used in the core relates the data in the two layers.
 The persistence layer for each of the endpoints, also consists of a Data Access Object(DAO) class which is used to gain access to the objects in the database. 
@@ -64,7 +64,7 @@ The final layer to create for an endpoint is the service layer and consists of a
 \noindent
 The next section will present the model to be modelled in the core layer for the three end points we are developing this sprint.
 
-\subsection{The new Model for REST API}\todo{add something bout users}
+\subsection{The new Model for REST API}\todo{add something bout users}\label{subsec:model}
 The new model design is an attempt to make the central parts of GIRAF more cohesive than before.
 We will start by discussing week schedule and then go on to discuss the rest of the model.
 \todo{indsæt klassediagram her} A week schedule consists of 7 week days one for each day of the week which creates a relation from a \texttt{weekSchedule} to several \texttt{weekDay}s.
@@ -86,4 +86,4 @@ All these classes are very intertwined and rely on eachother which makes the imp
 The \texttt{weekday} has a relationship-class: \texttt{weekdayFrame} to bind these \texttt{Frame}s together with a weekday which helps to preserve the order of frames on a weekday as well as being able to save the progress of a weekschedule.
 The progress is saved in another relationship-class: \texttt{weekdayFrameProgress} as the progress depends on the user because this new model of GIRAF weekschedules allows a weekschedule to be shared between users, which might be used for when an institution goes on a trip.
 
-With the model described the folling sections goes into more detail about the specific endpoints.
+With the model described the following sections goes into more detail about the specific endpoints.

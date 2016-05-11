@@ -1,6 +1,6 @@
-\section{Architecture of the REST API}
+\section{Architecture of the REST API}\label{sec:architecture}
 Before developing the code which creates the API endpoints, a proper architecture should be established.
-Since it can be costly to go back and change central decisions made in this phase, a big amount of time have been spent thinking about the design.
+Since it can be costly to go back and change central decisions made in this phase, a large amount of time have been spent thinking about the design.
 Most of this design was made by \textit{SW615F16} during sprint 1 and 2, but some refinements have been made by us during the resolutions of our tasks regarding the REST API.
 The full list of technologies used in the REST API and the development hereof will be listed in \myref{sec:techstack}, however in this section we will introduce the architecture used in the REST API.
 
@@ -10,15 +10,15 @@ Its job is to serve content from the database to the client.
 The three layers of the REST API depicted in the figure are: \textbf{Core}, \textbf{Persistence} and \textbf{Service}, the meaning of these are as follows:
 \begin{description}
     \item[Core] \hfill \\
-    The core layer contains the model of the REST API, a full class diagram will be shown later in \todo{ref her}.
+    The core layer contains the model of the REST API, a full class diagram will be shown later in \myref{subsec:model}.
 
     \item[Persistence] \hfill \\
     In the persistence layer we define and implement the data access objects (DAOs) which define how the objects in the database are accessed, as well as write and read files from the disk such as images.
-    Additionally we construct the tables for the relational database and some localdata which is used for unit tests and test data during development.
+    Additionally we construct the tables for the relational database and some localdata which is used for integration tests and test data during development.
 
     \item[Service] \hfill \\
     The service layer contains the code which is accessed by clients.
-    Here we construct the endpoints which the clients can connect to; we use the DAOs in the persistence layer to access and manipulate data if the client is allowed to do so.
+    Here we construct the endpoints which the clients can connect to; we use the DAOs in the persistence layer to access and manipulate data if the clients are allowed to do so.
 \end{description}
 
 \begin{figure}[h]
@@ -28,7 +28,6 @@ The three layers of the REST API depicted in the figure are: \textbf{Core}, \tex
     \label{fig:rest-architecture}
 \end{figure}
 
-\todo[inline]{Maybe we should put some of the technologies we use directly in the figure?}
 
 \subsection{Testing}
 One of the benefits of separating the REST API into the aforementioned layered architecture, i.e. core, persistence and service, is the ability to easily test the different components.
