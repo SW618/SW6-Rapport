@@ -22,6 +22,7 @@ Here a brief description of the purpose for each field of the classes on the fig
 		It is to be used for conflict handling as e.g. pictograms can be altered in the PictoCreator tool, and a need for conflict handling is therefore needed.
 		\item[partofSequences] This is a collection if sequences this frame is used in, and why this collection is here will be further explained in \todo[inline]{sequenceendpointref}
 	\end{description}
+
 \subsubsection*{PictoFrame}
 	\begin{description}
 		\item[title] Title of the \texttt{PictoFrame}, it is used to search for and also to show what the \texttt{PictoFrame} is called when shown with its title in different parts of GIRAF.
@@ -33,7 +34,24 @@ Here a brief description of the purpose for each field of the classes on the fig
 		\item[optionOn] A collection of all \texttt{Choice}s which contain the \texttt{PictoFrame}.
 		This is needed for hibernate to create the many-to-many relationship between \texttt{PictoFrame} and \texttt{Choice}, and will probably not be used for anything else.
 	\end{description}
+
 \subsubsection*{Pictogram}
 	\begin{description}
-		\item[titlePictogramOn] A collection of the \texttt{Sequence}s which this \texttt{Pictogram} is the titlePictogram of.
+		\item[isTitlePictogramOn] A collection of the \texttt{Sequence}s which this \texttt{Pictogram} is the titlePictogram of.
+		\item[pictogramImage] A reference to the \texttt{Pictogram}'s \texttt{PictogramImage}
+		\item [weekScheduleThumbnail] Much like the \texttt{isTitlePictogramOn} but this is for a collection of \texttt{WeekSchule}s instead.
+	\end{description}
+
+\subsubsection*{PictogramImage}
+The \texttt{PictogramImage} has no fields of its own, but is used to indicate that the image is used for a \texttt{Pictogram} instead of e.g. a UserIcon.
+It inherits fields for PersistFileHandle instead.
+
+\subsubsection*{PersistFileHandle}
+This class is what all images in GIRAF will inherit from, this means \texttt{Pictogram}s and also \texttt{UserIcon}s. 
+Originally when we started working on the REST API for Pictogram the \texttt{PersistFileHandle} did not exist and all information on this class was saved directly on the \texttt{UserIcon} class.
+Why and how this new generality is created will be explained in \todo{ref til sektionen}.
+It contains the following fields:
+	\begin{description}
+		\item[id] This field is self explanatory.
+		\item[filePath] A string of the path to the file which the class points to, for the \texttt{Pictogram} endpoint it will be a Pictogram.
 	\end{description}
