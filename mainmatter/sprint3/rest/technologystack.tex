@@ -13,11 +13,12 @@ Below, we briefly introduce the technologies and tools used to develop and run t
 
     \item[Hibernate] \hfill \\
         Hibernate\footnote{\url{http://hibernate.org/}} is a framework for object-relational mapping (ORM) which allows us to utilize high level objects while also storing them in a relational database.
+        It will be used in the core and persistence layer of the REST API.
         We use Java annotations to configure it on a per variable and class base, this will be further explained later in \todo{ref her.}.
 
     \item[Jackson] \hfill \\
         Jackson\footnote{\url{http://wiki.fasterxml.com/JacksonHome}} is a Java library for processing JSON.
-        We use it to (de)serialise objects between the client and the REST API.
+        We use it to (de)serialise objects between the client and the REST API, which is done in the service layer.
 
     \item[Spring] \hfill \\
         Spring\footnote{\url{https://spring.io/}} is a framework for dependency injection.
@@ -30,7 +31,7 @@ Below, we briefly introduce the technologies and tools used to develop and run t
 
     \item[MariaDB] \hfill \\
         MariaDB\footnote{\url{https://mariadb.org/}} is a drop in replacement for MySQL and was started as a fork of MySQL by its original developer when Oracle acquired MySQL.
-        We use MariaDB on the database server as the back-end of the REST API.
+        We use MariaDB on the database server as the back-end of the REST API environment (the \enquote{Database} in \myref{fig:rest-architecture}).
         In it we will store all the persistent data.
 \end{description}
 \subsubsection{Tools}
