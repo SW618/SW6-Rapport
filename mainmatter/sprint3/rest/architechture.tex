@@ -1,12 +1,12 @@
 \section{Architecture of the REST API}\label{sec:architecture}
 Before developing the code which creates the API endpoints, a proper architecture should be established.
 Since it can be costly to go back and change central decisions made in this phase, a large amount of time have been spent thinking about the design.
-Most of this design was made by \textit{SW615F16} during sprint 1 and 2, but some refinements have been made by us during the resolutions of our tasks regarding the REST API.
+Most of this architectual design was made by \textit{SW615F16} during sprint 1 and 2, but some refinements been made by us during the resolutions of our tasks regarding the REST API.
+The techonolgy and tools refinements include adding and using the techonolgies: Flyway, Enunciate, and H2 DB.
 The full list of technologies used in the REST API and the development hereof will be listed in \myref{sec:techstack}, however in this section we will introduce the architecture used in the REST API.
 
+When we speak of the REST API we talk about the system which is located between the client and the database.
 
-
-When we speak of the REST API were talking about the system which is located between the client and the database.
 Its job is to serve content from the database to the client.
 \myref{fig:rest-architecture} contains a diagram which explains the basic layers of the architecture alongside the connections between the REST API and its surroundings; e.g. the client-server concept described on page~\pageref{client-server-rest}, can be seen as the clients are connected to the REST API, i.e. the server, through the internet.
 The three layers of the REST API depicted in the figure are: \textbf{Core}, \textbf{Persistence} and \textbf{Service}, the meaning of these are as follows:
@@ -29,7 +29,6 @@ The three layers of the REST API depicted in the figure are: \textbf{Core}, \tex
     \caption{The environment and architecture of the REST API.}
     \label{fig:rest-architecture}
 \end{figure}
-
 
 \subsection{Testing}
 One of the benefits of separating the REST API into the aforementioned layered architecture, i.e. core, persistence and service, is the ability to easily test the different components.
