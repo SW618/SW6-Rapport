@@ -26,6 +26,8 @@ As we believed some of the design choices to be odd, for our own design choices 
 \subsubsection{Week Schedule}
 The table seen in \myref{tbl:WeekSchedule} provides an overview and a short description of how we model a WeekSchedule in the REST API.
 For some of the fields further details and thoughts behind their creation is provided.
+The WeekSchedule class is central to the modelling of week schedules.
+All information about a week schedule can be derived from this class, we will start by presenting this class and then following its fields to find the Weekday, WeekdayFrame and lastly WeekdayFrameProgress classes.
 
 \begin{table}[]
 \centering
@@ -47,6 +49,7 @@ days       & Collection\textless Weekday\textgreater & The weekdays belonging to
 
 \noindent
 The fields id, name and thumbnail are fairly straight forward and thus will not be discussed further.
+These kind of simple fields exist for all the following classes, in general we will never go into detail with id, name and enums as their names combined with the short description is sufficient for them to be understood.
 \begin{description}
     \item [lastEdit] \hfill \\ 
     The \texttt{lastEdit} field serves the same purpose as \texttt{lastEdit} described in \myref{pictogramendpoint}.
@@ -63,12 +66,14 @@ The fields id, name and thumbnail are fairly straight forward and thus will not 
 \end{description}
 
 \subsubsection{Weekday}
-The table seen in \myref{tbl:Weekday} provides an overview and a short description of how we model a Weekday in the REST API.
+A WeekSchedule that has had any information added to it, in the form of pictograms, contains between one and seven weekdays.
+These Weekday instances represent a single day of the week and contain information about the activities on a given day.
+The table seen in \myref{tbl:Weekday} provides an overview and a short description of how we model a weekday in the REST API.
 
 \begin{table}[]
 \centering
-\caption{My caption}
-\label{my-label1}
+\caption{Table that represents the Weekday class}
+\label{tbl:Weekday}
 \begin{tabular}{lll}
 \multicolumn{3}{c}{Class: Weekday}                                                                           \\
 Field Name   & Type                                   & Short Description                                    \\
@@ -79,49 +84,67 @@ weekSchedule & WeekSchedule                           & The WeekSchedule the Wee
 frames       & List\textless WeekdayFrame\textgreater & Timestamp for when the WeekSchedule was last edited 
 \end{tabular}
 \end{table}
+\todo[inline]{Lækkerfy this table Sass}
+
+\noindent
+\begin{description}
+    \item
+    \item
+    \item
+\end{description}
 
 
 \subsubsection{WeekdayFrame}
 
 \begin{table}[]
 \centering
-\caption{My caption}
-\label{my-label2}
+\caption{Table that represents the WeekdayFrame class}
+\label{tbl:WeekdayFrame}
 \begin{tabular}{lll}
-\multicolumn{3}{c}{Class: WeekdayFrame}                                                                    \\
-Field Name & Type                                  & Short Description                                     \\
-id         & long                                  & Unique ID                                             \\
-weekday    & Weekday                               & The Weekday that a Frame should be added to           \\
-frame      & Frame                                 & The Frame that should be added to the Weekday         \\
-index      & int                                   & The order for which Frames are stored                 \\
+\multicolumn{3}{c}{Class: WeekdayFrame}                                                                     \\
+Field Name & Type                                   & Short Description                                     \\
+id         & long                                   & Unique ID                                             \\
+weekday    & Weekday                                & The Weekday that a Frame should be added to           \\
+frame      & Frame                                  & The Frame that should be added to the Weekday         \\
+index      & int                                    & The order for which Frames are stored                 \\
 frames     & List\textless WeekdayFrame\textgreater & The list that stores all Frames, ordered by ascending
 \end{tabular}
 \end{table}
+\todo[inline]{Lækkerfy this table Sass}
+
+\noindent
+\begin{description}
+    \item
+    \item
+    \item
+    \item
+\end{description}
 
 \subsubsection{WeekdayFrameProgress}
 
 
 \begin{table}[]
 \centering
-\caption{My caption}
-\label{my-label}
+\caption{Table that represents the WeekdayFrameProgress class}
+\label{tbl:WeekdayFrameProgress}
 \begin{tabular}{lll}
-\multicolumn{3}{c}{Class: WeekdayFrameProgress}                                                     \\
-Field Name   & Type                              & Short Description                                \\
-id           & long                              & Unique ID                                        \\
-user         & User                              & The user for which progress is specified         \\
-weekdayFrame & WeekdayFrame                      & The WeekdayFrame for which progress is specified \\
+\multicolumn{3}{c}{Class: WeekdayFrameProgress}                                                      \\
+Field Name   & Type                               & Short Description                                \\
+id           & long                               & Unique ID                                        \\
+user         & User                               & The user for which progress is specified         \\
+weekdayFrame & WeekdayFrame                       & The WeekdayFrame for which progress is specified \\
 progress     & Enum\textless Progress\textgreater & The Progress for the specified WeekdayFrame     
 \end{tabular}
 \end{table}
+\todo[inline]{Lækkerfy this table Sass}
 
-\todo[inline]{WeekSchedule}
+\noindent
+\begin{description}
+    \item
+    \item
+    \item
+\end{description}
 
-\todo[inline]{Weekday + Day enum}
-
-\todo[inline]{WeekdayFrame}
-
-\todo[inline]{WeekdayFrameProgress}
 
 \subsection{Persistence}
 \subsubsection{SQL}
