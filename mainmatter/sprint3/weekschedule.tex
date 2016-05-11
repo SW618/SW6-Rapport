@@ -3,14 +3,19 @@ This section pertains to the following user story: \\
 \userstory{As a developer i would like an endpoint for Week Schedules, such that i can retrieve them from GIRAF.} \\
 Specifically the two sub tasks regarding the core layer and the persistance layer.
 
+For the sake of this section, we refer to both the classes and also the real life objects that they represent, as such we make a distinction between how the two are written.
+When refering to it in the sense o
+For when a class is refered to we write it as the class name and in a specific font, e.g. \texttt{WeekSchedule}.
+If we refer to the object that it identifies in the real world it will be written in standard language grammar with our normal font, e.g. week schedule.
+
 \noindent
 One of the focus points for this years GIRAF project have been the Week Schedule app.
 The data for this application should be shared across devices, and some information across users.
 Therefore it is crucial that the Week Schedule part of GIRAF is also part of its REST API.
-This Section will explain the parts of the Week Schedule we developed during this sprint; the Core (model) and Persistence. 
+This Section will explain the parts of the Week Schedule REST API we developed during this sprint; the Core (model) and Persistence. 
 
 \subsection{Model}
-In this subsection we will introduce the model we made for the Week Schedule.
+In this subsection we will introduce the model we made for the Week Schedule app.
 First we will explain what this is meant to be used for and how it is currently modelled, that is the Week Schedule app, then we will explain our solution to the problem. 
 
 In the Week Schedule app the view is split into seven views, each representing a day of the week.
@@ -24,39 +29,39 @@ Since the progress information is personal, each user needs to separately have t
 As we believed some of the design choices to be odd, for our own design choices we decided to base it upon how the Week Schedule app is used, and disregard the current model.
 
 \subsubsection{Week Schedule}
-The table seen in \myref{tbl:WeekSchedule} provides an overview and a short description of how we model a WeekSchedule in the REST API.
+The table seen in \myref{tbl:WeekSchedule} provides an overview and a short description of how we model a \texttt{WeekSchedule} in the REST API.
 For some of the fields further details and thoughts behind their creation is provided.
-The WeekSchedule class is central to the modelling of week schedules.
-All information about a week schedule can be derived from this class, we will start by presenting this class and then following its fields to find the Weekday, WeekdayFrame and lastly WeekdayFrameProgress classes.
+The \texttt{WeekSchedule} class is central to the modelling of week schedules.
+All information about a week schedule can be derived from this class, we will start by presenting this class and then following its fields to find the \texttt{Weekday}, \texttt{WeekdayFrame} and lastly \texttt{WeekdayFrameProgress} classes.
 
 \begin{table}[]
 \centering
-\caption{Table that represents the WeekSchedule class}
+\caption{Table that represents the \texttt{WeekSchedule} class}
 \label{tbl:WeekSchedule}
 \begin{tabular}{lll}
-\multicolumn{3}{c}{Class: WeekSchedule}                                                                      \\
-Field Name & Type                                    & Short Description                                     \\
-id         & long                                    & Unique ID                                             \\
-name       & string                                  & Name of the WeekSchedule                              \\
-thumbnail  & Pictogram                               & The pictogram shown as thumbnail                      \\
-lastEdit   & Date                                    & Timestamp for when the WeekSchedule was last edited   \\
-department & Department                              & The department that owns the WeekSchedule             \\
-users      & Collection\textless User\textgreater    & All users for whom the WeekSchedule is available      \\
-days       & Collection\textless Weekday\textgreater & The weekdays belonging to the WeekSchedule           
+\multicolumn{3}{c}{Class: \texttt{WeekSchedule}}                                                                                        \\
+Field Name          & Type                                             & Short Description                                              \\
+\texttt{id}         & \texttt{long}                                    & Unique ID                                                      \\
+\texttt{name}       & \texttt{string}                                  & Name of the \texttt{WeekSchedule}                              \\
+\texttt{thumbnail}  & \texttt{Pictogram}                               & The pictogram shown as thumbnail                               \\
+\texttt{lastEdit}   & \texttt{Date}                                    & Timestamp for when the \texttt{WeekSchedule} was last edited   \\
+\texttt{department} & \texttt{Department}                              & The department that owns the \texttt{WeekSchedule}             \\
+\texttt{users}      & \texttt{Collection\textless User\textgreater}    & All users for whom the \texttt{WeekSchedule} is available      \\
+\texttt{days}       & \texttt{Collection\textless Weekday\textgreater} & The \texttt{weekday}s belonging to the \texttt{WeekSchedule}           
 \end{tabular}
 \end{table}
 \todo[inline]{Lækkerfy this table Sass}
 
 \noindent
 The fields id, name and thumbnail are fairly straight forward and thus will not be discussed further.
-These kind of simple fields exist for all the following classes, in general we will never go into detail with id, name and enums as their names combined with the short description is sufficient for them to be understood.
+These kind of simple fields exist for all the following classes, in general we will not go into detail with id, name and similar simple fields as their names combined with the short description is sufficient for them to be understood.
 \begin{description}
     \item [lastEdit] \hfill \\ 
     The \texttt{lastEdit} field serves the same purpose as \texttt{lastEdit} described in \myref{pictogramendpoint}.
     \item [department] \hfill \\
     The \texttt{department} field is used to restrict access such that only users that are part of the department that owns the week schedule, can access that week schedule.
     \item [users] \hfill \\
-    The \texttt{users} field defines what users the WeekSchedule is available to.
+    The \texttt{users} field defines what users the \texttt{WeekSchedule} is available to.
     The users in this collection pertains specifically to citizens as all guardians within a department can edit week schedules belonging to that department.
     This field allows for several citizens to use the same week schedule such that if the department goes on a trip, rather than having to create a week schedule for each individual citizen, they can use a shared one for shared activities.
     This is a feature not available in the live version of the system, yet it is something that the customers expressed a want for in our first meeting with them \citep{GIRAF20161stMeeting}.
@@ -66,83 +71,105 @@ These kind of simple fields exist for all the following classes, in general we w
 \end{description}
 
 \subsubsection{Weekday}
-A WeekSchedule that has had any information added to it, in the form of pictograms, contains between one and seven weekdays.
+A \texttt{WeekSchedule} that has had any pictograms added to it contains between one and seven weekdays.
 These Weekday instances represent a single day of the week and contain information about the activities on a given day.
 The table seen in \myref{tbl:Weekday} provides an overview and a short description of how we model a weekday in the REST API.
 
 \begin{table}[]
 \centering
-\caption{Table that represents the Weekday class}
+\caption{Table that represents the \texttt{Weekday} class}
 \label{tbl:Weekday}
 \begin{tabular}{lll}
-\multicolumn{3}{c}{Class: Weekday}                                                                           \\
-Field Name   & Type                                   & Short Description                                    \\
-id           & long                                   & Unique ID                                            \\
-day          & Enum\textless Day\textgreater          & Defines which day of the week the Weekday represents \\
-lastEdit     & Date                                   & Timestamp for when the Weekday was last edited       \\
-weekSchedule & WeekSchedule                           & The WeekSchedule the Weekday belongs to              \\
-frames       & List\textless WeekdayFrame\textgreater & Timestamp for when the WeekSchedule was last edited 
+\multicolumn{3}{c}{Class: \texttt{Weekday}}                                                                                    \\
+Field Name            & Type                                            & Short Description                                    \\
+\texttt{id}           & \texttt{long}                                   & Unique ID                                            \\
+\texttt{day}          & \texttt{Enum\textless Day\textgreater}          & Defines which day of the week the Weekday represents \\
+\texttt{lastEdit}     & \texttt{Date}                                   & Timestamp for when the Weekday was last edited       \\
+\texttt{weekSchedule} & \texttt{WeekSchedule}                           & The \texttt{WeekSchedule} the Weekday belongs to     \\
+\texttt{frames}       & \texttt{List\textless WeekdayFrame\textgreater} & An ordered list of WeekdayFrames 
 \end{tabular}
 \end{table}
 \todo[inline]{Lækkerfy this table Sass}
 
 \noindent
 \begin{description}
-    \item
-    \item
-    \item
+    \item [lastEdit] \hfill \\
+    Having a \texttt{lastEdit} field on each Weekday as well as on each \texttt{WeekSchedule} allows for more specific information. 
+    As such conflicts, as defined in \myref{ssec:policy}, are less likely to occur as the changes have to be targeted on the same Weekdays and not simply the WeekSchedule. 
+    The lastEdit on \texttt{WeekSchedule} remains such that if no conflict occurs we will not have to check the \texttt{lastEdit} for each Weekday on a WeekSchedule.
+    \item [weekSchedule] \hfill \\
+    The \texttt{weekSchedule} field defines the \texttt{WeekSchedule} that a \texttt{Weekday} belongs to, a \texttt{Weekday} can only belong to one \texttt{WeekSchedule}.
+    Allowing for \texttt{Weekday}s to be shared among \texttt{WeekSchedule}s would create more oppurtunities for the aforementioned conflicts to occur and in a more complicated manner, as such we choose not to allow this
+    \item [frames] \hfill \\
+    The \texttt{frames} field is a list used to contain \texttt{Frame}s on a \texttt{Weekday}.
+    For this we use a class made specifically for linking \texttt{Frame}s and \texttt{Weekday}s together, \texttt{WeekdayFrame}.
+    We use a list for this such that we can order the elements.
 \end{description}
 
-
 \subsubsection{WeekdayFrame}
+In order to model that a pictogram has been added to day in the week schedule we use the \texttt{WeekdayFrame} class.
+This class serves as the link between a \texttt{Weekday} and a \texttt{Frame}.
+\myref{tbl:WeekdayFrame} shows what this class contains.
 
 \begin{table}[]
 \centering
-\caption{Table that represents the WeekdayFrame class}
+\caption{Table that represents the \texttt{WeekdayFrame} class}
 \label{tbl:WeekdayFrame}
 \begin{tabular}{lll}
-\multicolumn{3}{c}{Class: WeekdayFrame}                                                                     \\
-Field Name & Type                                   & Short Description                                     \\
-id         & long                                   & Unique ID                                             \\
-weekday    & Weekday                                & The Weekday that a Frame should be added to           \\
-frame      & Frame                                  & The Frame that should be added to the Weekday         \\
-index      & int                                    & The order for which Frames are stored                 \\
-frames     & List\textless WeekdayFrame\textgreater & The list that stores all Frames, ordered by ascending
+\multicolumn{3}{c}{Class: \texttt{WeekdayFrame}}                                                                                                \\
+Field Name          & Type                                            & Short Description                                                       \\
+\texttt{id}         & \texttt{long}                                   & Unique ID                                                               \\
+\texttt{weekday}    & \texttt{Weekday}                                & The \texttt{Weekday} that a \texttt{Frame} should be added to           \\
+\texttt{frame}      & \texttt{Frame}                                  & The \texttt{Frame} that should be added to the \texttt{Weekday}         \\
+\texttt{index}      & \texttt{int}                                    & The order for which \texttt{Frame}s are stored                          \\
+\texttt{frames}     & \texttt{List\textless WeekdayFrame\textgreater} & The list that stores all \texttt{Frame}s contained in this frame
 \end{tabular}
 \end{table}
 \todo[inline]{Lækkerfy this table Sass}
 
 \noindent
 \begin{description}
-    \item
-    \item
-    \item
-    \item
+    \item [weekday] \hfill \\
+    This field contains the \texttt{Weekday} that the \texttt{Frame}(s) also contained in this class should be on.
+    \item [frame] \hfill \\
+    This field contains the specific \texttt{Frame} that should be added to the \texttt{Weekday}.
+    \item [index] \hfill \\
+    The \texttt{index} is used to order the list of \texttt{Frame}s contained for any class that has a list of \texttt{WeekdayFrame}s like this class and the \texttt{Weekday} class.
+    \item [frames] \hfill \\
+    As a \texttt{Frame} is used to model pictograms, choices and sequences, and sequences and choices consist of several pictograms, this must be modelled as well.
+    This class fulfills that by allowing a \texttt{WeekdayFrame} to contain \texttt{Frame}s within \texttt{Frame}s.
+
 \end{description}
 
 \subsubsection{WeekdayFrameProgress}
-
+As discussed earlier previously progress was not modelled in the system, but rather saved on a local file as the progress is specific to each citizen.
+The \texttt{WeekdayFrameProgress} creates a link between a \texttt{User} and a \texttt{WeekdayFrame} such that progress can be tracked.
 
 \begin{table}[]
 \centering
-\caption{Table that represents the WeekdayFrameProgress class}
+\caption{Table that represents the \texttt{WeekdayFrameProgress} class}
 \label{tbl:WeekdayFrameProgress}
 \begin{tabular}{lll}
-\multicolumn{3}{c}{Class: WeekdayFrameProgress}                                                      \\
-Field Name   & Type                               & Short Description                                \\
-id           & long                               & Unique ID                                        \\
-user         & User                               & The user for which progress is specified         \\
-weekdayFrame & WeekdayFrame                       & The WeekdayFrame for which progress is specified \\
-progress     & Enum\textless Progress\textgreater & The Progress for the specified WeekdayFrame     
+\multicolumn{3}{c}{Class: \texttt{WeekdayFrameProgress}}                                                                        \\
+Field Name            & Type                                        & Short Description                                         \\
+\texttt{id}           & \texttt{long}                               & Unique ID                                                 \\
+\texttt{user}         & \texttt{User}                               & The user for which progress is specified                  \\
+\texttt{weekdayFrame} & \texttt{WeekdayFrame}                       & The \texttt{WeekdayFrame} for which progress is specified \\
+\texttt{progress}     & \texttt{Enum\textless Progress\textgreater} & The Progress for the specified \texttt{WeekdayFrame}     
 \end{tabular}
 \end{table}
 \todo[inline]{Lækkerfy this table Sass}
 
 \noindent
 \begin{description}
-    \item
-    \item
-    \item
+    \item [user] \hfill \\
+    The \texttt{User}, representing a citizen, for which progress must be tracked.
+    \item [weekdayFrame] \hfill \\
+    The \texttt{WeekdayFrame} for which a \texttt{User} must track their progress on
+    \item [progress] \hfill \\
+    The \texttt{Progress} enum contains four values, NotStarted, Done, Canceled and Active.
+    This field is also nullable and will simply default to NotStarted if any attempt at information retrieval is made if the field has not been set yet.
+    For tracking progress we specifically chose to not use booleans as the current model in the app does, as there is no scenario where any combination of values makes sense.
 \end{description}
 
 
