@@ -1,6 +1,6 @@
 \resizebox{1\textwidth}{!}{
 \begin{tikzpicture}[auto]
-    \node [cloud, align=center] (start) {Start};
+    \node [dacloud, align=center] (start) {Start};
     \node [block, below = of start] (setup) {Setup application};
     \node [decision, right = of setup] (hasprofiles) {Has profiles?};
     \node [decision, right = of hasprofiles] (network) {Is offline?};

@@ -17,7 +17,7 @@ An application that adheres to the constraints of REST is considered to be RESTf
 Next we will present each of the constraints and how they relate to the aforementioned non-functional properties.
 
 \begin{description}
-    \item [Client-Server] The first constraint we will discuss is derived from the hierarchical client-server architechture.
+    \item [Client-Server\label{client-server-rest}] The first constraint we will discuss is derived from the hierarchical client-server architechture.
     Separation of concern is the underlying concept for the client-server architecture, in essence the client serves as a trigger process, and the server as a reactive process.
     As the reactive process, the server is more often than not a non-terminating process waiting for a request from a trigger.
     When one of the multiple clients requests data, the client cares not for how the data is acquired, nor for how it is stored, as long as it is received in the agreed upon format.
@@ -65,7 +65,7 @@ Next we will present each of the constraints and how they relate to the aforemen
         \item Visibility: Through simplified architecture the visibility of interactions is also increased.
     \end{itemize}
     %Simplicity, Visibility
-    \item [Layered System] The fifth constraint of having a layered system adds hierarchical layers to the architecture, encapsulates the behavior of a layer to itself and its immediately used layers.
+    \item [Layered System] \label{layeredsystem}The fifth constraint of having a layered system adds hierarchical layers to the architecture, encapsulates the behavior of a layer to itself and its immediately used layers.
     By layering the system we acquire low coupling while also keeping the overall complexity of the system low.
     Layers can serve a variety of purposes from protecting legacy services to simplifying components by isolating less used services.
     Combined with the system being cacheable, shared caches can also be used to gain positive effect.

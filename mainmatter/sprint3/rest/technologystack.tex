@@ -1,0 +1,70 @@
+\section{Technologies and Tools}\label{sec:techstack}
+\todo[inline]{Maybe this should be moved to appendix, such that we can refer to them when we talk about them. Only introduce the core few: Hibernate/Jackson/Spring ?}
+In this section the technologies used in the GIRAF REST API and the development of it, will be introduced.
+In the first and second sprint, group SW615F16 worked on the REST API and they had decided on most of the technology stack to be used, however a few were introduced while we also are working on it.
+Below, we briefly introduce the technologies and tools used to develop and run the REST API:
+\subsubsection{Technologies}
+\begin{description}
+    \item[Java] \hfill \\
+        It was decided that the REST API would be written in the Java programming language.
+        This is primarily in order to use the same language as in the development of applications in GIRAF.
+        Java is also a popular language, as of writing this it is number one on TIOBEs Index\footnote{\url{http://www.tiobe.com/tiobe_index}}.
+        Java has many tools and frameworks etc. which makes it a good candidate for writing a REST API.
+
+    \item[Hibernate] \hfill \\
+        Hibernate\footnote{\url{http://hibernate.org/}} is a framework for object-relational mapping (ORM) which allows us to utilise high level objects while also storing them in a relational database.
+        It is used in the core and persistence layer of the REST API.
+        We use Java annotations to configure this mapping on a, per variable, and class base, this will be further explained later in \todo{ref her.}.
+
+    \item[Jackson] \hfill \\
+        Jackson\footnote{\url{http://wiki.fasterxml.com/JacksonHome}} is a Java library for processing JSON.
+        We use it to (de)serialise objects between the client and the REST API, which is done in the service layer to communicate on the agreed upon format between client and server, conforming to the standard of the Uniform Interface.
+
+    \item[Spring] \hfill \\
+        Spring\footnote{\url{https://spring.io/}} is a framework for dependency injection.
+        This allows us to decouple the configurations of e.g. the database connection or the filestore path, from the logic of the programs.
+
+    \item[RESTEasy] \hfill \\
+        RESTEasy\footnote{\url{http://resteasy.jboss.org/}} is JBoss' (which also makes Wildfly) implementation of the JAX-RS 2.0 standard, which is a Java API used to make RESTful Web Services.
+        RESTEasy implements annotations for methods, which gives meaning to the methods in the service layer, according to the JAX.RS 2.0 standard.
+        Examples of these are: \texttt{@GET}, \texttt{@POST} and \texttt{@Produces}, these will be further explained when we use them in \todo[inline]{ref til brug her.}
+
+    \item[MariaDB] \hfill \\
+        MariaDB\footnote{\url{https://mariadb.org/}} is a drop-in replacement for MySQL and was started as a fork of MySQL by its original developer when Oracle acquired MySQL.
+        We use MariaDB on the database server as the back-end of the REST API environment (the \enquote{Database} as seen in \myref{fig:rest-architecture}).
+        This is where the persistent data of GIRAF will be stored in production.
+\end{description}
+\subsubsection{Tools}
+\begin{description}
+    \item[Gradle] \hfill \\
+        We use the Gradle Build system\footnote{\url{http://gradle.org/}} to automate our builds.
+        As with the rest of the GIRAF project Gradle is used for build automation.
+        We have previously explained what Gradle is in \myref{subsec:gradle}.
+
+    \item[Wildfly] \hfill \\
+        WildFly\footnote{\url{http://wildfly.org/}} is the application server which will run the REST API.
+        It can also be run on a development machine to test the API endpoints.
+        It is lightweight and has a fast startup speed, which is especially useful during development.
+        When it is run on a development machine it can either use a local or a remote database, such as the development database for the REST API.
+        This configuration is what is specified in the configuration files and then injected during runtime using Spring.
+
+    \item[Enunciate] \hfill \\
+        Enunciate\footnote{\url{https://github.com/stoicflame/enunciate}} is used to generate a web based documentation of the REST API endpoints automatically.
+        This is useful for the people who will be interfacing with our REST API.
+        The documentation is based on the code and the JavaDocs comments which are written in the code, thus this documentation is generated with minimal effort from the REST API developers.
+
+    \item[JUnit] \hfill \\
+        In order to verify the correctness of the code we use unit tests.
+        We have decided to use JUnit\footnote{\url{http://junit.org}} as our unit testing framework.
+        JUnit is the de-facto standard for unit testing in Java\footnote{\url{http://www.methodsandtools.com/tools/tools.php?junit}}, and thus it has good support within most IDEs and tools.
+
+    \item[H2 Database Engine] \hfill \\
+        The H2 Database Engine\footnote{\url{http://www.h2database.com/html/main.html}} is a low footprint local database written in Java.
+        We use it as a local database for testing, in its in-memory mode, which means that after each run all data of the database is deleted.
+        It has a MySQL compatibility mode which means that it is reasonable to assume that any SQL executed onto it will do the same as if it was executed on MySQL.
+
+    \item[FlyWay] \hfill \\
+        FlyWay\footnote{\url{https://flywaydb.org/}} is used to automatically apply the database migrations, both the schemas and the data, on start-up, both on the H2 database during development and on the production server.
+        As we develop incrementally, this allows us to add migrations incrementally as well which makes sure no old data will be lost when new features are developed.
+        An example of this will be given in \todo{ref til sequence hvor vi gør det.}
+\end{description}

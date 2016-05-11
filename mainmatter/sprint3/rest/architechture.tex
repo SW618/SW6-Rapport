@@ -1,1 +1,43 @@
-\section{The Architechture of the API}\label{architechture}
+\section{Architecture of the REST API}\label{sec:architecture}
+Before developing the code which creates the API endpoints, a proper architecture should be established.
+Since it can be costly to go back and change central decisions made in this phase, a large amount of time have been spent thinking about the design.
+Most of this architectural design was made by \textit{SW615F16} during sprint 1 and 2, but some refinements been made by us during the resolutions of our tasks regarding the REST API.
+The technology and tools refinements include adding and using the technologies: Flyway, Enunciate, and H2 Database Engine.
+The full list of technologies used in the REST API and the development hereof will be listed in \myref{sec:techstack}, however in this section we will introduce the architecture used in the REST API.
+
+When we speak of the REST API we talk about the system which is located between the client and the database.
+Its job is to serve content from the database to the client.
+\myref{fig:rest-architecture} depicts a diagram which explains the basic layers of the architecture alongside the connections between the REST API and its surroundings; e.g. the client-server concept as described on page~\pageref{client-server-rest} can be seen, where the clients are connected to the REST API, i.e. the server, through the internet.
+The three layers of the REST API depicted in the figure are: \textbf{Core}, \textbf{Persistence} and \textbf{Service}, which supports the idea of a layered system from the Uniform Interface Constraint described described on page~\pageref{layeredsystem}the meaning of these are as follows:
+\begin{description}
+    \item[Core] \hfill \\
+    The core layer contains the model of the REST API, a full class diagram will be shown later in \myref{subsec:model}.
+
+    \item[Persistence] \hfill \\
+    In the persistence layer we define and implement the data access objects (DAOs) which define how the objects in the database are accessed, as well as write and read files from the disk such as images.
+    Additionally we construct the tables for the relational database and some localdata which is used for integration tests and test data during development.
+
+    \item[Service] \hfill \\
+    The service layer contains the code which is accessed by clients.
+    Here we construct the endpoints which the clients can connect to; we use the DAOs in the persistence layer to access and manipulate data if the clients are allowed to do so.
+\end{description}
+
+\begin{figure}[h]
+    \centering
+    \input{figures/tikz/architecture_diagram.tex}
+    \caption{The environment and architecture of the REST API.}
+    \label{fig:rest-architecture}
+\end{figure}
+
+\subsection{Testing}
+One of the benefits of separating the REST API into the aforementioned layered architecture, i.e. core, persistence and service, is the ability to easily test the different components.
+During the development we want to be able to test the REST API such that we can ensure whether or not the code works as intended.
+The Core and Persistence layers each have a test package which contains unit tests to ensure the correctness of the implementation.
+The tests in the persistence layer work as integration tests since they rely on the consistency of the Core, the SQL which creates the database, and the DAOs.
+With sufficient unit and integration testing we can also easily perform refactoring and change implementation details, meanwhile guaranteeing that the code behaves as expected.
+
+However one must contemplate the false security which unit testing can give; the correctness of the code which is tested using unit tests, heavily relies on the correctness of the tests themselves.
+Because of this it is important that unit tests are relatively simple and unambiguous, such that a programmer can easily comprehend whether or not the test itself is correct.
+Moreover the code coverage of the unit tests is also an important factor, i.e. how many lines and effectively branches of the code is tested.
+A code base may have a dozen unit tests which passed, but if only 50 \% of the code is tested, the unit tests cannot be used to conclude if the program behaves correctly.
+Furthermore, it is important to keep in mind that testing only helps discover errors in a given piece of software, it cannot guarantee that there are no remaining faults present. For more on software testing see Chapter 8 in \textit{Software Engineering (Tenth Edition)} By Ian Sommerville~\cite[Chapter~8]{SEBOOK}.

@@ -1,0 +1,36 @@
+\pgfdeclarelayer{background}
+\pgfdeclarelayer{foreground}
+\pgfsetlayers{background,main,foreground}
+\tikzstyle{double_arrow}=[latex'-latex']
+\tikzstyle{component}=[draw, fill=blue!20, text width=8em, 
+text centered, minimum height=2.5em]
+\tikzstyle{client_comp}=[draw, fill=blue!20, text width=4em, 
+text centered, minimum height=2.5em]
+\begin{tikzpicture}[auto]
+    \footnotesize
+    \node[component](core) {Core};    
+    \node[component, below = 0cm of core](persistence) {Persistence};    
+    \node[component, below = 0cm of persistence](service) {Service};    
+    \node[component, right = of persistence](db) {Database};    
+    \node[draw, cloud, cloud puffs=8.9, cloud ignores aspect, minimum width=9em, minimum height=5em,fill=blue!20, below = 0.8cm of service](web) {Internet};
+    \node[client_comp, below = 1.5cm of web, anchor = west](client1) {$\text{Client}_{3}$};
+    \node[client_comp, left = 0.2cm of client1](client2) {$\text{Client}_{2}$};
+    \node[client_comp, left = 0.2cm of client2](client3) {$\text{Client}_{1}$};
+    \node[right = 0.2cm of client1](client_dot){$\cdots$};
+    \node[client_comp, right = 0.2cm of client_dot](client4) {$\text{Client}_{n}$};
+    \begin{pgfonlayer}{background}
+        % Compute a few helper coordinates
+        \path (core.west |- core.north)+(-0.3,0.2) node (a) {};
+        \node [above = 1mm of a, anchor = west]{REST API};
+        \path (service.south -| service.east)+(+0.3,-0.2) node (b) {};
+        \path[fill=green!20,rounded corners, draw=black!50, dashed]
+        (a) rectangle (b);
+    \end{pgfonlayer}
+
+    \draw [double_arrow] (service) -- (web);
+    \draw [double_arrow] (persistence) -- (db);
+    \draw [double_arrow] (web) -- (client1.north);
+    \draw [double_arrow] (web) -- (client2.north);
+    \draw [double_arrow] (web) -- (client3.north);
+    \draw [double_arrow] (web) -- (client4.north);
+\end{tikzpicture}
