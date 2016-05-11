@@ -91,7 +91,6 @@ Field Name            & Type                                            & Short 
 \end{table}
 \todo[inline]{Lækkerfy this table Sass}
 
-\noindent
 \begin{description}
     \item [lastEdit] \hfill \\
     Having a \texttt{lastEdit} field on each Weekday as well as on each \texttt{WeekSchedule} allows for more specific information. 
@@ -127,7 +126,6 @@ Field Name          & Type                                            & Short De
 \end{table}
 \todo[inline]{Lækkerfy this table Sass}
 
-\noindent
 \begin{description}
     \item [weekday] \hfill \\
     This field contains the \texttt{Weekday} that the \texttt{Frame}(s) also contained in this class should be on.
@@ -160,7 +158,6 @@ Field Name            & Type                                        & Short Desc
 \end{table}
 \todo[inline]{Lækkerfy this table Sass}
 
-\noindent
 \begin{description}
     \item [user] \hfill \\
     The \texttt{User}, representing a citizen, for which progress must be tracked.
@@ -172,12 +169,23 @@ Field Name            & Type                                        & Short Desc
     For tracking progress we specifically chose to not use booleans as the current model in the app does, as there is no scenario where any combination of values makes sense.
 \end{description}
 
-
 \subsection{Persistence}
-As mentioned in \myref{sec:generalEP}
-\todo[inline]{SQL}
+As mentioned in \myref{sec:generalEP} the persistence layer contains the DAOs, SQL migrations and unittests.%*Salute* General EndPoint!
+Furthermore for DAOs the rules for when to create a method for retrieving an object reduces it to a total of two methods for the entire Week Schedule model, both methods are used to retrieve \texttt{WeekSchedule}.
+There are no methods for retrieving \texttt{WeekdayFrame}, \texttt{WeekdayFrameProgress} nor \texttt{Weekday}.
+The first two are not relevant without the \texttt{Weekday} they refer to, and as we are working with objects by having the \texttt{WeekSchedule} we have all related \texttt{Weekday}s and thereby all relevant \texttt{WeekdayFrame}s and by extension \texttt{WeekdayFrameProgress}.
 
-\todo[inline]{Unittests}
+The two methods created for the DAO are \texttt{getAll(User user)} and \texttt{getById(long id)}.
+While it may seem odd that the \texttt{getAll} method takes a user as parameter, this is to ensure that only available \texttt{WeekSchedule}s are retrieved, i.e. the user object is used to derive the department the user belongs to, such that only objects that the user should have access to are returned.
+This may be used when a week schedule should be shared between several citizens, a list of all week schedules is required.
+Similarly the \texttt{getById} method may then be useful when a specific week schedule is chosen, either while attempting to share a week schedule or simply when a citizen needs to access a week schedule.
+
+These two methods may be the only in the \texttt{WeekScheduleDao}, meaning they are the only methods that directly retrieve a \texttt{WeekSchedule}, alas it is not the only way a \texttt{WeekSchedule} may be retrieved.
+By using the \texttt{DepartmentDao} or the \texttt{UserDao} they can also be retrieved, as these both of these objects contain \texttt{WeekSchedule} objects.
+
+\subsubsection{SQL}
+
+\subsubsection{Unittests}
 
 \subsection{Work Remaining} % Rename ... 
 
