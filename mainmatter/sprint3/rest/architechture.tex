@@ -6,8 +6,8 @@ The full list of technologies used in the REST API and the development hereof wi
 
 When we speak of the REST API were talking about the system which is located between the client and the database.
 Its job is to serve content from the database to the client.
-\myref{fig:rest-architecture} contains a diagram which explains the basic layers of the architecture alongside the connections between said layers.
-The 3 layers depicted in the figure are: \textbf{Core}, \textbf{Persistence} and \textbf{Service}, the meaning of these are as follows:
+\myref{fig:rest-architecture} contains a diagram which explains the basic layers of the architecture alongside the connections between the REST API and its surroundings; e.g. the client-server concept described on page~\pageref{client-server-rest}, can be seen as the clients are connected to the REST API, i.e. the server, through the internet.
+The three layers of the REST API depicted in the figure are: \textbf{Core}, \textbf{Persistence} and \textbf{Service}, the meaning of these are as follows:
 \begin{description}
     \item[Core] \hfill \\
     The core layer contains the model of the REST API, a full class diagram will be shown later in \todo{ref her}.
@@ -24,20 +24,21 @@ The 3 layers depicted in the figure are: \textbf{Core}, \textbf{Persistence} and
 \begin{figure}[h]
     \centering
     \input{figures/tikz/architecture_diagram.tex}
-    \caption{REST API architecture}
+    \caption{The environment and architecture of the REST API.}
     \label{fig:rest-architecture}
 \end{figure}
 
 \todo[inline]{Maybe we should put some of the technologies we use directly in the figure?}
 
 \subsection{Testing}
-One of the benefits of separating the REST API into the aforementioned layered architecture, is the ability to easily unit test the different components.
+One of the benefits of separating the REST API into the aforementioned layered architecture, i.e. core, persistence and service, is the ability to easily test the different components.
 During the development we want to be able to test the REST API such that we can ensure whether or not the code works as intended.
 The Core and Persistence layers each have a test package which contains unit tests to ensure the correctness of the implementation.
-The tests in the persistence layer works as integration tests since it relies on the consistency of the Core, the SQL which creates the database, and the DAOs.
-With sufficient unit testing we can also easily do refactoring and change implementations details, meanwhile guaranteeing that the codes behaves as expected.
+The tests in the persistence layer work as integration tests since they rely on the consistency of the Core, the SQL which creates the database, and the DAOs.
+With sufficient unit and integration testing we can also easily do refactoring and change implementations details, meanwhile guaranteeing that the codes behaves as expected.
+
 However one must contemplate the false security which unit testing can give; the correctness of the code which is tested using unit tests, heavily relies on the correctness of the tests themselves.
 Because of the it is important that unit tests are relatively simple and unambiguous, such that a programmer easily can comprehend whether or not the test itself is correct.
 Moreover the code coverage of the unit tests is also an important factor, i.e. how many lines and effectively branches of the code is tested.
-A codebase may have a dozen unit test which passed, but if only 50 \% of the code is tested, the unit tests cannot be used to conclude if the program behaves correctly.
+A code base may have a dozen unit test which passed, but if only 50 \% of the code is tested, the unit tests cannot be used to conclude if the program behaves correctly.
 Furthermore, it is important to keep in mind that testing only helps discover errors in a given piece of software, it cannot guarantee that there are no remaining faults in present. For more on software testing see Chapter 8 in \textit{Software Engineering (Tenth Edition)} By Ian Sommerville~\cite[Chapter~8]{SEBOOK}.
