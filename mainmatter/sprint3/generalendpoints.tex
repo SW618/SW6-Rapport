@@ -6,7 +6,7 @@ This section deals with completing the following: \\
 First a presentation of the steps involved in developing the different layers for the REST API.
 This is followed by the design of the model as a class diagram.
 
-\subsection{Developing an Endpoint and its Constituents}
+\subsection{Developing an Endpoint and its Constituents}\label{subsec:general}
 As stated in \myref{sec:architecture} a single endpoint consists of three layers.
 A core layer which is where the classes of the model are implemented and tested.
 A persistence layer which is where the tables for the model, defined in the core, are created; the annotations from hibernate used in the core relates the data in the two layers.
@@ -64,7 +64,8 @@ The final layer to create for an endpoint is the service layer and consists of a
 \noindent
 The next section will present the model to be modelled in the core layer for the three endpoints, which we are developing during this sprint.
 
-\subsection{The new Model for REST API}\todo{add something bout users}\label{restapimodel}
+
+\subsection{The new Model for REST API}\todo{add something bout users}\label{subsec:model}
 
 The new model design is an attempt to make the central parts of GIRAF more cohesive than before.
 We will start by discussing week schedule and then go on to discuss the rest of the model.

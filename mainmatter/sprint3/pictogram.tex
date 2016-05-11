@@ -51,7 +51,129 @@ This class is what all images in GIRAF will inherit from, this means \texttt{Pic
 Originally when we started working on the REST API for Pictogram the \texttt{PersistFileHandle} did not exist and all information on this class was saved directly on the \texttt{UserIcon} class.
 Why and how this new generality is created will be explained in \todo{ref til sektionen}.
 It contains the following fields:
-	\begin{description}
-		\item[id] This field is self explanatory.
-		\item[filePath] A string of the path to the file which the class points to, for the \texttt{Pictogram} endpoint it will be a Pictogram.
-	\end{description}
+\begin{description}
+	\item[id] This field is self explanatory.
+	\item[filePath] A string of the path to the file which the class points to, for the \texttt{Pictogram} endpoint it will be a Pictogram.
+\end{description}
+
+The section above explained what is modelled in the Java classes, the following section will present how this information is stored in the database using the tools mentioned in \myref{sec:techstack}.
+
+\subsection{Storing the Model in the Database}
+
+As mentioned we use an ORM to map the models to the database, this section describes how this actually done.
+
+\begin{lstlisting}[float, floatplacement=h, caption={Fields with annotations which causes Hibernate to perform the ORM for a \texttt{PictogramImage}.},label={lst:PictoImage}]
+@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
+private PictogramImage pictogramImage;
+\end{lstlisting}
+
+The short snippet on \myref{lst:PictoImage} shows how the relation to the \texttt{PictogramImage} is created in \texttt{Pictogram}.
+It simply uses the \texttt{@OneToOne} annotation to create the One-to-One relation between these two objects.
+This is only done on the \texttt{Pictogram} and not on the side of the \texttt{PictogramImage}.
+The field \texttt{fetch} is sat to \texttt{LAZY} in which means that the \texttt{PictogramImage} is not retrieved in the same transaction as when the \texttt{Pictogram} is retrieved, but is instead retrieved when the \texttt{PictogramImage} is accessed on the object.
+The other fetch type \texttt{EAGER} would instead retrieve the entity in the same transaction as the \texttt{Pictogram} is retrieved.
+The \texttt{CascadeType.All} means that any change which happens to the \texttt{Pictogram} must cascade to \texttt{PictogramImage} as well.
+The field is set to being optional because when creating the \texttt{Pictogram} using a HTTP POST request, you cannot post the JSON data along with the ImageFile, and as such the requests have to be separated into two.
+The field is therefore optional to allow for the \texttt{Pictogram} to exist without the \texttt{PictogramImage} for a while, as we deemed it better that a \texttt{Pictogram} exists without a \texttt{PictogramImage} than vice versa.
+
+When creating a One-to-Many a opposite Many-to-One needs to be created on the class the relation is created with.
+
+This needs to be done for the field \texttt{isTitlePictogramOn} as can be seen on \myref{lst:titlePictogram}.
+
+\begin{lstlisting}[float, floatplacement=h, caption={Fields with annotations which causes Hibernate to perform the ORM for \texttt{titlePictogram}.},label={lst:titlePictogram}]
+//The relation on the side of Sequence
+public class Sequence extends PictoFrame implements Iterable<Frame> {
+...
+@ManyToOne(fetch = FetchType.EAGER)
+@JoinColumn(name = "titlePictogram_id")
+private Pictogram titlePictogram;
+...
+}
+// The relation on the side of Pictogram
+public class Pictogram extends PictoFrame {
+...
+@OneToMany(fetch = FetchType.LAZY)
+private Collection<Sequence> titlePictogramOn;
+...
+}
+// SQL for the Sequence Schema
+CREATE TABLE Sequence
+(
+    frame_id BIGINT NOT NULL PRIMARY KEY,
+    titlePictogram_id BIGINT NOT NULL
+);
+\end{lstlisting}
+
+On line 5 the \texttt{@JoinColumn} Hibernate annotation is used to specify which column the two tables \texttt{Pictogram} and \texttt{Sequence} will join on.
+Lines 12-13 shows the relation needed on the side of \texttt{Pictogram} to create the opposite One-to-Many side to the Many-to-One relationship on \texttt{Sequence}.
+Line 20 shows the SQL where the column to be joined on is created in the SQL.
+
+\subsection{Querying the Database}
+As explained in \myref{subsec:general} the database is queried using a DAO, this section will present the \texttt{PictogramDaoImpl} class.
+
+\begin{lstlisting}[float, floatplacement=h, caption={The class header of the \texttt{PictogramDao}, along with its annotations.},label={lst:pictogramDaoImpl}]
+@Transactional
+@Repository
+@Primary
+public class PictogramDaoImpl extends BaseDaoImpl<Pictogram> implements PictogramDao {
+\end{lstlisting}
+
+\myref{lst:pictogramDao} shows the class header of the \texttt{PictogramDaoImpl}, it extends \texttt{BaseDaoImpl<Pictogram} and implements its relating interface \texttt{PictogramDao} as described in \myref{subsec:general}.
+It has the annotation \texttt{@Transactional} which is a Spring annotation all DAOs in the REST API use.
+It allows Spring to inject behaviours around method calls like transaction management.
+The \texttt{@Reposity} annotation is also a Spring annotation used for all DAOs in the REST API, which tells spring that the class is used for encapsulating storage, retrieval and search behaviour for a collection of objects.
+The last annotation \texttt{@Primary} is also a Spring annotation used by all DAOs in the REST API, and is used to tell Spring that the Java Bean \todo{Det har vi vel ikke nævnt?} containing this class should be given preference when multiple beans are candidates to be autowired.
+Autowire means that you do not have to specify the bean's properties or constructor arguments explicitly. 
+This is used in the Service layer where the proper DAOs are retrieved using Beans and the auto wiring makes this easier.
+\\
+
+\myref{lst:pictogramByTitle} shows the method for querying the database for \texttt{Pictogram}s which title contains the string being searched for.
+Line 9-11 creates a \texttt{TypedQuery} which uses the \texttt{LIKE} operator to find any \texttt{Pictogram} which title adheres to the pattern \texttt{:title}.
+Line 10 then sets \texttt{:title} to be any string concatenated with the search string, which is then concatenated by any string as well.
+\begin{lstlisting}[float, floatplacement=h, caption={The method which searches through all \texttt{Pictogram}s by their titles.},label={lst:pictogramByTitle}]
+    /**
+     * Search for public pictograms by title.
+     *
+     * @param title to search for (substring of real title)
+     * @return pictograms whose title include the query
+     */
+    @Override
+    public Collection<Pictogram> searchByTitle(String title) {
+        TypedQuery<Pictogram> query = em.createQuery("SELECT p FROM Pictogram p " +
+            "WHERE (p.title LIKE :title) " +
+            "AND p.accessLevel = :public", Pictogram.class);
+        query.setParameter("title", "%" + title + "%");
+        query.setParameter("public", AccessLevel.PUBLIC);
+        return query.getResultList();
+    }
+\end{lstlisting}
+
+As mentioned in \myref{subsec:general}, the persistence layer is tested, which  means that the method \texttt{SearchByTitle} is also tested, and the test for this method can be seen on \myref{lst:pictogramByTitleTest}.
+It start by assigning what is returned by the \texttt{searchByTitle} method to an \texttt{ArrayList} on line 3.
+lines 6-13 asserts first if the results is empty, followed by asserting whether the ArrayList contains a specific \texttt{Pictogram}.
+The rest of the asserts check whether the \texttt{PictogramImage} is also as expected, which essentially tests whether Hibernate retrieves the \texttt{Pictogram}'s one-to-one relation correctly.
+
+\begin{lstlisting}[float, floatplacement=h, caption={The test method which tests the method \texttt{SearchByTitle}.},label={lst:pictogramByTitleTest}]
+@Test
+public void testPictogramByTitle() throws Exception {
+    ArrayList<Pictogram> pictogramlist = new ArrayList<Pictogram>(pictogramDao.searchByTitle("test1"));
+
+    Assert.assertFalse(pictogramlist.isEmpty());
+    Assert.assertTrue(pictogramlist.stream()
+    	.anyMatch(p -> p.getId() == 1L));
+
+    Assert.assertTrue(pictogramlist.stream()
+    	.anyMatch(p -> p.getPictogramImage().getFilePath().equals("jeff")));
+    Assert.assertTrue(pictogramlist.stream()
+    	.anyMatch(p -> p.getPictogramImage().getId() == 1L));
+}
+\end{lstlisting}
+
+
+\todo{FilePersistFactory}
+
+\subsection{Migrations for the Database}
+\todo{Migration from older model from first iteration of Pictogram}
+
+\subsection{The Service Layer for the Pictogram}
+\todo{PictogramService inkludér blot et get, post, og put tænker jeg ?}
