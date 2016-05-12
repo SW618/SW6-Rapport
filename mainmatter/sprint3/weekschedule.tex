@@ -1,11 +1,11 @@
 \section{REST API: Week Schedule}\label{sec:restws}
 This section pertains to the following user story: \\
 \userstory{As a developer i would like an endpoint for Week Schedules, such that i can retrieve them from GIRAF.} \\
-Specifically the two sub tasks regarding the core layer and the persistance layer.
+Specifically the two sub tasks regarding the core layer and the persistence layer.
 
 For the sake of this section, we refer to both the classes and also the real life objects that they represent, as such we make a distinction between how the two are written.
-When refering to it in the sense o
-For when a class is refered to we write it as the class name and in a specific font, e.g. \texttt{WeekSchedule}.
+When referring to it in the sense o
+For when a class is referred to we write it as the class name and in a specific font, e.g. \texttt{WeekSchedule}.
 If we refer to the object that it identifies in the real world it will be written in standard language grammar with our normal font, e.g. week schedule.
 
 \noindent
@@ -98,7 +98,7 @@ Field Name            & Type                                            & Short 
     The lastEdit on \texttt{WeekSchedule} remains such that if no conflict occurs we will not have to check the \texttt{lastEdit} for each Weekday on a WeekSchedule.
     \item [weekSchedule] \hfill \\
     The \texttt{weekSchedule} field defines the \texttt{WeekSchedule} that a \texttt{Weekday} belongs to, a \texttt{Weekday} can only belong to one \texttt{WeekSchedule}.
-    Allowing for \texttt{Weekday}s to be shared among \texttt{WeekSchedule}s would create more oppurtunities for the aforementioned conflicts to occur and in a more complicated manner, as such we choose not to allow this
+    Allowing for \texttt{Weekday}s to be shared among \texttt{WeekSchedule}s would create more opportunities for the aforementioned conflicts to occur and in a more complicated manner, as such we choose not to allow this
     \item [frames] \hfill \\
     The \texttt{frames} field is a list used to contain \texttt{Frame}s on a \texttt{Weekday}.
     For this we use a class made specifically for linking \texttt{Frame}s and \texttt{Weekday}s together, \texttt{WeekdayFrame}.
@@ -108,6 +108,7 @@ Field Name            & Type                                            & Short 
 \subsubsection{WeekdayFrame}
 In order to model that a pictogram has been added to day in the week schedule we use the \texttt{WeekdayFrame} class.
 This class serves as the link between a \texttt{Weekday} and a \texttt{Frame}.
+It is necessary that we have this intermediary link such that we can add additional information, in this case this information is ordering the \texttt{Frame}s in a list while allowing them to be reordered easily.
 \myref{tbl:WeekdayFrame} shows what this class contains.
 
 \begin{table}[]
@@ -187,8 +188,9 @@ By using the \texttt{DepartmentDao} or the \texttt{UserDao} they can also be ret
 \todo[inline]{I dont know what to put here, the general link between hibernate notations and tables would already be described in the two sections prior to this one}
 \subsubsection{Unittests}
 \todo[inline]{I dont know what to put here, the tests really arent interesting, nor do they affect the workings of the system}
+
 \subsection{Work Remaining}
-For this sprint only the prepwork, i.e. the core and persistence layers, were finished.
-The endpoint iteself, that is to say the service layer, has yet to be made, and will be in the following sprint.
+For this sprint only the prep work, i.e. the core and persistence layers, for the endpoint itself was finished.
+The endpoint itself, that is to say the service layer, has yet to be made, and will be in the following sprint.
 When we start creating the service layer it may reveal things that have been overlooked in the two other layers and subsequently cause changes.
 \todo[inline]{I dont think there's enough content here to justify a subsec}
