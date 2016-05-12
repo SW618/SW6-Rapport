@@ -71,8 +71,8 @@ These kind of simple fields exist for all the following classes, in general we w
 \end{description}
 
 \subsubsection{Weekday}
-A \texttt{WeekSchedule} that has had any pictograms added to it contains between one and seven weekdays.
-These Weekday instances represent a single day of the week and contain information about the activities on a given day.
+A \texttt{WeekSchedule} that has had any pictograms added to any related \texttt{Weekday}s, contains between one and seven weekdays.
+These \texttt{} instances represent a single day of the week and contain information about the activities on a given day.
 The table seen in \myref{tbl:Weekday} provides an overview and a short description of how we model a weekday in the REST API.
 
 \begin{table}[]
@@ -83,9 +83,9 @@ The table seen in \myref{tbl:Weekday} provides an overview and a short descripti
 \multicolumn{3}{c}{Class: \texttt{Weekday}}                                                                                    \\
 Field Name            & Type                                            & Short Description                                    \\
 \texttt{id}           & \texttt{long}                                   & Unique ID                                            \\
-\texttt{day}          & \texttt{Enum\textless Day\textgreater}          & Defines which day of the week the Weekday represents \\
-\texttt{lastEdit}     & \texttt{Date}                                   & Timestamp for when the Weekday was last edited       \\
-\texttt{weekSchedule} & \texttt{WeekSchedule}                           & The \texttt{WeekSchedule} the Weekday belongs to     \\
+\texttt{day}          & \texttt{Enum\textless Day\textgreater}          & Defines which day of the week the \texttt{Weekday} represents \\
+\texttt{lastEdit}     & \texttt{Date}                                   & Timestamp for when the \texttt{Weekday} was last edited       \\
+\texttt{weekSchedule} & \texttt{WeekSchedule}                           & The \texttt{WeekSchedule} the \texttt{Weekday} belongs to     \\
 \texttt{frames}       & \texttt{List\textless WeekdayFrame\textgreater} & An ordered list of WeekdayFrames 
 \end{tabular}
 \end{table}
@@ -93,9 +93,9 @@ Field Name            & Type                                            & Short 
 
 \begin{description}
     \item [lastEdit] \hfill \\
-    Having a \texttt{lastEdit} field on each Weekday as well as on each \texttt{WeekSchedule} allows for more specific information. 
-    As such conflicts, as defined in \myref{ssec:policy}, are less likely to occur as the changes have to be targeted on the same Weekdays and not simply the WeekSchedule. 
-    The lastEdit on \texttt{WeekSchedule} remains such that if no conflict occurs we will not have to check the \texttt{lastEdit} for each Weekday on a WeekSchedule.
+    Having a \texttt{lastEdit} field on each \texttt{Weekday} as well as on each \texttt{WeekSchedule} allows for more specific information. 
+    As such conflicts, as defined in \myref{ssec:policy}, are less likely to occur as the changes have to be targeted on the same Weekdays and not simply the \texttt{WeekSchedule}. 
+    The lastEdit on \texttt{WeekSchedule} remains such that if no conflict occurs we will not have to check the \texttt{lastEdit} for each \texttt{Weekday} on a \texttt{WeekSchedule}.
     \item [weekSchedule] \hfill \\
     The \texttt{weekSchedule} field defines the \texttt{WeekSchedule} that a \texttt{Weekday} belongs to, a \texttt{Weekday} can only belong to one \texttt{WeekSchedule}.
     Allowing for \texttt{Weekday}s to be shared among \texttt{WeekSchedule}s would create more opportunities for the aforementioned conflicts to occur and in a more complicated manner, as such we choose not to allow this
