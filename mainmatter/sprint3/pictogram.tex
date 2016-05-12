@@ -6,12 +6,13 @@ Currently in the PictoSearch library a user searches for some string, and the lo
 Therefore a goal of the REST API for pictograms is to provide a search method, such that PictoSearch will result in the same results as before.
 The endpoint will also be used in the case that a user opens, e.g. a week schedule which contains a pictogram that the device have not saved locally, the endpoint will then retrieve this single pictogram rather than returning a list of pictograms.
 
-The model that was described in \myref{subsec:model} was the complete model of the REST API \myref{fig:screenshot_newsearch} shows the model regarding pictograms along with the fields of these classes.
+\subsection{Description of the Model of Pictogram}\label{subsec:pictomodel}
+The model that was described in \myref{subsec:model} was the complete model of the REST API \myref{fig:pictogramModel} shows the model regarding pictograms along with the fields of these classes.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{figures/diagram-pictogram.png}
-    \caption{Class-diagram including fields of the classes involved in Pictograms}\label{fig:screenshot_newsearch}
+    \caption{Class-diagram including fields of the classes involved in Pictograms}\label{fig:pictogramModel}
 \end{figure}\todo{Update accordingly in the end}
 
 Here a brief description of the purpose for each field of the classes on the figure will be given.
@@ -49,7 +50,7 @@ It inherits fields for PersistFileHandle instead.
 \subsubsection*{PersistFileHandle}
 This class is what all images in GIRAF will inherit from, this means \texttt{Pictogram}s and also \texttt{UserIcon}s. 
 Originally when we started working on the REST API for Pictogram the \texttt{PersistFileHandle} did not exist and all information on this class was saved directly on the \texttt{UserIcon} class.
-Why and how this new generality is created will be explained in \todo{ref til sektionen}.
+Why and how this new generality is created will be explained in \myref{subsec:persistfilehandle}.
 It contains the following fields:
 \begin{description}
 	\item[id] This field is self explanatory.
@@ -80,21 +81,21 @@ When creating a One-to-Many a opposite Many-to-One needs to be created on the cl
 
 This needs to be done for the field \texttt{isTitlePictogramOn} as can be seen on \myref{lst:titlePictogram}.
 
-\begin{lstlisting}[float, floatplacement=h, caption={Fields with annotations which causes Hibernate to perform the ORM for \texttt{titlePictogram}.},label={lst:titlePictogram}]
+\begin{lstlisting}[float, floatplacement=h, caption={Fields with annotations which causes Hibernate to perform the ORM for \texttt{titlePictogram}. \texttt{[...]} denotes omitted code.},label={lst:titlePictogram}]
 //The relation on the side of Sequence
 public class Sequence extends PictoFrame implements Iterable<Frame> {
-...
-@ManyToOne(fetch = FetchType.EAGER)
-@JoinColumn(name = "titlePictogram_id")
-private Pictogram titlePictogram;
-...
+	[...]
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "titlePictogram_id")
+	private Pictogram titlePictogram;
+	[...]
 }
 // The relation on the side of Pictogram
 public class Pictogram extends PictoFrame {
-...
-@OneToMany(fetch = FetchType.LAZY)
-private Collection<Sequence> titlePictogramOn;
-...
+	[...]
+	@OneToMany(fetch = FetchType.LAZY)
+	private Collection<Sequence> titlePictogramOn;
+	[...]
 }
 // SQL for the Sequence Schema
 CREATE TABLE Sequence
@@ -111,20 +112,22 @@ Line 20 shows the SQL where the column to be joined on is created in the SQL.
 \subsection{Querying the Database}
 As explained in \myref{subsec:general} the database is queried using a DAO, this section will present the \texttt{PictogramDaoImpl} class.
 
-\begin{lstlisting}[float, floatplacement=h, caption={The class header of the \texttt{PictogramDao}, along with its annotations.},label={lst:pictogramDaoImpl}]
+\begin{lstlisting}[float, floatplacement=h, caption={The class header of the \texttt{PictogramDao}, along with its annotations. \texttt{[...]} denotes omitted code.},label={lst:pictogramDaoImpl}]
 @Transactional
 @Repository
 @Primary
 public class PictogramDaoImpl extends BaseDaoImpl<Pictogram> implements PictogramDao {
+	[...]
+}
 \end{lstlisting}
 
-\myref{lst:pictogramDao} shows the class header of the \texttt{PictogramDaoImpl}, it extends \texttt{BaseDaoImpl<Pictogram} and implements its relating interface \texttt{PictogramDao} as described in \myref{subsec:general}.
+\myref{lst:pictogramDaoImpl} shows the class header of the \texttt{PictogramDaoImpl}, it extends \texttt{BaseDaoImpl<Pictogram} and implements its relating interface \texttt{PictogramDao} as described in \myref{subsec:general}.
 It has the annotation \texttt{@Transactional} which is a Spring annotation all DAOs in the REST API use.
 It allows Spring to inject behaviours around method calls like transaction management.
 The \texttt{@Reposity} annotation is also a Spring annotation used for all DAOs in the REST API, which tells spring that the class is used for encapsulating storage, retrieval and search behaviour for a collection of objects.
 The last annotation \texttt{@Primary} is also a Spring annotation used by all DAOs in the REST API, and is used to tell Spring that the Java Bean \todo{Det har vi vel ikke nævnt?} containing this class should be given preference when multiple beans are candidates to be autowired.
 Autowire means that you do not have to specify the bean's properties or constructor arguments explicitly. 
-This is used in the Service layer where the proper DAOs are retrieved using Beans and the auto wiring makes this easier.
+This is used in the Service layer where the proper DAOs are retrieved as Beans and the auto wiring makes this easier.
 \\
 
 \myref{lst:pictogramByTitle} shows the method for querying the database for \texttt{Pictogram}s which title contains the string being searched for.
@@ -169,11 +172,79 @@ public void testPictogramByTitle() throws Exception {
 }
 \end{lstlisting}
 
+\subsection{Generalising the FileDAO}\label{subsec:persistfilehandle}
+When we started working on the REST API \texttt{Pictogram}, there was already created a way to get an Image for another class, namely the \texttt{UserIcon}.
+A DAO was also created for \texttt{UserIcon}, which contained methods which were the exact same methods we needed to implement for the \texttt{PictogramImage}, so in order to not copy-paste code we decided to generalise the concept.
+This is when the class \texttt{PersistFileHandle} was created as mentioned in \myref{subsec:pictomodel}.
+This meant that the data was now inherited by a single class.
+When creating a DAO for retrieving the information we did not want to copy-paste as well, as the queries would retrieve the same data just for different kind of objects, therefore the DAO was generalised using Type parameters as shown on \myref{lst:typeparameter}.
 
-\todo{FilePersistFactory}
 
-\subsection{Migrations for the Database}
-\todo{Migration from older model from first iteration of Pictogram}
+\begin{lstlisting}[float, floatplacement=h, caption={The \texttt{FileDaoImpl} class header which uses Type Parameters to generalise which types it can be used with. \texttt{[...]} denotes omitted code.},label={lst:typeparameter}]
+public abstract class FileDaoImpl<T extends PersistFileHandle> implements FileDao<T> {
+	[...]
+}
+\end{lstlisting}
+
+This means that any Type that extends from the class \texttt{PersistFileHandle} is able to be used with this Class, which means that both \texttt{PictogramImage} and \texttt{UserIcon} can now be used.
+
+As we started to generalise the methods in \texttt{FileDaoImpl} we faced a problem in the \texttt{add} method as we created a new object using a constructor, which would now be the Type Parameter T as seen on \myref{lst:TypeParameterConstructor}.
+
+\begin{lstlisting}[float, floatplacement=h, caption={Trying to use a Type Parameter constructor, which Java cannot do. \texttt{[...]} denotes omitted code.},label={lst:TypeParameterConstructor}]
+public T add(Readable file) throws IOException {
+    [...]
+    T fh = new T(uuid.toString());
+    [...]
+}
+\end{lstlisting}
+
+Therefore we decided to use the abstract factory pattern, such that the method knows exactly what object it needs to use.
+
+The Abstract Factory Pattern can be shown using our own classes on \myref{fig:asbtractFactory}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\textwidth]{figures/diagram-factory.png}
+    \caption{The abstract factory pattern in the REST API for \texttt{PersistentFileHandle}.}\label{fig:asbtractFactory}
+\end{figure}
+The abstract factory or factory of factories is the \texttt{PersistFileHandleFactory}.
+When e.g. a \texttt{FileDao<PictogramImage>} is created, an instance of \texttt{pictogramImageFileDaoImpl} is what is actually created. 
+This instance has a factory field, which will then be one of the non abstract subclasses or subfactories of \texttt{PersistFileHandleFactory} which in this case is the \texttt{PictogramImageFactory}.
+This means that the \texttt{add} function mentioned earlier now knows what object it is working on and thus the line shown in \myref{lst:TypeParameterConstructor} can be changed to the line shown in \myref{lst:TypeParameterConstructorActual}.
+
+\begin{lstlisting}[float, floatplacement=h, caption={Trying to use a Type Parameter constructor, which Java cannot do. \texttt{[...]} denotes omitted code.},label={lst:TypeParameterConstructorActual}]
+public T add(PersistFileHandleFactory<T> factory, Readable file) throws IOException {
+    [...]
+      fh = factory.create(uuid.toString());
+    [...]
+}
+\end{lstlisting}
+
+Using this pattern the factory, whatever type it may be, has a create method which takes a string as input.
+The factory variable will either be a \texttt{UserIconFactory} or a \texttt{PictogramImageFactory}, where the create methods both create their corresponding class with the path set to the string that is sent as input.
+In this way the pattern of storing files and the paths to the files is generalised, and can work for virtually any other type of file, as long as they implement a factory which inherit from the abstract factory, and a class which inherits from the abstract class \texttt{PersistFileHandle}.
 
 \subsection{The Service Layer for the Pictogram}
-\todo{PictogramService inkludér blot et get, post, og put tænker jeg ?}
+This section describes the service layer of the Pictogram endpoint.
+The tool RESTEasy makes it simple to create HTTP Request methods using its annotations such as \texttt{@GET} or \texttt{@PUT}.
+First we present the services which can be accessed through a department, followed by the services for accessing public \texttt{Pictograms}.
+
+\subsubsection*{Pictograms of a Department}
+
+\begin{table}[]
+\centering
+\caption{My caption}
+\label{my-label}
+\begin{tabular}{lll}
+Path           & HTTP Request Type & Method Name          \\
+/              & GET               & getAllPictograms     \\
+/\{pid\}       & GET               & getPictogram         \\
+/\{pid\}/image & GET               & getPictogramImage    \\
+/              & POST              & CreatePictogram      \\
+/\{pid\}/image & PUT               & uploadPictogramImage \\
+/\{pid\}       & PUT               & updatePictogram      \\
+/\{pid\}	   & DELETE			   & deletePictogram	  \\
+\end{tabular}
+\end{table}\todo{SASS GØR DEN LÆKKER!!}
+
+\subsubsection*{Public Pictograms}
