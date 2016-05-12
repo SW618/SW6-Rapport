@@ -197,7 +197,7 @@ public T add(Readable file) throws IOException {
     [...]
 }
 \end{lstlisting}
-
+\todo[inline]{Skal vi forklare hvad factory pattern er mere abstrakt? I så fald hvor dybdegående skal det være?}
 Therefore we decided to use the abstract factory pattern, such that the method knows exactly what object it needs to use.
 
 The Abstract Factory Pattern can be shown using our own classes on \myref{fig:asbtractFactory}.
@@ -227,14 +227,14 @@ In this way the pattern of storing files and the paths to the files is generalis
 \subsection{The Service Layer for the Pictogram}
 This section describes the service layer of the Pictogram endpoint.
 The tool RESTEasy makes it simple to create HTTP Request methods using its annotations such as \texttt{@GET} or \texttt{@PUT}.
-First we present the services which can be accessed through a department, followed by the services for accessing public \texttt{Pictograms}.
-
-\subsubsection*{Pictograms of a Department}
+\myref{tbl:pictogramservice} shows a list of all the services provided by the pictogram REST API.
+All the serivces are located in the path \texttt{/publicpictogram} and \texttt{/department/{id}/pictogram}.
+This separation has been made because the public pictorams are all given by the GIRAF application, while the other pictograms are pictograms that will be created by a department.
 
 \begin{table}[]
 \centering
-\caption{My caption}
-\label{my-label}
+\caption{List of Pictogram endpoints, they all exist at \texttt{/department/id/pictogram} or at \texttt{/publicpictogram}.}
+\label{tbl:pictogramservice}
 \begin{tabular}{lll}
 Path           & HTTP Request Type & Method Name          \\
 /              & GET               & getAllPictograms     \\
@@ -245,6 +245,40 @@ Path           & HTTP Request Type & Method Name          \\
 /\{pid\}       & PUT               & updatePictogram      \\
 /\{pid\}	   & DELETE			   & deletePictogram	  \\
 \end{tabular}
-\end{table}\todo{SASS GØR DEN LÆKKER!!}
+\end{table}\todo{Sass gør tabellen lækker ... please...LÆKKERFY DEN!!!!}
 
-\subsubsection*{Public Pictograms}
+The services use the DAOs created in the persistence layer of the REST API. 
+The queries created in the DAO retrieve the objects that the request wants to either GET, PUT, or DELETE, otherwise for a POST request a builder for \texttt{Pictogram} will build the \texttt{Pictogram} from the JSON data, and the method that handles the request will then save this in the database.
+
+\myref{lst:getallPictograms} shows the method which handles a GET request on the path ``/'' which is seen from the annotations \texttt{@GET} and \texttt{@Path("/")}.
+Since a \texttt{PictogramService} is only created through the \texttt{DepartmentService} on the path \texttt{"/pictogram"} the full path to activate this method is \texttt{"department/{id}/pictograms/"}.
+The annotation on line 8 simply states which representation a resource can produce in this case it means that this method can produce JSON as output.
+The last annotation on line 9 \texttt{RolesAllowed({PermissionType.Constants.USER})}, specifies which roles may access this method, and \texttt{USER} is the most general one, which means every type of user in the model may access this method.
+
+\begin{lstlisting}[float, floatplacement=h, caption={A GET request to get all pictograms for a department.},label={lst:getallPictograms}]
+/**
+ * Get a list of all the private/protected {@link Pictogram pictograms}. Any user of a department can do this.
+ * @param user The currently authenticated user
+ * @return A collection of {@link Pictogram pictograms}.
+ */
+@GET
+@Path("/")
+@Produces("application/json")
+@RolesAllowed({ PermissionType.Constants.USER })
+public Collection<Pictogram> getAllPictograms(@Context User user) {
+    if(user == null)
+        throw new NotAuthorizedException("You need to be logged in to add department pictograms");
+    if(!user.getDepartment().equals(department) && !user.hasPermission(PermissionType.SuperUser))
+        throw new NotAuthorizedException("You are logged in to the wrong department");
+
+    return pictogramDao.getAll(user);
+}
+\end{lstlisting}
+
+First the method simple checks if a user is actually received, i.e. is a user logged in or not.
+If this check passes the next if check on line 13 checks whether the user is in the same department as the department the method will try to get \texttt{Pictogram}s from, if this check fails it also checks whether the user might be a \texttt{SuperUser}, in which case it is also allowed and the if check will fail.
+A \texttt{SuperUser} is a sort of admin which will be the user attached to \texttt{PublicPictograms}.
+
+If both if checks fail, the method returns what the \texttt{PictogramDao.getAll(user)} method retrieves, which will be all pictograms the user is allowed to see.
+
+This concludes the \texttt{Pictogram} endpoint showcase; the next section will cover how the REST API for \texttt{Sequence} was progressed for this sprint, it will skip details already covered in this section about the \texttt{Pictogram} endpoint.
