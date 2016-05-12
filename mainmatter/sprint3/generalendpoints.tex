@@ -15,6 +15,7 @@ The last layer is the service layer which is what is called from any application
 
 \subsubsection{The Core Layer}
 The first layer to be implemented for an endpoint is the core layer, which consists of two steps:
+\kim{I dont quite understand how layers have steps? A layer might contain some components, please explain this.}
 \begin{description}
 	\item[Creating the classes needed for the endpoint] \hfill \\
 	When creating the classes all fields of the classes are annotated with Hibernate annotations which in turn helps retrieve the correct objects when querying the database.
@@ -23,7 +24,7 @@ The first layer to be implemented for an endpoint is the core layer, which consi
 	The methods created on the classes should be methods which will be used in GIRAF applications on the object, like adding another pictogram to a week schedule.
 	\item[Unit testing the classes] \hfill \\
 	There must be unit tests which creates some objects of the class and use the methods implemented on them.
-	There should be enough unit tests such that all methods have 100\% code coverage.
+	There should be enough unit tests such that all methods have 100\% code coverage. \kim{How should I understand this? do you test call all methods? or are all code branches covered? Please clearify.}
 \end{description}
 
 \noindent
@@ -64,9 +65,8 @@ The final layer to create for an endpoint is the service layer and consists of a
 \noindent
 The next section will present the model to be modelled in the core layer for the three endpoints, which we are developing during this sprint.
 
-
 \subsection{The new Model for REST API}\todo{add something bout users}\label{subsec:model}
-
+\kim{Why is this a ``new'' model for the API?}
 The new model design is an attempt to make the central parts of GIRAF more cohesive than before.
 We will start by discussing week schedule and then go on to discuss the rest of the model.
 \todo[inline]{indsæt klassediagram her} A week schedule consists of seven week days one for each day of the week which creates a relation from a \texttt{weekSchedule} to several \texttt{weekDay}s.

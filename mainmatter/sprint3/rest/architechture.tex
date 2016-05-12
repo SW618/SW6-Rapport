@@ -6,10 +6,11 @@ The technology and tools refinements include adding and using the technologies: 
 The full list of technologies used in the REST API and the development hereof will be listed in \myref{sec:techstack}, however in this section we will introduce the architecture used in the REST API.
 
 When we speak of the REST API we talk about the system which is located between the client and the database.
-
 Its job is to serve content from the database to the client.
 \myref{fig:rest-architecture} depicts a diagram which explains the basic layers of the architecture alongside the connections between the REST API and its surroundings; e.g. the client-server concept as described on page~\pageref{client-server-rest} can be seen, where the clients are connected to the REST API, i.e. the server, through the internet.
 The three layers of the REST API depicted in the figure are: \textbf{Core}, \textbf{Persistence} and \textbf{Service}, which supports the idea of a layered system from the Uniform Interface Constraint described described on page~\pageref{layeredsystem}the meaning of these are as follows:
+\kim{Reference to wrong page.}
+\kim{Where did you get these layer names from. I would expect them to be called, presentation, logic, and model/data access. If it is a traditional rest layed architecture that you use, then please use somthing similar to the standard names.}
 \begin{description}
     \item[Core] \hfill \\
     The core layer contains the model of the REST API, a full class diagram will be shown later in \myref{subsec:model}.
@@ -19,8 +20,8 @@ The three layers of the REST API depicted in the figure are: \textbf{Core}, \tex
     Additionally we construct the tables for the relational database and some localdata which is used for integration tests and test data during development.
 
     \item[Service] \hfill \\
-    The service layer contains the code which is accessed by clients.
-    Here we construct the endpoints which the clients can connect to; we use the DAOs in the persistence layer to access and manipulate data if the clients are allowed to do so.
+    The service layer contains the code which is accessed by clients. \kim{Reformulate, it sounds like that the client gets a chunk of code to look at. }
+    Here we construct the endpoints\kim{it is unclear what  ``construct the endpoints means''} which the clients can connect to; we use the DAOs in the persistence layer to access and manipulate data if the clients are allowed to do so. \kim{Just to ensure that I understand it correctly, then this is the layer where all the business logic is implemented, right?}
 \end{description}
 
 \begin{figure}[h]
@@ -31,7 +32,7 @@ The three layers of the REST API depicted in the figure are: \textbf{Core}, \tex
 \end{figure}
 
 \subsection{Testing}
-One of the benefits of separating the REST API into the aforementioned layered architecture, i.e. core, persistence and service, is the ability to easily test the different components.
+One of the benefits of separating the REST API into the aforementioned layered architecture, i.e. core, persistence and service, is the ability to easily test the different components\kim{It is unclear what these components are! Earlier you described the component SequenceViewer, is it the same components you are talking about now?  }.
 During the development we want to be able to test the REST API such that we can ensure whether or not the code works as intended.
 The Core and Persistence layers each have a test package which contains unit tests to ensure the correctness of the implementation.
 The tests in the persistence layer work as integration tests since they rely on the consistency of the Core, the SQL which creates the database, and the DAOs.
@@ -40,6 +41,6 @@ With sufficient unit and integration testing we can also easily perform refactor
 However one must contemplate the false security which unit testing can give; the correctness of the code which is tested using unit tests, heavily relies on the correctness of the tests themselves.
 Because of this it is important that unit tests are relatively simple and unambiguous, such that a programmer can easily comprehend whether or not the test itself is correct.
 Moreover the code coverage of the unit tests is also an important factor, i.e. how many lines and effectively branches of the code is tested.
-
 A code base may have a dozen unit tests which passed, but if only 50 \% of the code is tested, the unit tests cannot be used to conclude if the program behaves correctly.
 Furthermore, it is important to keep in mind that testing only helps discover errors in a given piece of software, it cannot guarantee that there are no remaining faults present. For more on software testing see Chapter 8 in \textit{Software Engineering (Tenth Edition)} By Ian Sommerville~\cite[Chapter~8]{SEBOOK}.
+\kim{What is your coverage? Are your unit tests simple and unambiguous? Why did you make integration tests and not units test on the persistence layer? Please try to cover these choices in this section.}
