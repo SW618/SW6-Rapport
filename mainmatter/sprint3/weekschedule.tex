@@ -1,6 +1,6 @@
 \section{REST API: Week Schedule}\label{sec:restws}
 This section pertains to the following user story: \\
-\userstory{As a developer i would like an endpoint for Week Schedules, such that i can retrieve them from GIRAF.} \\
+\userstory{As a developer I would like an endpoint for Week Schedules, such that I can retrieve them from GIRAF.} \\
 Specifically the two sub tasks regarding the core layer and the persistence layer.
 
 For the sake of this section, we refer to both the classes and also the real life objects that they represent, as such we make a distinction between how the two are written.
@@ -34,23 +34,27 @@ For some of the fields further details and thoughts behind their creation is pro
 The \texttt{WeekSchedule} class is central to the modelling of week schedules.
 All information about a week schedule can be derived from this class, we will start by presenting this class and then following its fields to find the \texttt{Weekday}, \texttt{WeekdayFrame} and lastly \texttt{WeekdayFrameProgress} classes.
 
-\begin{table}[]
-\centering
-\caption{Table that represents the \texttt{WeekSchedule} class}
-\label{tbl:WeekSchedule}
-\begin{tabular}{lll}
-\multicolumn{3}{c}{Class: \texttt{WeekSchedule}}                                                                                        \\
-Field Name          & Type                                             & Short Description                                              \\
-\texttt{id}         & \texttt{long}                                    & Unique ID                                                      \\
-\texttt{name}       & \texttt{string}                                  & Name of the \texttt{WeekSchedule}                              \\
-\texttt{thumbnail}  & \texttt{Pictogram}                               & The pictogram shown as thumbnail                               \\
-\texttt{lastEdit}   & \texttt{Date}                                    & Timestamp for when the \texttt{WeekSchedule} was last edited   \\
-\texttt{department} & \texttt{Department}                              & The department that owns the \texttt{WeekSchedule}             \\
-\texttt{users}      & \texttt{Collection\textless User\textgreater}    & All users for whom the \texttt{WeekSchedule} is available      \\
-\texttt{days}       & \texttt{Collection\textless Weekday\textgreater} & The \texttt{weekday}s belonging to the \texttt{WeekSchedule}           
-\end{tabular}
+\begin{table}[ht]
+\resizebox{\textwidth}{!}{%
+    \centering
+    \begin{tabular}{lll}
+        \multicolumn{3}{c}{\Large{Class: \texttt{WeekSchedule}}}                                                                                \\
+        \tblgrpsep
+        \tblgrpsep
+        \textbf{Field Name} & \textbf{Type}                                     & \textbf{Short Description}                                    \\
+        \midrule
+        \texttt{id}         & \texttt{long}                                     & Unique Identifier                                             \\
+        \texttt{name}       & \texttt{string}                                   & Name of the \texttt{WeekSchedule}                             \\
+        \texttt{thumbnail}  & \texttt{Pictogram}                                & The pictogram shown as thumbnail                              \\
+        \texttt{lastEdit}   & \texttt{Date}                                     & Timestamp for when the \texttt{WeekSchedule} was last edited  \\
+        \texttt{department} & \texttt{Department}                               & The department that owns the \texttt{WeekSchedule}            \\
+        \texttt{users}      & \texttt{Collection\textless User\textgreater}     & All users for whom the \texttt{WeekSchedule} is available     \\
+        \texttt{days}       & \texttt{Collection\textless Weekday\textgreater}  & The \texttt{weekday}s belonging to the \texttt{WeekSchedule}           
+    \end{tabular}}
+    \caption{Table of fields in the \texttt{WeekSchedule} class.}
+    \label{tbl:WeekSchedule}
 \end{table}
-\todo[inline]{Lækkerfy this table Sass}
+\todo[inline]{Har gjort dem viewable nu, er ikke sikker på om overskriften skal være deri, det er jo captionens job? - Troels}
 
 \noindent
 The fields id, name and thumbnail are fairly straight forward and thus will not be discussed further.
@@ -75,21 +79,25 @@ A \texttt{WeekSchedule} that has had any pictograms added to any related \texttt
 These \texttt{} instances represent a single day of the week and contain information about the activities on a given day.
 The table seen in \myref{tbl:Weekday} provides an overview and a short description of how we model a weekday in the REST API.
 
-\begin{table}[]
-\centering
-\caption{Table that represents the \texttt{Weekday} class}
-\label{tbl:Weekday}
-\begin{tabular}{lll}
-\multicolumn{3}{c}{Class: \texttt{Weekday}}                                                                                    \\
-Field Name            & Type                                            & Short Description                                    \\
-\texttt{id}           & \texttt{long}                                   & Unique ID                                            \\
-\texttt{day}          & \texttt{Enum\textless Day\textgreater}          & Defines which day of the week the \texttt{Weekday} represents \\
-\texttt{lastEdit}     & \texttt{Date}                                   & Timestamp for when the \texttt{Weekday} was last edited       \\
-\texttt{weekSchedule} & \texttt{WeekSchedule}                           & The \texttt{WeekSchedule} the \texttt{Weekday} belongs to     \\
-\texttt{frames}       & \texttt{List\textless WeekdayFrame\textgreater} & An ordered list of WeekdayFrames 
-\end{tabular}
+\begin{table}[ht]
+\resizebox{\textwidth}{!}{%
+    \centering
+    \begin{tabular}{lll}
+        \multicolumn{3}{c}{\Large{Class: \texttt{WeekSchedule}}}                                                                                \\
+        \tblgrpsep
+        \tblgrpsep
+        \textbf{Field Name} & \textbf{Type}                                     & \textbf{Short Description}                                    \\
+        \midrule
+        \texttt{id}           & \texttt{long}                                   & Unique ID                                                     \\
+        \texttt{day}          & \texttt{Enum\textless Day\textgreater}          & Defines which day of the week the \texttt{Weekday} represents \\
+        \texttt{lastEdit}     & \texttt{Date}                                   & Timestamp for when the \texttt{Weekday} was last edited       \\
+        \texttt{weekSchedule} & \texttt{WeekSchedule}                           & The \texttt{WeekSchedule} the \texttt{Weekday} belongs to     \\
+        \texttt{frames}       & \texttt{List\textless WeekdayFrame\textgreater} & An ordered list of WeekdayFrames 
+    \end{tabular}}
+    \caption{Table of fields in the \texttt{Weekday} class.}
+    \label{tbl:Weekday}
 \end{table}
-\todo[inline]{Lækkerfy this table Sass}
+\todo[inline]{Har gjort dem viewable nu, er ikke sikker på om overskriften skal være deri, det er jo captionens job? - Troels}
 
 \begin{description}
     \item [lastEdit] \hfill \\
@@ -111,21 +119,24 @@ This class serves as the link between a \texttt{Weekday} and a \texttt{Frame}.
 It is necessary that we have this intermediary link such that we can add additional information, in this case this information is ordering the \texttt{Frame}s in a list while allowing them to be reordered easily.
 \myref{tbl:WeekdayFrame} shows what this class contains.
 
-\begin{table}[]
-\centering
-\caption{Table that represents the \texttt{WeekdayFrame} class}
-\label{tbl:WeekdayFrame}
-\begin{tabular}{lll}
-\multicolumn{3}{c}{Class: \texttt{WeekdayFrame}}                                                                                                \\
-Field Name          & Type                                            & Short Description                                                       \\
-\texttt{id}         & \texttt{long}                                   & Unique ID                                                               \\
-\texttt{weekday}    & \texttt{Weekday}                                & The \texttt{Weekday} that a \texttt{Frame} should be added to           \\
-\texttt{frame}      & \texttt{Frame}                                  & The \texttt{Frame} that should be added to the \texttt{Weekday}         \\
-\texttt{index}      & \texttt{int}                                    & The order for which \texttt{Frame}s are stored                          \\
-\texttt{frames}     & \texttt{List\textless WeekdayFrame\textgreater} & The list that stores all \texttt{Frame}s contained in this frame
-\end{tabular}
+\begin{table}[ht]
+\resizebox{\textwidth}{!}{%
+    \centering
+    \begin{tabular}{lll}
+        \multicolumn{3}{c}{\Large{Class: \texttt{WeekSchedule}}}                                                                                        \\
+        \tblgrpsep
+        \tblgrpsep
+        \textbf{Field Name} & \textbf{Type}                                   & \textbf{Short Description}                                              \\
+        \midrule
+        \texttt{id}         & \texttt{long}                                   & Unique ID                                                               \\
+        \texttt{weekday}    & \texttt{Weekday}                                & The \texttt{Weekday} that a \texttt{Frame} should be added to           \\
+        \texttt{frame}      & \texttt{Frame}                                  & The \texttt{Frame} that should be added to the \texttt{Weekday}         \\
+        \texttt{index}      & \texttt{int}                                    & The order for which \texttt{Frame}s are stored                          \\
+        \texttt{frames}     & \texttt{List\textless WeekdayFrame\textgreater} & The list that stores all \texttt{Frame}s contained in this frame
+    \end{tabular}}
+    \caption{Table that represents the \texttt{WeekdayFrame} class}
+    \label{tbl:WeekdayFrame}
 \end{table}
-\todo[inline]{Lækkerfy this table Sass}
 
 \begin{description}
     \item [weekday] \hfill \\
@@ -144,18 +155,22 @@ Field Name          & Type                                            & Short De
 As discussed earlier previously progress was not modelled in the system, but rather saved on a local file as the progress is specific to each citizen.
 The \texttt{WeekdayFrameProgress} creates a link between a \texttt{User} and a \texttt{WeekdayFrame} such that progress can be tracked.
 
-\begin{table}[]
-\centering
-\caption{Table that represents the \texttt{WeekdayFrameProgress} class}
-\label{tbl:WeekdayFrameProgress}
-\begin{tabular}{lll}
-\multicolumn{3}{c}{Class: \texttt{WeekdayFrameProgress}}                                                                        \\
-Field Name            & Type                                        & Short Description                                         \\
-\texttt{id}           & \texttt{long}                               & Unique ID                                                 \\
-\texttt{user}         & \texttt{User}                               & The user for which progress is specified                  \\
-\texttt{weekdayFrame} & \texttt{WeekdayFrame}                       & The \texttt{WeekdayFrame} for which progress is specified \\
-\texttt{progress}     & \texttt{Enum\textless Progress\textgreater} & The Progress for the specified \texttt{WeekdayFrame}     
-\end{tabular}
+\begin{table}[ht]
+\resizebox{\textwidth}{!}{%
+    \centering
+    \begin{tabular}{lll}
+        \multicolumn{3}{c}{\Large{Class: \texttt{WeekSchedule}}}                                                                        \\
+        \tblgrpsep
+        \tblgrpsep
+        \textbf{Field Name}   & \textbf{Type}                               & \textbf{Short Description}                                \\
+        \midrule
+        \texttt{id}           & \texttt{long}                               & Unique ID                                                 \\
+        \texttt{user}         & \texttt{User}                               & The user for which progress is specified                  \\
+        \texttt{weekdayFrame} & \texttt{WeekdayFrame}                       & The \texttt{WeekdayFrame} for which progress is specified \\
+        \texttt{progress}     & \texttt{Enum\textless Progress\textgreater} & The Progress for the specified \texttt{WeekdayFrame}     
+    \end{tabular}}
+    \caption{Table that represents the \texttt{WeekdayFrameProgress} class}
+    \label{tbl:WeekdayFrameProgress}
 \end{table}
 \todo[inline]{Lækkerfy this table Sass}
 
