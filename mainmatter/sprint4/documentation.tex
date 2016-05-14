@@ -1,14 +1,27 @@
 \section{Documentation}
+With the REST-API being a late addition to GIRAF we decided to be very rigid and corporate about rules for the project, this is such that it is easy to start developing on the REST-API
 
 \todo[inline]{How to setup build environment}
 \todo[inline]{Javadocs - where should it be?}
 For the class, for ALL methods, for non-trivial getters/setters/constructers, for each enum value.
+Også brugt til endpoint specifikke ting, client focused guide, enunciate.
+output i service/dist..... HTML, list of service, Params for URL, objekter returneret -  gradle enunciate to acquire rest API documentation for client focused implementation
+Hookup to javadocs, for jsonpath.
 \todo[inline]{Tests, what are we testing?}
+
+As a baseline all methods should be tested regardless of how simple the method may be.
+Even simple add and remove methods should be tested, such that if they at some point are altered, the tests remain and will reveal an error if the modification is done wrong.
+The Dao should have a near 100 \% code coverage.
+There should also be performed integration tests, integration testing, tests the whole as a cohesive unit.
+In order to achieve integration tests, one must test more than just the methods created, one should test that objects exists and can be found in their expected location, e.g. tests like hasSomeFieldName
+
 \todo[inline]{Hibernate notations, where and why?}
 \todo[inline]{SQL - migrate and NEVER delete}
 \todo[inline]{Jackson(Json) properties, why?}
 \todo[inline]{Layer Descriptions}
 \todo[inline]{The linter}
 
-
 If you believe you require further information groups SW618F16 and SW615F16 started the REST API with SW618 primarily on the endpoints and SW615 on the login so their papers may contain more details.
+
+´For the Wiki - just how and where
+For the paper, why?
