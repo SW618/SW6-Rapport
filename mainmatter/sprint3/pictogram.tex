@@ -1,83 +1,84 @@
 \section{Pictogram Endpoint}\label{pictogramendpoint}
-This section will solve the \userstory{As a developer i would like an endpoint for Pictograms, such that i can retrieve them from GIRAF.}
+This section will solve the \userstory{As a developer I would like an endpoint for Pictograms, such that I can retrieve them from GIRAF.}
 
-The Pictogram endpoint is used for the PictoSearch library to find different pictograms, as well as to get specific pictograms which have not been downloaded yet.
+The Pictogram endpoint is used for the PictoSearch library to find different pictograms, as well as to acquire specific pictograms which have not been downloaded yet.
 Currently in the PictoSearch library a user searches for some string, and the local database is queried using \texttt{... LIKE \%searchstring\%} and as such this will also be used for the REST API.
-Therefore a goal of the REST API for pictograms is to provide a search method, such that PictoSearch will result in the same results as before.
-The endpoint will also be used in the case that a user opens, e.g. a week schedule which contains a pictogram that the device have not saved locally, the endpoint will then retrieve this single pictogram rather than returning a list of pictograms.
+Therefore a goal of the REST API for pictograms is to provide a search method, such that PictoSearch will return the same results.
+The endpoint will also be used in the case that a user opens e.g. a week schedule which contains a pictogram that the device have not stored locally, the endpoint will then retrieve this single pictogram rather than returning a list of pictograms.
 
-\subsection{Description of the Model of Pictogram}\label{subsec:pictomodel}
-The model that was described in \myref{subsec:model} was the complete model of the REST API \myref{fig:pictogramModel} shows the model regarding pictograms along with the fields of these classes.
+\subsection{Description of the Model of Pictograms}\label{subsec:pictomodel}
+The model that was described in \myref{subsec:model} was the complete model of the REST API, \myref{fig:pictogramModel} shows the model regarding pictograms along with the fields of these classes.
 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{figures/diagram-pictogram.png}
-    \caption{Class-diagram including fields of the classes involved in Pictograms}\label{fig:pictogramModel}
+    \caption{Class--diagram including fields of the classes involved in Pictograms}\label{fig:pictogramModel}
 \end{figure}\todo{Update accordingly in the end}
 
+\todo{Table or description? --- I will make consistent when we decide}
 Here a brief description of the purpose for each field of the classes on the figure will be given.
 \subsubsection*{Frame}
 	\begin{description}
 		\item[id] This is the id of the Frame which is saved in the database.
-		\item[lastEditAt] This is a time stamp of when the Frame was last edited. 
+		\item[lastEditAt] This is a time stamp of when the Frame was last edited --- auto updated by Hibernate when changes on the object is persisted in the database.
 		It is to be used for conflict handling as e.g. pictograms can be altered in the PictoCreator tool, and a need for conflict handling is therefore needed.
-		\item[partofSequences] This is a collection if sequences this frame is used in, and why this collection is here will be further explained in \todo[inline]{sequenceendpointref}
+		\item[partofSequences] This is a collection of sequences this frame is used in; why this collection is needed will be further explained in \todo[inline]{sequenceendpointref}
 	\end{description}
 
 \subsubsection*{PictoFrame}
 	\begin{description}
-		\item[title] Title of the \texttt{PictoFrame}, it is used to search for and also to show what the \texttt{PictoFrame} is called when shown with its title in different parts of GIRAF.
-		\item[owner] The user which owns the \texttt{PictoFrame}. 
+		\item[title] Title of the \texttt{PictoFrame}. Is used to search for and also to show what the \texttt{PictoFrame} is called when shown with its title in different parts of GIRAF.
+		\item[owner] The user which owns the \texttt{PictoFrame}, but not necessarily the user whom created it.
 		This is used to accommodate the need for creating private \texttt{Pictograms} and \texttt{Sequences}.
 		Private means that only the user who is owner can access them.
 		\item[accessLevel] This is an Enumeration which specifies whether the \texttt{PictoFrame} is Public, shared on department or private.
-		\item[department] Specifies which apartment the \texttt{PictoFrame} belongs to, and is used when the accessLevel is specified as shared on department.
+		\item[department] Specifies which department the \texttt{PictoFrame} belongs to, and is used when the accessLevel is specified as shared on department.
 		\item[optionOn] A collection of all \texttt{Choice}s which contain the \texttt{PictoFrame}.
-		This is needed for hibernate to create the many-to-many relationship between \texttt{PictoFrame} and \texttt{Choice}, and will probably not be used for anything else.
+		This is needed for Hibernate to create the many-to-many relationship between \texttt{PictoFrame} and \texttt{Choice}, and will probably not be used for anything else.
 	\end{description}
 
 \subsubsection*{Pictogram}
 	\begin{description}
 		\item[isTitlePictogramOn] A collection of the \texttt{Sequence}s which this \texttt{Pictogram} is the titlePictogram of.
-		\item[pictogramImage] A reference to the \texttt{Pictogram}'s \texttt{PictogramImage}
-		\item [weekScheduleThumbnail] Much like the \texttt{isTitlePictogramOn} but this is for a collection of \texttt{WeekSchule}s instead.
+		\item[pictogramImage] A reference to the \texttt{PictogramImage} of the \texttt{Pictogram}.
+		\item[weekScheduleThumbnail] Similar to the \texttt{isTitlePictogramOn} but this is for a collection of \texttt{WeekSchedule}s instead.
 	\end{description}
 
 \subsubsection*{PictogramImage}
 The \texttt{PictogramImage} has no fields of its own, but is used to indicate that the image is used for a \texttt{Pictogram} instead of e.g. a UserIcon.
-It inherits fields for PersistFileHandle instead.
+However it inherits fields for PersistFileHandle.
 
 \subsubsection*{PersistFileHandle}
-This class is what all images in GIRAF will inherit from, this means \texttt{Pictogram}s and also \texttt{UserIcon}s. 
+This class is what all objects that encapsulates image files will inherit from, this means \texttt{PictogramImage}s and also \texttt{UserIcon}s.
 Originally when we started working on the REST API for Pictogram the \texttt{PersistFileHandle} did not exist and all information on this class was saved directly on the \texttt{UserIcon} class.
 Why and how this new generality is created will be explained in \myref{subsec:persistfilehandle}.
 It contains the following fields:
 \begin{description}
 	\item[id] This field is self explanatory.
-	\item[filePath] A string of the path to the file which the class points to, for the \texttt{Pictogram} endpoint it will be a Pictogram.
+	\item[filePath] A string of the path to the file which the class points to, for the Pictogram endpoint it will be a Pictogram.
 \end{description}
 
-The section above explained what is modelled in the Java classes, the following section will present how this information is stored in the database using the tools mentioned in \myref{sec:techstack}.
+The section above explains what is modelled with the Java classes; the following section will present how this information is stored in the database using the tools mentioned in \myref{sec:techstack}.
 
 \subsection{Storing the Model in the Database}
 
-As mentioned we use an ORM to map the models to the database, this section describes how this actually done.
+As mentioned previously we use an \textbf{ORM} (object--relational mapping) tool to map the models to the database, this section describes how this specifically is done.
 
 \begin{lstlisting}[float, floatplacement=h, caption={Fields with annotations which causes Hibernate to perform the ORM for a \texttt{PictogramImage}.},label={lst:PictoImage}]
 @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
 private PictogramImage pictogramImage;
 \end{lstlisting}
 
-The short snippet on \myref{lst:PictoImage} shows how the relation to the \texttt{PictogramImage} is created in \texttt{Pictogram}.
+The short snippet in \myref{lst:PictoImage} shows how the relation to the \texttt{PictogramImage} is created in the \texttt{Pictogram} class.
 It simply uses the \texttt{@OneToOne} annotation to create the One-to-One relation between these two objects.
 This is only done on the \texttt{Pictogram} and not on the side of the \texttt{PictogramImage}.
-The field \texttt{fetch} is sat to \texttt{LAZY} in which means that the \texttt{PictogramImage} is not retrieved in the same transaction as when the \texttt{Pictogram} is retrieved, but is instead retrieved when the \texttt{PictogramImage} is accessed on the object.
-The other fetch type \texttt{EAGER} would instead retrieve the entity in the same transaction as the \texttt{Pictogram} is retrieved.
+The property \texttt{fetch} is sat to \texttt{LAZY} which means that the \texttt{PictogramImage} is not retrieved in the same transaction as when the \texttt{Pictogram} is retrieved, but is instead retrieved when the \texttt{PictogramImage} is accessed through the \texttt{Pictogram} object.
+The other fetch type \texttt{EAGER} would instead retrieve the entity in the same transaction as the \texttt{Pictogram}.
 The \texttt{CascadeType.All} means that any change which happens to the \texttt{Pictogram} must cascade to \texttt{PictogramImage} as well.
-The field is set to being optional because when creating the \texttt{Pictogram} using a HTTP POST request, you cannot post the JSON data along with the ImageFile, and as such the requests have to be separated into two.
+The field is set to being optional because when creating the \texttt{Pictogram} using a HTTP POST request, you cannot send the JSON data along with the image file, and as such the requests have to be separated into two.
 The field is therefore optional to allow for the \texttt{Pictogram} to exist without the \texttt{PictogramImage} for a while, as we deemed it better that a \texttt{Pictogram} exists without a \texttt{PictogramImage} than vice versa.
 
-When creating a One-to-Many a opposite Many-to-One needs to be created on the class the relation is created with.
+When creating a One-to-Many a opposite Many-to-One needs to be created on the class the relation is created to.
 
 This needs to be done for the field \texttt{isTitlePictogramOn} as can be seen on \myref{lst:titlePictogram}.
 
@@ -93,22 +94,22 @@ public class Sequence extends PictoFrame implements Iterable<Frame> {
 // The relation on the side of Pictogram
 public class Pictogram extends PictoFrame {
 	[...]
-	@OneToMany(fetch = FetchType.LAZY)
-	private Collection<Sequence> titlePictogramOn;
+    @OneToMany(fetch = FetchType.LAZY)(*@\label{lst:tp_rel_on_pictog1}@*)
+	private Collection<Sequence> titlePictogramOn;(*@\label{lst:tp_rel_on_pictog2}@*)
 	[...]
 }
 // SQL for the Sequence Schema
 CREATE TABLE Sequence
 (
     frame_id BIGINT NOT NULL PRIMARY KEY,
-    titlePictogram_id BIGINT NOT NULL
+    titlePictogram_id BIGINT NOT NULL(*@\label{lst:tp_sql_meme}@*)
 );
 \end{lstlisting}
 
 On line 5 the \texttt{@JoinColumn} Hibernate annotation is used to specify which column the two tables \texttt{Pictogram} and \texttt{Sequence} will join on.
-Lines 12-13 shows the relation needed on the side of \texttt{Pictogram} to create the opposite One-to-Many side to the Many-to-One relationship on \texttt{Sequence}.
-Line 20 shows the SQL where the column to be joined on is created in the SQL.
-
+Lines~\ref{lst:tp_rel_on_pictog1}--\ref{lst:tp_rel_on_pictog2} shows the relation needed on the side of \texttt{Pictogram} to create the opposite One-to-Many side to the Many-to-One relationship on \texttt{Sequence}.
+Line~\ref{lst:tp_sql_meme} shows the SQL where the column to be joined on is created in the SQL.
+% NÅET HER TIL MEMEMEMEMEMEM
 \subsection{Querying the Database}
 As explained in \myref{subsec:general} the database is queried using a DAO, this section will present the \texttt{PictogramDaoImpl} class.
 
@@ -126,7 +127,7 @@ It has the annotation \texttt{@Transactional} which is a Spring annotation all D
 It allows Spring to inject behaviours around method calls like transaction management.
 The \texttt{@Reposity} annotation is also a Spring annotation used for all DAOs in the REST API, which tells spring that the class is used for encapsulating storage, retrieval and search behaviour for a collection of objects.
 The last annotation \texttt{@Primary} is also a Spring annotation used by all DAOs in the REST API, and is used to tell Spring that the Java Bean \todo{Det har vi vel ikke nævnt?} containing this class should be given preference when multiple beans are candidates to be autowired.
-Autowire means that you do not have to specify the bean's properties or constructor arguments explicitly. 
+Autowire means that you do not have to specify the bean's properties or constructor arguments explicitly.
 This is used in the Service layer where the proper DAOs are retrieved as Beans and the auto wiring makes this easier.
 \\
 
@@ -209,7 +210,7 @@ The Abstract Factory Pattern can be shown using our own classes on \myref{fig:as
     \caption{The abstract factory pattern in the REST API for \texttt{PersistentFileHandle}.}\label{fig:asbtractFactory}
 \end{figure}
 The abstract factory or factory of factories is the \texttt{PersistFileHandleFactory}.
-When e.g. a \texttt{FileDao<PictogramImage>} is created, an instance of \texttt{pictogramImageFileDaoImpl} is what is actually created. 
+When e.g. a \texttt{FileDao<PictogramImage>} is created, an instance of \texttt{pictogramImageFileDaoImpl} is what is actually created.
 This instance has a factory field, which will then be one of the non abstract subclasses or subfactories of \texttt{PersistFileHandleFactory} which in this case is the \texttt{PictogramImageFactory}.
 This means that the \texttt{add} function mentioned earlier now knows what object it is working on and thus the line shown in \myref{lst:TypeParameterConstructor} can be changed to the line shown in \myref{lst:TypeParameterConstructorActual}.
 
@@ -248,7 +249,7 @@ Path           & HTTP Request Type & Method Name          \\
 \end{tabular}
 \end{table}\todo{Sass gør tabellen lækker ... please...LÆKKERFY DEN!!!!}
 
-The services use the DAOs created in the persistence layer of the REST API. 
+The services use the DAOs created in the persistence layer of the REST API.
 The queries created in the DAO retrieve the objects that the request wants to either GET, PUT, or DELETE, otherwise for a POST request a builder for \texttt{Pictogram} will build the \texttt{Pictogram} from the JSON data, and the method that handles the request will then save this in the database.
 
 \myref{lst:getallPictograms} shows the method which handles a GET request on the path ``/'' which is seen from the annotations \texttt{@GET} and \texttt{@Path("/")}.
