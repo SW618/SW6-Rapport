@@ -1,4 +1,4 @@
-\section{Designing API Endpoints}
+\section{Designing API Endpoints}\label{sec:generalEP}
 This section deals with completing the following: \\
 \userstory{As a developer, I want a design of the model for Sequence and a guideline for implementing this, such that I can concentrate on actually implementing the model.} \\
 \userstory{As a developer, I want a design of the model for WeekSchedule and a guideline for implementing this, such that I can concentrate on actually implementing the model.} \\
@@ -47,7 +47,7 @@ The persistence layer consists of four steps
 	Each DAO should only contain methods that will actually be used by the class they pertain to, e.g. GIRAF never has to find all week schedules containing a specific pictogram, therefore a \texttt{getAll(Frame pictogram)} should not exist.
 	Similarly the DAO should also only contain methods to get objects which cannot already be retrieved by another DAO in the same manner,	e.g. \texttt{getByUser(User user)} may seem like a relevant method for \texttt{WeekScheduleDao}, but users already have a collection of all their week schedules so this method is never needed.
 
-	Once all the necessary methods are added to the interface it is implemented in a class that inherits from a \texttt{BaseDaoImpl} class which implements the \texttt{BaseDao} Interface.
+	Once all the necessary methods are added to the interface it is implemented in a class that inherits from a \texttt{BaseDaoImpl} class which implements the \texttt{BaseDao} Interface, which implements the basic operations of adding, removing and updating an element.
 	\item[Testing the DAO] \hfill \\
 	Lastly the DAO will have to be tested through integration tests on the data created in step 2 of this layer.
 	The tests should be created such that we know whether all entities are retrieved correctly and also test whether wrong information is retrieved or not.
@@ -89,4 +89,3 @@ The \texttt{weekday} has a relationship-class: \texttt{weekdayFrame} to bind the
 The progress is saved in another relationship-class: \texttt{weekdayFrameProgress} as the progress depends on the user because this new model of GIRAF weekschedules allows a weekschedule to be shared between users, which might be used for when an institution goes on a trip.
 
 With the model described the following sections goes into more detail about the specific endpoints.
-
