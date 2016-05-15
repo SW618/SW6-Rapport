@@ -1,34 +1,46 @@
 \section{REST API: Week Schedule}\label{sec:restws}
 This section pertains to the following user story: \\
 \userstory{As a developer I would like an endpoint for Week Schedules, such that I can retrieve them from GIRAF.} \\
-Specifically the two sub tasks regarding the core layer and the persistence layer, as they are done first, and we wont have time in this sprint to do develop the service layer.
+Specifically the two sub tasks regarding the core layer and the persistence layer, as they are done first, and we wont have time in this sprint to develop the service layer.
 
 For the sake of this section, we refer to both the classes and also the real life objects that they represent, as such we make a distinction between how the two are written.
 For when a class is referred to we write it as the class name and in a monospaced font, e.g. \texttt{WeekSchedule}.
-If we refer to the object that it identifies in the real world it will be written in standard language grammar with our normal font, e.g. week schedule.
+If we refer to the object that it identifies in the real world it will be written in standard language grammar with our normal font, e.g. week schedule.\todo{Skal det ikke rykkes til noget forord/reading guide?}
 
 \noindent
 One of the focus points for this years GIRAF project have been the Week Schedule app.
 The data for this application should be shared across devices, and some information across users.
 Therefore it is crucial that the Week Schedule part of GIRAF is also part of its REST API.
-This Section will explain the parts of the Week Schedule REST API we developed during this sprint; the Core (model) and Persistence. 
+This Section will explain the layers of the REST API for Week Schedule we developed during this sprint; the Core and Persistence layers. 
 
 \subsection{Core}
 In this subsection we will introduce the model we made in the core layer of the REST API.
-First we will explain what this is meant to be used for and how it is currently modelled, that is the Week Schedule app, then we will explain our solution to the problem. 
+First we will explain what this is meant to be used for and how it is currently modelled in the Week Schedule app, finally we will explain our solution to the problem. 
 
 In the Week Schedule app the view is split into seven views, each representing a day of the week.
 In the current version this is modelled as the Week Schedule being a sequence containing seven sequences.
-Each of these views contains an ordered list of a combination of pictograms, sequences and choices.
+Each of these views contain an ordered list of a combination of pictograms, sequences and choices.
 As explained earlier we model these as the \texttt{Frame}--superclass, from which they all inherit. % They inherit despite noone dying. 
 Each frame in a week schedule additionally have a number of boolean values that determine their progress, which indicates the status of the frame. 
-The booleans that currently exist denote the progress are: Complete, Active, NotComplete and Canceled. 
+The booleans that currently exist denote the progress are: Complete, Active, NotComplete and Cancelled. 
 As mentioned this progress is not stored on the server, but on a locally saved file.
 Since the progress information is personal, each user needs to separately have this information stored. 
-As we believed some of the design choices to be odd, for our own design choices we decided to base it upon how the Week Schedule app is used, and disregard the current model.
+As we believed some of the design choices to be odd, for our own design choices, we decided to base it upon how the Week Schedule app is used, and disregard the current model.
 
-\todo[inline]{Maybe we should provide a big overview maybe a nice figure first? The explaination from here on down is very verbose and kinda bottom-up. - Troels}
-\todo[inline]{Måske vi skal snakke om primary keys her med henblik på database senere eller skal vi det der? - Troels}
+\begin{figure}
+    \centering
+        \includegraphics[width=0.8\textwidth]{figures/weekscheduleclassdiagram.png}
+    \caption{The Class Diagram without their fields of classes involved with \texttt{WeekSchedule}.}\label{fig:weekscheduleclassdiagram}
+\end{figure}
+
+\myref{fig:weekscheduleclassdiagram} shows the class diagram of the classes involved with \texttt{WeekSchedule}.
+A \texttt{WeekSchdule} has many \texttt{Weekday}s, although we allow no more than 7, and these are assigned an enum \texttt{Day} which indicates which day of the week the \texttt{Weekday} belongs to.
+A \texttt{Weekday} have a number of \texttt{Frame}s as seen by the join-table \texttt{WeekdayFrame}.
+These \texttt{WeekdayFrame}s are then involved with a \texttt{User} and each \texttt{User} has their own \texttt{Progress} which is all joined in the join-table \texttt{WeekdayFrameProgress}.
+And then of course a \texttt{User} is able to have many \texttt{WeekSchedule}s which is also the case for a \texttt{Department}.
+The following sections will introduce the fields of the classes created for modelling \texttt{WeekSchedule}.
+
+\todo[inline]{Måske vi skal snakke om primary keys her med henblik på database senere eller skal vi det der? - Troels --- Er ikke med på hvad du mener? Nævne at Id er primary key ? - Søren}
 \subsubsection{Week Schedule}
 \myref{tbl:WeekSchedule} provides an overview of how we model a \texttt{WeekSchedule} in the REST API.
 For some of the fields further details and thoughts behind their creation is provided.
@@ -59,12 +71,12 @@ All information about a week schedule can be derived from this class, we will st
 
 \noindent
 The fields id, name and thumbnail are fairly straight forward and thus will not be discussed further.
-These kind of self--explanatory fields exist for all the following classes, in general we will not go into detail with id, name and similar simple fields as their names combined with the short description is sufficient for them to be understood.
+These kind of self--explanatory fields exist for all the following classes, in general we will not go into detail with id, name and similar simple fields as their names combined with the short description is sufficient for them to be understood, so if a field is omitted from further description it is because we deem it self explanatory.
 \begin{description}
     \item [\texttt{lastEdit}] \hfill \\ 
     The \texttt{lastEdit} field serves the same purpose as \texttt{lastEdit} previously described in \myref{sec:pictogramendpoint}.
     \item [\texttt{department}] \hfill \\
-    The \texttt{department} field is used to restrict access such that only users that are part of the department that owns the week schedule, can access that week schedule.
+    The \texttt{department} field is used to restrict access such that only users that are part of the \texttt{department} that owns the \texttt{WeekSchedule}, can access that \texttt{WeekSchedule}.
     \item [\texttt{users}] \hfill \\
     The \texttt{users} field defines which users the \texttt{WeekSchedule} is used by.
     The users in this collection pertains specifically to citizens as all guardians within a department can edit week schedules belonging to that department.
@@ -76,8 +88,8 @@ These kind of self--explanatory fields exist for all the following classes, in g
 \end{description}
 
 \subsubsection{Weekday}
-A \texttt{WeekSchedule} that has had any pictograms added to any related \texttt{Weekday}s, contains between one and seven weekdays.
-These \texttt{} instances represent a single day of the week and contain information about the activities on a given day.
+A \texttt{WeekSchedule} that has had any pictograms added to any related \texttt{Weekday}s, contains between one and seven \texttt{Weekdays}.
+These \texttt{Weekdays} instances represent a single day of the week and contain information about the activities on a given day.
 \myref{tbl:Weekday} provides an overview of how we model a weekday in the REST API.
 
 \begin{table}[ht]
@@ -105,7 +117,7 @@ These \texttt{} instances represent a single day of the week and contain informa
     As such conflicts, as defined in \myref{ssec:policy}, are less likely to occur as the changes have to be targeted on the same Weekdays and not simply the \texttt{WeekSchedule}. 
     The lastEdit on \texttt{WeekSchedule} remains such that if no conflict occurs we will not have to check the \texttt{lastEdit} for each \texttt{Weekday} on a \texttt{WeekSchedule}.
     \item [\texttt{weekSchedule}] \hfill \\
-    The \texttt{weekSchedule} field defines the \texttt{WeekSchedule} that a \texttt{Weekday} belongs to, a \texttt{Weekday} can only belong to one \texttt{WeekSchedule}.
+    The \texttt{weekSchedule} field defines the \texttt{WeekSchedule} that a \texttt{Weekday} belongs to, a \texttt{Weekday} can only belong to a single \texttt{WeekSchedule}.
     Allowing for \texttt{Weekday}s to be shared among \texttt{WeekSchedule}s would create more opportunities for the aforementioned conflicts to occur and in a more complicated manner, as such we choose not to allow this.
     \item [\texttt{frames}] \hfill \\
     The \texttt{frames} field is a list used to contain \texttt{Frame}s on a \texttt{Weekday}.
@@ -116,7 +128,8 @@ These \texttt{} instances represent a single day of the week and contain informa
 \subsubsection{WeekdayFrame}
 In order to model that a pictogram has been added to day in the week schedule we use the \texttt{WeekdayFrame} class.
 This class serves as the link between a \texttt{Weekday} and a \texttt{Frame}.
-It is necessary that we have this intermediary link such that we can add additional information, in this case this information is ordering the \texttt{Frame}s in a list while allowing them to be reordered easily.
+It is necessary that we have this intermediary class such that we can add additional information, in this case this information is ordering the \texttt{Frame}s in a list while allowing them to be reordered easily.
+We also need the class such that we can create a relation from this class to the class \texttt{WeekdayFrameProgress}.
 \myref{tbl:WeekdayFrame} provides an overview of how we model a weekday in the REST API.
 
 \begin{table}[ht]
@@ -140,18 +153,14 @@ It is necessary that we have this intermediary link such that we can add additio
 
 \begin{description}
     \item [\texttt{weekday}] \hfill \\
-    This field contains the \texttt{Weekday} that the \texttt{Frame}(s) also contained in this class should be on.
-    \item [\texttt{frame}] \hfill \\
-    This field contains the specific \texttt{Frame} that should be added to the \texttt{Weekday}.
-    \item [\texttt{index}] \hfill \\
-    The \texttt{index} is used to order the list of \texttt{Frame}s contained for any class that has a list of \texttt{WeekdayFrame}s like this class and the \texttt{Weekday} class.
+    This field contains the \texttt{Weekday} that the \texttt{Frame}, contained in this class, should be on.
     \item [\texttt{frameProgresses}] \hfill \\
-    This collection contains all the user specific progression of a given \texttt{WeekdayFrame}, it will be explained in \myref{subsubsec:weekdayframeprogress}.
+    This collection contains all the user specific progression of a given \texttt{WeekdayFrame}, it is further explained in the next section.
 \end{description}
 
 \subsubsection{WeekdayFrameProgress}\label{subsubsec:weekdayframeprogress}
-As discussed earlier previously progress was not modelled in the system, but rather saved on a local file as the progress is specific to each citizen.
-The \texttt{WeekdayFrameProgress} creates a link between a \texttt{User} and a \texttt{WeekdayFrame} such that progress can be tracked.
+As discussed earlier progress was previously not modelled in the system, but rather saved in a local file.
+As the progress is specific to each citizen the \texttt{WeekdayFrameProgress} creates a link between a \texttt{User} and a \texttt{WeekdayFrame} such that progress can be tracked.
 This class is the connection in the many--to--many relation between \texttt{User} and a \texttt{WeekdayFrame}.
 In \myref{tbl:WeekdayFrame} we will briefly give an overview of the fields of the \texttt{WeekdayFrameProgress}--class.
 
@@ -180,36 +189,31 @@ In \myref{tbl:WeekdayFrame} we will briefly give an overview of the fields of th
     The \texttt{WeekdayFrame} for which a \texttt{User} must track their progress on.
     \item [\texttt{progress}] \hfill \\
     The \texttt{Progress} enum can take one of four values, \texttt{NotStarted}, \texttt{Done}, \texttt{Canceled} and \texttt{Active}.
-    This field is also nullable and will simply default to NotStarted if any attempt at information retrieval is made if the field has not been set yet.
-    For tracking progress we specifically chose to not use booleans as the current model in the app does, as there is no scenario where any combination of values makes sense.
-    It should also be noted that for a given user in a given week schedule should no two \texttt{WeekdayFrame}s be Active at the same time. 
+    This field is also nullable and will simply default to NotStarted if any attempt at information retrieval is made for an instance where it has not been set yet.
+    For tracking progress we specifically chose to not use booleans as the current model in the app does, as there is no scenario where more than one has to be set at the same time.
+    It should also be noted that for a given user in a given week schedule no two \texttt{WeekdayFrame}s should be \texttt{Active} at the same time. 
 \end{description}
 
 \subsection{Persistence}
 As mentioned in \myref{sec:generalEP} the persistence layer contains the DAOs, SQL migrations and unit-tests.%*Salute* General EndPoint!
-Furthermore for DAOs the rules for when to create a method for retrieving an object reduces it to a total of two methods for the entire Week Schedule model, both methods are used to retrieve \texttt{WeekSchedule}.
+A \texttt{Department} has a list of \texttt{WeekSchedules}, as does a \texttt{User}, therefore the DAO needs no methods to retrieve by \texttt{User} or by \texttt{Department} which reduces the number of methods to a total of two methods for the entire Week Schedule model, both methods are used to retrieve \texttt{WeekSchedule}s.
 There are no methods for retrieving \texttt{WeekdayFrame}, \texttt{WeekdayFrameProgress} nor \texttt{Weekday}.
 The first two are not relevant without the \texttt{Weekday} they refer to, and as we are working with objects by having the \texttt{WeekSchedule} we have access to all related \texttt{Weekday}s and thereby all relevant \texttt{WeekdayFrame}s and by extension \texttt{WeekdayFrameProgress}.
 
 The two methods created for the DAO are \texttt{getAll(User user)} and \texttt{getById(long id)}.
-While it may seem odd that the \texttt{getAll} method takes a user as parameter, this is to ensure that only available \texttt{WeekSchedule}s are retrieved, i.e. the user object is used to derive the department the user belongs to, such that only objects that the user should have access to are returned.
-Even though this can be considered business logic it still makes sense to implement it here, such that we wont have to operate on large collections of \texttt{WeekSchedules} as later points in the code. 
-This may be used when a week schedule should be shared between several citizens, a list of all week schedules is required.
+While it may seem odd that the \texttt{getAll} method takes a \texttt{user} as parameter, this is to ensure that only available \texttt{WeekSchedule}s are retrieved, i.e. the user object is used to derive the department the user belongs to, such that only objects that the user have access to are returned, which means it has nothing to do with which \texttt{WeekSchedules} the user owns.
+Even though this can be considered business logic it still makes sense to implement it here, such that we wont have to operate on large collection of \texttt{WeekSchedules} at later points in the code. 
+This may be used when a week schedule should be shared between several citizens, a list of all week schedules is therefore required.
 Similarly the \texttt{getById} method may then be useful when a specific week schedule is chosen, either while attempting to share a week schedule or simply when a citizen needs to access a week schedule.
 
-These two methods may be the only in the \texttt{WeekScheduleDao}, meaning they are the only methods that directly retrieve a \texttt{WeekSchedule}, alas it is not the only way a \texttt{WeekSchedule} may be retrieved.
-By using the \texttt{DepartmentDao} or the \texttt{UserDao} they can also be retrieved, as these both of these objects contain references to \texttt{WeekSchedule} objects.
 
-\todo[inline]{Skal vi skrive noget generelt om Daos + basedao et sted? - Troels}
-The DAO naturally inherits from the \texttt{BaseDao}--class which implements the basic operations of adding, removing and updating an elements. 
-
-\subsubsection{SQL}
-Part of writing the persistence layer is writing SQL which corresponds to the model.
-However since objects does not exist in a database they will be refered to by their primary key, i.e. their id, instead of an object reference.
-Though we can use object references when writing a \texttt{TypedQuery}, which is used for the DAOs.
-An example of this is the \texttt{getAll} method in the DAO, as shown in \myref{lst:getAllWeekSchedules}.
+\subsubsection{Table Schemas}
+Part of writing the persistence layer is writing table schemas in SQL which corresponds to the model.
+However since objects does not exist in a database they will be referred to by their primary key, i.e. their id, instead of an object reference.
+Although we can use object references when writing a \texttt{TypedQuery}, which is used for the DAOs.
+An example of this is the \texttt{getAll} method in the DAO, as shown in \myref{lst:getAllWeekSchedules}.\todo{Vær sikker på det her ikke er nævnt før i et andet afsnit - Søren}
 Here we set the \texttt{:department} in the query directly to a \texttt{Department}--object, even though there is no department column in the schema, but only a departmentid. 
-Hibernate can do this because of an annotate we made in the \texttt{WeekSchedule}--class. 
+Hibernate can do this because of an annotation we made in the \texttt{WeekSchedule}--class. 
 Specifically the \texttt{@JoinColumn}--annotation with its parameter: \texttt{name}. 
 
 \begin{lstlisting}[float, floatplacement=h!, caption={}, label={lst:getAllWeekSchedules}]
@@ -224,12 +228,13 @@ public Collection<WeekSchedule> getAll(User user) {
 \end{lstlisting}
 
 \bigskip
-We have put the full SQL code used to generate the schema related to week schedule in \myref{app:weekschedulesql}.
+We have put the full SQL code used to generate the schema related to week schedule in \myref{app:weekschedulesql}.\todo{Hvorfor?}
 We have also written a small amount of SQL to generate some initial data for use in testing during development. 
+
 \subsubsection{Tests}
 To ensure the durability and validity of our design of the week schedules we made a series of integration tests using JUnit.
 We test all the methods in the DAO and ensure that the SQL relations and the mapping from Java--classes to the database is working as intended.
-Both the methods in the \texttt{WeekScheduleDao} are tested, and since they have no branching, the code--coverage is 100~\%.
-This alone does not necessarily mean that their behavior is fully tested. 
+Both the methods in the \texttt{WeekScheduleDao} are tested, which results in a code--coverage of 100~\%.
+This alone does not necessarily mean that their behaviour is fully tested. 
 
-To ensure that the relations are created, we make sure that the \texttt{WeekSchedule} can access its fields though the getters and receive the correct information as defined in the initial data described previously. 
+To ensure that the relations are created, we also test that the \texttt{WeekSchedule} can access its fields through the getters and receive the correct information as defined in the initial data described previously as well as testing if a change to an object is registered correctly. 
