@@ -29,7 +29,7 @@ This is needed because of two factors:
     \item citizens are not allowed to manage the applications; and
     \item in the view where the applications are managed, the pseudo app should not be shown.
 \end{enumberate*}
-On line~\ref{lst:newboolyo} in~\myref{lst:modified_constructor} the boolean which enables the pseudo application --- it is disabled by default.
+On line~\ref{lst:newboolyo} in~\myref{lst:modified_constructor} the boolean which enables the pseudo application, it is disabled by default as generally you do not want to show the button as only the guardians will need to see the button.
 
 \begin{lstlisting}[float, floatplacement=h!, label={lst:modified_constructor}, caption={The new constructor which instantiates the task that loads the applications in the GIRAF launcher}] 
 public LoadApplicationTask(final Context context,

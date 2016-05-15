@@ -2,7 +2,7 @@
 REST is an architectural style for distributed hypermedia systems.
 REST is also defined as a hybrid style due to its constraints being derived from several other network-based architectural styles.
 The idea is that rather than using complex protocols such as Remote Procedure Calls (\textbf{RPC}) to connect between entities, the simpler HTTP requests are used instead.
-Originally defined in 2000 by Roy Fielding in his doctoral dissertation, \citep{fielding2000rest}, REST establishes a set of constraints that positively impacts the following set of non-functional properties. 
+Originally defined in 2000 by Roy Fielding in his doctoral dissertation, \citep{fielding2000rest}, REST establishes a set of constraints that positively impacts the following set of non-functional properties.
 \begin{multicols}{3}
 \begin{itemize}
     \item Performance
@@ -11,7 +11,7 @@ Originally defined in 2000 by Roy Fielding in his doctoral dissertation, \citep{
     \item Visibility
     \item Portability
     \item Reliability
-\end{itemize}      
+\end{itemize}
 \end{multicols}
 An application that adheres to the constraints of REST is considered to be RESTful.
 Next we will present each of the constraints and how they relate to the aforementioned non-functional properties.
@@ -28,7 +28,7 @@ Next we will present each of the constraints and how they relate to the aforemen
         \item Scalability: By simplifying the server components, the server components becomes scalable by allowing them to evolve independantly.
         \item Portability: By removing concerns between server and client specific details, significantly improving the portability of client side code, as only the language between the two is important.
     \end{itemize}\todo[inline]{Tikz Figure of client server architechture?}
-    %Scalability, Simplicity, Portability 
+    %Scalability, Simplicity, Portability
     \item [Stateless] Adding to the constraints we further require that communication between client and server must be stateless.
     In making communication stateless, all requests must contain every bit of information required to perform the request, i.e. no context stored on the server can be used.
     As with most decisions this also has its downside, with no context available the overhead for each request may be higher for repetitive requests.
@@ -50,7 +50,7 @@ Next we will present each of the constraints and how they relate to the aforemen
     \end{itemize}
     %Performance, Scalability, Reliability
     \item [Uniform Interface] The fourth constraint Uniform Interface is expressed by Fielding as \enquote{The central feature that distinguishes the REST architectural style from other network-based styles}\citep{fielding2000rest}.
-    Applying the principle of generality to the interface between server and client achieves low coupling between components allowing components to evolve independently, as long as the interface persists. 
+    Applying the principle of generality to the interface between server and client achieves low coupling between components allowing components to evolve independently, as long as the interface persists.
     The interface itself follows four main principles.
     Firstly it uses resource identifiers to request resources from the server, the resources themselves are represented differently in requests than the way they are stored, e.g. for GIRAF we represent our data using the JSON format, but the data is not stored in this format.
     Secondly clients must be able to manipulate resources through representations, this means that when a client has a representation of a resource, the representation contains enough data such that the client can and may alter or delete the resource, given the client is allowed to do so.
@@ -65,7 +65,7 @@ Next we will present each of the constraints and how they relate to the aforemen
         \item Visibility: Through simplified architecture the visibility of interactions is also increased.
     \end{itemize}
     %Simplicity, Visibility
-    \item [Layered System] \label{layeredsystem}The fifth constraint of having a layered system adds hierarchical layers to the architecture, encapsulates the behavior of a layer to itself and its immediately used layers.
+    \item [Layered System]\label{layeredsystem}The fifth constraint of having a layered system adds hierarchical layers to the architecture, encapsulates the behavior of a layer to itself and its immediately used layers.
     By layering the system we acquire low coupling while also keeping the overall complexity of the system low.
     Layers can serve a variety of purposes from protecting legacy services to simplifying components by isolating less used services.
     Combined with the system being cacheable, shared caches can also be used to gain positive effect.
@@ -73,11 +73,11 @@ Next we will present each of the constraints and how they relate to the aforemen
         \item Performance: While the layers themselves increase overhead and thus increasing latency, shared caches can be used to counter this by reducing latency.
         \item Scalability: Intermediary layers can be used for load balancing thus improving scalability.
         \item Simplicity: Layers can be used to simplify components by separating less frequently used functionality from often used functionality, and also by encapsulating certain functionality in layers such that a logical separation of functionality is achieved.
-    \end{itemize} 
+    \end{itemize}
     %Performance, Scalability, Simplicity
     \item [Code-On-Demand] is the last constraint and is also the only constraint that can be considered optional.
     Since this constraint will not be used for this project, it will not be further described here, for more information on Code-On-Demand we refer to Fieldings doctoral dissertation \citep{fielding2000rest}.
 \end{description}
 
 These constraints is what will make an API RESTful, which means that the API for GIRAF will also adhere to these constraints.
-The next section will present the design choices 
+The next section will present the design choices
