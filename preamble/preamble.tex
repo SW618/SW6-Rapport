@@ -1,13 +1,13 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Languages, Encodings and Fonts
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\usepackage[utf8]{inputenc} 
-\usepackage[UKenglish]{babel}  
-\usepackage{lmodern} 
+%\usepackage[utf8]{inputenc}
+\usepackage[UKenglish]{babel}
+\usepackage{lmodern}
 \usepackage[thin]{roboto}
 \usepackage{inconsolata}
 \usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}	
+\usepackage[utf8]{inputenc}
 \usepackage{fixltx2e}
 \usepackage{microtype}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -19,10 +19,10 @@
 \usepackage{subcaption}
 \usepackage{sidecap}
 \usepackage{caption}
-\captionsetup{  font=footnotesize, 
+\captionsetup{  font=footnotesize,
                 labelfont=bf}
 \captionsetup[subfigure]{font=footnotesize}
-\usepackage[nounderscore]{syntax} 
+\usepackage[nounderscore]{syntax}
 \usepackage{array,booktabs,arydshln}
 \usepackage{tabularx}
 \usepackage{multirow}
@@ -42,6 +42,7 @@
 \usepackage{moreenum}
 \usepackage{setspace}
 \usepackage{multicol}
+\renewcommand{\arraystretch}{1.5}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Page Layout
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -59,7 +60,7 @@
     {\thechapter\hsp\textcolor{aaublue}{|}\hsp}%
     {0pt}%
     {\Huge\sffamily\mdseries}%
-    [\vspace{-20pt}] 
+    [\vspace{-20pt}]
 \titleformat{\section}
     {\normalfont\Large\sffamily}{\thesection}{1em}{}
 \titleformat{\subsection}
@@ -86,7 +87,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[backend=bibtex,natbib=true,sorting=none]{biblatex} 
+\usepackage[backend=bibtex,natbib=true,sorting=none]{biblatex}
 \addbibresource{bibliography/mainbibliography.bib}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Hyperlinks
@@ -99,7 +100,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{listings}
 \lstset{
-  numbers=left,    
+  numbers=left,
   firstnumber=1,
   numberfirstline=true
 }
@@ -114,23 +115,23 @@
 \usepackage{xargs}
 \usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
 \usepackage{csquotes}
-\usepackage{booktabs}   
+\usepackage{booktabs}
 \usepackage{xstring}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Pseudocode
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{algorithm}
-\usepackage{algpseudocode} 
+\usepackage{algpseudocode}
 \floatname{algorithm}{Pseudocode}
-\algrenewcommand\algorithmicindent{2em}%  
+\algrenewcommand\algorithmicindent{2em}%
 \captionsetup[algorithm]{font=footnotesize}
 \makeatletter
 \renewcommand{\ALG@beginalgorithmic}{\footnotesize}
-\makeatother 
+\makeatother
 \algrenewcommand{\alglinenumber}[1]{\color{black!50!}\scriptsize#1}
 \algrenewcommand{\algorithmiccomment}[1]{\hfill$\triangleright$ #1\hspace{0.3em}~}
 %HighLighting
-\input{preamble/algohighlight.tex} 
+\input{preamble/algohighlight.tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MyRef
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -154,7 +155,7 @@
 \tikzstyle{block} = [rectangle, draw, fill=green!40, text width=5em	, rounded corners, minimum height=3em]
 \tikzstyle{wideblock} = [block, text width=0.8\textwidth, align=center]
 \tikzstyle{line} = [draw, -latex']
-\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm, minimum height=2em]
+\tikzstyle{dacloud} = [draw, ellipse,fill=red!20, node distance=3cm, minimum height=2em]
 \tikzstyle{cloud_nospace} = [cloud, node distance=1cm]
 \tikzstyle{preDefProc} = [draw,rectangle split, rectangle split horizontal,rectangle split parts=3, fill=green!40,minimum height=4em]
 

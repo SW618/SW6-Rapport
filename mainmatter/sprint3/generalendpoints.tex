@@ -7,23 +7,25 @@ First a presentation of the steps involved in developing the different layers fo
 This is followed by the design of the model as a class diagram.
 
 \subsection{Developing an Endpoint and its Constituents}
-As stated in \myref{architechture} a single endpoint consists of three layers.
+As stated in \myref{sec:architecture} a single endpoint consists of three layers.
 A core layer which is where the classes of the model are implemented and tested.
 A persistence layer which is where the tables for the model, defined in the core, are created; the annotations from hibernate used in the core relates the data in the two layers.
 The persistence layer for each of the endpoints, also consists of a Data Access Object(DAO) class which is used to gain access to the objects in the database.
 The last layer is the service layer which is what is called from any application using HTTP requests.
 
 \subsubsection{The Core Layer}
-The first layer to be implemented for an endpoint is the core layer, which consists of two steps: 
+The first layer to be implemented for an endpoint is the core layer.
+Implementing this layer is done in two steps:
 \begin{description}
 	\item[Creating the classes needed for the endpoint] \hfill \\
 	When creating the classes all fields of the classes are annotated with Hibernate annotations which in turn helps retrieve the correct objects when querying the database.
 	The annotations can create relationship tables, which makes creating relationships between entities a simple task.
 	What is important for this layer is to make sure that the correct annotations are used and making sure that the design has been thoroughly inspected in order to ensure it is sensible.
 	The methods created on the classes should be methods which will be used in GIRAF applications on the object, like adding another pictogram to a week schedule.
-	\item[Unit testing the classes] \hfill \\ 
+	\item[Unit testing the classes] \hfill \\
 	There must be unit tests which creates some objects of the class and use the methods implemented on them.
-	There should be enough unit tests such that all methods have 100\% code coverage.
+	There should be enough unit tests such that all non-simple methods like a simple add, or getters and setter have 100\% code coverage.
+	We do not want to test methods which are simply adding an element to a Java list implementation, Java's methods are thoroughly tested and more tests are therefore unnecessary. 
 \end{description}
 
 \noindent
@@ -44,7 +46,7 @@ The persistence layer consists of four steps
 	The DAO consists of methods that query the database according to certain search criteria and are also named as such.
 	Each DAO should only contain methods that will actually be used by the class they pertain to, e.g. GIRAF never has to find all week schedules containing a specific pictogram, therefore a \texttt{getAll(Frame pictogram)} should not exist.
 	Similarly the DAO should also only contain methods to get objects which cannot already be retrieved by another DAO in the same manner,	e.g. \texttt{getByUser(User user)} may seem like a relevant method for \texttt{WeekScheduleDao}, but users already have a collection of all their week schedules so this method is never needed.
-	
+
 	Once all the necessary methods are added to the interface it is implemented in a class that inherits from a \texttt{BaseDaoImpl} class which implements the \texttt{BaseDao} Interface.
 	\item[Testing the DAO] \hfill \\
 	Lastly the DAO will have to be tested through integration tests on the data created in step 2 of this layer.
@@ -64,11 +66,12 @@ The final layer to create for an endpoint is the service layer and consists of a
 \noindent
 The next section will present the model to be modelled in the core layer for the three endpoints, which we are developing during this sprint.
 
-\subsection{The new Model for REST API}\todo{add something bout users}
+\subsection{The Updated Model for Objects in GIRAF}\todo{add something bout users}\label{subsec:model}
 The new model design is an attempt to make the central parts of GIRAF more cohesive than before.
 We will start by discussing week schedule and then go on to discuss the rest of the model.
 \todo[inline]{indsæt klassediagram her} A week schedule consists of seven week days one for each day of the week which creates a relation from a \texttt{weekSchedule} to several \texttt{weekDay}s.
 We acknowledge that a weekday is supposed to be able to use the following in its schedule: 
+
 \begin{itemize}
 	\item \texttt{Sequence}s
 	\item \texttt{Pictogram}s
@@ -81,7 +84,7 @@ We made a distinction between \texttt{Choice}s, \texttt{Sequence}s, and \texttt{
 Therefore \texttt{Sequence}s and \texttt{Pictogram}s inherit from yet another superclass called \texttt{PictoFrame}, that inherits from \texttt{Frame}, which encapsulate the common data between \texttt{Sequence}s and \texttt{Pictogram}s.
 This also solves the problem of directly nested choices because a \texttt{Choice} can then have one-to-many of these \texttt{PictoFrame}s.
 A \texttt{Sequence} has an ordered one-to-many relation to \texttt{Frame} and a \texttt{Pictogram} has a \texttt{PictogramImage} that separates a \texttt{Pictogram} from its associated image.
-All these classes are very intertwined and rely on eachother which makes the implementation somewhat difficult to parallelise in the group.
+All these classes are very intertwined and rely on each other which makes the implementation somewhat difficult to work on in parallel in the group.
 
 The \texttt{weekday} has a relationship-class: \texttt{weekdayFrame} to bind these \texttt{Frame}s together with a weekday which preserves the order of frames on a weekday as well as being able to save the progress of a weekschedule.
 The progress is saved in another relationship-class: \texttt{weekdayFrameProgress} as the progress depends on the user because this new model of GIRAF weekschedules allows a weekschedule to be shared between users, which might be used for when an institution goes on a trip.
