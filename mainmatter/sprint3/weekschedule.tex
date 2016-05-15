@@ -216,7 +216,7 @@ Here we set the \texttt{:department} in the query directly to a \texttt{Departme
 Hibernate can do this because of an annotation we made in the \texttt{WeekSchedule}--class. 
 Specifically the \texttt{@JoinColumn}--annotation with its parameter: \texttt{name}. 
 
-\begin{lstlisting}[float, floatplacement=h!, caption={}, label={lst:getAllWeekSchedules}]
+\begin{lstlisting}[float, floatplacement=h!, caption={The \texttt{getAll}--method in the \texttt{WeekScheduleDaoImpl}--class.}, label={lst:getAllWeekSchedules}]
 public Collection<WeekSchedule> getAll(User user) {
     Department department = user.getDepartment();
     TypedQuery<WeekSchedule> query = em.createQuery(
