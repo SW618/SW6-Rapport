@@ -25,7 +25,7 @@ Implementing this layer is done in two steps:
 	\item[Unit testing the classes] \hfill \\
 	There must be unit tests which creates some objects of the class and use the methods implemented on them.
 	There should be enough unit tests such that all non-simple methods like a simple add, or getters and setter have 100\% code coverage.
-	We do not want to test methods which are simply adding an element to a Java list implementation, Java's methods are thoroughly tested and more tests are therefore unnecessary 
+	We do not want to test methods which are simply adding an element to a Java list implementation, Java's methods are thoroughly tested and more tests are therefore unnecessary. 
 \end{description}
 
 \noindent
@@ -36,7 +36,7 @@ The persistence layer consists of four steps
 	\item[Creating the Tables from the Core] \hfill \\
 	The first task is to create the tables specified in the core layer as SQL.
 	Any class annotated with \texttt{@Entity} and \texttt{@Table(name = "name")} needs to have a corresponding table created for them.
-	If a class has a many-to-many relation with another class and this relationship-table needs to contain additional information, e.g. an index for the relationship, a table that includes the index needs to be created as well.
+	If a class has a many-to-many relation with another class the SQL needs to create the relationship-table, or the join-table, you can also add extra properties on these join-tables as e.g. an index.
 	As we are developing incrementally on the REST API any alterations to a class may require subsequent alterations to the related tables, this should also be done in this step.
 	If we perform any alterations to a table the already existing data is migrated to fit in the new tables such that no information is lost.
 	\item[Creating Data] \hfill \\

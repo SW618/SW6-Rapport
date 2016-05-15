@@ -14,6 +14,7 @@ Below, we briefly introduce the technologies and tools used to develop and run t
         Hibernate\footnote{\url{http://hibernate.org/}} is a framework for object-relational mapping (ORM) which allows us to utilise high level objects while also storing them in a relational database.
         It is used in the core and persistence layer of the REST API.
         We use Java annotations to configure this mapping on a, per variable, and class base, this will be showcased with examples when they are used in e.g. \todo{ref til pictogram}.
+        Hibernate can also create the database tables for you, but we choose not to do this so we have more control over the database, aswell as making it easier to map the old data to the new database.
 
     \item[Jackson] \hfill \\
         Jackson\footnote{\url{http://wiki.fasterxml.com/JacksonHome}} is a Java library for processing JSON.
