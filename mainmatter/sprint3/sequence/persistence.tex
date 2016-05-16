@@ -1,1 +1,86 @@
 \subsection{Persistence --- Querying the Database}
+In this section the process of querying the database in relation to sequences will be presented.
+Two DAOs will be introduced and we will explain why the \texttt{Choice} objects does not have a Data Access Object.
+
+\subsubsection{Frame DAO}
+Every sequence is, as previously described, essentially just an ordered list of \texttt{Frame}s alongside some metadata, such as the title of the sequence and so forth.
+Normally when handling \texttt{Sequence}s in the REST API, this list of \texttt{Frame}s is accessed as an ordinary \texttt{List} structure in Java.
+However when a \texttt{Sequence} object is instantiated or the elements, i.e. the list of \texttt{Frame}s, is changed, the desired \texttt{Frame}s must first be found, before they can be added to the list and Hibernate can establish the correct relations.
+Because of this retrieving \texttt{Frame} objects from the database is an essential procedure.
+
+Moreover after a \texttt{Frame} object have been retrieved from the database, because \texttt{Choice}, \texttt{Sequence} and \texttt{Pictogram} all extend the \texttt{Frame} class, Hibernate is able to find the specific object using the foreign keys.
+For Hibernate to do this the \texttt{Frame} class has the annotation: \texttt{@Inheritance(strategy = InheritanceType.JOINED)}.
+
+\bigskip
+The \texttt{FrameDaoImpl} which is the Hibernate implementation of the interface \texttt{FrameDao}, has two methods for retrieving \texttt{Frame}s, as can be seen on \myref{lst:framedaoimpl}.
+The first method named \texttt{byId} behaves precisely as the method of the same name in the \texttt{PictogramDaoImpl} class as described in \todo[inline]{ref!!}, hence it has been omitted from \myref{lst:framedaoimpl}.
+
+Secondly \texttt{FrameDaoImpl} has the method \texttt{byIds} as seen on line~\ref{lst:framedaoimpl_byids}.
+This method is used when multiple \texttt{Frame}s needs to be retrieved.
+The callee must provide an array of \texttt{long}s, which corresponds to the ids of the \texttt{Frame}s to be retrieved.
+Because of the design which requires a specific order of the \texttt{Frame}s and allows the same \texttt{Frame} to be on a \texttt{Sequence} multiple times, some ordering and restructuring must be done before returning the \texttt{Frame}s.
+By doing this the returned list of \texttt{Frame}s is guaranteed to have the same objects and order as the \texttt{long} array calls for.
+
+Fetching the \texttt{Frame}s from the database is done with a \texttt{TypedQuery} using the \texttt{IN} clause, which selects all \texttt{Frame}s which id is in a given list of ids; this can be seen on line~\ref{lst:framedaoimpl_byids_query}.
+The restructuring and ordering is done in the for--loop starting on line~\ref{lst:framedaoimpl_byids_forloop}, where the input array with \texttt{Frame} ids is iterated through.
+For each id in the array, the corresponding \texttt{Frame} is added the ordered list to be returned.
+\todo{is it interesting to see the stream stuff on line~\ref{lst:framedaoimpl_byids_stream}?}
+
+\begin{lstlisting}[float, floatplacement=h, caption={Implementation of the \texttt{FrameDao} interface, used to retrieve \texttt{Frame}s from the database, using Hibernate. \texttt{[...]} denotes omitted code.}, label={lst:framedaoimpl}]
+[...]
+public class FrameDaoImpl extends BaseDaoImpl<Frame> implements FrameDao {
+    [...]
+    @Override
+    public List<Frame> byIds(long[] ids) {(*@\label{lst:framedaoimpl_byids}@*)
+        TypedQuery<Frame> query = em.createQuery("SELECT f FROM Frame f WHERE f.id IN :ids", Frame.class);(*@\label{lst:framedaoimpl_byids_query}@*)
+        query.setParameter("ids", Arrays.asList(LongStream.of(ids).boxed().toArray()));
+        List<Frame> fetched = query.getResultList();
+        List<Frame> ordered = new ArrayList<>();
+        for (long id : ids) {(*@\label{lst:framedaoimpl_byids_forloop}@*)
+            ordered.add(
+                    fetched.stream().filter(frame -> frame.getId() == id).findFirst().get()(*@\label{lst:framedaoimpl_byids_stream}@*)
+            );
+        }
+        return ordered;
+    }
+}
+\end{lstlisting}
+
+\subsubsection{Sequence DAO}
+The most significant difference between the aforementioned \texttt{FrameDaoImpl} and the \texttt{SequenceDaoImpl} is the ability to retrieve \texttt{Sequence}s by querying by title.
+This is done with the method which can be seen in \myref{lst:seqdao_search}.
+Here a \texttt{TypedQuery} is used with a \texttt{LIKE} clause, which matches the lowercase modification of the \texttt{Sequence} titles to a given string, as seen on line~\ref{lst:seqdao_search_like}.
+The string which the title is matched against is likewise transformed to lowercase, such that searches are not case sensitive.
+Moreover the string is padded with the \texttt{\%} wild card operator, which matches one or more characters, thus making the search effective on substrings.
+These two transformations can be seen on line~\ref{lst:seqdao_search_string}.
+
+\begin{lstlisting}[float, floatplacement=h, caption={The method in \texttt{SequenceDaoImpl} which allows for \texttt{Sequence}s to be searched for by title}, label={lst:seqdao_search}]
+public Collection<Sequence> searchByUserAndTitle(User user, String title) {
+    TypedQuery<Sequence> query = em.createQuery(
+            "SELECT s " +
+            "FROM Sequence s " +
+            "WHERE (LOWER(s.title) LIKE :title) " +(*@\label{lst:seqdao_search_like}@*)
+                "AND (s.accessLevel = :public " +
+                    "OR (s.accessLevel = :protected " +
+                        "AND  s.department = :usersdepartment) " +
+                    "OR (s.accessLevel = :private " +
+                        "AND s.owner = :user))",
+            Sequence.class);
+    query.setParameter("title", "%" + title.toLowerCase() + "%");(*@\label{lst:seqdao_search_string}@*)
+    query.setParameter("public", AccessLevel.PUBLIC);
+    query.setParameter("protected", AccessLevel.PROTECTED);
+    query.setParameter("private", AccessLevel.PRIVATE);
+    query.setParameter("user", user);
+    query.setParameter("usersdepartment", user.getDepartment());
+    return query.getResultList();
+}
+\end{lstlisting}
+
+\subsubsection{Retrieving Choices}
+In the case of \texttt{Choice}s and way they are used in the REST API and GIRAF, a DAO for retrieving them from database is useless.
+This is due to the fact that \texttt{Choice}s always resides on a \texttt{WeekSchedule}, and should not be searched for as e.g. \texttt{Sequence}s.
+Therefore we have not implemented a Choice DAO, as Hibernate facilitates us to acquire them through other objects.
+\todo{I am not content with this choice thing please halp}
+
+
+
