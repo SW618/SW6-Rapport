@@ -8,7 +8,7 @@
 \usepackage{inconsolata}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage{fixltx2e}
+%\usepackage{fixltx2e}
 \usepackage{microtype}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Graphics and tables
@@ -60,7 +60,7 @@
     {\thechapter\hsp\textcolor{aaublue}{|}\hsp}%
     {0pt}%
     {\Huge\sffamily\mdseries}%
-    [\vspace{-20pt}]
+    [\vspace{-20pt}] 
 \titleformat{\section}
     {\normalfont\Large\sffamily}{\thesection}{1em}{}
 \titleformat{\subsection}
@@ -87,7 +87,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[backend=bibtex,natbib=true,sorting=none]{biblatex}
+\usepackage[backend=biber,natbib=true,sorting=none]{biblatex}
 \addbibresource{bibliography/mainbibliography.bib}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Hyperlinks
@@ -120,24 +120,24 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Pseudocode
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{algorithm}
-\usepackage{algpseudocode}
-\floatname{algorithm}{Pseudocode}
-\algrenewcommand\algorithmicindent{2em}%
-\captionsetup[algorithm]{font=footnotesize}
-\makeatletter
-\renewcommand{\ALG@beginalgorithmic}{\footnotesize}
-\makeatother
-\algrenewcommand{\alglinenumber}[1]{\color{black!50!}\scriptsize#1}
-\algrenewcommand{\algorithmiccomment}[1]{\hfill$\triangleright$ #1\hspace{0.3em}~}
+%\usepackage{algorithm}
+%\usepackage{algpseudocode}
+%\floatname{algorithm}{Pseudocode}
+%\algrenewcommand\algorithmicindent{2em}%
+%\captionsetup[algorithm]{font=footnotesize}
+%\makeatletter
+%\renewcommand{\ALG@beginalgorithmic}{\footnotesize}
+%\makeatother
+%\algrenewcommand{\alglinenumber}[1]{\color{black!50!}\scriptsize#1}
+%\algrenewcommand{\algorithmiccomment}[1]{\hfill$\triangleright$ #1\hspace{0.3em}~}
 %HighLighting
-\input{preamble/algohighlight.tex}
+%\input{preamble/algohighlight.tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % MyRef
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[english]{cleveref}
 \crefname{exa}{example}{examples}
-\crefname{algorithm}{pseudocode}{pseudocodes}
+%\crefname{algorithm}{pseudocode}{pseudocodes}
 \renewcommand{\reftextcurrent}{}
 \newcommandx{\myref}[2][1=]{%
 \IfStrEq{#1}{name}{\Cref{#2} \emph{\nameref{#2}} \vpageref{#2}}{\Cref{#2} \vpageref{#2}}%

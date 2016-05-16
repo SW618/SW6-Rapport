@@ -1,4 +1,4 @@
-\section{Designing API Endpoints}
+\section{Designing API Endpoints}\label{sec:generalEP}
 This section deals with completing the following: \\
 \userstory{As a developer, I want a design of the model for Sequence and a guideline for implementing this, such that I can concentrate on actually implementing the model.} \\
 \userstory{As a developer, I want a design of the model for WeekSchedule and a guideline for implementing this, such that I can concentrate on actually implementing the model.} \\
@@ -6,7 +6,7 @@ This section deals with completing the following: \\
 First a presentation of the steps involved in developing the different layers for the REST API.
 This is followed by the design of the model as a class diagram.
 
-\subsection{Developing an Endpoint and its Constituents}
+\subsection{Developing an Endpoint and its Constituents}\label{subsec:general}
 As stated in \myref{sec:architecture} a single endpoint consists of three layers.
 A core layer which is where the classes of the model are implemented and tested.
 A persistence layer which is where the tables for the model, defined in the core, are created; the annotations from hibernate used in the core relates the data in the two layers.
@@ -36,7 +36,7 @@ The persistence layer consists of four steps
 	\item[Creating the Tables from the Core] \hfill \\
 	The first task is to create the tables specified in the core layer as SQL.
 	Any class annotated with \texttt{@Entity} and \texttt{@Table(name = "name")} needs to have a corresponding table created for them.
-	If a class has a many-to-many relationship with another class and this relationship-table needs to contain additional information, e.g. an index for the relationship, a table that includes the index needs to be created as well.\todo{Skal alle many-to-many ikke manuelt have et table? - Troels}
+	If a class has a many-to-many relation with another class the SQL needs to create the relationship-table, or the join-table, you can also add extra properties on these join-tables as e.g. an index.
 	As we are developing incrementally on the REST API any alterations to a class may require subsequent alterations to the related tables, this should also be done in this step.
 	If we perform any alterations to a table the already existing data is migrated to fit in the new tables such that no information is lost.
 	\item[Creating Data] \hfill \\
@@ -47,7 +47,7 @@ The persistence layer consists of four steps
 	Each DAO should only contain methods that will actually be used by the class they pertain to, e.g. GIRAF never has to find all week schedules containing a specific pictogram, therefore a \texttt{getAll(Frame pictogram)} should not exist.
 	Similarly the DAO should also only contain methods to get objects which cannot already be retrieved by another DAO in the same manner,	e.g. \texttt{getByUser(User user)} may seem like a relevant method for \texttt{WeekScheduleDao}, but users already have a collection of all their week schedules so this method is never needed.
 
-	Once all the necessary methods are added to the interface it is implemented in a class that inherits from a \texttt{BaseDaoImpl} class which implements the \texttt{BaseDao} Interface.
+	Once all the necessary methods are added to the interface it is implemented in a class that inherits from a \texttt{BaseDaoImpl} class which implements the \texttt{BaseDao} Interface, which implements the basic operations of adding, removing and updating an element.
 	\item[Testing the DAO] \hfill \\
 	Lastly the DAO will have to be tested through integration tests on the data created in step 2 of this layer.
 	The tests should be created such that we know whether all entities are retrieved correctly and also test whether wrong information is retrieved or not.
