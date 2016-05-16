@@ -154,7 +154,7 @@ Line~\ref{lst:pictogrambt_tq3} then sets \texttt{:title} to be any string concat
 
 As mentioned in \myref{subsec:general}, the persistence layer is tested, which means that the method \texttt{SearchByTitle} is also tested --- the test for this method can be seen on \myref{lst:pictogramByTitleTest}.
 It starts by assigning what is returned by the \texttt{searchByTitle} method to an \texttt{ArrayList} on line~\ref{lst:tpbt_1love}.
-lines~\ref{lst:tpbt_2loves}--\ref{lst:tpbt_3loves} asserts first if the results is empty, followed by asserting whether the \texttt{ArrayList} contains a specific \texttt{Pictogram}.
+lines~\ref{lst:tpbt_2love}--\ref{lst:tpbt_3love} asserts first if the results is empty, followed by asserting whether the \texttt{ArrayList} contains a specific \texttt{Pictogram}.
 The rest of the asserts check whether the \texttt{PictogramImage} is also as expected, which essentially tests whether Hibernate retrieves the \texttt{Pictogram}'s one-to-one relation correctly.
 
 \begin{lstlisting}[float, floatplacement=h, caption={The test method which tests the method \texttt{SearchByTitle}.},label={lst:pictogramByTitleTest}]
