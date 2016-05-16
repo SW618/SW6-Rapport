@@ -1,7 +1,5 @@
 \section{Technologies and Tools}\label{sec:techstack}
-\kim{I dont understand why you have this section, and why is it under the REST API chapter? I get that this is technologies that you use on the server, but I would say that rest is one of the technologies that you use, thus on equal level with sprint and java!}
-\todo[inline]{Maybe this should be moved to appendix, such that we can refer to them when we talk about them. Only introduce the core few: Hibernate/Jackson/Spring ?}
-In this section the technologies used in the GIRAF REST API and the development of it, will be introduced.
+In this section the technologies used for making the GIRAF REST API, will be introduced
 In the first and second sprint, group SW615F16 worked on the REST API and they had decided on most of the technology stack to be used, however a few were introduced while we also are working on it.
 Below, we briefly introduce the technologies and tools used to develop and run the REST API:
 \subsubsection{Technologies}
@@ -15,7 +13,8 @@ Below, we briefly introduce the technologies and tools used to develop and run t
     \item[Hibernate] \hfill \\
         Hibernate\footnote{\url{http://hibernate.org/}} is a framework for object-relational mapping (ORM) which allows us to utilise high level objects while also storing them in a relational database.
         It is used in the core and persistence layer of the REST API.
-        We use Java annotations to configure this mapping on a, per variable, and class base, this will be further explained later in \todo{ref her.}.
+        We use Java annotations to configure this mapping on a, per variable, and class base, this will be showcased with examples when they are used in e.g. \todo{ref til pictogram}.
+        Hibernate can also create the database tables for you, but we choose not to do this so we have more control over the database, aswell as making it easier to map the old data to the new database.
 
     \item[Jackson] \hfill \\
         Jackson\footnote{\url{http://wiki.fasterxml.com/JacksonHome}} is a Java library for processing JSON.
@@ -24,17 +23,18 @@ Below, we briefly introduce the technologies and tools used to develop and run t
     \item[Spring] \hfill \\
         Spring\footnote{\url{https://spring.io/}} is a framework for dependency injection.
         This allows us to decouple the configurations of e.g. the database connection or the filestore path, from the logic of the programs.
+        Spring is a large framework and for this project we use the following spring frameworks: Core, Test, and ORM.
 
     \item[RESTEasy] \hfill \\
         RESTEasy\footnote{\url{http://resteasy.jboss.org/}} is JBoss' (which also makes Wildfly) implementation of the JAX-RS 2.0 standard, which is a Java API used to make RESTful Web Services.
         RESTEasy implements annotations for methods, which gives meaning to the methods in the service layer, according to the JAX.RS 2.0 standard.
-        Examples of these are: \texttt{@GET}, \texttt{@POST} and \texttt{@Produces}, these will be further explained when we use them in \todo[inline]{ref til brug her.}
+        Examples of these are: \texttt{@GET}, \texttt{@POST} and \texttt{@Produces}, these will be further explained when we use them in \todo[inline]{ref til pictogram her.}
+    
+    \item[JUnit] \hfill \\
+        In order to verify the correctness of the code we use unit tests.
+        We have decided to use JUnit\footnote{\url{http://junit.org}} as our unit testing framework.
+        JUnit is the de-facto standard for unit testing in Java\footnote{\url{http://www.methodsandtools.com/tools/tools.php?junit}}, and thus it has good support within most IDEs and tools.
 
-    \item[MariaDB] \hfill \\
-        MariaDB\footnote{\url{https://mariadb.org/}} is a drop-in replacement for MySQL and was started as a fork of MySQL by its original developer when Oracle acquired MySQL.
-        We use MariaDB on the database server as the back-end of the REST API environment (the \enquote{Database} as seen in \myref{fig:rest-architecture}).
-        This is where the persistent data of GIRAF will be stored in production.
-        \kim{I think that MariaDB belongs in the tools section.}
 \end{description}
 \subsubsection{Tools}
 \begin{description}
@@ -55,11 +55,10 @@ Below, we briefly introduce the technologies and tools used to develop and run t
         This is useful for the people who will be interfacing with our REST API.
         The documentation is based on the code and the JavaDocs comments which are written in the code, thus this documentation is generated with minimal effort from the REST API developers.
 
-    \item[JUnit] \hfill \\
-        In order to verify the correctness of the code we use unit tests.
-        We have decided to use JUnit\footnote{\url{http://junit.org}} as our unit testing framework.
-        JUnit is the de-facto standard for unit testing in Java\footnote{\url{http://www.methodsandtools.com/tools/tools.php?junit}}, and thus it has good support within most IDEs and tools.
-        \kim{I would say this is a technology.}
+    \item[MariaDB] \hfill \\
+        MariaDB\footnote{\url{https://mariadb.org/}} is a drop-in replacement for MySQL and was started as a fork of MySQL by its original developer when Oracle acquired MySQL.
+        We use MariaDB on the database server as the back-end of the REST API environment (the \enquote{Database} as seen in \myref{fig:rest-architecture}).
+        This is where the persistent data of GIRAF will be stored in production.
 
     \item[H2 Database Engine] \hfill \\
         The H2 Database Engine\footnote{\url{http://www.h2database.com/html/main.html}} is a low footprint local database written in Java.

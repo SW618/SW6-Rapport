@@ -58,3 +58,4 @@ master.run.xml
 master-blx.bib
 *.fls
 main.pdf
+*.bcf
