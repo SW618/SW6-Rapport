@@ -32,7 +32,7 @@ public class Sequence extends PictoFrame implements Iterable<Frame> {
 \end{lstlisting}
 
 A \texttt{@ManyToMany} annotation is used here aswell, but we also specify a \texttt{@JoinTable} annotation and a \texttt{@OrderColumn}, the latter will be explained in the next section \textit{Ordering the Frames}.
-The \texttt{@JoinTable} annotation is much like the \texttt{@JoinColumn} as explained in \myref{pictogramendpoint}, but instead a table is created, which is given a name \texttt{Sequence__Frame}, and also two join columns \texttt{sequence_id} and \texttt{frame_id}.
+The \texttt{@JoinTable} annotation is much like the \texttt{@JoinColumn} as explained in \myref{pictogramendpoint}, but instead a table is created, which is given a name \texttt{Sequence\_\_Frame}, and also two join columns \texttt{sequence\_id} and \texttt{frame\_id}.
 These \texttt{JoinColumns} work as explained in \myref{pictogramendpoint}, but there is also an \texttt{inverseJoinColumn} which is simply the column for the entity being joined with \texttt{Sequence} which is \texttt{Frame}.
 Therefore we also need to create this join table and this is simply done as can be seen on \myref{lst:sql-frame-sequence}.
 
