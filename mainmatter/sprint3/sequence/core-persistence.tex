@@ -1,1 +1,65 @@
 \subsection{Persistence --- Storing the Model}
+In \myref{pictogramendpoint} we showed how to model af \texttt{One-to-Many}, and a \texttt{One-to-One}, this section will who how we model a \texttt{Many-to-Many} while making sure the order of the list is intact.
+
+A \texttt{Sequence} has the field \texttt{elements} which is a list of \texttt{Frames}, and a \texttt{Frame} can exist in many different \texttt{Sequence}s which means that there is a need for a \texttt{Many-to-Many} relationship between the two.
+A \texttt{Frame} has the field \texttt{partOfSequences} which is created in the Class as shown on \myref{lst:frame-sequence}.
+The \texttt{@ManyToMany} annotation is what makes Hibernate create the relationship.
+The \texttt{mappedBy = "elements"} argument tells Hibernate that the fields database mapping is done by the elements field on the class it consists of, which in this case is \texttt{Sequence}.
+
+\begin{lstlisting}[float, floatplacement=h, caption={The field partOfSequences in the \texttt{Frame} class. \texttt{[...]} denotes omitted code.},label={lst:frame-sequence}]
+public abstract class Frame {
+	[...]
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "elements")
+    private Collection<Sequence> partOfSequences;
+    [...]
+}
+\end{lstlisting}
+
+Therefore to show how this is mapped, we need to look at the \texttt{elements} field in \texttt{Sequence} which is shown in \myref{lst:sequnce-frame}.
+
+\begin{lstlisting}[float, floatplacement=h, caption={The field elements in the \texttt{Sequence} class. \texttt{[...]} denotes omitted code.},label={lst:sequnce-frame}]
+public class Sequence extends PictoFrame implements Iterable<Frame> {
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "Sequence__Frame",
+            joinColumns = {
+                @JoinColumn(name = "sequence_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "frame_id")})
+    @OrderColumn(name = "placement")
+    private List<Frame> elements = new ArrayList<Frame>();
+    [...]
+}
+\end{lstlisting}
+
+A \texttt{@ManyToMany} annotation is used here aswell, but we also specify a \texttt{@JoinTable} annotation and a \texttt{@OrderColumn}, the latter will be explained in the next section \textit{Ordering the Frames}.
+The \texttt{@JoinTable} annotation is much like the \texttt{@JoinColumn} as explained in \myref{pictogramendpoint}, but instead a table is created, which is given a name \texttt{Sequence__Frame}, and also two join columns \texttt{sequence_id} and \texttt{frame_id}.
+These \texttt{JoinColumns} work as explained in \myref{pictogramendpoint}, but there is also an \texttt{inverseJoinColumn} which is simply the column for the entity being joined with \texttt{Sequence} which is \texttt{Frame}.
+Therefore we also need to create this join table and this is simply done as can be seen on \myref{lst:sql-frame-sequence}.
+
+\begin{lstlisting}[float, floatplacement=h, caption={The table creation of the join table between \texttt{Sequence} and \texttt{Frame}.},label={lst:sql-frame-sequence}]
+CREATE TABLE Sequence__Frame
+(
+    id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    placement INT NOT NULL,
+    sequence_id BIGINT NOT NULL,
+    frame_id BIGINT NOT NULL
+);
+\end{lstlisting}
+
+
+\subsubsection{Ordering the Frames}
+
+As explained in \myref{subsec:seqcore} it is important that the order of the elements are correct, and we can do this in two ways:
+
+\begin{itemize}
+	\item Creating a class to store additional information like an index of where each element belongs.
+	\item Using Hibernate to order the list according to a variable.
+\end{itemize}
+
+We mention both as we first created this mapping using the first option with an extra class.
+This class had two \texttt{Many-to-One} fields one for \texttt{Frame} and one for \texttt{Sequence} as well as a field called \texttt{placement}.
+We then had to make sure that the list being returned was sorted according to the placement field.
+This solution bloats the number of classes, and if this could be reduced it would be easier to maintain.
+We needed exactly one field to somehow order the entries on the list, which is why an alternative was available, had we needed to store some other value, it might not have been possible.
+The alternative solution is quite simple, and can be seen on \myref{lst:sequnce-frame} and \myref{lst:sql-frame-sequence}.
+The \texttt{@OrderColumn} on \myref{lst:sequnce-frame} specifies that the entries in the list are ordered by the column in the input, which is the column \texttt{placement}, and this \texttt{placement} is then a property of the table in \myref{lst:sql-frame-sequence}.
