@@ -6,7 +6,7 @@ Currently in the PictoSearch library a user searches for some string, and the lo
 Therefore a goal of the REST API for pictograms is to provide a search method, such that PictoSearch will return the same results.
 The endpoint will also be used in the case that a user opens e.g. a week schedule which contains a pictogram that the device have not stored locally, the endpoint will then retrieve this single pictogram rather than returning a list of pictograms.
 
-\subsection{Description of the Model of Pictograms}\label{subsec:pictomodel}
+\subsection{Core --- The Model of Pictograms}\label{subsec:pictomodel}
 The model that was described in \myref{subsec:model} was the complete model of the REST API, \myref{fig:pictogramModel} shows the model regarding pictograms along with the fields of these classes.
 
 \begin{figure}[h]
@@ -110,7 +110,7 @@ On line 5 the \texttt{@JoinColumn} Hibernate annotation is used to specify which
 Lines~\ref{lst:tp_rel_on_pictog1}--\ref{lst:tp_rel_on_pictog2} shows the relation needed on the side of \texttt{Pictogram} to create the opposite One-to-Many side to the Many-to-One relationship on \texttt{Sequence}.
 Line~\ref{lst:tp_sql_meme} shows the SQL where the column to be joined on is created in the SQL.
 
-\subsection{Querying the Database}
+\subsection{Persistence --- Querying the Database}
 As explained in \myref{subsec:general} the database is queried using a DAO, this section will present the \texttt{PictogramDaoImpl} class.
 
 \begin{lstlisting}[float, floatplacement=h, caption={The class header of the \texttt{PictogramDao}, along with its annotations. \texttt{[...]} denotes omitted code.},label={lst:pictogramDaoImpl}]
