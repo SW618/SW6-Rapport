@@ -109,7 +109,7 @@ CREATE TABLE Sequence
 On line 5 the \texttt{@JoinColumn} Hibernate annotation is used to specify which column the two tables \texttt{Pictogram} and \texttt{Sequence} will join on.
 Lines~\ref{lst:tp_rel_on_pictog1}--\ref{lst:tp_rel_on_pictog2} shows the relation needed on the side of \texttt{Pictogram} to create the opposite One-to-Many side to the Many-to-One relationship on \texttt{Sequence}.
 Line~\ref{lst:tp_sql_meme} shows the SQL where the column to be joined on is created in the SQL.
-% NÅET HER TIL MEMEMEMEMEMEM
+
 \subsection{Querying the Database}
 As explained in \myref{subsec:general} the database is queried using a DAO, this section will present the \texttt{PictogramDaoImpl} class.
 
@@ -129,11 +129,11 @@ The \texttt{@Reposity} annotation is also a Spring annotation used for all DAOs 
 The last annotation \texttt{@Primary} is also a Spring annotation used by all DAOs in the REST API, and is used to tell Spring that the Java Bean \todo{Det har vi vel ikke nævnt?} containing this class should be given preference when multiple beans are candidates to be autowired.
 Autowire means that you do not have to specify the bean's properties or constructor arguments explicitly.
 This is used in the Service layer where the proper DAOs are retrieved as Beans and the auto wiring makes this easier.
-\\
 
+\bigskip
 \myref{lst:pictogramByTitle} shows the method for querying the database for \texttt{Pictogram}s which title contains the string being searched for.
-Line 9-11 creates a \texttt{TypedQuery} which uses the \texttt{LIKE} operator to find any \texttt{Pictogram} which title adheres to the pattern \texttt{:title}.
-Line 10 then sets \texttt{:title} to be any string concatenated with the search string, which is then concatenated by any string as well.
+Lines~\ref{lst:pictogrambt_tq1}--\ref{lst:pictogrambt_tq2} creates a \texttt{TypedQuery} which uses the \texttt{LIKE} operator to find any \texttt{Pictogram} which title adheres to the pattern \texttt{:title}.
+Line~\ref{lst:pictogrambt_tq3} then sets \texttt{:title} to be any string concatenated with the search string, which is then concatenated by any string as well.
 \begin{lstlisting}[float, floatplacement=h, caption={The method which searches through all \texttt{Pictogram}s by their titles.},label={lst:pictogramByTitle}]
     /**
      * Search for public pictograms by title.
@@ -143,43 +143,43 @@ Line 10 then sets \texttt{:title} to be any string concatenated with the search 
      */
     @Override
     public Collection<Pictogram> searchByTitle(String title) {
-        TypedQuery<Pictogram> query = em.createQuery("SELECT p FROM Pictogram p " +
+        TypedQuery<Pictogram> query = em.createQuery("SELECT p FROM Pictogram p " +(*@\label{lst:pictogrambt_tq1}@*)
             "WHERE (p.title LIKE :title) " +
-            "AND p.accessLevel = :public", Pictogram.class);
-        query.setParameter("title", "%" + title + "%");
+            "AND p.accessLevel = :public", Pictogram.class);(*@\label{lst:pictogrambt_tq2}@*)
+        query.setParameter("title", "%" + title + "%");(*@\label{lst:pictogrambt_tq3}@*)
         query.setParameter("public", AccessLevel.PUBLIC);
         return query.getResultList();
     }
 \end{lstlisting}
 
-As mentioned in \myref{subsec:general}, the persistence layer is tested, which  means that the method \texttt{SearchByTitle} is also tested, and the test for this method can be seen on \myref{lst:pictogramByTitleTest}.
-It start by assigning what is returned by the \texttt{searchByTitle} method to an \texttt{ArrayList} on line 3.
-lines 6-13 asserts first if the results is empty, followed by asserting whether the ArrayList contains a specific \texttt{Pictogram}.
+As mentioned in \myref{subsec:general}, the persistence layer is tested, which means that the method \texttt{SearchByTitle} is also tested --- the test for this method can be seen on \myref{lst:pictogramByTitleTest}.
+It starts by assigning what is returned by the \texttt{searchByTitle} method to an \texttt{ArrayList} on line~\ref{lst:tpbt_1love}.
+lines~\ref{lst:tpbt_2loves}--\ref{lst:tpbt_3loves} asserts first if the results is empty, followed by asserting whether the \texttt{ArrayList} contains a specific \texttt{Pictogram}.
 The rest of the asserts check whether the \texttt{PictogramImage} is also as expected, which essentially tests whether Hibernate retrieves the \texttt{Pictogram}'s one-to-one relation correctly.
 
 \begin{lstlisting}[float, floatplacement=h, caption={The test method which tests the method \texttt{SearchByTitle}.},label={lst:pictogramByTitleTest}]
 @Test
 public void testPictogramByTitle() throws Exception {
-    ArrayList<Pictogram> pictogramlist = new ArrayList<Pictogram>(pictogramDao.searchByTitle("test1"));
+    ArrayList<Pictogram> pictogramlist = new ArrayList<Pictogram>(pictogramDao.searchByTitle("test1"));(*@\label{lst:tpbt_1love}@*)
 
-    Assert.assertFalse(pictogramlist.isEmpty());
+    Assert.assertFalse(pictogramlist.isEmpty());(*@\label{lst:tpbt_2love}@*)
     Assert.assertTrue(pictogramlist.stream()
     	.anyMatch(p -> p.getId() == 1L));
 
     Assert.assertTrue(pictogramlist.stream()
     	.anyMatch(p -> p.getPictogramImage().getFilePath().equals("jeff")));
     Assert.assertTrue(pictogramlist.stream()
-    	.anyMatch(p -> p.getPictogramImage().getId() == 1L));
+    	.anyMatch(p -> p.getPictogramImage().getId() == 1L));(*@\label{lst:tpbt_3love}@*)
 }
 \end{lstlisting}
 
 \subsection{Generalising the FileDAO}\label{subsec:persistfilehandle}
-When we started working on the REST API \texttt{Pictogram}, there was already created a way to get an Image for another class, namely the \texttt{UserIcon}.
-A DAO was also created for \texttt{UserIcon}, which contained methods which were the exact same methods we needed to implement for the \texttt{PictogramImage}, so in order to not copy-paste code we decided to generalise the concept.
+When we started working on the REST API \texttt{Pictogram}, there was already created a way to get an image in another class, namely the \texttt{UserIcon}.
+A DAO was also created for \texttt{UserIcon}, which contained methods which were the exact same methods we needed to implement for the \texttt{PictogramImage}, so to avoid \enquote{copy--paste} code we decided to generalise the concept.
 This is when the class \texttt{PersistFileHandle} was created as mentioned in \myref{subsec:pictomodel}.
-This meant that the data was now inherited by a single class.
-When creating a DAO for retrieving the information we did not want to copy-paste as well, as the queries would retrieve the same data just for different kind of objects, therefore the DAO was generalised using Type parameters as shown on \myref{lst:typeparameter}.
-
+It meant that the data was now inherited from a single class.
+When creating a DAO for retrieving the information we did not want to copy--paste as well, as the queries would retrieve the same data just for different kind of objects, therefore the DAO was generalised using Type parameters as shown on \myref{lst:typeparameter}.
+This means that any Type that extends from the class \texttt{PersistFileHandle} is able to be used with this Class, which means that both \texttt{PictogramImage} and \texttt{UserIcon} can now be used.
 
 \begin{lstlisting}[float, floatplacement=h, caption={The \texttt{FileDaoImpl} class header which uses Type Parameters to generalise which types it can be used with. \texttt{[...]} denotes omitted code.},label={lst:typeparameter}]
 public abstract class FileDaoImpl<T extends PersistFileHandle> implements FileDao<T> {
@@ -187,9 +187,10 @@ public abstract class FileDaoImpl<T extends PersistFileHandle> implements FileDa
 }
 \end{lstlisting}
 
-This means that any Type that extends from the class \texttt{PersistFileHandle} is able to be used with this Class, which means that both \texttt{PictogramImage} and \texttt{UserIcon} can now be used.
-
-As we started to generalise the methods in \texttt{FileDaoImpl} we faced a problem in the \texttt{add} method as we created a new object using a constructor, which would now be the Type Parameter T as seen on \myref{lst:TypeParameterConstructor}.
+As we started to generalise the methods in \texttt{FileDaoImpl} we faced a problem in the \texttt{add} method as we created a new object using a constructor, which would now be the type parameter \texttt{T} as seen on \myref{lst:TypeParameterConstructor}.
+Therefore we decided to use the abstract factory pattern, such that the method knows exactly what object it needs to use.
+For further reading on the factory pattern see The Gang of Four's description in their book \textit{Design Patterns: Elements of Reusable Object-oriented Software} \cite{abstractfactorypattern}.
+The \textit{Abstract Factory Pattern} can be shown using our own classes on \myref{fig:asbtractFactory}.
 
 \begin{lstlisting}[float, floatplacement=h, caption={Trying to use a Type Parameter constructor, which Java cannot do. \texttt{[...]} denotes omitted code.},label={lst:TypeParameterConstructor}]
 public T add(Readable file) throws IOException {
@@ -199,16 +200,12 @@ public T add(Readable file) throws IOException {
 }
 \end{lstlisting}
 
-Therefore we decided to use the abstract factory pattern, such that the method knows exactly what object it needs to use.
-For further reading on the factory pattern see The Gang of Four's description in their book \textit{Design Patterns: Elements of Reusable Object-oriented Software} \cite{abstractfactorypattern}.
-
-The Abstract Factory Pattern can be shown using our own classes on \myref{fig:asbtractFactory}.
-
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.5\textwidth]{figures/diagram-factory.png}
     \caption{The abstract factory pattern in the REST API for \texttt{PersistentFileHandle}.}\label{fig:asbtractFactory}
 \end{figure}
+
 The abstract factory or factory of factories is the \texttt{PersistFileHandleFactory}.
 When e.g. a \texttt{FileDao<PictogramImage>} is created, an instance of \texttt{pictogramImageFileDaoImpl} is what is actually created.
 This instance has a factory field, which will then be one of the non abstract subclasses or subfactories of \texttt{PersistFileHandleFactory} which in this case is the \texttt{PictogramImageFactory}.
@@ -230,30 +227,34 @@ In this way the pattern of storing files and the paths to the files is generalis
 This section describes the service layer of the Pictogram endpoint.
 The tool RESTEasy makes it simple to create HTTP Request methods using its annotations such as \texttt{@GET} or \texttt{@PUT}.
 \myref{tbl:pictogramservice} shows a list of all the services provided by the pictogram REST API.
-All the serivces are located in the path \texttt{/publicpictogram} and \texttt{/department/{id}/pictogram}.
-This separation has been made because the public pictorams are all given by the GIRAF application, while the other pictograms are pictograms that will be created by a department.
+All the services are located in the path \texttt{/publicpictogram} and \texttt{/department/\{id\}/pictogram}.
+This separation has been made because the public pictograms are all given by the GIRAF application, while the other pictograms are pictograms that will be created by a department.
 
 \begin{table}[]
+\footnotesize
 \centering
-\caption{List of Pictogram endpoints, they all exist at \texttt{/department/id/pictogram} or at \texttt{/publicpictogram}.}
-\label{tbl:pictogramservice}
-\begin{tabular}{lll}
-Path           & HTTP Request Type & Method Name          \\
-/              & GET               & getAllPictograms     \\
-/\{pid\}       & GET               & getPictogram         \\
-/\{pid\}/image & GET               & getPictogramImage    \\
-/              & POST              & CreatePictogram      \\
-/\{pid\}/image & PUT               & uploadPictogramImage \\
-/\{pid\}       & PUT               & updatePictogram      \\
-/\{pid\}	   & DELETE			   & deletePictogram	  \\
+\begin{tabular}{rll}
+HTTP Request    & Path          & Method Name                   \\
+\midrule
+GET             &/              & \texttt{getAllPictograms}     \\
+GET             &/\{pid\}       & \texttt{getPictogram}         \\
+GET             &/\{pid\}/image & \texttt{getPictogramImage}    \\
+\tblgrpsep
+POST            &/              & \texttt{CreatePictogram}      \\
+\tblgrpsep
+PUT             &/\{pid\}/image & \texttt{uploadPictogramImage} \\
+PUT             &/\{pid\}       & \texttt{updatePictogram}      \\
+\tblgrpsep
+DELETE          &/\{pid\}	    & \texttt{deletePictogram}	    \\
 \end{tabular}
-\end{table}\todo{Sass gør tabellen lækker ... please...LÆKKERFY DEN!!!!}
+\caption{List of Pictogram endpoints, they all exist at \texttt{/department/\{id\}/pictogram} or at \texttt{/publicpictogram}.}\label{tbl:pictogramservice}
+\end{table}
 
 The services use the DAOs created in the persistence layer of the REST API.
 The queries created in the DAO retrieve the objects that the request wants to either GET, PUT, or DELETE, otherwise for a POST request a builder for \texttt{Pictogram} will build the \texttt{Pictogram} from the JSON data, and the method that handles the request will then save this in the database.
 
-\myref{lst:getallPictograms} shows the method which handles a GET request on the path ``/'' which is seen from the annotations \texttt{@GET} and \texttt{@Path("/")}.
-Since a \texttt{PictogramService} is only created through the \texttt{DepartmentService} on the path \texttt{"/pictogram"} the full path to activate this method is \texttt{"department/{id}/pictograms/"}.
+\myref{lst:getallPictograms} shows the method which handles a GET request on the root path which is seen from the annotations \texttt{@GET} and \texttt{@Path("/")}.
+Since a \texttt{PictogramService} is only created through the \texttt{DepartmentService} on the path \texttt{"/pictogram"} the full path to activate this method is \texttt{"department/\{id\}/pictogram/"}.
 The annotation on line 8 simply states which representation a resource can produce in this case it means that this method can produce JSON as output.
 The last annotation on line 9 \texttt{RolesAllowed({PermissionType.Constants.USER})}, specifies which roles may access this method, and \texttt{USER} is the most general one, which means every type of user in the model may access this method.
 
@@ -277,10 +278,10 @@ public Collection<Pictogram> getAllPictograms(@Context User user) {
 }
 \end{lstlisting}
 
-First the method simple checks if a user is actually received, i.e. is a user logged in or not.
-If this check passes the next if check on line 13 checks whether the user is in the same department as the department the method will try to get \texttt{Pictogram}s from, if this check fails it also checks whether the user might be a \texttt{SuperUser}, in which case it is also allowed and the if check will fail.
-A \texttt{SuperUser} is a sort of admin which will be the user attached to \texttt{PublicPictograms}.
+First, the method simply checks if a user is actually received, i.e. is a user logged in or not.
+If this check passes the next if--check on line 13 checks whether the user is in the same department as the department the method will try to get \texttt{Pictogram}s from, if this check fails it also checks whether the user might be a \texttt{SuperUser}, in which case it is also allowed and the if--check will fail.
+A \texttt{SuperUser} is a user with permissions to do administrative tasks such as create public pictograms.
 
-If both if checks fail, the method returns what the \texttt{PictogramDao.getAll(user)} method retrieves, which will be all pictograms the user is allowed to see.
+If both if--checks fail, the method returns what the \texttt{PictogramDao.getAll(user)} method retrieves, which will be all pictograms the user is allowed to see.
 
 This concludes the \texttt{Pictogram} endpoint showcase; the next section will cover how the REST API for \texttt{Sequence} was progressed for this sprint, it will skip details already covered in this section about the \texttt{Pictogram} endpoint.
