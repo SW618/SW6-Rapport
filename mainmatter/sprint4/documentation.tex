@@ -7,6 +7,40 @@ For the class, for ALL methods, for non-trivial getters/setters/constructers, fo
 Også brugt til endpoint specifikke ting, client focused guide, enunciate.
 output i service/dist..... HTML, list of service, Params for URL, objekter returneret -  gradle enunciate to acquire rest API documentation for client focused implementation
 Hookup to javadocs, for jsonpath.
+
+In order to make the code more readable and easier to use for new developers as well as developers that may not have been included in that specific segment we use Javadocs.
+For each class, method, non-empty constructor, non-default setters and getters and an enum value Javadocs should be present such that the purpose and how to use the aforementioned constructions can be understood with no more than simply skimming the code.
+For classes and enum values the Javadocs is quite simple but should exist nonetheless. 
+``
+/**
+   *A Weekday is used to contain Frames for the week schedule.
+   */
+''
+The above may be enough for a class.
+For methods, non-empty constructors and non-default getters and setters a little more information is required, purpose, params and return value should all be present.
+``
+/**
+   *  Adds a user to the week schedule.
+   *
+   * @param user user to add to list.
+   * @return boolean
+   */
+''
+Specifically for the service layer it is important that the javadocs links each other together as shown in this example, this is required for us to achieve the endpoint documentation mentioned next.
+``
+/**
+     * Add a new {@link User user} to the department. Only guardians can add users.
+     *
+     * @param currentUser The currently authenticated {@link User user}
+     * @param newUser     The new {@link User user}to insert
+     * @return The {@link User user} that was inserted
+     */
+''
+For the REST-API Java-docs serves as more than just documentation and an easy way to understand the cohesion in the code.
+The Javadocs are also used to provide a clean overview of all the endpoints available in the REST-API.
+This is done through enunciate which uses the Javadocs to create full HTML documentation making implementation for the client side significantly easier by providing hypertext documentation for the endponts.
+To create and view this, run ``gradle enunciate'' and open the index.html file.
+
 \todo[inline]{Tests, what are we testing?}
 
 As a baseline all methods should be tested regardless of how simple the method may be.
@@ -14,6 +48,68 @@ Even simple add and remove methods should be tested, such that if they at some p
 The Dao should have a near 100 \% code coverage.
 There should also be performed integration tests, integration testing, tests the whole as a cohesive unit.
 In order to achieve integration tests, one must test more than just the methods created, one should test that objects exists and can be found in their expected location, e.g. tests like hasSomeFieldName
+
+For the unit tests we use JUnit.
+As a baseline all methods must be tested regardless of their simplicity.
+For the Core and Persistence layer we use unit tests and integration tests to test.
+The service layer has no formal testing established as it should not contain anything new, still during development one should test whether or not the JSON response is correct.
+It should be noted that the integration tests are in a developer environment, thus there is not actual guarantee it works in other environments.
+The integration tests, the persistence tests, tests whether the DAO works with the model.
+The tests are split into 3 segments, firstly resources are added with the @Resource annotation, secondly data is prepared if required using the @Before notation and lastly tests, each of which has the @Test notation to determine it is a test.
+For those familiar with the AAA syntax from NUnit @Resource and @Before serves as the arrange part for all tests.
+For the Core layer, the unit tests, there will be no @Resource as the Core layer is not testing how a resource works with the rest of the system, but simply methods and objects, as such only instantiating objects is necessary, which is handled with the @Before notation.
+For the integration tests @Resource is required for all DAOs tested in a given test class.
+
+Unit/Core test example:
+==================
+@Before
+    public void prepareData(){
+        department1 = new Department("meme");
+        department1.setId(69L);
+        department2 = new Department("dank");
+        department2.setId(911L);
+        user1 = new User(department1, "test1", "hunter2");
+        user2 = new User(department2, "test2", "hunter2");
+        user1.setId(1L);
+        user2.setId(2L);
+    }
+
+    @Test
+    public void testHasAccessToPublicPictogram(){
+        pictogram1 = new Pictogram("rare", AccessLevel.PUBLIC, user1);
+        Assert.assertTrue(pictogram1.hasPermission(user1));
+        Assert.assertTrue(pictogram1.hasPermission(user2));
+    }
+
+Integration/Persistence test example:
+=================
+@Resource
+    private PictogramDao pictogramDao;
+
+    @Resource
+    private UserDao userDao;
+
+    @Resource
+    private DepartmentDao departmentDao;
+
+    @Before
+    public void getDepartment() {
+        department = departmentDao.byName("monstertruck");
+    }
+
+    @Test
+    public void testPictogramGetAll() throws Exception {
+        Collection<Pictogram> pictograms = pictogramDao.getAllPublicPictograms();
+        Assert.assertFalse(pictograms.isEmpty());
+    }
+
+    @Test
+    public void testPictogramGetAllWithUser() throws Exception {
+        User u = userDao.byId(department, 1337L);
+        Collection<Pictogram> pictograms = pictogramDao.getAll(u);
+        Assert.assertFalse(pictograms.isEmpty());
+        Assert.assertEquals(pictograms.size(), 4);
+    }
 
 \todo[inline]{Hibernate notations, where and why?}
 \todo[inline]{SQL - migrate and NEVER delete}
