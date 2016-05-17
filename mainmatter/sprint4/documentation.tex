@@ -1,123 +1,32 @@
 \section{Documentation}
-With the REST-API being a late addition to GIRAF we decided to be very rigid and corporate about rules for the project, this is such that it is easy to start developing on the REST-API
+This section pertains to the \userstory{As a future developer I would like a guide for developing on the REST API, along with a plan for what has been created for the API and what still needs to be implemented, such that I can quickly get an overview and set up my work environment at the start of the project.} and will describe how this is resolved and why the these guides are written.
 
-\todo[inline]{How to setup build environment}
-\todo[inline]{Javadocs - where should it be?}
-For the class, for ALL methods, for non-trivial getters/setters/constructers, for each enum value.
-Også brugt til endpoint specifikke ting, client focused guide, enunciate.
-output i service/dist..... HTML, list of service, Params for URL, objekter returneret -  gradle enunciate to acquire rest API documentation for client focused implementation
-Hookup to javadocs, for jsonpath.
+The REST-API was a rather late addition to GIRAF being introduced this year, as such our semester has been in charge of the design, tools and technologies used in its development.
+The groups involved, SW615 and SW618, have followed a rigid set of design and project management guidelines to ensure a certain quality, or at the very least structure in the code.
+In order to provide a guide and ease the next years developers into the REST API part of GIRAF and the guidelines that follows, each of the following sections have had a wiki page written, explaining how and when each subject is used in the REST-API, the content of these wiki pages can be found in \todo[inline]{Ref til bilag med alle wiki pages samlet}.
 
-In order to make the code more readable and easier to use for new developers as well as developers that may not have been included in that specific segment we use Javadocs.
-For each class, method, non-empty constructor, non-default setters and getters and an enum value Javadocs should be present such that the purpose and how to use the aforementioned constructions can be understood with no more than simply skimming the code.
-For classes and enum values the Javadocs is quite simple but should exist nonetheless. 
-``
-/**
-   *A Weekday is used to contain Frames for the week schedule.
-   */
-''
-The above may be enough for a class.
-For methods, non-empty constructors and non-default getters and setters a little more information is required, purpose, params and return value should all be present.
-``
-/**
-   *  Adds a user to the week schedule.
-   *
-   * @param user user to add to list.
-   * @return boolean
-   */
-''
-Specifically for the service layer it is important that the javadocs links each other together as shown in this example, this is required for us to achieve the endpoint documentation mentioned next.
-``
-/**
-     * Add a new {@link User user} to the department. Only guardians can add users.
-     *
-     * @param currentUser The currently authenticated {@link User user}
-     * @param newUser     The new {@link User user}to insert
-     * @return The {@link User user} that was inserted
-     */
-''
-For the REST-API Java-docs serves as more than just documentation and an easy way to understand the cohesion in the code.
-The Javadocs are also used to provide a clean overview of all the endpoints available in the REST-API.
-This is done through enunciate which uses the Javadocs to create full HTML documentation making implementation for the client side significantly easier by providing hypertext documentation for the endponts.
-To create and view this, run ``gradle enunciate'' and open the index.html file.
+\subsection{Build Environment Setup}
+\subsection{Javadocs}
+The Javadocs wiki page explains when and where to use Javadocs, a guideline for this is written specifically for the REST-API as Enunciate also depends on Javadocs.
+Aside from Javadocs providing a quicker way to read the purpose, effect and use of code when looking at it as well as providing an overview through the web documentation it provides, for REST-API it helps provide us with even better endpoint documentation through enunciate.
+It is important that we ensure the Javadocs is consistent such that Enunciate can efficiently provide client-side developers with the information they require about the REST-API endpoints.
+Javadocs provides greater detail for the entirety of the project and is useful for working on the REST-API, however for any instance where a developer needs to work with the REST-API, enunciate creates a far superior way of presenting the required information.
+    
+\subsection{Testing}
+A wiki page has also been constructed for testing, in order to explain where, when and what type of tests are created as well as how to use the proper notations when testing.
+The tests that we use are both unit tests and integration tests.
+The obvious reason for having tests is to test correctness, however even more beneficial is the regression testing acquired through having all methods, and the interconnected modules tested together through integration tests.
+The most benefit gained is when altering SQL tables, as no tests for the SQL tables exist beyond the integration tests, this helps ensuring that all refactoring of code does not break anything.
+This guideline exists to ensure that while GIRAF may not have tests, the REST-API will be tested such that future development can occur without breaking anything.
 
+\subsection{Hibernate Notations}
+\subsection{SQL Migrations}
+\subsection{Jackson}
+\subsection{Layer Description}
+\subsection{Linter}
 \todo[inline]{Tests, what are we testing?}
-
-As a baseline all methods should be tested regardless of how simple the method may be.
-Even simple add and remove methods should be tested, such that if they at some point are altered, the tests remain and will reveal an error if the modification is done wrong.
-The Dao should have a near 100 \% code coverage.
-There should also be performed integration tests, integration testing, tests the whole as a cohesive unit.
-In order to achieve integration tests, one must test more than just the methods created, one should test that objects exists and can be found in their expected location, e.g. tests like hasSomeFieldName
-
-For the unit tests we use JUnit.
-As a baseline all methods must be tested regardless of their simplicity.
-For the Core and Persistence layer we use unit tests and integration tests to test.
-The service layer has no formal testing established as it should not contain anything new, still during development one should test whether or not the JSON response is correct.
-It should be noted that the integration tests are in a developer environment, thus there is not actual guarantee it works in other environments.
-The integration tests, the persistence tests, tests whether the DAO works with the model.
-The tests are split into 3 segments, firstly resources are added with the @Resource annotation, secondly data is prepared if required using the @Before notation and lastly tests, each of which has the @Test notation to determine it is a test.
-For those familiar with the AAA syntax from NUnit @Resource and @Before serves as the arrange part for all tests.
-For the Core layer, the unit tests, there will be no @Resource as the Core layer is not testing how a resource works with the rest of the system, but simply methods and objects, as such only instantiating objects is necessary, which is handled with the @Before notation.
-For the integration tests @Resource is required for all DAOs tested in a given test class.
-
-Unit/Core test example:
-==================
-@Before
-    public void prepareData(){
-        department1 = new Department("meme");
-        department1.setId(69L);
-        department2 = new Department("dank");
-        department2.setId(911L);
-        user1 = new User(department1, "test1", "hunter2");
-        user2 = new User(department2, "test2", "hunter2");
-        user1.setId(1L);
-        user2.setId(2L);
-    }
-
-    @Test
-    public void testHasAccessToPublicPictogram(){
-        pictogram1 = new Pictogram("rare", AccessLevel.PUBLIC, user1);
-        Assert.assertTrue(pictogram1.hasPermission(user1));
-        Assert.assertTrue(pictogram1.hasPermission(user2));
-    }
-
-Integration/Persistence test example:
-=================
-@Resource
-    private PictogramDao pictogramDao;
-
-    @Resource
-    private UserDao userDao;
-
-    @Resource
-    private DepartmentDao departmentDao;
-
-    @Before
-    public void getDepartment() {
-        department = departmentDao.byName("monstertruck");
-    }
-
-    @Test
-    public void testPictogramGetAll() throws Exception {
-        Collection<Pictogram> pictograms = pictogramDao.getAllPublicPictograms();
-        Assert.assertFalse(pictograms.isEmpty());
-    }
-
-    @Test
-    public void testPictogramGetAllWithUser() throws Exception {
-        User u = userDao.byId(department, 1337L);
-        Collection<Pictogram> pictograms = pictogramDao.getAll(u);
-        Assert.assertFalse(pictograms.isEmpty());
-        Assert.assertEquals(pictograms.size(), 4);
-    }
-
 \todo[inline]{Hibernate notations, where and why?}
 \todo[inline]{SQL - migrate and NEVER delete}
 \todo[inline]{Jackson(Json) properties, why?}
 \todo[inline]{Layer Descriptions}
 \todo[inline]{The linter}
-
-If you believe you require further information groups SW618F16 and SW615F16 started the REST API with SW618 primarily on the endpoints and SW615 on the login so their papers may contain more details.
-
-´For the Wiki - just how and where
-For the paper, why?
