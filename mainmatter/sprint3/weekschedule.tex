@@ -62,7 +62,7 @@ All information about a week schedule can be derived from this class, we will st
         \texttt{lastEdit}   & \texttt{Date}                                     & Timestamp for when the \texttt{WeekSchedule} was last edited  \\
         \texttt{department} & \texttt{Department}                               & The department that owns the \texttt{WeekSchedule}            \\
         \texttt{users}      & \texttt{Collection\textless User\textgreater}     & All users for whom the \texttt{WeekSchedule} is available     \\
-        \texttt{days}       & \texttt{Collection\textless Weekday\textgreater}  & The \texttt{weekday}s belonging to the \texttt{WeekSchedule}           
+        \texttt{days}       & \texttt{EnumMap\textless Day, Weekday\textgreater}     & The \texttt{weekday}s belonging to the \texttt{WeekSchedule}
     \end{tabular}}
     \caption{Table of fields in the \texttt{WeekSchedule} class.}
     \label{tbl:WeekSchedule}
@@ -83,8 +83,8 @@ These kind of self--explanatory fields exist for all the following classes, in g
     This field allows for several citizens to use the same week schedule such that if the department goes on a trip, rather than having to create a week schedule for each individual citizen, they can use a shared one for shared activities.
     This is a feature not available in the live version of the system, yet it is something that the customers expressed a want for in our first meeting with them, the notes from said meeting is available at \citep{GIRAF20161stMeeting}.
     \item [\texttt{days}] \hfill \\
-    The \texttt{days} field contains at most seven days which are represented by their own class, Weekday, described next.
-    If a day is without activity it may be represented as either a Weekday, or lack thereof as an empty day does not require any information to create the view in the app.
+    \texttt{days} is an \texttt{EnumMap}, with its key being the \texttt{Day}-enum, and its values being the \texttt{Weekday} which fits the day on the \texttt{WeekSchedule}.
+    This secures that each day can only be stored once pr. weekday, and simple access to its elements.
 \end{description}
 
 \subsubsection{Weekday}
@@ -145,7 +145,7 @@ We also need the class such that we can create a relation from this class to the
         \texttt{weekday}            & \texttt{Weekday}      & The \texttt{Weekday} that a \texttt{Frame} should be added to           \\
         \texttt{frame}              & \texttt{Frame}        & The \texttt{Frame} that should be added to the \texttt{Weekday}         \\
         \texttt{index}              & \texttt{int}          & The order for which \texttt{Frame}s are stored                          \\
-        \texttt{frameProgresses}    & \texttt{Collection\textless WeekdayFrameProgress\textgreater} & \texttt{WeekdayFrameProgress} elements related to this frame
+        \texttt{frameProgresses}    & \texttt{Map\textless User, WeekdayFrameProgress\textgreater} & \texttt{WeekdayFrameProgress} elements related to this frame
     \end{tabular}}
     \caption{Table that represents the \texttt{WeekdayFrame} class}
     \label{tbl:WeekdayFrame}
@@ -155,7 +155,8 @@ We also need the class such that we can create a relation from this class to the
     \item [\texttt{weekday}] \hfill \\
     This field contains the \texttt{Weekday} that the \texttt{Frame}, contained in this class, should be on.
     \item [\texttt{frameProgresses}] \hfill \\
-    This collection contains all the user specific progression of a given \texttt{WeekdayFrame}, it is further explained in the next section.
+    This is a Map, with its key being a \texttt{User} and its value of type \texttt{WeekdayFrameProgress}.
+    This secures that each user only can have one \texttt{WeekdayFrameProgress} pr. \texttt{WeekdayFrame}.
 \end{description}
 
 \subsubsection{WeekdayFrameProgress}\label{subsubsec:weekdayframeprogress}
