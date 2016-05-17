@@ -77,10 +77,6 @@ public Collection<Sequence> searchByUserAndTitle(User user, String title) {
 \end{lstlisting}
 
 \subsubsection{Retrieving Choices}
-In the case of \texttt{Choice}s and way they are used in the REST API and GIRAF, a DAO for retrieving them from database is useless.
-This is due to the fact that \texttt{Choice}s always resides on a \texttt{WeekSchedule}, and should not be searched for as e.g. \texttt{Sequence}s.
-Therefore we have not implemented a Choice DAO, as Hibernate facilitates us to acquire them through other objects.
-\todo{I am not content with this choice thing please halp}
-
-
-
+In the case of \texttt{Choice}s and the way they are used in the REST API and GIRAF, a DAO for retrieving them from database is useless.
+This is due to the fact that \texttt{Choice}s always reside on a \texttt{WeekSchedule} or on a \texttt{Sequence}, and should not be searched for as e.g. \texttt{Sequence}s or \texttt{Pictograms}.
+Therefore we have not implemented a \texttt{ChoiceDAO}, as Hibernate facilitates the retrieval of \texttt{Choice}s through other objects.
