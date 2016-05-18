@@ -1,4 +1,5 @@
-\section{Motivation for Creating the REST API} \label{sec:current}
+\section{Motivation for Creating the REST API}\label{sec:current}
+
 As previously mentioned it was decided at a multi group meeting that we would replace the current database connection with a REST API for GIRAF.
 This section will explain the motivation behind this decision by highlighting some of the issues currently present in GIRAF.
 
@@ -8,11 +9,11 @@ The local database is made by the \textit{meta-database}--library, and the conte
 
 During last semester one of the project groups, SW610F15, attempted to setup SymmetricDS\footnote{More details at: \url{http://www.symmetricds.org/}} to synchronise the remote- and local--databases.
 They claim to implement this, however they note some serious problems; since SymmetricDS is a bi-directional database replication tool, used to synchronise row-wise, any deletion on one device will delete on every device which can cause conflicts, the same kind that we explained in \myref{sec:offline_giraf}
-Their prototype using SymmetricDS was never enabled in GIRAF because of the dificulties of conflict handling when using the tool on multiple devices. 
+Their prototype using SymmetricDS was never enabled in GIRAF because of the dificulties of conflict handling when using the tool on multiple devices.
 So currently there is only a one way transfer from the remote database to the local database and no transfer the other way.
 
 \bigskip
-There are significant issues with the aforementioned solution, most importantly for us is the issues the system causes for security and synchronisation as they directly relate to current user stories. 
+There are significant issues with the aforementioned solution, most importantly for us is the issues the system causes for security and synchronisation as they directly relate to current user stories.
 Since the customer of the GIRAF project are institutions in Aalborg Municipality, there are rather strict confidentiality and security measures which must be met.
 These measures are encryption of files, password protection, strict privacy, encryption of all out going communication, which are part of ``Persondataloven''\footnote{\url{https://www.retsinformation.dk/forms/r0710.aspx?id=828}}.
 The biggest points for GIRAF is that all users must have a log-in, all communication has to be encrypted, and the data saved locally must also be encrypted.
@@ -33,3 +34,4 @@ This means that a new database system will need to adhere to the following requi
 	\item Modelling and synchronising all relevant data for each application, such that a user can use an arbitrary tablet without losing data.
 \end{itemize}
 To resolve these issues, we deem it necessary to replace the current solution entirely.
+
