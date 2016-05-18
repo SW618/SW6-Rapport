@@ -12,39 +12,8 @@ Moreover after a \texttt{Frame} object have been retrieved from the database, be
 For Hibernate to do this the \texttt{Frame} class has the annotation: \texttt{@Inheritance(strategy = InheritanceType.JOINED)}.
 
 \bigskip
-The \texttt{FrameDaoImpl} which is the Hibernate implementation of the interface \texttt{FrameDao}, has two methods for retrieving \texttt{Frame}s, as can be seen on \myref{lst:framedaoimpl}.
-The first method named \texttt{byId} behaves precisely as the method of the same name in the \texttt{PictogramDaoImpl} class as described in \todo[inline]{ref!!}, hence it has been omitted from \myref{lst:framedaoimpl}.
-
-Secondly \texttt{FrameDaoImpl} has the method \texttt{byIds} as seen on line~\ref{lst:framedaoimpl_byids}.
-This method is used when multiple \texttt{Frame}s needs to be retrieved.
-The callee must provide an array of \texttt{long}s, which corresponds to the ids of the \texttt{Frame}s to be retrieved.
-Because of the design which requires a specific order of the \texttt{Frame}s and allows the same \texttt{Frame} to be on a \texttt{Sequence} multiple times, some ordering and restructuring must be done before returning the \texttt{Frame}s.
-By doing this the returned list of \texttt{Frame}s is guaranteed to have the same objects and order as the \texttt{long} array calls for.
-
-Fetching the \texttt{Frame}s from the database is done with a \texttt{TypedQuery} using the \texttt{IN} clause, which selects all \texttt{Frame}s which id is in a given list of ids; this can be seen on line~\ref{lst:framedaoimpl_byids_query}.
-The restructuring and ordering is done in the for--loop starting on line~\ref{lst:framedaoimpl_byids_forloop}, where the input array with \texttt{Frame} ids is iterated through.
-For each id in the array, the corresponding \texttt{Frame} is added the ordered list to be returned.
-\todo{is it interesting to see the stream stuff on line~\ref{lst:framedaoimpl_byids_stream}?}
-
-\begin{lstlisting}[float, floatplacement=h, caption={Implementation of the \texttt{FrameDao} interface, used to retrieve \texttt{Frame}s from the database, using Hibernate. \texttt{[...]} denotes omitted code.}, label={lst:framedaoimpl}]
-[...]
-public class FrameDaoImpl extends BaseDaoImpl<Frame> implements FrameDao {
-    [...]
-    @Override
-    public List<Frame> byIds(long[] ids) {(*@\label{lst:framedaoimpl_byids}@*)
-        TypedQuery<Frame> query = em.createQuery("SELECT f FROM Frame f WHERE f.id IN :ids", Frame.class);(*@\label{lst:framedaoimpl_byids_query}@*)
-        query.setParameter("ids", Arrays.asList(LongStream.of(ids).boxed().toArray()));
-        List<Frame> fetched = query.getResultList();
-        List<Frame> ordered = new ArrayList<>();
-        for (long id : ids) {(*@\label{lst:framedaoimpl_byids_forloop}@*)
-            ordered.add(
-                    fetched.stream().filter(frame -> frame.getId() == id).findFirst().get()(*@\label{lst:framedaoimpl_byids_stream}@*)
-            );
-        }
-        return ordered;
-    }
-}
-\end{lstlisting}
+The \texttt{FrameDaoImpl} which is the Hibernate implementation of the interface \texttt{FrameDao}, has one method for retrieving \texttt{Frame}s.
+The method is named \texttt{byId} and behaves precisely as the method of the same name in the \texttt{PictogramDaoImpl} class as described in \todo{ref!!}.
 
 \subsubsection{Sequence DAO}
 The most significant difference between the aforementioned \texttt{FrameDaoImpl} and the \texttt{SequenceDaoImpl} is the ability to retrieve \texttt{Sequence}s by querying by title.
@@ -79,4 +48,4 @@ public Collection<Sequence> searchByUserAndTitle(User user, String title) {
 \subsubsection{Retrieving Choices}
 In the case of \texttt{Choice}s and the way they are used in the REST API and GIRAF, a DAO for retrieving them from database is useless.
 This is due to the fact that \texttt{Choice}s always reside on a \texttt{WeekSchedule} or on a \texttt{Sequence}, and should not be searched for as e.g. \texttt{Sequence}s or \texttt{Pictograms}.
-Therefore we have not implemented a \texttt{ChoiceDAO}, as Hibernate facilitates the retrieval of \texttt{Choice}s through other objects.
+Therefore we have not implemented a \texttt{ChoiceDAO}, as Hibernate facilitates the retrieval of \texttt{Choice}s through other objects or the Frame DAO.
