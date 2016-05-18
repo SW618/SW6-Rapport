@@ -2,17 +2,29 @@
 \pgfdeclarelayer{foreground}
 \pgfsetlayers{background,main,foreground}
 \tikzstyle{double_arrow}=[latex'-latex']
-\tikzstyle{component}=[draw, fill=blue!20, text width=8em, 
+\tikzstyle{component}=[draw, fill=blue!20, text width=8em,
 text centered, minimum height=2.5em]
-\tikzstyle{client_comp}=[draw, fill=blue!20, text width=4em, 
+\tikzstyle{client_comp}=[draw, fill=blue!20, text width=4em,
 text centered, minimum height=2.5em]
 \begin{tikzpicture}[auto]
-    \footnotesize
-    \node[component](core) {Core};    
-    \node[component, below = 0cm of core](persistence) {Persistence};    
-    \node[component, below = 0cm of persistence](service) {Service};    
-    \node[component, right = of persistence](db) {Database};    
-    \node[draw, cloud, cloud puffs=8.9, cloud ignores aspect, minimum width=9em, minimum height=5em,fill=blue!20, below = 0.8cm of service](web) {Internet};
+    % \node[component] (persistence) {Persistence};
+    % \node[component, above = of persistence] (service) {Service};
+
+    % \path (persistence.south -| persistence.east)+(1,0) node (core_a) {};
+    % \path (service.north -| service.east)+(2,0) node (core_b) {};
+    % \path[draw, fill = blue!20,] (core_a) rectangle (core_b);
+    % \path ($ (core_a) !.5! (core_b) $) node {Core};
+
+    % \path ($(persistence.west |- persistence.south) !.5! (core_b |- persistence.south)$) node (rest_buttom) {};
+    % \path ($(service.west |- service.north) !.5! (core_b |- service.north)$) node (rest_top) {};
+
+    % \node[component, below = 3cm of rest_buttom] (db) {Database --- MariaDB};
+    % \node[draw, cloud, cloud puffs=8.9, cloud ignores aspect, minimum width=9em, minimum height=5em,fill=blue!20, above = 3cm of rest_top](web) {Internet};
+    \node[component](core) {Core};
+    \node[component, below = 0cm of core](persistence) {Persistence};
+    \node[component, below = 0cm of persistence](service) {Service};
+    \node[component, right = of persistence](db) {Database};
+    \node[draw, cloud, cloud puffs=12, cloud ignores aspect, minimum width=9em, minimum height=5em,fill=blue!20, below = 0.8cm of service](web) {Internet};
     \node[client_comp, below = 1.5cm of web, anchor = west](client1) {$\text{Client}_{3}$};
     \node[client_comp, left = 0.2cm of client1](client2) {$\text{Client}_{2}$};
     \node[client_comp, left = 0.2cm of client2](client3) {$\text{Client}_{1}$};
