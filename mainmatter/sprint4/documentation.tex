@@ -1,32 +1,28 @@
 \section{Documentation}
-This section pertains to the \userstory{As a future developer I would like a guide for developing on the REST API, along with a plan for what has been created for the API and what still needs to be implemented, such that I can quickly get an overview and set up my work environment at the start of the project.} and will describe how this is resolved and why the these guides are written.
+This section pertains to the \userstory{As a future developer I would like a guide for developing on the REST API, along with a plan for what has been created for the API and what still needs to be implemented, such that I can quickly get an overview and set up my work environment at the start of the project.} and will describe how this is resolved and why these guides are written.
 
 The REST-API was a rather late addition to GIRAF being introduced this year, as such our semester has been in charge of the design, tools and technologies used in its development.
-The groups involved, SW615 and SW618, have followed a rigid set of design and project management guidelines to ensure a certain quality, or at the very least structure in the code.
-In order to provide a guide and ease the next years developers into the REST API part of GIRAF and the guidelines that follows, each of the following sections have had a wiki page written, explaining how and when each subject is used in the REST-API, the content of these wiki pages can be found in \todo[inline]{Ref til bilag med alle wiki pages samlet}.
+The groups involved, SW615 and SW618, have followed a rigid set of design and project management guidelines to ensure a certain quality, or at the very least a certain structure in the code.
+In order to provide a guide and ease the next years developers into the REST API for GIRAF and the guidelines that follows, each of the following sections have a corresponding wiki page on Phabricator, explaining how and when each subject is used in the REST-API, the content of these wiki pages can be found in \todo[inline]{Ref til bilag med alle wiki pages samlet}.
 
 \subsection{Build Environment Setup}
 \subsection{Javadocs}
 The Javadocs wiki page explains when and where to use Javadocs, a guideline for this is written specifically for the REST-API as Enunciate also depends on Javadocs.
-Aside from Javadocs providing a quicker way to read the purpose, effect and use of code when looking at it as well as providing an overview through the web documentation it provides, for REST-API it helps provide us with even better endpoint documentation through enunciate.
-It is important that we ensure the Javadocs is consistent such that Enunciate can efficiently provide client-side developers with the information they require about the REST-API endpoints.
-Javadocs provides greater detail for the entirety of the project and is useful for working on the REST-API, however for any instance where a developer needs to work with the REST-API, enunciate creates a far superior way of presenting the required information.
+Aside from Javadocs providing a quicker way to read the purpose, effect and use of code for the REST-API, it helps provide us with even better endpoint documentation through enunciate.
+It is important that we ensure the Javadocs is consistent such that Enunciate can efficiently provide client-side developers with the information they require in order to use the REST-API endpoints.
+Javadocs provides greater detail for the entirety of the project and is useful for developing further on the REST-API, however for any instance where a developer needs to use the REST-API, enunciate creates a far superior way of presenting the needed information.
     
 \subsection{Testing}
 A wiki page has also been constructed for testing, in order to explain where, when and what type of tests are created as well as how to use the proper notations when testing.
 The tests that we use are both unit tests and integration tests.
 The obvious reason for having tests is to test correctness, however even more beneficial is the regression testing acquired through having all methods, and the interconnected modules tested together through integration tests.
-The most benefit gained is when altering SQL tables, as no tests for the SQL tables exist beyond the integration tests, this helps ensuring that all refactoring of code does not break anything.
+These integration tests, are the only tests for the ORM created by Hibernate, these tests are beneficial when refactoring to make sure that the changes did not break the any functionality.
 This guideline exists to ensure that while GIRAF may not have tests, the REST-API will be tested such that future development can occur without breaking anything.
 
-\subsection{Hibernate Notations}
+\subsection{Hibernate Annotations}
+
+
 \subsection{SQL Migrations}
 \subsection{Jackson}
 \subsection{Layer Description}
 \subsection{Linter}
-\todo[inline]{Tests, what are we testing?}
-\todo[inline]{Hibernate notations, where and why?}
-\todo[inline]{SQL - migrate and NEVER delete}
-\todo[inline]{Jackson(Json) properties, why?}
-\todo[inline]{Layer Descriptions}
-\todo[inline]{The linter}
