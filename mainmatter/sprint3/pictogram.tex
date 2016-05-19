@@ -60,11 +60,11 @@ It contains the following fields:
 
 The section above explains what is modelled with the Java classes; the following section will present how this information is stored in the database using the tools mentioned in \myref{sec:techstack}.
 
-\subsection{Persistence --- Storing the Model in the Database}
+\subsection{Persistence --- Storing the Model in the Database}\label{subsec:pictomodelstore}
 
 As mentioned previously we use an \textbf{ORM} (object--relational mapping) tool to map the models to the database, this section describes how this specifically is done.
 
-\begin{lstlisting}[float, floatplacement=h, caption={Fields with annotations which causes Hibernate to perform the ORM for a \texttt{PictogramImage}.},label={lst:PictoImage}]
+\begin{lstlisting}[ caption={Fields with annotations which causes Hibernate to perform the ORM for a \texttt{PictogramImage}.},label={lst:PictoImage}]
 @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
 private PictogramImage pictogramImage;
 \end{lstlisting}
