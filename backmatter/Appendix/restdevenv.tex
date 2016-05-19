@@ -1,0 +1,87 @@
+\section{Setting up the Build Environment}
+This is a guide in the basic steps for setting up a developer environment for the GIRAF REST API.
+This takes between 5--15 minutes.
+\subsection*{Setting up Intellij}
+\begin{itemize}
+    \item First download and install InteliJ IDEA.
+    \item Clone the Git repository for the REST API.
+    \item Then start Intellij, and go though the initial start wizzard selecting your preferences.
+    \item Then from the main start menu of Intellij select: Import Project.
+    \item Select the folder which you've cloned the git repository to.
+    \item Select ``Import project from external model''.
+    \item Select Gradle.
+    \item Press next.
+    \item Select default gradle wrapper
+    \item Press Finish.
+    \item Press ok to import all the gradle project data.
+    \item Intellij should now start to its main interface.
+    \item Wait for it to stop processing (might take a while the first time on slow computers).
+    \item Open the ``Event log'' in the lower right corner, it is the yellow speech bubb
+le with en exclamation mark.
+    \item In it it will show: ``Frameworks detected: Spring framework is detected in the project Configure".
+    \item Press the ``Configure''--link.
+    \item You should now see the ``Setup Frameworks'', it should show Spring and two sub-items.
+    \item Press OK, with them selected.
+    \item Now goto ``File'' -> ``Project Structure'' -> ``Project''.
+    \item Under Project SDK select the newest JDK (at least 1.8).
+    \item If no SDK are to be found, then press ``New'' then ``JDK'' then navigate to your JDK folder (C:\\Program Files\\Java\\jdk*** on Windows).
+    \item Under ``Project language level'' select ``8 - Lambdas, type annotations etc.''.
+    \item Press OK to close ``Project Structure''.
+    \item Intellij will now Index your files again, this might take a while.
+    \item If everything was done sucessfully, then you should be able to Build the REST--API by pressing ``Build'' -> ``Make Project''
+\end{itemize}
+
+\subsection*{Setting up Spring}
+\begin{itemize}
+    \item Now we will configure spring to inject the proper settings.
+    \item Navigate to the ``persistence-config.xml'' file in ``persistence/src/main/resources/''.
+    \item In the top press ``Change Profiles'' -> then select ``Project'' and ``Default''.
+    \item This will configure Spring to use the local in-memory database.
+    \item Then you should create a file called ``files.properties'' in ``persistence/src/main/resources/''.
+    \item This file should be the same as ``files-prod.properties'' but have paths which fits your machine. (On windows a path such as ``C:/giraf/''
+is fine).
+    \item This path is used to store the pictogramimages and usericons, which are uploaded though the API.
+\end{itemize}
+
+\subsection*{Setting up WildFly}
+\begin{itemize}
+    \item In order to test the REST--API locally, we will now setup WildFly to run locally.
+    \item First download WildFly from \url{http://wildfly.org/downloads/}.
+    \item This is made with the ``Java EE7 Full \& Web Distribution'' in mind.gst
+    \item Unzip it.
+    \item Open the bin folder.
+    \item Use the ``add-user'' script appropriate for your platform (.bat for windows, .sh for nix*)
+    \item select a) Management User
+    \item Enter a username.
+    \item Enter a password.
+    \item When prompted if you want to add it to any groups, just press enter.
+    \item Type ``yes'' to add the user to the realm ``ManagementRealm'', and again for the AS process prompt.
+    \item Press enter to close the prompt.
+\end{itemize}
+
+\begin{itemize}
+    \item Open Intellij again if you closed it. 
+    \item Open the build configuration menu by pressing the dropdown in the upper right corner and pressing ``Edit Configuration''.
+    \item Press the plus sign to add a new configuration.
+    \item Select ``JBoss'' -> ``Local'' (Might have to press show 33 more item in order for it to show, look at the bottom of the dropdown).
+    \item First press ``Configure''
+    \item Then navigate to the install location of your WildFly folder.
+    \item Once it is located press ``Register schemas...'', then press OK, and OK again.
+    \item Uncheck ``After launch'' (You should use a REST--client here, try out POSTMAN for Google Chrome)\#SELLOUT
+    \item Enter your username and password you set before under ``JBoss Server Settings''
+    \item If another service is using port 8080 then enter a Port offset i.e. 1. (NVIDIA Network Services does on windows).
+    \item It should give you a warning that ``No artifacts marked for deployment'', press the ``Fix'' next to it, select ``dk.aau.giraf.rest :
+giraf-rest-1.0.0.ear (exploded)''.
+    \item Press OK to exit the configuration menu.
+    \item Try to run the WildFly server by pressing run in the upper right corner.
+    \item This should build and deploy the WildFly server.
+    \item After a while the Output window should show: ``Artifact Gradle : dk.aau.giraf.rest : giraf-rest-1.0.0.ear (exploded): Artifact is deployed
+successfully''.
+    \item And above it ``Registered web context: /services-1.0.0''.
+    \item This means that on the url \url{http://localhost:8080/services-1.0.0} should be the base of the REST--API.
+    \item However nothing should be running on the root, try accessing \url{http://localhost:8080/services-1.0.0/pictogram/}.
+    \item This should show some JSON for the public pictograms made in the localdata.
+    \item Otherwise there should be an error in the Output view for you to debug.
+\end{itemize}
+
+Enjoy.
