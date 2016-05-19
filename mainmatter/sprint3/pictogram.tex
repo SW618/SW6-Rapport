@@ -11,9 +11,9 @@ The model that was described in \myref{subsec:model} was the complete model of t
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.5\textwidth]{figures/diagram-pictogram.png}
+    \includegraphics[width=0.5\textwidth]{figures/pictogrammodel.pdf}
     \caption{Class--diagram including fields of the classes involved in Pictograms}\label{fig:pictogramModel}
-\end{figure}\todo{Update accordingly in the end}
+\end{figure}
 
 \todo{Table or description? --- I will make consistent when we decide}
 Here a brief description of the purpose for each field of the classes on the figure will be given.
@@ -22,7 +22,7 @@ Here a brief description of the purpose for each field of the classes on the fig
 		\item[id] This is the id of the Frame which is saved in the database.
 		\item[lastEditAt] This is a time stamp of when the Frame was last edited --- auto updated by Hibernate when changes on the object is persisted in the database.
 		It is to be used for conflict handling as e.g. pictograms can be altered in the PictoCreator tool, and a need for conflict handling is therefore needed.
-		\item[partofSequences] This is a collection of sequences this frame is used in; why this collection is needed will be further explained in \todo[inline]{sequenceendpointref}
+		\item[partofSequences] This is a collection of sequences this frame is used in; why this collection is needed will be further explained in \myref{sec:sequence}.
 	\end{description}
 
 \subsubsection*{PictoFrame}
@@ -126,7 +126,7 @@ public class PictogramDaoImpl extends BaseDaoImpl<Pictogram> implements Pictogra
 It has the annotation \texttt{@Transactional} which is a Spring annotation all DAOs in the REST API use.
 It allows Spring to inject behaviours around method calls like transaction management.
 The \texttt{@Reposity} annotation is also a Spring annotation used for all DAOs in the REST API, which tells spring that the class is used for encapsulating storage, retrieval and search behaviour for a collection of objects.
-The last annotation \texttt{@Primary} is also a Spring annotation used by all DAOs in the REST API, and is used to tell Spring that the Java Bean \todo{Det har vi vel ikke nævnt?} containing this class should be given preference when multiple beans are candidates to be autowired.
+The last annotation \texttt{@Primary} is also a Spring annotation used by all DAOs in the REST API, and is used to tell Spring that the Java Bean containing this class should be given preference when multiple beans are candidates to be autowired.
 Autowire means that you do not have to specify the bean's properties or constructor arguments explicitly.
 This is used in the Service layer where the proper DAOs are retrieved as Beans and the auto wiring makes this easier.
 
@@ -202,7 +202,7 @@ public T add(Readable file) throws IOException {
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{figures/diagram-factory.png}
+    \includegraphics[width=\textwidth]{figures/factorymodel.pdf}
     \caption{The abstract factory pattern in the REST API for \texttt{PersistentFileHandle}.}\label{fig:asbtractFactory}
 \end{figure}
 

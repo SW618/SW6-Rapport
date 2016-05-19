@@ -66,9 +66,9 @@ The final layer to create for an endpoint is the service layer and consists of a
 \noindent
 The next section will present the model to be modelled in the core layer for the three endpoints, which we are developing during this sprint.
 
-\subsection{The Updated Model for Objects in GIRAF}\todo{add something bout users}\label{subsec:model}
+\subsection{The Updated Model for Objects in GIRAF}\label{subsec:model}
 The new model design is an attempt to make the central parts of GIRAF more cohesive than before.
-The class diagram can be seen on \myref{fig:fullmodelclassdiagram}.
+The class diagram can be seen on \myref{fig:fullmodelclassdiagram}, excessive detail have been removed.
 We will start by discussing week schedule and then go on to discuss the rest of the model.
 
 \begin{figure}[h]
@@ -77,8 +77,7 @@ We will start by discussing week schedule and then go on to discuss the rest of 
     \caption{Classdiagram of the new model user in the REST API}\label{fig:fullmodelclassdiagram}
 \end{figure}
 
-
-A week schedule consists of seven week days one for each day of the week which creates a relation from a \texttt{weekSchedule} to several \texttt{weekDay}s.
+A week schedule consists of seven week days, one for each day of the week, which creates a relation from a \texttt{weekSchedule} to several \texttt{weekDay}s.
 We acknowledge that a weekday is supposed to be able to use the following in its schedule: 
 
 \begin{itemize}
@@ -95,6 +94,8 @@ Therefore \texttt{Sequence}s and \texttt{Pictogram}s inherit from yet another su
 This also solves the problem of directly nested choices because a \texttt{Choice} can then have one-to-many of these \texttt{PictoFrame}s.
 A \texttt{Sequence} has an ordered one-to-many relation to \texttt{Frame} and a \texttt{Pictogram} has a \texttt{PictogramImage} that separates a \texttt{Pictogram} from its associated image.
 All these classes are very intertwined and rely on each other which makes the implementation somewhat difficult to work on in parallel in the group.
+A \texttt{WeekSchedule} is owned by one or many \texttt{User}s, and it also belongs to a single department which the users also belong to.
+All \texttt{PictoFrame}s are owned by a \texttt{User} and/or a \texttt{Department}.
 
 The \texttt{weekday} has a relationship-class: \texttt{weekdayFrame} to bind these \texttt{Frame}s together with a weekday which preserves the order of frames on a weekday as well as being able to save the progress of a weekschedule.
 The progress is saved in another relationship-class: \texttt{weekdayFrameProgress} as the progress depends on the user because this new model of GIRAF weekschedules allows a weekschedule to be shared between users, which might be used for when an institution goes on a trip.
