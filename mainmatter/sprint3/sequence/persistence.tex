@@ -1,0 +1,51 @@
+\subsection{Persistence --- Querying the Database}
+In this section the process of querying the database in relation to sequences is presented.
+Two DAOs will be introduced and we will explain why the \texttt{Choice} objects do not have a DAO.
+
+\subsubsection{Frame DAO}
+Every \texttt{Sequence} is, as previously described, essentially just an ordered list of \texttt{Frame}s alongside some metadata, e.g. the title of the sequence.
+Normally when handling \texttt{Sequence}s in the REST API, this list of \texttt{Frame}s is accessed as an ordinary \texttt{List} structure in Java.
+When a \texttt{Sequence} object is instantiated or the elements, i.e. the list of \texttt{Frame}s, is changed, the desired \texttt{Frame}s must first be found, before they can be added to the list and Hibernate can establish the correct relations.
+Because of this, retrieving \texttt{Frame} objects from the database is an essential procedure.
+
+Moreover due to \texttt{Choice}, \texttt{Sequence} and \texttt{Pictogram} all extending the \texttt{Frame} class, Hibernate is able to find the specific object using the foreign keys.
+This is enabled by Hibernate through the annotation \texttt{@Inheritance(strategy = InheritanceType.JOINED)} placed on the \texttt{Frame} class.
+
+\bigskip
+The \texttt{FrameDaoImpl} which is the Hibernate implementation of the interface \texttt{FrameDao}, has one method for retrieving \texttt{Frame}s.
+The method is named \texttt{byId} and behaves like the name suggests using typedqueries.
+
+\subsubsection{Sequence DAO}
+The most significant difference between the aforementioned \texttt{FrameDaoImpl} and the \texttt{SequenceDaoImpl} is the ability to retrieve \texttt{Sequence}s by querying by title.
+This is done with the method which can be seen in \myref{lst:seqdao_search}.
+Here a \texttt{TypedQuery} is used with a \texttt{LIKE} clause, which matches the lowercase modification of the \texttt{Sequence} titles to a given string, as seen on line~\ref{lst:seqdao_search_like}.
+The string which the title is matched against is likewise transformed to lowercase, such that searches are not case sensitive.
+Moreover the string is padded with the \texttt{\%} wild card operator, which matches one or more characters, thus making the search effective on substrings.
+These two transformations can be seen on line~\ref{lst:seqdao_search_string}.
+
+\begin{lstlisting}[float, floatplacement=h, caption={The method in \texttt{SequenceDaoImpl} which allows for \texttt{Sequence}s to be searched for by title}, label={lst:seqdao_search}]
+public Collection<Sequence> searchByUserAndTitle(User user, String title) {
+    TypedQuery<Sequence> query = em.createQuery(
+            "SELECT s " +
+            "FROM Sequence s " +
+            "WHERE (LOWER(s.title) LIKE :title) " +(*@\label{lst:seqdao_search_like}@*)
+                "AND (s.accessLevel = :public " +
+                    "OR (s.accessLevel = :protected " +
+                        "AND  s.department = :usersdepartment) " +
+                    "OR (s.accessLevel = :private " +
+                        "AND s.owner = :user))",
+            Sequence.class);
+    query.setParameter("title", "%" + title.toLowerCase() + "%");(*@\label{lst:seqdao_search_string}@*)
+    query.setParameter("public", AccessLevel.PUBLIC);
+    query.setParameter("protected", AccessLevel.PROTECTED);
+    query.setParameter("private", AccessLevel.PRIVATE);
+    query.setParameter("user", user);
+    query.setParameter("usersdepartment", user.getDepartment());
+    return query.getResultList();
+}
+\end{lstlisting}
+
+\subsubsection{Retrieving Choices}
+In the case of \texttt{Choice}s and the way they are used in the REST API and GIRAF, a DAO for retrieving them from database is useless.
+This is due to the fact that \texttt{Choice}s always reside on a \texttt{WeekSchedule} or on a \texttt{Sequence}, and should not be searched for since it has no purpose as a standalone object unlike \texttt{Sequence}s or \texttt{Pictograms}.
+Thereby since Hibernate facilities the retrieval of \texttt{Choice}s through other objects or the Frame DAO we have not implemented a \texttt{ChoiceDAO}.
