@@ -1,1 +1,164 @@
+\newpage
 \section{Hibernate Annotations}
+
+Hibernate is a tool we use for Object Relational Mapping, which e.g. makes it easier to create the relations between classes, and especially when retrieving the objects of the database.
+
+This guide will show how we created some relations in the REST API using Hibernate, i.e. how to do a many-to-many, one-to-one, many-to-one.
+In a code block \texttt{[...]} means that the other code is omitted from the example.
+
+First up however, any class which you want modelled in the database, needs to have the following annotations above the class definition: \texttt{@Entity} and \texttt{@Table(name = <nameoftable>)}
+
+\subsubsection*{A One-to-One relationship}
+
+We have a One-to-One in the class: Pictogram, which has a single PictogramImage.
+You simply write:  \texttt{@OneToOne(<fillWithFields>)}.
+In Pictogram it looks like this:
+    
+\begin{lstlisting}[caption={A One-to-One relationship using \texttt{PictogramImage}, on \texttt{Pictogram}.}] 
+@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
+private PictogramImage pictogramImage;
+\end{lstlisting}
+
+
+\begin{itemize}
+\item Cascade means that if a Pictogram is deleted or created, the action will cascade so PictogramImage will know of e.g. the delete, and will also be deleted. Please see the Hibernate Documentation for more information on the CascadeTypes.
+\item FetchType.LAZY means that the object will not be loaded in the same transaction as the pictogram is loaded, the opposite will be .EAGER and this will load it in the same transaction.
+\item optional means that the field is not requried.
+\end{itemize}
+
+In the SQL a simple foreign key constraint is set on the table. The table Pictogram contains the property aslong with its constraint:
+
+
+\begin{lstlisting}[caption={The SQL to create the required}, language=sql]
+(
+  [...]
+    pictogramimage_id BIGINT,
+    CONSTRAINT Pictogram__id_PictogramImage FOREIGN KEY (pictogramimage_id) REFERENCES PictogramImage (id),
+  [...]
+}
+\end{lstlisting}
+
+
+\subsubsection*{A many-to-one relationship}
+
+A many-to-one, is used in PictoFrame to set Department.
+The new thing here is that a \texttt{JoinColumn} has to be set which specifies which column will contain the foreign key for the table.
+
+
+\begin{lstlisting}[ caption={The Annotations required for a \texttt{Many-to-One}}, language=sql]
+@ManyToOne(fetch = FetchType.EAGER, optional = true)
+@JoinColumn(name = "department_id", nullable = true) 
+protected Department department;
+\end{lstlisting}
+
+The SQL needs to be created as follows to create this:
+
+\begin{lstlisting}[ caption={The SQL needed for a \texttt{Many-to-One}}, language=sql]
+ CREATE TABLE PictoFrame
+(
+    [...]
+    department_id BIGINT,
+    [...]
+);
+ALTER TABLE PictoFrame
+    ADD CONSTRAINT PictoFrame__department_id
+        FOREIGN KEY (department_id) REFERENCES Department (id);
+\end{lstlisting}
+
+Simply adding the department\_id as specified in the annotation to the SQL, and adding the constraint, which means that the difference of create a \texttt{One-to-One} and a \texttt{Many-to-One}, is simply adding the \texttt{@JoinColumn} annotation to the field.
+
+\subsubsection*{A Many-to-Many relationship}
+
+A many-to-many is created in two different ways in the REST-API.
+With an extra class to model more data which is not just an index, and without an extra class.
+
+\textbf{The first will be without the extra class which happens in the class Sequence.}
+
+\begin{lstlisting}[caption={The Annotations required for a \texttt{Many-to-Many} relationship without creating an extra class to model it.}, language=sql]
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "Sequence__Frame",
+            joinColumns = {
+                @JoinColumn(name = "sequence_id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "frame_id")})
+    @OrderColumn(name = "index")
+    private List<Frame> elements;
+\end{lstlisting}
+
+Instead of creating a \texttt{JoinColumn} we know create a \texttt{JoinTable}, the tables data is made using the annotations, it is given a name and two \texttt{JoinColumns} are created.
+A \texttt{JoinColumn} which is the id of the class this is being modelled in, and an \texttt{inverseJoinColumns} which is the opposite direction, which is then the id of the other side, in this case \texttt{Frame}.
+
+\texttt{@OrderColumn} is created here, and tell hibernate that the List should be ordered according to the property Index, this is how the ordering of the sequence elements is created, to make sure they always come in the same order.
+
+Now the opposite side also needs to be modelled for a \texttt{Many-to-Many} in Hibernate so it contains the following as well:
+
+\begin{lstlisting}[caption={The opposite side of the relations needs to say it is mappedBy the other end.}, language=sql]
+ @ManyToMany(fetch = FetchType.LAZY, mappedBy = "elements", cascade = CascadeType.ALL)
+    private Collection<Sequence> partOfSequences;
+\end{lstlisting}
+
+Here the annotation \texttt{mappedBy} is needed to specify which field on the opposite side(Sequence) models it in the database.
+
+For the SQL we need to add the following:
+
+
+\begin{lstlisting}[caption={The SQL for the above mentioned \texttt{Many-to-Many} relationship.}, language=sql]
+CREATE TABLE Sequence__Frame
+(
+    id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    index INT NOT NULL,
+    sequence_id BIGINT NOT NULL,
+    frame_id BIGINT NOT NULL
+);
+ALTER TABLE Sequence__Frame
+    ADD CONSTRAINT Sequence__Frame__choice_id
+        FOREIGN KEY (sequence_id) REFERENCES Sequence (frame_id);
+
+ALTER TABLE Sequence__Frame
+    ADD CONSTRAINT Sequence__Frame__pictoFrame_id
+        FOREIGN KEY (frame_id) REFERENCES Frame (id);
+\end{lstlisting}
+
+\textbf{The second with extra classes is created like this:}
+
+You need three classes, in the REST API example we have a Weekday, a Frame, and a WeekdayFrame.
+You may create a \texttt{@one-to-many} on the two classes, e.g. Frame, and Weekday:
+
+\begin{lstlisting}[caption={One of the relations on the opposite side to create the \texttt{One-to-Many} to the relationship class.}, language=sql]
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "weekday_id", nullable = false)
+    @OrderColumn(name = "weekdayframe_index", updatable = false, insertable = false)
+    private List<WeekdayFrame> frames;
+\end{lstlisting}
+
+
+But you only need to create the \textbf{@many-to-one} for both classes on their relationship-table, or join-table, i.e. \texttt{WeekdayFrame} like so:
+
+\begin{lstlisting}[caption={The two relations needed on the relationship class in order to create the \texttt{Many-to-Many} relationship.}, language=sql]
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "weekday_id", insertable = false, updatable = false)
+    private Weekday weekday;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "frame_id")
+    private Frame frame;
+\end{lstlisting}
+
+
+Finally you create the SQL as you would normally: 
+
+
+\begin{lstlisting}[caption={The SQL needed for the relationship class to create the \texttt{Many-to-Many}.}, language=sql]
+CREATE TABLE Weekday__Frame
+(
+    id                 BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    weekday_id         BIGINT NOT NULL,
+    frame_id           BIGINT NOT NULL,
+    weekdayframe_index INT,
+    pictoFrameProgress INT,
+    CONSTRAINT WeekdayFrame__id_Weekday FOREIGN KEY (weekday_id) REFERENCES Weekday (id),
+    CONSTRAINT WeekdayFrame__id_Frame FOREIGN KEY (frame_id) REFERENCES Frame (id)
+);
+\end{lstlisting}
+
+
