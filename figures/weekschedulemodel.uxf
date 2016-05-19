@@ -1,186 +1,231 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="13.2">
-  <zoom_level>14</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>294</x>
+      <x>266</x>
+      <y>259</y>
+      <w>161</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>WeekSchedule
+--
+id                                              long
+name                                     String
+thumbnail                        Pictogram
+createdOn                               Date
+lastEdit                                    Date
+department                    Deparment
+users                    Collection&lt;User&gt; 
+weekdays      Map&lt;Day, Weekday&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>35</x>
+      <y>259</y>
+      <w>175</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>Weekday
+--
+id                                                   long
+day                                                 Day
+lastEdit                                          Date
+weekSchedule              WeekSchedule
+frames               List&lt;WeekdayFrame&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>14</x>
+      <y>427</y>
+      <w>280</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>WeekdayFrame
+--
+id                                                                                          long
+weekday                                                                       Weekday
+frame                                                                                Frame
+index                                                                                       int
+pictoFrameProgress       Map&lt;User, WeekdayFrameProgress&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>77</x>
+      <y>336</y>
+      <w>35</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>217</x>
+      <y>672</y>
+      <w>161</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>WeekdayFrameProgress
+--
+id                                              long
+user                                         User
+weekdayFrame      WeekdayFrame
+progress                           Progress</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>98</x>
+      <y>504</y>
+      <w>35</w>
+      <h>133</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;170.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>245</x>
+      <y>504</y>
+      <w>35</w>
+      <h>182</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..*</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0;10.0;240.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>350</x>
       <y>546</y>
-      <w>140</w>
-      <h>42</h>
-    </coordinates>
-    <panel_attributes>/Frame/</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>560</x>
-      <y>224</y>
-      <w>140</w>
-      <h>42</h>
-    </coordinates>
-    <panel_attributes>WeekSchedule</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>294</x>
-      <y>224</y>
-      <w>140</w>
-      <h>42</h>
-    </coordinates>
-    <panel_attributes>Weekday</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>420</x>
-      <y>224</y>
-      <w>168</w>
-      <h>56</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1
-m2=0..7  </panel_attributes>
-    <additional_attributes>100.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>280</x>
-      <y>378</y>
-      <w>168</w>
-      <h>42</h>
-    </coordinates>
-    <panel_attributes>WeekdayFrame</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>336</x>
-      <y>252</y>
-      <w>70</w>
-      <h>154</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1
-m2=0..*</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>420</x>
-      <y>476</y>
-      <w>224</w>
-      <h>42</h>
-    </coordinates>
-    <panel_attributes>WeekdayFrameProgress</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>336</x>
-      <y>406</y>
-      <w>70</w>
-      <h>168</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1
-m2=0..*</panel_attributes>
-    <additional_attributes>10.0;100.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>434</x>
-      <y>378</y>
-      <w>168</w>
-      <h>126</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1
-m2=0..*</panel_attributes>
-    <additional_attributes>10.0;10.0;80.0;10.0;80.0;70.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>630</x>
-      <y>406</y>
-      <w>238</w>
-      <h>126</h>
+      <w>35</w>
+      <h>140</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=0..*
 m2=1</panel_attributes>
-    <additional_attributes>10.0;60.0;150.0;60.0;150.0;10.0</additional_attributes>
+    <additional_attributes>10.0;180.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>658</x>
-      <y>252</y>
-      <w>182</w>
-      <h>182</h>
+      <x>273</x>
+      <y>371</y>
+      <w>35</w>
+      <h>70</h>
     </coordinates>
     <panel_attributes>
 m1=0..*
 m2=0..*</panel_attributes>
-    <additional_attributes>110.0;100.0;10.0;100.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>812</x>
-      <y>378</y>
-      <w>140</w>
-      <h>42</h>
+      <x>343</x>
+      <y>420</y>
+      <w>294</w>
+      <h>133</h>
     </coordinates>
-    <panel_attributes>User</panel_attributes>
+    <panel_attributes>User
+--
+id                                                                                               long
+department                                                               Derpmartment
+username                                                                               String
+password                                                                                String
+authTokens                                                 Collection&lt;AuthToken&gt;
+permissions                                              Collection&lt;Permissions&gt;
+owned                                                        Collection&lt;PictoFrame&gt;
+userprogress      Map&lt;WeekdayFrame, WeekdayFrameProgress&gt;
+weekSchedules                                   Collection&lt;WeekSchedule&gt;
+icon                                                                                   UserIcon</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>686</x>
-      <y>210</y>
-      <w>168</w>
-      <h>70</h>
+      <x>420</x>
+      <y>308</y>
+      <w>112</w>
+      <h>35</h>
     </coordinates>
     <panel_attributes>
 m1=1
 m2=0..*</panel_attributes>
-    <additional_attributes>100.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>140.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>882</x>
-      <y>252</y>
-      <w>70</w>
-      <h>154</h>
+      <x>546</x>
+      <y>343</y>
+      <w>35</w>
+      <h>91</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
 m2=0..*</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;110.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>826</x>
-      <y>224</y>
-      <w>140</w>
-      <h>42</h>
+      <x>518</x>
+      <y>294</y>
+      <w>126</w>
+      <h>56</h>
     </coordinates>
     <panel_attributes>Department
+--
+id                                 long
+name                        String
+member   Collection&lt;User&gt;
 </panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>14</x>
+      <y>623</y>
+      <w>189</w>
+      <h>56</h>
+    </coordinates>
+    <panel_attributes>/Frame/
+--
+id                                                       long
+lastEditAt   	                                        Date
+partOfSequences  Collection&lt;Sequence&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>203</x>
+      <y>294</y>
+      <w>77</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=1
+m2=0..7  </panel_attributes>
+    <additional_attributes>90.0;10.0;10.0;10.0</additional_attributes>
   </element>
 </diagram>
