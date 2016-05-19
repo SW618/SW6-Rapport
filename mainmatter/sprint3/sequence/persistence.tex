@@ -1,19 +1,19 @@
 \subsection{Persistence --- Querying the Database}
-In this section the process of querying the database in relation to sequences will be presented.
-Two DAOs will be introduced and we will explain why the \texttt{Choice} objects does not have a Data Access Object.
+In this section the process of querying the database in relation to sequences is presented.
+Two DAOs will be introduced and we will explain why the \texttt{Choice} objects do not have a DAO.
 
 \subsubsection{Frame DAO}
-Every sequence is, as previously described, essentially just an ordered list of \texttt{Frame}s alongside some metadata, such as the title of the sequence and so forth.
+Every \texttt{Sequence} is, as previously described, essentially just an ordered list of \texttt{Frame}s alongside some metadata, e.g. the title of the sequence.
 Normally when handling \texttt{Sequence}s in the REST API, this list of \texttt{Frame}s is accessed as an ordinary \texttt{List} structure in Java.
-However when a \texttt{Sequence} object is instantiated or the elements, i.e. the list of \texttt{Frame}s, is changed, the desired \texttt{Frame}s must first be found, before they can be added to the list and Hibernate can establish the correct relations.
-Because of this retrieving \texttt{Frame} objects from the database is an essential procedure.
+When a \texttt{Sequence} object is instantiated or the elements, i.e. the list of \texttt{Frame}s, is changed, the desired \texttt{Frame}s must first be found, before they can be added to the list and Hibernate can establish the correct relations.
+Because of this, retrieving \texttt{Frame} objects from the database is an essential procedure.
 
-Moreover after a \texttt{Frame} object have been retrieved from the database, because \texttt{Choice}, \texttt{Sequence} and \texttt{Pictogram} all extend the \texttt{Frame} class, Hibernate is able to find the specific object using the foreign keys.
-For Hibernate to do this the \texttt{Frame} class has the annotation: \texttt{@Inheritance(strategy = InheritanceType.JOINED)}.
+Moreover due to \texttt{Choice}, \texttt{Sequence} and \texttt{Pictogram} all extending the \texttt{Frame} class, Hibernate is able to find the specific object using the foreign keys.
+This is enabled by Hibernate through the annotation \texttt{@Inheritance(strategy = InheritanceType.JOINED)} placed on the \texttt{Frame} class.
 
 \bigskip
 The \texttt{FrameDaoImpl} which is the Hibernate implementation of the interface \texttt{FrameDao}, has one method for retrieving \texttt{Frame}s.
-The method is named \texttt{byId} and behaves precisely as the method of the same name in the \texttt{PictogramDaoImpl} class as described in \todo{ref!!}.
+The method is named \texttt{byId} and behaves like the name suggests using typedqueries.
 
 \subsubsection{Sequence DAO}
 The most significant difference between the aforementioned \texttt{FrameDaoImpl} and the \texttt{SequenceDaoImpl} is the ability to retrieve \texttt{Sequence}s by querying by title.
@@ -47,5 +47,5 @@ public Collection<Sequence> searchByUserAndTitle(User user, String title) {
 
 \subsubsection{Retrieving Choices}
 In the case of \texttt{Choice}s and the way they are used in the REST API and GIRAF, a DAO for retrieving them from database is useless.
-This is due to the fact that \texttt{Choice}s always reside on a \texttt{WeekSchedule} or on a \texttt{Sequence}, and should not be searched for as e.g. \texttt{Sequence}s or \texttt{Pictograms}.
-Therefore we have not implemented a \texttt{ChoiceDAO}, as Hibernate facilitates the retrieval of \texttt{Choice}s through other objects or the Frame DAO.
+This is due to the fact that \texttt{Choice}s always reside on a \texttt{WeekSchedule} or on a \texttt{Sequence}, and should not be searched for since it has no purpose as a standalone object unlike \texttt{Sequence}s or \texttt{Pictograms}.
+Thereby since Hibernate facilities the retrieval of \texttt{Choice}s through other objects or the Frame DAO we have not implemented a \texttt{ChoiceDAO}.
