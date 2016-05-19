@@ -58,8 +58,8 @@ The persistence layer consists of four steps
 The final layer to create for an endpoint is the service layer and consists of a single step:
 \begin{description}
 	\item[Creating HTTP Request Response Methods]\hfill \\
-	Here we have to think about the context the endpoint will be used in and create methods for any requests that might occur in this context, these methods are annotated with JAX-RS annotations which RESTEasy\todo{ref til tools/tech} will use.
-	The methods will use the DAOs from the persistence layer to retrieve the requested data and send this data back as JSON which is serialised by Jackson\todo{Ref til tools/tech}.
+	Here we have to think about the context the endpoint will be used in and create methods for any requests that might occur in this context, these methods are annotated with JAX-RS annotations which RESTEasy will use, as mentioned in \myref{sec:techstack}.
+	The methods will use the DAOs from the persistence layer to retrieve the requested data and send this data back as JSON which is serialised by Jackson which is also described in\myref{sec:techstack}.
 	We do not have any automatic tests for this as they use methods which are already tested and because the Jackson library is heavily tested.
 	Instead the way we test the service layer is to manually test whether the methods behaves in the intended way.
 \end{description}
@@ -68,8 +68,17 @@ The next section will present the model to be modelled in the core layer for the
 
 \subsection{The Updated Model for Objects in GIRAF}\todo{add something bout users}\label{subsec:model}
 The new model design is an attempt to make the central parts of GIRAF more cohesive than before.
+The class diagram can be seen on \myref{fig:fullmodelclassdiagram}.
 We will start by discussing week schedule and then go on to discuss the rest of the model.
-\todo[inline]{indsæt klassediagram her} A week schedule consists of seven week days one for each day of the week which creates a relation from a \texttt{weekSchedule} to several \texttt{weekDay}s.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.8\textwidth]{figures/fullclassdiagram.pdf}
+    \caption{Classdiagram of the new model user in the REST API}\label{fig:fullmodelclassdiagram}
+\end{figure}
+
+
+A week schedule consists of seven week days one for each day of the week which creates a relation from a \texttt{weekSchedule} to several \texttt{weekDay}s.
 We acknowledge that a weekday is supposed to be able to use the following in its schedule: 
 
 \begin{itemize}
@@ -77,8 +86,9 @@ We acknowledge that a weekday is supposed to be able to use the following in its
 	\item \texttt{Pictogram}s
 	\item \texttt{Choice}s
 \end{itemize}
+
 With this in mind we created a super class which all these can inherit from, and from this we can make it so a week schedule for each day has a list of this super class, which we call \texttt{Frame}.
-\todo{myref til figuren} shows how the only connection from these three elements of a weekday is through the \texttt{Frame} class.
+\myref{fig:fullmodelclassdiagram} shows how the only connection from these three elements of a weekday is through the \texttt{Frame} class.
 We can also encapsulate common data in this super class.
 We made a distinction between \texttt{Choice}s, \texttt{Sequence}s, and \texttt{Pictogram}s, because a \texttt{Choice} in GIRAF does not contain as much of this common information as \texttt{Pictogram}s and \texttt{Sequence}s like a title or an owner.
 Therefore \texttt{Sequence}s and \texttt{Pictogram}s inherit from yet another superclass called \texttt{PictoFrame}, that inherits from \texttt{Frame}, which encapsulate the common data between \texttt{Sequence}s and \texttt{Pictogram}s.
