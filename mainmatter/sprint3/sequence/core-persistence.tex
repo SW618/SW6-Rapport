@@ -1,5 +1,5 @@
 \subsection{Persistence --- Storing the Model}
-In \myref{pictogramendpoint} we showed how to model a \texttt{One-to-Many}, and a \texttt{One-to-One}, this section will who how we model a \texttt{Many-to-Many} while making sure the order of the list is intact.
+In \myref{sec:pictogramendpoint} we showed how to model a \texttt{One-to-Many}, and a \texttt{One-to-One}, this section will who how we model a \texttt{Many-to-Many} while making sure the order of the list is intact.
 
 The \texttt{elements} field on a \texttt{Sequence} is a list of \texttt{Frames}, and a \texttt{Frame} can exist on many different \texttt{Sequence}s which means that there is a need for a \texttt{Many-to-Many} relationship between the two.
 A \texttt{Frame} has the field \texttt{partOfSequences} which is created in the Class as shown on \myref{lst:frame-sequence}.
@@ -32,7 +32,7 @@ public class Sequence extends PictoFrame implements Iterable<Frame> {
 \end{lstlisting}
 
 A \texttt{@ManyToMany} annotation is used here as well, but we also specify a \texttt{@JoinTable} annotation and a \texttt{@OrderColumn}, the latter is explained in the next subsubsection \myref{ss:order}.
-The \texttt{@JoinTable} annotation is much like the \texttt{@JoinColumn}, explained in \myref{pictogramendpoint}, although rather than joining on a column a table is created and given the name \texttt{Sequence\_\_Frame}.
+The \texttt{@JoinTable} annotation is much like the \texttt{@JoinColumn}, explained in \myref{sec:pictogramendpoint}, although rather than joining on a column a table is created and given the name \texttt{Sequence\_\_Frame}.
 The table contains the two join columns \texttt{sequence\_id} and \texttt{frame\_id} and the \texttt{@OrderColum placement}.
 For this example we use a new column, an \texttt{inverseJoinColumn}, which is simply the column for the entity being joined with \texttt{Sequence} which is \texttt{Frame}.
 Therefore we also need to create this join table and this is simply done as can be seen on \myref{lst:sql-frame-sequence}.
