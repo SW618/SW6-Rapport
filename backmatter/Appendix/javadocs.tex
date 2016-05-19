@@ -1,0 +1,40 @@
+\newpage
+\section{Javadocs}
+In order to make the code more readable and easier to use for new developers as well as developers that may not have been included in that specific segment we use Javadocs.
+For each class, method, non--empty constructor, non--default setters and getters and an enum value Javadocs should be present such that the purpose and how to use the aforementioned constructions can be understood with no more than simply skimming the code.
+For classes and enum values the Javadocs is quite simple but should exist nonetheless.
+
+\begin{lstlisting}
+/**
+ * A Weekday is used to contain Frames for the week schedule.
+ */
+\end{lstlisting}
+
+The above may be enough for a class.
+For methods, non--empty constructors and non--default getters and setters a little more information is required, purpose, parameters and return value should all be present.
+
+\begin{lstlisting}
+/**
+ *  Adds a user to the week schedule.
+ *
+ * @param user user to add to list.
+ * @return boolean
+ */
+\end{lstlisting}
+
+Specifically for the service layer it is important that the Javadocs uses link to reference classes as shown in this example, this is required for us to achieve the endpoint documentation mentioned next.
+
+\begin{lstlisting}
+/**
+ * Add a new {@link User user} to the department. Only guardians can add users.
+ *
+ * @param currentUser The currently authenticated {@link User user}
+ * @param newUser     The new {@link User user}to insert
+ * @return The {@link User user} that was inserted
+ */
+\end{lstlisting}
+
+For the REST--API Javadocs serves as more than just documentation and an easy way to understand the cohesion in the code.
+The Javadocs are also used to provide a clean overview of all the endpoints available in the REST--API.
+This is done through enunciate which uses the Javadocs to create full HTML documentation making implementation for the client side significantly easier by providing hypertext documentation for the endponts.
+To create and view this, run \texttt{./gradlew enunciate} and open the \texttt{index.html} file.

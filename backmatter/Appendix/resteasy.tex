@@ -1,0 +1,63 @@
+\newpage
+\section{RESTeasy}\label{app:resteasy}
+\begin{displayquote}
+RESTEasy is a JBoss project that provides various frameworks to help you build RESTful Web Services and RESTful Java applications.
+It is a fully certified and portable implementation of the JAX-RS 2.0 specification, a JCP specification that provides a Java API for RESTful Web Services over the HTTP protocol.\footnote{\url{http://resteasy.jboss.org/}}
+\end{displayquote}
+
+\noindent
+The JAX-RS 2.0\footnote{\url{https://jax-rs-spec.java.net/}} standard implemented by RESTeasy, provides a set of annotations which are used to create restful endpoints. These annotations should be placed above the methods which are the different endpoints.
+
+\bigskip\noindent
+Example:
+\begin{lstlisting}
+@GET
+@Path("/")
+@Produces("application/json")
+[...]
+public Collection<Sequence> getDepartmentSequences(@Context User user, @QueryParam("title") String title)
+    throws NoContentException
+{
+    [...]
+}
+\end{lstlisting}
+
+\subsection{Annotations}
+
+\subsubsection{HTTP Request Type}
+The first annotation describes the HTTP request used to access the method, and we use one of the following
+\begin{itemize}
+    \item \texttt{@GET}
+    \item \texttt{@POST}
+    \item \texttt{@PUT}
+    \item \texttt{@DELETE}
+\end{itemize}
+
+\subsubsection{Path}
+The \texttt{@Path} annotation defines the URL to access the method on. E.g. \texttt{@Path("/department")} will point to \texttt{http://\{giraf-something\}/department}.
+The path is appended when a service returns another service, see sequence service in the DepartmentService file for an example.
+Moreover parameters can be sent to a method using the path. This is done by writing \texttt{\{var\_name\}}within the path and then \texttt{@PathParam("var\_name") Type name} in the argument list for the method.
+
+\newpage
+\noindent
+Example:
+\begin{lstlisting}
+[...]
+@Path("/sequence/{id}")
+[...]
+public Sequence getSequence([...], @PathParam("id") long id) {
+    [...]
+}
+\end{lstlisting}
+
+\subsubsection{Query Params}
+In an URL the stuff after the \texttt{?} is key-value pairs of parameters.
+
+E.g. \texttt{http://\{giraf-something\}/department/2/sequence?title=something}, here \texttt{title} is \textit{something}.
+These parameters can be retrieved with an annotation similar to the \texttt{@PathParam}annotation.
+In the methods arguments, you must write \texttt{@QueryParam("var\_name") Type name}.
+
+
+\subsubsection{Produce / Consume}
+Normally a method in any service in the GIRAF REST API will produce and consume JSON data. This is denoted by using \texttt{@Produces("application/json")} and \texttt{@Consumes("application/json")} annotations above a method.
+However some methods such as the ones used to delete objects, should not produce or consume JSON, but just use \texttt{Response} as the return type.
