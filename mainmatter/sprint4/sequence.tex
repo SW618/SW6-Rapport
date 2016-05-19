@@ -1,1 +1,92 @@
-\section{Sequence Endpoint}
+\section{Sequence Endpoint --- Service Layer}
+This section will describe the continued work on the Sequence Endpoint, more specifically the service layer, which exposes the sequence endpoint to the outside world.
+It deals with the same user story as the \myref[name]{sec:sequence_endpoint_sprint3}, which is:
+\begin{center}
+\userstory{As a developer I would like an endpoint for Sequences, such that I can retrieve them from the GIRAF REST API.}
+\end{center}
+
+\bigskip
+This service layer uses RESTeasy, like the Pictogram service, described in \myref[name]{ssec:pictogram_service}.
+To access any sequence service, a user must go through the department service, hence all services are located at \texttt{/department/\{id\}/sequence}.
+The following table (\myref{tbl:sequence_eps}) shows how and where the sequence endpoint can be accessed.
+
+\begin{table}[]
+\footnotesize
+\centering
+\begin{tabular}{rll}
+HTTP Request    & Path          & Method Name                   \\
+\midrule
+GET             &/              & \texttt{getDepartmentSequences}     \\
+&\multicolumn{2}{l}{Optional query param: \texttt{title}}\\
+GET             &/\{pid\}       & \texttt{getSequence}         \\
+\tblgrpsep
+POST            &/              & \texttt{createSequence}      \\
+\tblgrpsep
+PUT             &/\{pid\}       & \texttt{updateSequence}      \\
+\tblgrpsep
+DELETE          &/\{pid\}	    & \texttt{deleteSequence}	    \\
+\end{tabular}
+\caption{List of Sequence endpoints, they all exist at \texttt{/department/\{id\}/sequence}.}\label{tbl:sequence_eps}
+\end{table}
+
+\subsection{Searching For a Sequence}
+By providing the optional query parameter \texttt{title}, the sequences returned can be filtered by title.
+The URL used to make such a request will then be: \texttt{/department/\{id\}/sequence?title=\{query\}}.
+In \myref{lst:seq_serviceget} the method used for this search is shown.
+On line~\ref{lst:seq_methodheader} the query parameter by the name of \texttt{title} can be seen.
+The RESTeasy annotation \texttt{@QueryParam("title")} is used, which enables the query parameter to be extracted from the request URL and used by the method.
+In the method body it is first checked if the user making the request is of the given department, and after that on line~\ref{lst:seq_searchif}, it is checked whether or not the optional query parameter was given.
+Moreover it is checked if the parameter is not a string containing zero characters, since a search for such a title would be meaning less.
+If the \texttt{title} parameter is usable a collection of sequences matching the search query is returned using the sequence DAO.
+The method used for this return can be seen in \myref{lst:seqdao_search}.
+However if no query parameter or the empty string was given, all sequence available for the department are returned --- again using the sequence DAO.  
+
+\begin{lstlisting}[float, floatplacement=h, caption={The method which returns a list of sequences; and it can be filtered using a query parameter.}, label={lst:seq_serviceget}]
+@GET
+@Path("/")
+@Produces("application/json")
+@RolesAllowed(PermissionType.Constants.USER)
+public Collection<Sequence> getDepartmentSequences(@Context User user, @QueryParam("title") String title)(*@\label{lst:seq_methodheader}@*)
+    throws NoContentException
+{
+    if (!(user.getDepartment().equals(department)))
+        throw new NotFoundException("User is not allowed in the Department");
+    if (title != null && title.length() > 0)(*@\label{lst:seq_searchif}@*)
+        return sequenceDao.searchByUserAndTitle(user, title);(*@\label{lst:seq_searchdao}@*)
+    return sequenceDao.byDepartment(department);
+}	
+\end{lstlisting}
+
+\subsection{Updating a Sequence}
+When updating a sequence using the PUT request.
+The body of the request must contain a JSON object which describes the updates that should be made.
+Such a JSON object could look as follows:
+
+\begin{lstlisting}[language=json]
+{
+	"title" : "New Title",
+	"thumbnailId" : 2,
+	"elementIds" : [ 4, 6, 3, 4 ]
+}
+\end{lstlisting}
+
+Sending the above JSON object using a PUT request to \texttt{/department/4/sequence/9}, will update the title, thumbnail pictogram, and elements of the sequence with the id 9.
+Any property relevant for a sequence is optional in the JSON object, and the order is irrelevant.
+As only the properties in the JSON data will affect the update on the sequence.
+Updating all properties would require a JSON object like the following:
+
+\begin{lstlisting}[language=json]
+{
+	"title" : "New Title",
+	"ownerId" : 55,
+	"accessLevel" : "PRIVATE",
+	"thumbnailId" : 2,
+	"elementIds" : [ 4, 6, 3, 4 ]
+}
+\end{lstlisting}
+
+If the goal of the update is to remove all elements from the sequence, the property called \texttt{elementIds} must be an empty array, i.e. \texttt{"elementIds" : []}.
+
+\bigskip
+The user story related to the Sequence Endpoint is hereby completed.\todo{this feels weird, what should I write instead}
+
