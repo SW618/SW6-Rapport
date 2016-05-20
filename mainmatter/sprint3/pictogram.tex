@@ -253,8 +253,20 @@ DELETE          &/\{pid\}	    & \texttt{deletePictogram}	    \\
 The services use the DAOs created in the persistence layer of the REST API.
 The queries created in the DAO retrieve the objects that the request wants to either GET, PUT, or DELETE, otherwise for a POST request a builder for \texttt{Pictogram} will build the \texttt{Pictogram} from the JSON data, and the method that handles the request will then save this in the database.
 
+We will go through how each type of request works here.
+
+\subsubsection*{POST--requests}
+There is only one time in which it is needed to create data in association with pictograms, this is naturally when creating them.
+Therefore there is only one POST method in the part of the REST API.
+To implement this we make a builder to create the \texttt{Pictogram}-object.
+The builder--class \texttt{PictogramBuilder} contains the information which is required to construct a \texttt{Pictogram}.
+However it takes the information which the client would send i.e. the ids of the users which are supposed to be attached to it, and not the \texttt{User}-objects as JSON.
+An integral part of a \texttt{Pictogram} is the \texttt{PictogramImage}s, but this has to be attached with a PUT--request, as the \texttt{PictogramImage} is uploaded in its own request. 
+
+\subsubsection*{GET--requests}
+
 \myref{lst:getallPictograms} shows the method which handles a GET request on the root path which is seen from the annotations \texttt{@GET} and \texttt{@Path("/")}.
-Since a \texttt{PictogramService} is only created through the \texttt{DepartmentService} on the path \texttt{"/pictogram"} the full path to activate this method is \texttt{"department/\{id\}/pictogram/"}.
+Since a \texttt{PictogramService} is only created through the \texttt{DepartmentService} on the path \texttt{"/pictogram"} the full path to activate this method is \\ \texttt{"department/\{id\}/pictogram/"}.
 The annotation on line 8 simply states which representation a resource can produce in this case it means that this method can produce JSON as output.
 The last annotation on line 9 \texttt{RolesAllowed({PermissionType.Constants.USER})}, specifies which roles may access this method, and \texttt{USER} is the most general one, which means every type of user in the model may access this method.
 
@@ -283,5 +295,17 @@ If this check passes the next if--check on line 13 checks whether the user is in
 A \texttt{SuperUser} is a user with permissions to do administrative tasks such as create public pictograms.
 
 If both if--checks fail, the method returns what the \texttt{PictogramDao.getAll(user)} method retrieves, which will be all pictograms the user is allowed to see.
+Developing this also required us to go back to the model and use the annotations \texttt{@JsonProperty} and \texttt{@JsonIgnore} which are provided by Jackson.
+We need to \texttt{@JsonIgnore} some information to avoid circular references, since this will lead to infinite recursion when trying to serialize the objects.
+An example of this is the relation between \texttt{Department} and \texttt{Pictogram}, since they both contain a reference to each-other, requesting one week schedule would yield it and its department, this is turn would yield all that departments week schedules and so on.
+
+\subsubsection*{PUT--requests}
+A PUT is used to update existing data, and for \texttt{Pictogram} we also need to add the \texttt{PictogramImage} in a PUT--request after it has been posted.
+We create a merge method which simply takes the input retrieved from JSON and swaps the information, such that the new information is set to the data objects in the database.
+
+\subsubsection*{DELETE-requests}
+A DELETE-request for \texttt{Pictogram} is simple, it finds the \texttt{Pictogram} using the \texttt{PictogramDaoImpl} which also finds the corresponding \texttt{PictogramImage}.
+First the \texttt{PictogramImage} is deleted, followed by deleteing the \texttt{Pictogram}, this deletion cascades throughout the entire database, and any entity using the \texttt{Pictogram} in some way will be updated, such that it knows the \texttt{Pictogram} no longer exists.
+
 
 This concludes the \texttt{Pictogram} endpoint showcase; the next section will cover how the REST API for \texttt{Sequence} was progressed for this sprint, it will skip details already covered in this section about the \texttt{Pictogram} endpoint.

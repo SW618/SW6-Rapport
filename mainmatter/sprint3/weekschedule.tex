@@ -195,7 +195,7 @@ In \myref{tbl:WeekdayFrame} we will briefly give an overview of the fields of th
     It should also be noted that for a given user in a given week schedule no two \texttt{WeekdayFrame}s should be \texttt{Active} at the same time. 
 \end{description}
 
-\subsection{Persistence}
+\subsection{Persistence}\label{subsec:weekschedulepersistence}
 As mentioned in \myref{sec:generalEP} the persistence layer contains the DAOs, SQL migrations and unit-tests.%*Salute* General EndPoint!
 A \texttt{Department} has a list of \texttt{WeekSchedules}, as does a \texttt{User}, therefore the DAO needs no methods to retrieve by \texttt{User} or by \texttt{Department} which reduces the number of methods to a total of two methods for the entire Week Schedule model, both methods are used to retrieve \texttt{WeekSchedule}s.
 There are no methods for retrieving \texttt{WeekdayFrame}, \texttt{WeekdayFrameProgress} nor \texttt{Weekday}.
