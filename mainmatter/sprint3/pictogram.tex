@@ -11,9 +11,9 @@ The model that was described in \myref{subsec:model} was the complete model of t
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.5\textwidth]{figures/diagram-pictogram.png}
+    \includegraphics[width=0.5\textwidth]{figures/pictogrammodel.pdf}
     \caption{Class--diagram including fields of the classes involved in Pictograms}\label{fig:pictogramModel}
-\end{figure}\todo{Update accordingly in the end}
+\end{figure}
 
 \todo{Table or description? --- I will make consistent when we decide}
 Here a brief description of the purpose for each field of the classes on the figure will be given.
@@ -22,7 +22,7 @@ Here a brief description of the purpose for each field of the classes on the fig
 		\item[id] This is the id of the Frame which is saved in the database.
 		\item[lastEditAt] This is a time stamp of when the Frame was last edited --- auto updated by Hibernate when changes on the object is persisted in the database.
 		It is to be used for conflict handling as e.g. pictograms can be altered in the PictoCreator tool, and a need for conflict handling is therefore needed.
-		\item[partofSequences] This is a collection of sequences this frame is used in; why this collection is needed will be further explained in \todo[inline]{sequenceendpointref}
+		\item[partofSequences] This is a collection of sequences this frame is used in; why this collection is needed will be further explained in \myref{sec:sequence}.
 	\end{description}
 
 \subsubsection*{PictoFrame}
@@ -60,11 +60,11 @@ It contains the following fields:
 
 The section above explains what is modelled with the Java classes; the following section will present how this information is stored in the database using the tools mentioned in \myref{sec:techstack}.
 
-\subsection{Persistence --- Storing the Model in the Database}
+\subsection{Persistence --- Storing the Model in the Database}\label{subsec:pictomodelstore}
 
 As mentioned previously we use an \textbf{ORM} (object--relational mapping) tool to map the models to the database, this section describes how this specifically is done.
 
-\begin{lstlisting}[float, floatplacement=h, caption={Fields with annotations which causes Hibernate to perform the ORM for a \texttt{PictogramImage}.},label={lst:PictoImage}]
+\begin{lstlisting}[ caption={Fields with annotations which causes Hibernate to perform the ORM for a \texttt{PictogramImage}.},label={lst:PictoImage}]
 @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
 private PictogramImage pictogramImage;
 \end{lstlisting}
@@ -126,7 +126,7 @@ public class PictogramDaoImpl extends BaseDaoImpl<Pictogram> implements Pictogra
 It has the annotation \texttt{@Transactional} which is a Spring annotation all DAOs in the REST API use.
 It allows Spring to inject behaviours around method calls like transaction management.
 The \texttt{@Reposity} annotation is also a Spring annotation used for all DAOs in the REST API, which tells spring that the class is used for encapsulating storage, retrieval and search behaviour for a collection of objects.
-The last annotation \texttt{@Primary} is also a Spring annotation used by all DAOs in the REST API, and is used to tell Spring that the Java Bean \todo{Det har vi vel ikke nævnt?} containing this class should be given preference when multiple beans are candidates to be autowired.
+The last annotation \texttt{@Primary} is also a Spring annotation used by all DAOs in the REST API, and is used to tell Spring that the Java Bean containing this class should be given preference when multiple beans are candidates to be autowired.
 Autowire means that you do not have to specify the bean's properties or constructor arguments explicitly.
 This is used in the Service layer where the proper DAOs are retrieved as Beans and the auto wiring makes this easier.
 
@@ -202,7 +202,7 @@ public T add(Readable file) throws IOException {
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=\textwidth]{figures/diagram-factory.png}
+    \includegraphics[width=\textwidth]{figures/factorymodel.pdf}
     \caption{The abstract factory pattern in the REST API for \texttt{PersistentFileHandle}.}\label{fig:asbtractFactory}
 \end{figure}
 
@@ -223,7 +223,7 @@ Using this pattern the factory, whatever type it may be, has a create method whi
 The factory variable will either be a \texttt{UserIconFactory} or a \texttt{PictogramImageFactory}, where the create methods both create their corresponding class with the path set to the string that is sent as input.
 In this way the pattern of storing files and the paths to the files is generalised, and can work for virtually any other type of file, as long as they implement a factory which inherit from the abstract factory, and a class which inherits from the abstract class \texttt{PersistFileHandle}.
 
-\subsection{The Service Layer for the Pictogram}
+\subsection{The Service Layer for the Pictogram}\label{ssec:pictogram_service}
 This section describes the service layer of the Pictogram endpoint.
 The tool RESTEasy makes it simple to create HTTP Request methods using its annotations such as \texttt{@GET} or \texttt{@PUT}.
 \myref{tbl:pictogramservice} shows a list of all the services provided by the pictogram REST API.

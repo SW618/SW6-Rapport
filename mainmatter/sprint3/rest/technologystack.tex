@@ -13,7 +13,7 @@ Below, we briefly introduce the technologies and tools used to develop and run t
     \item[Hibernate] \hfill \\
         Hibernate\footnote{\url{http://hibernate.org/}} is a framework for object-relational mapping (ORM) which allows us to utilise high level objects while also storing them in a relational database.
         It is used in the core and persistence layer of the REST API.
-        We use Java annotations to configure this mapping on a, per variable, and class base, this will be showcased with examples when they are used in e.g. \todo{ref til pictogram}.
+        We use Java annotations to configure this mapping on a, per variable, and class base, this will be showcased with examples when they are used in e.g. \myref[name]{sec:pictogramendpoint}.
         Hibernate can also create the database tables for you, but we choose not to do this so we have more control over the database, aswell as making it easier to map the old data to the new database.
 
     \item[Jackson] \hfill \\
@@ -23,12 +23,13 @@ Below, we briefly introduce the technologies and tools used to develop and run t
     \item[Spring] \hfill \\
         Spring\footnote{\url{https://spring.io/}} is a framework for dependency injection.
         This allows us to decouple the configurations of e.g. the database connection or the filestore path, from the logic of the programs.
-        Spring is a large framework and for this project we use the following spring frameworks: Core, Test, and ORM.
+        Spring is a large framework and for this project we use the following spring frameworks: Core, Test, ORM and WEBMVC.
+        Spring uses the serialisable Java class \texttt{bean}, which are classes that encapsulate many objects into a single object.
 
     \item[RESTEasy] \hfill \\
         RESTEasy\footnote{\url{http://resteasy.jboss.org/}} is JBoss' (which also makes Wildfly) implementation of the JAX-RS 2.0 standard, which is a Java API used to make RESTful Web Services.
         RESTEasy implements annotations for methods, which gives meaning to the methods in the service layer, according to the JAX.RS 2.0 standard.
-        Examples of these are: \texttt{@GET}, \texttt{@POST} and \texttt{@Produces}, these will be further explained when we use them in \todo[inline]{ref til pictogram her.}
+        Examples of these are: \texttt{@GET}, \texttt{@POST} and \texttt{@Produces}, these will be further explained when we use them in \myref{sec:pictogramendpoint}.
     
     \item[JUnit] \hfill \\
         In order to verify the correctness of the code we use unit tests.
@@ -68,5 +69,4 @@ Below, we briefly introduce the technologies and tools used to develop and run t
     \item[FlyWay] \hfill \\
         FlyWay\footnote{\url{https://flywaydb.org/}} is used to automatically apply the database migrations, both the schemas and the data, on start-up, both on the H2 database during development and on the production server.
         As we develop incrementally, this allows us to add migrations incrementally as well which makes sure no old data will be lost when new features are developed.
-        An example of this will be given in \todo{ref til sequence hvor vi gør det.}
 \end{description}

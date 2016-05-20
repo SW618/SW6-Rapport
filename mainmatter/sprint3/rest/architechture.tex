@@ -20,14 +20,14 @@ The names are based on RESTEasy's example on a REST API structure using RESTEasy
 
     \item[Service] \hfill \\
     The service layer contains the code which is executed by clients, by using the HTTP requests GET, POST, PUT, and DELETE.
-    Here we implement the endpoints which the clients can connect to; we use the DAOs in the persistence layer to access and manipulate data if the clients are allowed to do so. 
+    Here we implement the endpoints which the clients can connect to; we use the DAOs in the persistence layer to access and manipulate data if the clients are allowed to do so.
     A method handling the requests will ensure that the requests conforms to the standards set by the model.
 \end{description}
 
 \begin{figure}[h]
     \centering
     \input{figures/tikz/architecture_diagram.tex}
-    \caption{The environment and architecture of the REST API.}\label{fig:rest-architecture}
+    \caption{The environment and architecture of the REST API. \textit{S.A.} is short for \textit{Sync Adapter}.}\label{fig:rest-architecture}
 \end{figure}
 
 \subsection{Testing}
