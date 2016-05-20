@@ -35,8 +35,6 @@ Either the data retrieved and sent to the REST API must enter a translation proc
 The reason for the difference is both that we were dissatisfied with the degraded model used by the app and thus decided to improve the model to retain a high code quality in the REST API.
 As for choosing between one or the other, refactoring may take longer and be the best long term solution, while a translation module may be a faster solution, but worse in the long term and make it harder for future developers to use.
 
-Aside from this, client-side must also consider version control, particular in regards to offline mode and here implement either the solution that we decided would be best in \myref{ssec:policy}, or decide upon another way of handling this issue, either way it must be handled with the use of the REST-API.
-
 \subsection{Web Administration}
 Once a working REST API has been established, web administration should be implemented concurrently with the client-side implementations.
 In its current state the only way to add users, departments or any other administrative information is by database access, this should be changed such that the department can add new citizens or guardians when needed.
