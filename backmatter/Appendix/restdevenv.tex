@@ -60,7 +60,7 @@ is fine).
 \end{itemize}
 
 \begin{itemize}
-    \item Open Intellij again if you closed it. 
+    \item Open Intellij again if you closed it.
     \item Open the build configuration menu by pressing the dropdown in the upper right corner and pressing ``Edit Configuration''.
     \item Press the plus sign to add a new configuration.
     \item Select ``JBoss'' -> ``Local'' (Might have to press show 33 more item in order for it to show, look at the bottom of the dropdown).
@@ -84,4 +84,20 @@ successfully''.
     \item Otherwise there should be an error in the Output view for you to debug.
 \end{itemize}
 
+\subsection*{Checkstyle}
+Optionally you can use the CheckStyle-IDEA plugin to check linting in real-time.
+\begin{itemize}
+    \item Go to ``File -> settings'', then ``Plugins'' then ``Browse repositories''
+    \item Search for ``CheckStyle-IDEA'' and press install.
+    \item Press close, then ok.
+    \item Restart Intellij
+    \item Go to ``File -> settings''
+    \item Then ``Other Settings -> Checkstyle''
+    \item Under ``Configuration File'' press the plus icon.
+    \item Find the ``checkstyle.xml'' file in the root of the Git repository.
+    \item Be sure to mark it as ``Active''
+    \item Press Ok
+\end{itemize}
+
+\bigskip
 Enjoy.
