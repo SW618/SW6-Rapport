@@ -223,7 +223,7 @@ Using this pattern the factory, whatever type it may be, has a create method whi
 The factory variable will either be a \texttt{UserIconFactory} or a \texttt{PictogramImageFactory}, where the create methods both create their corresponding class with the path set to the string that is sent as input.
 In this way the pattern of storing files and the paths to the files is generalised, and can work for virtually any other type of file, as long as they implement a factory which inherit from the abstract factory, and a class which inherits from the abstract class \texttt{PersistFileHandle}.
 
-\subsection{The Service Layer for the Pictogram}
+\subsection{The Service Layer for the Pictogram}\label{ssec:pictogram_service}
 This section describes the service layer of the Pictogram endpoint.
 The tool RESTEasy makes it simple to create HTTP Request methods using its annotations such as \texttt{@GET} or \texttt{@PUT}.
 \myref{tbl:pictogramservice} shows a list of all the services provided by the pictogram REST API.
