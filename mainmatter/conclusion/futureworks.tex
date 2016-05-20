@@ -13,14 +13,14 @@ This section discuss the different features that still need to be implemented or
 \subsection*{REST API}
 Once the REST API is implemented in GIRAF, then synchronisation will be possible.
 This is something that we believe is mandatory before GIRAF could ever be proclaimed as even close to finished.
-Despite being discouraged by the previous developers telling us to ignore synchronisation as it would not be reachable within one semester, we believe it to detrimental to the quality and usability of GIRAF and as such the REST API should be the primary goal for the following semester.
-It is worth noting here that simply because we find this to be the most important other things should not be neglected, a lot of the REST API is internally blocking and requires plenty of collaborative work between groups, as such putting too many developers may slow down the development.
+Despite being discouraged by the previous developers telling us to ignore synchronisation as it would not be reachable within one semester, we believe it detrimental to the quality and usability of GIRAF and as such the implementation and use of the REST API should be the primary goal for the following semester.
+It is worth noting here that simply because we find this to be the most important other things should not be neglected, a lot of the REST API is internally blocking and requires plenty of collaborative work between groups, as such putting too many developers on this task may slow down the overall possible development.
 
 The areas that yet need to be worked on for the REST API are login, endpoints, client--side implementations and web administration.
-Our group has not been involved in developing the new login system and thus we will not discuss that further, web administration is yet untouched so for that we will simply explain why it is needed and how it relates to REST.
+Our group has not been involved in developing the new login system and thus we will not discuss that further, web administration is yet untouched so for that we will simply explain why it is needed and how it relates to the REST API.
 
 \subsubsection*{Endpoints}
-While a number of endpoints and their models have been finished this year, yet more remain before the current applications can rely solely on the REST API for data.
+While a number of endpoints and their corresponding models have been finished this year, more remain before the current applications can rely solely on the REST API for data.
 Currently endpoints exist for users, departments, the derivatives of frames and week schedules.
 This however is not enough as still more data exists for other applications in GIRAF, namely maps and game settings for both Voicegame and Categorygame, as well as categories themselves.
 Further than that administrative data such as user settings is also not yet available through the REST API.
@@ -28,18 +28,18 @@ All of these must be constructed before GIRAF can fully migrate to use the REST 
 
 Of the endpoints that we have been developing a few services have yet to be constructed.
 For Week Schedule the services to delete a Week Schedule and to put user progress are not available.
-We made a branch in the Git repository for the next to continue working in.
+We made a branch in the Git repository for the next years students to continue working in.
+The conflict handling also still need to fine tuned such that less conflicted copies will be created.
 Furthermore there is no service available that enables searches for pictograms, in a more complete way than: ``\% LIKE \%'' in SQL, and there is no ranking amongst the result.
-Both of these should be finished as well as these are services that will be used by the client.
 
 \subsubsection*{Client--Side Implementation}
 Once all the endpoints are completed, or before that even, client--side implementations must be made in order to actually utilise the REST API.
 In general one primary concern remains here which for us have not yet been discussed as it has not been important.
 Either some module that translates data must be developed, or the apps must be refactored as to use the same models as the REST API.
 An example here would be the Week Schedule model and endpoint that we have developed.
-Our model uses a class Week Schedule with and enummap to map days, where the app currently uses nested sequences.
+Our model uses a class \texttt{WeekSchedule} with an \texttt{enummap} to map \texttt{Weekdays}, where the app currently uses nested sequences instead.
 Either the data retrieved and sent to the REST API must enter a translation process or the app should undergo a refactoring process as to use something that more closely resembles the model used by the REST API.
-The reason for the difference is both that we were dissatisfied with the degraded model used by the app and thus decided to improve the model to retain a high code quality in the REST API.
+The reason for the difference is that we were dissatisfied with the degraded model used by the app, and thus decided to improve the model to retain a high code quality in the REST API.
 As for choosing between one or the other, refactoring may take longer and be the best long term solution, while a translation module may be a faster solution, but worse in the long term and make it harder for future developers to use.
 
 Aside from this, client--side must also consider version control, particular in regards to offline mode and here implement either the solution that we decided would be best in \myref{ssec:policy}, or decide upon another way of handling this issue, either way it must be handled with the use of the REST-API.
@@ -47,48 +47,84 @@ Aside from this, client--side must also consider version control, particular in 
 \subsubsection*{Web Administration}
 Once a working REST API has been established, web administration should be implemented concurrently with the client--side implementations.
 In its current state the only way to add users, departments or any other administrative information is by database access, this should be changed such that the department can add new citizens or guardians when needed.
-The reason we believe that a web tool would be the way to solve this is because the customers has asked for this to be available on their computers, and having it as a web application would made it a simple task to adjust the web application to support tablets should they at a later point want access from the tablets.
+The reason we believe that a web tool would be the way to solve this, is because the customers has asked for this to be available on their computers, and having it as a web application would made it a simple task to adjust the web application to support tablets should they at a later point want access from the tablets.
 
 \subsection*{Week Schedule}
 Significant progress on Week Schedule have been made during this year, plenty of features to improve quality of life when using the application have been developed, yet it still needs to implement the REST API.
 As such the goal for Week Schedule in the coming year should be to start using the REST API.
 This also means that perhaps more services for the Week Schedule must be created in the case where the current services prove insufficient.
 As for starting to use the REST API we would suggest a significant refactoring of Week Schedule such that the model more closely resembles that of the REST API, rather than creating a module that translates data as best as it can.
-This opinion is based on our experience with Week Schedule from which it is very clear that the model was not entirely thought through when it originally was established, and has since then just had components added as separate developers sought fit.
+This opinion is based on our experience with Week Schedule from which it is very clear that the model was not entirely thought through when it was originally established, and has since then just had components added as separate developers sought fit.
 
-Refactoring this would create a significantly better overview of the model, and make it far easier to make small adjustments when Week Schedule enters a tryout phase, which is what we believe should be prioritised after REST API implementation.
+Refactoring this would create a significantly better overview of the model, and make it far easier to make small adjustments when Week Schedule enters a try--out phase, which is what we believe should be prioritised after REST API implementation.
 With the REST API an opportunity to fix some of the issues that currently exist also presents itself, in particular this relates the progress.
-When we inherited GIRAF, progress was saved to a local file on the tablet, not even to the local database, furthermore the states a frames could be is presented as booleans whereas an enum would make more sense, e.g. a frame could be canceled and finished at the same time.
+When we inherited GIRAF, progress was saved to a local file on the tablet, not even to the local database, furthermore the states a frames can be in is presented as booleans whereas an enum would make more sense, e.g. a frame could be cancelled and finished at the same time.
 These choices are a result of continuously making quick fixes each semester and have resulted in the whole progress feature not fully working and having odd interactions causing bugs that have not been fixed.
 Refactoring the progress system alongside implementing the REST API may solve issues that are caused as a result of degraded code.
 
 \subsection*{Launcher}
-While our involvement on the launcher was primarily in regards to offline mode, most offline mode changes that must occur the following semester should be implementing the offline policy we established in each app when the REST API is used.
-For version control policy in with the REST API however, the REST API handles the version control.
-Beyond maintaining ensuring offline availability security and login should be the primary aspects considered for the launcher.
-Security refers both to access levels of data, how long data is stored as well as the encryption of data.
-The login part is closely connected with the aforementioned login part of REST which we have not been a part of and thus our knowledge of is limited.
+While our involvement on the Launcher was primarily in regards to offline mode, most offline mode changes that must occur the following semester should be implementing the offline policy we established in each app when the REST API is used.
+For version control policy when using the REST API in the apps, the REST API should handle the version control instead of the apps.
+Beyond maintaining offline availability, security and login should be the primary aspects considered for the Launcher.
+Security refers not only to access levels of data, but also how long data is stored as well as the encryption of data.
+The login part is closely connected with the aforementioned login part of the REST API, which we have not been a part of and thus our knowledge of it is limited.
 
 \subsection*{PictoSearch}
 For PictoSearch the immediate work to be done is less reliant on the REST API than most of the other areas we have been included in, although REST API will still affect it slightly.
-The goals for PictoSearch was to make it more responsive and faster, while making it more responsive and changing how to initialise the search creates the experience that it is faster, it still remains as slow as before.
+The goals for PictoSearch was to make it more responsive and faster, while making it more responsive and changing how to initialise the search creates the experience that it is faster, it still searches as slow as before.
 For this reason in regards to the PictoSearch app one should look at perhaps improving the search algorithm.
 Beyond improving the search algorithm a variety of other improvements come to mind.
 Through either lazy loading or pagination the search experience could also be improved, this however leads us to a second problem that should be fixed in regards to the search.
-The results of a search are ordered by their internal ID, when in reality it should be ordered by how closely it resembles my search string, e.g. if i search for apple, i would prefer apple to be the first shown pictograms, not pineapple or apple juice.
+The results of a search are ordered by their internal ID, when in reality it should be ordered by how closely it resembles the search string, e.g. a search for apple, should have apple to be the first shown pictogram, not pineapple or apple juice.
 Here one could also return frequently used pictograms first etc.
-Further improvements involve adding categories and sequences to the search results, in the case of sequence this could benefit from implementing the REST API and making adjustments for the REST API model, as a sequence and pictograms inherits from the same super class.
-Lastly if categories and sequences were to be added to the search, perhaps search settings such that one could filter the search may be worth implementing with it.
+Further improvements involve adding categories and sequences to the search results, in the case of sequences this could benefit from implementing the REST API and making adjustments for the REST API model, as the model in the REST API have \texttt{Sequence} and \texttt{pictogram} inherit from the same super class.
+Lastly if categories and sequences were to be added to the search, perhaps some sort of search settings could be added as well such that one could filter the search.
 
 \section{Development Process Suggestions}
 This section presents our suggestions for the development process for students working on GIRAF.
 
-\todo[inline]{Pair pwogwammin}
-\todo[inline]{Code-review}
-\todo[inline]{Phabby}
-\todo[inline]{Keep up with report, not just help eachother with development, but make sure everyone is able to keep up in both development and in the report.}
-\todo[inline]{Evaluer mere, måske intern evaluering af hinandens features, få mere omstændig feedback fra kunderne}
+\begin{description}
+	\item[Pair Programming] We advice that the next year's students will use pair programming especially in the start of the project.
+	There are many different elements to keep track of when starting to use and develop further on a code-base, especially one as GIRAF where a good structure might be missing in some places.
+	As mentioned before, we gained alot from pair programming especially bringing everyone up to speed, and ensuring that everyone in the group was able to develop further on the project.
 
-\subsection{scrum}
-\todo[inline]{Scrumboards}
-\todo[inline]{PO is important jawb, make sure the ones who do it are dedicated and resourceful}
+	\item[Code--Review] Although we had some bad experiences with Code--review, we still see the potential in having them for design purposes.
+	We advice that the next year's students will continue having Code--reviews, but instead of having them very loose, set--up a guideline for how to do a proper code--review.
+	A guide should entail, what to look for in a code-review, how to give feedback, and what things are not necessarily \textit{comment-worthy}.
+
+	\item[Phabricator] We strongly advice that they continue to use the tool Phabricator, to have a product backlog, aswell as a good tool for code-review, and creating an overview of everyone's progress.
+	Phabricator has proves to be a useful tool for us and it has many more features than what we have used throughout the semester, perhaps there exists more features could help the project.
+
+	\item[Progress Tracking] We faced problems ourselves falling behind on the report in sprint 3, as we used all of our time programming the REST API.
+	Other groups were even further behind than us, and we therefore suggest that more focus for the multi-project is put on the report.
+	If a group is behind on the report they should let the project know such that they can have less user stories for their sprint, and perhaps take more user stories later in the sprint if they suddenly catch up.
+
+	\item[More Evaluation] The project have had some evaluation throughout its lifetime from the customer's, but this year at least, PO did not give very good feedback to the rest of the multi-project from the customers.
+	We would have appreciated more feedback on the user stories we have done which dealt with application.
+	Therefore we advice that internal evaluation could be used.
+	This could be included in the code--review where an evaluation plan should be given to the code--reviewer, and when the reviewer tests the application the person who implemented the feature would sit with them and talk about the feature to get feedback outside of the group.
+	We do not think this would take much time away from development, and fresh eyes on a problem or feature could only be beneficial.
+
+	\item[Focussed Projects] We decided to all be very mixed in what we worked on this semester, where they last year had a very designated field of work.
+	This was great in the fact that we all know much about the different parts of GIRAF, but it sadly affects the project reports written to lack a sort of structure, which we felt that ours did until we partook in the REST API.
+	We advice that every group gets a focus area of GIRAF rather than only of the project, like being in charge of everyone writing proper documentation, or in charge of social events of which we have had none.
+	If every group chose an application they would focus on a more traditional style project could be achieved where more in depth problem analysis could be given.
+\end{description}
+
+We also advice that the project continue to use scrum, which is covered in the following section.
+
+\subsection{Scrum}
+Scrum has worked great for this project to keep track of how every group was doing and also internally in our own group as the retrospective of sprint 3, and 4 have indicated.
+Therefore we greatly advice that next year's students will use scrum for their project in a way that fits them, not just for the multi-project but also for their internal project structure.
+This section will briefly cover the points we thought to be most important for Scrum to succeed for this project.
+
+\begin{description}
+	\item[Product Owner] The Product Owners have had internal problems this semester which sadly shined through in some aspects.
+	The user stories were badly written, and the communication from the customers to the multi-project were somewhat lacking.
+	Therefore we advice that the product owner should be a group which is known to be a resourceful group, and a group which thinks that the task of being product owner is interesting, such that they will put in the required effort.
+	\todo[inline]{er det for meget ? }
+
+	\item[Scrumboard] We internally gained much from using the scrumboard, as it gave us an overview of where our user stories currently stand, and also sparks the conversation at the daily scrum meeting.
+
+	\item[The Scrum Guide] The current Scrum masters did a good job of facilitating the scrum meetings, and have also written a scrum guide for next years students which we would recommend for them to follow for their project structure.
+\end{description}
