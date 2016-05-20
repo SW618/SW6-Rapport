@@ -47,8 +47,13 @@ Significant progress on Week Schedule have been made during this year, plenty of
 As such the goal for Week Schedule in the coming year should be to start using the REST API.
 This also means that perhaps more services for the Week Schedule must be created in the case where the current services prove insufficient.
 As for starting to use the REST API a we would suggest a significant refactoring of Week Schedule such that the model more closely resembles that of the REST API, rather than creating a module that translates data as best as it can.
-This comes from our own experience with Week Schedule from which it is very clear that the model was not entirely thought through when it originally was established, and has since then just had components added as separate developers sought fit.
+This opinion is based on our experience with Week Schedule from which it is very clear that the model was not entirely thought through when it originally was established, and has since then just had components added as separate developers sought fit.
+
 Refactoring this would create a significantly better overview of the model, and make it far easier to make small adjustments when Week Schedule enters a tryout phase, which is what we believe should be prioritised after REST API implementation.
+With the REST API an opportunity to fix some of the issues that currently exist also presents itself, in particular this relates the progress.
+When we inherited GIRAF progress was saved to a local file on the tablet, not even to the local DB, furthermore the states a pictograms could be is presented as booleans whereas an enum would make more sense.
+These choices are a result of continuously making quick fixes each semester and have resulted in the whole progress feature not fully working and having odd interactions causing bugs that have not been fixed.
+Refactoring the progress system alongside implementing the REST API may solve issues that are caused as a result of degraded code.
 
 \section{Launcher}
 While our involvement on the launcher was primarily in regards to offline mode, most offline mode changes that must occur the following semester should be implementing the offline policy we established in each app when the REST API is used.
