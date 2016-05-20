@@ -1,10 +1,10 @@
 \chapter{Future Work on GIRAF}\label{chp:futureworks}
 In this chapter we present the immediate work that we believe would be most beneficial to continue development on GIRAF.
-This chapter will not be a complete list of all the work to be done, rather it will be contained to the areas of GIRAF where we have been involved in throughout the projects, this means we will discuss improvements in regards to Picto Search, the Week Schedule App, the GIRAF Launcher and of course the REST API.
+This chapter will not be a complete list of all the work to be done, rather it will be contained to the areas of GIRAF where we have been involved in throughout the projects, this means we will discuss improvements in regards to PictoSearch, the Week Schedule App, the GIRAF Launcher and of course the REST API.
 The REST API affects the future of most apps including the ones we already mentioned, as such we will start by explaining what is missing from the REST API as well as argue for why we believe that the REST API should be prioritised.
 
 This list is not solely compiled from our point of view, it is the result of a final meeting with representatives from each group at which we spoke of the degree to which we had achieved our goals as well as what we believed would be best for the development of GIRAF to continue with.
-%Limit this to what we have been involved in, goes beyond this chap
+%Limit this to what we have been involved in
 
 \section{REST API}
 With the REST API synchronisation will become a part of GIRAF.
@@ -20,6 +20,11 @@ Currently endpoints exist for users, departments, the derivatives of frames and 
 This however is not enough as still more data exists for other applications in GIRAF, namely maps and game settings for Voicegame and Categorygame, as well as categories themselves.
 Further than that administrative data such as user settings is also not yet available through the REST API.
 All of these must be constructed before GIRAF can fully migrate to use the REST API rather than the current database.
+
+Of the endpoints that we have been developing a few services have yet to be constructed.
+For Week Schedule the services to delete a Week Schedule and to put user progress are not available.
+Furthermore for pictograms there is no service available that enables search.
+Both of these should be finished as well as these are services that will be used by the client-side.
 \subsection{Client-Side Implementation}
 Once all the endpoints are completed, or before that even, client-side implementations must be made in order to actually utilise the REST API.
 In general one primary concern remains here which for us have not yet been discussed as it has not been important.
@@ -30,17 +35,37 @@ Either the data retrieved and sent to the REST API must enter a translation proc
 The reason for the difference is both that we were dissatisfied with the degraded model used by the app and thus decided to improve the model to retain a high code quality in the REST API.
 As for choosing between one or the other, refactoring may take longer and be the best long term solution, while a translation module may be a faster solution, but worse in the long term and make it harder for future developers to use.
 
-Aside from this, client-side must also consider version control, particular in regards to offline mode and here implement either the solution that we decided would be best in \myref{ssec:policy}, or decide upon another way of handling this issue, either way it must be handled with the use of the REST-API
-%Perhaps make dummies for the not yet developed endpoints in regards to apps so app developers can tell  endpoint developers what data they need. not an issue for us as we had been developing on the apps we did endpoints for.
+Aside from this, client-side must also consider version control, particular in regards to offline mode and here implement either the solution that we decided would be best in \myref{ssec:policy}, or decide upon another way of handling this issue, either way it must be handled with the use of the REST-API.
 
 \subsection{Web Administration}
+Once a working REST API has been established, web administration should be implemented concurrently with the client-side implementations.
+In its current state the only way to add users, departments or any other administrative information is by database access, this should be changed such that the department can add new citizens or guardians when needed.
+The reason we believe that a web tool would be the way to solve this is because the customers has asked for this to be available on their computers, and having it as a web application would made it a simple task to adjust the web application to support tablets should they at a later point want access from the tablets.
 
 \section{Week Schedule}
+Significant progress on Week Schedule have been made during this year, plenty of features to improve quality of life when using the application have been developed, yet it still needs to implement the REST API.
+As such the goal for Week Schedule in the coming year should be to start using the REST API.
+This also means that perhaps more services for the Week Schedule must be created in the case where the current services prove insufficient.
+As for starting to use the REST API a we would suggest a significant refactoring of Week Schedule such that the model more closely resembles that of the REST API, rather than creating a module that translates data as best as it can.
+This comes from our own experience with Week Schedule from which it is very clear that the model was not entirely thought through when it originally was established, and has since then just had components added as separate developers sought fit.
+Refactoring this would create a significantly better overview of the model, and make it far easier to make small adjustments when Week Schedule enters a tryout phase, which is what we believe should be prioritised after REST API implementation.
 
 \section{Launcher}
+While our involvement on the launcher was primarily in regards to offline mode, most offline mode changes that must occur the following semester should be implementing the offline policy we established in each app when the REST API is used.
+Alternatively a helper class could be created to handle the version control policy in the different apps for which it would be relevant.
+Beyond maintaining ensuring offline availability security and login should be the primary aspects considered for the launcher.
+Security refers both to access levels of data, how long data is stored as well as the encryption of data.
+The login part is closely connected with the aforementioned login part of REST which we have not been a part of and thus our knowledge of is limited.
 
-\section{Picto Search}
-
+\section{PictoSearch}
+For PictoSearch the immediate work to be done is less reliant on the REST API than most of the other areas we have been included in, although REST API will still affect it slightly.
+The goals for PictoSearch was to make it more responsive and faster, while making it more responsive and changing how to initialise the search creates the experience that it is faster, it still remains as slow as before.
+For this reason in regards to the PictoSearch app one should look at perhaps improving the search algorithm.
+Beyond improving the search algorithm a variety of other improvements come to mind.
+Through either lazy loading or paging the search could also be improved, this however leads us to a second problem that should be fixed in regards to the search.
+The results of a search is returned and ordered by ID, when in reality it should be ordered by how closely it resembles my search string, e.g. if i search for apple, i would prefer apple to be the first shown pictograms, not pineapple or apple juice.
+Further improvements involve adding categories and sequences to the search results, in the case of sequence this could benefit from implementing the REST API and making adjustments for the REST API model, as a sequence and pictograms inherits from the same super class.
+Lastly if categories and sequences were to be added to the search, perhaps search settings such that one could filter the search may be worth implementing with it.
 
 %PS
     %Search Improvemens
@@ -67,7 +92,6 @@ Aside from this, client-side must also consider version control, particular in r
         %VoiceGame
         %CategoryGame
             %Categories
-        %Compartmentalize this ya mofo!
     %Logon stuff???
     %Deploy and Migrate DB
     %Use what we developed, Client-Side adapting
