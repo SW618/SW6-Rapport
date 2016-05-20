@@ -1,1 +1,48 @@
 \chapter{Sprint End}
+With the conclusion of the fourth sprint our work on GIRAF is officially over.
+Following this chapter we present a more complete overview on the work done throughout the sprints, what still remains to be done, as well as our suggestions for how to prioritise work in the sprints to come.
+
+\section{Sprint Review}
+For this sprint we had two primary goals in relation to GIRAF:
+\begin{enumberate*}
+\item Finish the endpoints, the service layers, for both the Week Schedule and Sequence part of the REST API; and
+\item produce documentation for the Wiki in order to help next years developers get started with the REST API.
+\end{enumberate*}
+The remainder of the sprint was to be spent writing the paper, as this had been neglected in the previous sprint.
+The work on the REST API was thought to be fairly straight forward, however complications with cascade--types in regards to DELETE requests caused slightly more time to be invested into the endpoint development.
+
+The REST API for Sequence is now fully operational and ready for client--side implementation allowing for data manipulation and data retrieval through requests to the API.
+However for  Week Schedule not all data manipulation methods are available; yet to be implemented is request methods DELETE for Week Schedule and PUT for user progress.
+There is a branch in the Git repository called \textit{feature--weekscheduleendpoint}, which contains our work in progress and is ready to be developed further on.
+While we spent slightly more time than estimated on the Sequence endpoint than anticipated, bad estimation is not the reason for which Week Schedule was not completed in time.
+Instead our review process took up so much time that we were unable to spend more time on the Week Schedule endpoint, the review process and its issues are described further in \myref[name]{sec:S4retro}.
+
+As the REST API does not yet affect the users, the only evaluation of it is from the two REST designated groups.
+Our opinion is that the amount of guidelines set, have provided us with a \enquote{easy to hand over} code-base as well as good endpoint documentation for those who only need to use the REST API for client--side implementation.
+The ability to hand over the code, and the responsibility of REST API development is further strengthened by the documentation we have created for the Wiki explaining the workflow and guidelines established for the REST API.
+Combined we believe that knowledge required for developing endpoints as well as using endpoints should be acquired far quicker than in our case, and the newly written Wiki entries should help remove the hurdles we ourselves had troubles with.
+
+\myref{tbl:sprint_review4} shows the time spent on the tasks, from the table we also infer that 30 EP was spent on the paper.
+
+\begin{table}[h]
+       \begin{tabular}{llrr}
+        && \multicolumn{2}{c}{Points}\\
+        \multicolumn{2}{c}{User Story}      & Estimated & Spent \\
+        \midrule
+        \tblgrpsep
+        \multicolumn{2}{l}{Formal tasks}                        \\
+        \cline{1-2}
+        & REST API Sequence endpoint                &  6    & 8        \\
+        & REST API Week Schedule endpoint           &  6    & 6        \\
+        & REST API Guides                           &  4    & 4        \\
+        \tblgrpsep
+        \multicolumn{2}{l}{Internal work}                        \\
+        \cline{1-2}
+        & Writing the paper                &  30    & 30        \\
+        \tblgrpsep
+        \midrule
+        \multicolumn{2}{l}{Total}           & 46    & 48        \\
+    \end{tabular}
+    \centering
+    \caption{This table shows the estimated effort points for the different user stories titled with short stories, along with the amount of points we actually spent. Time spent on writing the paper is also included.}\label{tbl:sprint_review4}
+\end{table}
