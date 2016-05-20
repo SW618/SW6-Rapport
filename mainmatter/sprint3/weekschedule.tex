@@ -29,7 +29,7 @@ As we believed some of the design choices to be odd, for our own design choices,
 
 \begin{figure}
     \centering
-        \includegraphics[width=0.8\textwidth]{figures/weekscheduleclassdiagram.png}
+        \includegraphics[width=0.8\textwidth]{figures/weekschedulemodel.pdf}
     \caption{The Class Diagram without their fields of classes involved with \texttt{WeekSchedule}.}\label{fig:weekscheduleclassdiagram}
 \end{figure}
 
@@ -212,7 +212,7 @@ Similarly the \texttt{getById} method may then be useful when a specific week sc
 Part of writing the persistence layer is writing table schemas in SQL which corresponds to the model.
 However since objects does not exist in a database they will be referred to by their primary key, i.e. their id, instead of an object reference.
 Although we can use object references when writing a \texttt{TypedQuery}, which is used for the DAOs.
-An example of this is the \texttt{getAll} method in the DAO, as shown in \myref{lst:getAllWeekSchedules}.\todo{Vær sikker på det her ikke er nævnt før i et andet afsnit - Søren}
+An example of this is the \texttt{getAll} method in the DAO, as shown in \myref{lst:getAllWeekSchedules}.
 Here we set the \texttt{:department} in the query directly to a \texttt{Department}--object, even though there is no department column in the schema, but only a departmentid. 
 Hibernate can do this because of an annotation we made in the \texttt{WeekSchedule}--class. 
 Specifically the \texttt{@JoinColumn}--annotation with its parameter: \texttt{name}. 
@@ -229,7 +229,7 @@ public Collection<WeekSchedule> getAll(User user) {
 \end{lstlisting}
 
 \bigskip
-We have put the full SQL code used to generate the schema related to week schedule in \myref{app:weekschedulesql}.\todo{Hvorfor?}
+We have put the full SQL code used to generate the schema related to week schedule in \myref{app:weekschedulesql}.\todo{Skal vi gøre det Kim?}
 We have also written a small amount of SQL to generate some initial data for use in testing during development. 
 
 \subsubsection{Tests}
