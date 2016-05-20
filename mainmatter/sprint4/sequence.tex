@@ -6,6 +6,7 @@ It deals with the same user story as the \myref[name]{sec:sequence_endpoint_spri
 \end{center}
 
 \bigskip
+In sprint 3, we completed the two layers Core and Persistence, and now only need to write the services that use these layers to return JSON data.
 This service layer uses RESTeasy, like the Pictogram service, described in \myref[name]{ssec:pictogram_service}.
 To access any sequence service, a user must go through the department service, hence all services are located at \texttt{/department/\{id\}/sequence}.
 The following table (\myref{tbl:sequence_eps}) shows how and where the sequence endpoint can be accessed.
@@ -31,15 +32,14 @@ DELETE          &/\{pid\}	    & \texttt{deleteSequence}	    \\
 
 \subsection{Searching For a Sequence}
 By providing the optional query parameter \texttt{title}, the sequences returned can be filtered by title.
-The URL used to make such a request will then be: \texttt{/department/\{id\}/sequence?title=\{query\}}.
+The URL used to make such a request will then be: \texttt{/department/\{id\}/sequence?title=\{searchstring\}}.
 In \myref{lst:seq_serviceget} the method used for this search is shown.
-On line~\ref{lst:seq_methodheader} the query parameter by the name of \texttt{title} can be seen.
-The RESTeasy annotation \texttt{@QueryParam("title")} is used, which enables the query parameter to be extracted from the request URL and used by the method.
-In the method body it is first checked if the user making the request is of the given department, and after that on line~\ref{lst:seq_searchif}, it is checked whether or not the optional query parameter was given.
-Moreover it is checked if the parameter is not a string containing zero characters, since a search for such a title would be meaning less.
+On line~\ref{lst:seq_methodheader} the query parameter by the name of \texttt{title} is created using the RESTeasy annotation \texttt{@QueryParam("title")}, which enables the query parameter to be extracted from the request URL and used by the method.
+In the method body it is first checked if the user making the request is of the given department specified in the URL, and after that on line~\ref{lst:seq_searchif}, it is checked whether or not the optional query parameter was given.
+Moreover it is checked if the parameter is not a string containing zero characters, since a search for such a title would be meaningless.
 If the \texttt{title} parameter is usable a collection of sequences matching the search query is returned using the sequence DAO.
 The method used for this return can be seen in \myref{lst:seqdao_search}.
-However if no query parameter or the empty string was given, all sequence available for the department are returned --- again using the sequence DAO.  
+However if no query parameter or the empty string was given, all sequences available for the department are returned --- again using the sequence DAO.  
 
 \begin{lstlisting}[float, floatplacement=h, caption={The method which returns a list of sequences; and it can be filtered using a query parameter.}, label={lst:seq_serviceget}]
 @GET
@@ -88,5 +88,5 @@ Updating all properties would require a JSON object like the following:
 If the goal of the update is to remove all elements from the sequence, the property called \texttt{elementIds} must be an empty array, i.e. \texttt{"elementIds" : []}.
 
 \bigskip
-The user story related to the Sequence Endpoint is hereby completed.\todo{this feels weird, what should I write instead}
 
+All the methods seen in \myref{tbl:sequence_eps} make up the service layer for \texttt{Sequence}, and as such the user story is completed.
