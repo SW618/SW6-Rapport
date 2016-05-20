@@ -1,5 +1,5 @@
 \chapter{Future Work on GIRAF}\label{chp:futureworks}
-In this chapter we present the immediate work that we believe would benefit GIRAF the most to continue with.
+In this chapter we present the immediate work that we believe would benefit GIRAF the most.
 This chapter will not be a complete list of all the work to be done, rather it will be contained to the areas of GIRAF where we have been involved in throughout the projects, this means we will discuss improvements in regards to PictoSearch, the Week Schedule App, the GIRAF Launcher and of course the REST API.
 The REST API affects the future of most apps including the ones we already mentioned, as such we will start by explaining what is missing from the REST API as well as argue for why we believe that the REST API should be prioritised.
 
@@ -7,13 +7,14 @@ This list is not solely compiled from our point of view, it is the result of a f
 %Limit this to what we have been involved in
 
 \section{REST API}
-With the REST API synchronisation will become a part of GIRAF.
+Once the REST API is implemented in GIRAF, then synchronisation will be possible.
 This is something that we believe is mandatory before GIRAF could ever be proclaimed as even close to finished.
 Despite being discouraged by the previous developers telling us to ignore synchronisation as it would not be reachable within one semester, we believe it to detrimental to the quality and usability of GIRAF and as such the REST API should be the primary goal for the following semester.
 It is worth noting here that simply because we find this to be the most important other things should not be neglected, a lot of the REST API is internally blocking and requires plenty of collaborative work between groups, as such putting too many developers may slow down the development.
 
-The areas that yet need to be worked on for the REST API are login, endpoints, client-side implementations and web administration.
-Our group has not been involved in developing the new login system and thus we will not discuss that further, web administration is yet untouched so for that we will simply explain why it is needed and how it relates to REST. 
+The areas that yet need to be worked on for the REST API are login, endpoints, client--side implementations and web administration.
+Our group has not been involved in developing the new login system and thus we will not discuss that further, web administration is yet untouched so for that we will simply explain why it is needed and how it relates to REST.
+
 \subsection{Endpoints}
 While a number of endpoints and their models have been finished this year, yet more remain before the current applications can rely solely on the REST API for data.
 Currently endpoints exist for users, departments, the derivatives of frames and week schedules.
@@ -23,10 +24,12 @@ All of these must be constructed before GIRAF can fully migrate to use the REST 
 
 Of the endpoints that we have been developing a few services have yet to be constructed.
 For Week Schedule the services to delete a Week Schedule and to put user progress are not available.
-Furthermore for pictograms there is no service available that enables search.
-Both of these should be finished as well as these are services that will be used by the client-side.
-\subsection{Client-Side Implementation}
-Once all the endpoints are completed, or before that even, client-side implementations must be made in order to actually utilise the REST API.
+We made a branch in the Git repository for the next to continue working in.
+Furthermore there is no service available that enables searches for pictograms, in a more complete way than: ``\% LIKE \%'' in SQL, and there is no ranking amongst the result.
+Both of these should be finished as well as these are services that will be used by the client.
+
+\subsection{Client--Side Implementation}
+Once all the endpoints are completed, or before that even, client--side implementations must be made in order to actually utilise the REST API.
 In general one primary concern remains here which for us have not yet been discussed as it has not been important.
 Either some module that translates data must be developed, or the apps must be refactored as to use the same models as the REST API.
 An example here would be the Week Schedule model and endpoint that we have developed.
@@ -35,8 +38,10 @@ Either the data retrieved and sent to the REST API must enter a translation proc
 The reason for the difference is both that we were dissatisfied with the degraded model used by the app and thus decided to improve the model to retain a high code quality in the REST API.
 As for choosing between one or the other, refactoring may take longer and be the best long term solution, while a translation module may be a faster solution, but worse in the long term and make it harder for future developers to use.
 
+Aside from this, client--side must also consider version control, particular in regards to offline mode and here implement either the solution that we decided would be best in \myref{ssec:policy}, or decide upon another way of handling this issue, either way it must be handled with the use of the REST-API.
+
 \subsection{Web Administration}
-Once a working REST API has been established, web administration should be implemented concurrently with the client-side implementations.
+Once a working REST API has been established, web administration should be implemented concurrently with the client--side implementations.
 In its current state the only way to add users, departments or any other administrative information is by database access, this should be changed such that the department can add new citizens or guardians when needed.
 The reason we believe that a web tool would be the way to solve this is because the customers has asked for this to be available on their computers, and having it as a web application would made it a simple task to adjust the web application to support tablets should they at a later point want access from the tablets.
 
@@ -44,12 +49,12 @@ The reason we believe that a web tool would be the way to solve this is because 
 Significant progress on Week Schedule have been made during this year, plenty of features to improve quality of life when using the application have been developed, yet it still needs to implement the REST API.
 As such the goal for Week Schedule in the coming year should be to start using the REST API.
 This also means that perhaps more services for the Week Schedule must be created in the case where the current services prove insufficient.
-As for starting to use the REST API a we would suggest a significant refactoring of Week Schedule such that the model more closely resembles that of the REST API, rather than creating a module that translates data as best as it can.
+As for starting to use the REST API we would suggest a significant refactoring of Week Schedule such that the model more closely resembles that of the REST API, rather than creating a module that translates data as best as it can.
 This opinion is based on our experience with Week Schedule from which it is very clear that the model was not entirely thought through when it originally was established, and has since then just had components added as separate developers sought fit.
 
 Refactoring this would create a significantly better overview of the model, and make it far easier to make small adjustments when Week Schedule enters a tryout phase, which is what we believe should be prioritised after REST API implementation.
 With the REST API an opportunity to fix some of the issues that currently exist also presents itself, in particular this relates the progress.
-When we inherited GIRAF progress was saved to a local file on the tablet, not even to the local DB, furthermore the states a pictograms could be is presented as booleans whereas an enum would make more sense.
+When we inherited GIRAF, progress was saved to a local file on the tablet, not even to the local database, furthermore the states a frames could be is presented as booleans whereas an enum would make more sense, e.g. a frame could be canceled and finished at the same time.
 These choices are a result of continuously making quick fixes each semester and have resulted in the whole progress feature not fully working and having odd interactions causing bugs that have not been fixed.
 Refactoring the progress system alongside implementing the REST API may solve issues that are caused as a result of degraded code.
 
@@ -65,8 +70,9 @@ For PictoSearch the immediate work to be done is less reliant on the REST API th
 The goals for PictoSearch was to make it more responsive and faster, while making it more responsive and changing how to initialise the search creates the experience that it is faster, it still remains as slow as before.
 For this reason in regards to the PictoSearch app one should look at perhaps improving the search algorithm.
 Beyond improving the search algorithm a variety of other improvements come to mind.
-Through either lazy loading or paging the search could also be improved, this however leads us to a second problem that should be fixed in regards to the search.
-The results of a search is returned and ordered by ID, when in reality it should be ordered by how closely it resembles my search string, e.g. if i search for apple, i would prefer apple to be the first shown pictograms, not pineapple or apple juice.
+Through either lazy loading or pagination the search experience could also be improved, this however leads us to a second problem that should be fixed in regards to the search.
+The results of a search are ordered by their internal ID, when in reality it should be ordered by how closely it resembles my search string, e.g. if i search for apple, i would prefer apple to be the first shown pictograms, not pineapple or apple juice.
+Here one could also return frequently used pictograms first etc.
 Further improvements involve adding categories and sequences to the search results, in the case of sequence this could benefit from implementing the REST API and making adjustments for the REST API model, as a sequence and pictograms inherits from the same super class.
 Lastly if categories and sequences were to be added to the search, perhaps search settings such that one could filter the search may be worth implementing with it.
 
@@ -85,7 +91,7 @@ Lastly if categories and sequences were to be added to the search, perhaps searc
     %Future
         %Changes to progress, REST API have already considered this
         %Responsive, the app feels a little slow, Rest load types can affect this
-        %Rest implemented Client-Side
+        %Rest implemented client--side
         %Vælg Antal is placed oddly and is very unspecific, took months for us to figure it out
         %The app is a mess of Sequences, a refacter with REST may be extemely beneficial for future development.
 %REST
@@ -97,7 +103,7 @@ Lastly if categories and sequences were to be added to the search, perhaps searc
             %Categories
     %Logon stuff???
     %Deploy and Migrate DB
-    %Use what we developed, Client-Side adapting
+    %Use what we developed, client--side adapting
     %Translater Interface between apps and APIS OR restructure apps
     %WebAdmin will use API as well Prioritised just after REST itself
 
