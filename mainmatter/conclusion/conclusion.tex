@@ -1,1 +1,84 @@
-\chapter{Conclusion}
+\chapter{Summary and Evaluation}
+This chapter will go through four sections of summary and evaluation each pertaining to different subjects of the project.
+First a description of what the goals for the project were, and why.
+This is followed by a description of what we achieved, and how we did it, on a multi--project level, proceeded by a description of how we worked internally in the group, what we ourselves have done and which techniques worked well and which did not.
+Lastly we evaluate whether the goals of the projects as specified in the first section were achieved.
+
+\section{The Goals of the Project}
+
+For this project we have developed on the GIRAF project, which tries to make life easier for \textit{autistic folk}.
+The first sprint we worked in many different apps, which resulted in all of us feeling like we were not chasing a common goal, which is where the idea of having a multi--project wide set of goals was created.
+Instead of dividing the work between all groups such that none of us were working on the same apps like the years before us, we decided to concentrate on what the customer's had defined as the core of GIRAF.
+Therefore we decided that the Week Schedule along with its prerequisites would be the main goal, and another goal was to make the Voice Game stand-alone such that it required no other applications to run.
+The prerequisites of Week Schedule are: Launcher, and PictoSearch, as well as having a way of synchronising the data on each device, such that a user could use any tablet and have all its data.
+These goals were mentioned in \myref[name]{s1retro}.
+
+\section{Multi--Project Achievements}
+First we present the projects process, followed by what we completed.
+
+\subsubsection*{The Process of the Multi--Project}
+We have used parts of the agile development method Scrum for the project as well as a Scrum of Scrums for multi--project purposes.
+We worked in sprints of varying length, where each group takes a number of tasks or user stories to work on before the sprint ends.
+There are three fixed meetings: sprint planning, weekly Scrum, and sprint end/retrospective, all three have been further described in \myref{devmethod}.
+
+We used Phabricator to keep track of all user stories and tasks for the project.
+In the first sprint we had tasks containing a user story and a description of what needed to be done, which we changed for the rest of the sprints such that a user story has one or more tasks, and the user story is what was claimed by a project group instead of a task.
+This gave a much better structure and overview of what work needed to be done, and also left the solutions up to interpretation for each group, which gave more opportunity for analysing the problem to the groups.
+We evaluated our development process for the multi--project using a technique called: \textit{start, stop, continue}, which provided us with a medium for expressing our thought of the process.
+Our group used this method to express our dissatisfaction with the way groups used Phabricator differentials, and in general their work flow using this tool.
+This resulted in a discussion of the problem, and thought that solved the problems.
+When the problems arose again it was concluded that the problem was with the guide written for the work--flow, which left too much up for interpretation, and was not specific enough.
+We rewrote the guide afterwards and the problem seemed to have been resolved, as described in \myref{sec:sprint2retro}.
+
+The weekly Scrum meeting provided us with a meeting in which to discuss problems with the user stories we had taken for a sprint, and to get help if needed.
+This resulted in a way for us all to keep track of progress for the groups on the multi--project, and being able to communicate effectively and find areas where collaboration would prove effective such as for the REST-API.
+
+We used code--review to try and increase the quality of the code, the code-reviews however seemed to cause problems throughout the sprints.
+Some would code--review internally in the group and not even look at the code, which could be seen as the Phabricator differentials had only been open for 2 minutes, while others would argue about every detail in the code, resulting in code--review sometimes taking longer than design and implementation.
+Code--review did work well in some cases, and these cases lie somewhere in the middle of these two extremes, where the reviewer reviews the overall design and for logical errors this way the reviewer makes sure that the code performs as required, although maybe not in the same way that the reviewer would have created it.
+
+\subsubsection*{What Has Been Accomplished?}
+We have modified the Voice Game to work stand-alone, however we in group SW618F16 have not developed on it for this semester, but it is now runnable directly after downloading it from Google play.
+We spent much time this project developing on Week Schedule, and fixing different visual bugs like aspect ratios and the like in the launcher, as well as creating a new login system which allowed for starting the GIRAF launcher offline.
+The Week Schedule has obtained many new features and quality of life improvements, and is in general easier to work with now than before due to fewer crashes, and easier control due to the new scroll implementation.
+Weekdays and Week schedules can now be copied, as well as being used offline, both by the citizens and also by the guardians.
+Synchronisation was a huge new feature which sadly did not finish, a plan for how next year's students should continue implementing this has been written and we all hope they will continue to implement it.
+Synchronisation was said to be too big a task to finish at the start of the semester by the semester coordinator, which seemed to hold true.
+However solving this issue was started by starting the REST API.
+The customer have been happy with the progress done in this semester, an e-mail was sent from the customers where one customer had told another:\\
+\enquote{\textit{...for the first time there are actually things which have been completed. Have actually been very impressed by the students relationship with finishing the product.}}\footnote{The entire e-mail can be found in \myref{app:mail}}
+\\
+The e-mail seems to express that the customer's are very happy with the results this year.
+
+\section{Internal--Project Achievements}
+This section will first describe our development process internally in the group followed by what work we have done throughout the four sprints.
+
+\subsubsection*{The Process Internally in the Group}
+We used parts of Scrum throughout the project, in the start for the first two sprints we had somewhat neglected it for various reasons, but started using it more in sprint three and four.
+We felt huge positive difference in our productivity of the project when using the daily Scrum as well as using the Scrum board.
+Using the framework rather than trying to work it out ad--hoc actually works, which we will take with us onwards in our careers.
+The daily Scrum provided us with a medium to discuss our progress of the user stories, and also discuss certain problems we were facing.
+The troubles we had with using the method was due to not always meeting at the university due to course activity, which resulted in the daily Scrum being difficult to always do.
+We regret not following through using the daily Scrum better throughout the project as we might have had better time in the end of the project if we had done so.
+
+We used pair programming to implement many of the different user stories for the project which have resulted in better quality code than the user stories which have not used pair programming.
+The user stories which used pair programming are better integrated with the rest of GIRAF and in general use other techniques such as design patterns to generalise the situations.
+We also found pair programming useful to spread knowledge amongst us, and especially good when starting out with new things, such as when we started working on the REST API.
+
+\subsubsection*{What Have We Accomplished?}
+We spent our first sprint developing on PictoSearch as well as fixing small bugs in different places of GIRAF.
+This ended up being useful for the goal of completing Week Schedule as the PictoSearch library is a vital part of using the Week Schedule.
+It was the only time for this semester that the PictoSearch was worked on.
+In sprint two we worked on Week Schedule and the Launcher, making the Week Schedule easier to navigate with scrolling as well as making offline capability possible.
+For sprint three and four we worked on the REST API which tries to solve security issues with GIRAF while trying to achieve synchronisation between tablets.
+We finished the endpoints for \texttt{Sequence} and \texttt{Pictogram} while \texttt{WeekSchedule} still needs some work to be done.
+The endpoints still need to be used in the different application which we write more about in \todo{ref to futureworks}, but the completed ones are ready to be used in the apps.
+
+\section{Did We Achieve The Goals?}
+On a multi--group level we achieved the goal of a stand-alone Voice Game, and got much closer to a completing the Week Schedule app.
+The customer's do not have more features requested for Week Schedule, but it does need to be polished a bit for the workflow, especially when a citizen actually uses the week schedule.
+The REST API is not complete, but we have taken a big step in the right direction, and it is actually such a big step that they can start to use the API next year, if they continue developing further on the API as well, thus we have made progress towards having a secure way to synchronise data across tablets.
+We are happy with what we achieved this semester, especially due the to kind words from the customers.
+Although we did not succeed in both goals of the semester enough progress is made that week schedule could probably be finished using the new database model of the REST API next year.
+The next chapter will present the work we think the next year's students should do in order to continue the great progress of GIRAF.
+\todo[inline]{Skriver vi teasers til det næste kapittel?}
