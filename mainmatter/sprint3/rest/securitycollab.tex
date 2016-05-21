@@ -1,0 +1,83 @@
+\section{Security Meeting}\label{sec:securitycollab}
+We held a meeting between ourselves, group SW615F16 and a representative from the security and PO group.
+This section is developed in collaboration with group SW615F16 in order to document the purpose and results of this meeting.
+
+The original motivation for making the REST API was enabling security and synchronization.
+We have already documented how the previous solution was unable to achieve neither of these.
+Up until now we had only considered security by authentication.
+Since we moved the login from the Giraf application to the REST API, this have been improved greatly.
+
+We had not considered the requirement that GIRAF should be usable while a device is offline.
+To reconcile we decided to hold this meeting, such that we could design a proper solution which would follow all the requirements for a secure system to be used by a Danish municipality.
+
+It is central that some information is limited to a single person.
+However it is not a given that a single user will use the same tablet for every use of GIRAF while offline.
+This poses a problem of giving users information for which they have no access, for use at later points in time by another user.
+Access to another user's private information is in direct conflict with the security model proposed earlier by SW615F16, consisting only of authentication.
+
+Some information is more private than other.
+Some information is shared by all users of GIRAF, indiscriminate of which department they belong to.
+Some information is shared by the users of a single department, but not across different departments.
+Lastly, some information is private and only available to a single user.
+We expect the great majority of information is either public or department specific, with a miniscule amount being private.
+
+We define three access levels: One for all public information, one for all department shared information and one for private pr. user information.
+We call these:
+\begin{itemize}
+    \item Public
+    \item Protected
+    \item Private
+\end{itemize}
+
+Under this model we can store the public and protected information on the tablet, and share it between all users while offline.
+Since all the users are expected to be from the same department this poses no security issues.
+We would still be unable to adequately secure private information, and as such would not provide access to it while offline.
+
+To keep the private data from one person away from other people we delete private user data when the user logs out.
+Likewise, when a guardian switches department, we delete all the department wide data.
+Public data is never deleted, since everyone can access it at all times, anyway.
+
+We expect the login process to follow a flow as seen on \myref{fig:loginworkflowrest}.
+Our figure shows that it is possible to synchronise some data in the background, even before the user logs in.
+Since a large number of pictograms, provided by Giraf, are stored as public we expect this to help with synchronisation speed on first login.
+
+%\documentclass[crop,tikz]{standalone}
+%\usetikzlibrary{shapes.multipart, arrows, matrix, automata, positioning, shadows, decorations.pathreplacing, calc}
+\tikzstyle{wblock} = [rectangle, draw, fill=green!40, text width=6em, text badly centered, rounded corners, minimum height=3em]
+\tikzstyle{memearrow} = [->, >=latex', shorten >=1pt, thick]
+\tikzstyle{startstop} = [draw, ellipse,fill=red!20, minimum height=2em]
+\tikzstyle{signs} = [wblock, fill=yellow!20, text width = 7.5em]
+\begin{figure}[!ht]
+    \centering
+    \begin{tikzpicture}[node distance = 5em]
+        \node [startstop] (start) {Open GIRAF};
+        \node [wblock, below of = start] (selectdep) {Select Department};
+        \node [wblock, below of = selectdep] (selectuser) {Select User};
+        \node [wblock, below of = selectuser] (enterpassword) {Enter Password};
+        \node [wblock, below of = enterpassword] (authed) {Authenticated};
+        \node [wblock, below of = authed] (normaluse) {Pick User};
+        \node [startstop, below of = normaluse] (givetouser) {Give to user};
+
+        \draw [memearrow] (start) -- (selectdep);
+        \draw [memearrow] (selectdep) -- (selectuser);
+        \draw [memearrow] (selectuser) -- (enterpassword);
+        \draw [memearrow] (enterpassword) -- (authed);
+        \draw [memearrow] (authed) -- (normaluse);
+        \draw [memearrow] (normaluse) -- (givetouser);
+
+        % Right column
+        \coordinate (startinvis) at ($(start)!0.5!(selectdep)$);
+        \node [signs, right =7em of startinvis] (syncpublic) {Sync Public Data};
+        \draw [memearrow,<->] (startinvis) -- (syncpublic);
+
+        \coordinate (startinvis2) at ($(authed)!0.5!(normaluse)$);
+        \node [signs, right =7em of startinvis2] (syncdep) {Sync Deparment Data};
+        \draw [memearrow,<->] (startinvis2) -- (syncdep);
+
+        \coordinate (startinvis3) at ($(normaluse)!0.5!(givetouser)$);
+        \node [signs, right =7em of startinvis3] (syncuserdata) {Sync Private Data};
+        \draw [memearrow,<->] (startinvis3) -- (syncuserdata);
+    \end{tikzpicture}
+    \caption{The suggested login workflow with the REST API.}
+    \label{fig:loginworkflowrest}
+\end{figure}
