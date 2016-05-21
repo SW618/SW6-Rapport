@@ -10,13 +10,14 @@ We decided before sprint 1, that every differential on Phabricator would need to
 We agreed that we would review across the two groups SW615F16 and SW618F16, but it was mostly just one person from SW615F16 who would review our code.
 It turned out that the reviewer in group SW615, was very rigid, and went in to details we would deem unnecessary, e.g. the complexity $O(n^2)$ of a method rarely used and most often with fewer than 10 elements as its input.
 The review phase ended up taking more time than the actual implementation of the functionality, which was a frustrating way of developing.
-We advise that a review should not chase perfect as long as what is already there is good, as the throughput of code is heavily reduced, and we would end up \textit{bike shedding}\footnote{\url{http://bikeshed.com/}}.
+We advise that a review should not chase perfect as long as what is already there is good, as the throughput of code is heavily reduced, and we would end up \textit{bike shedding}\footnote{As popularised by Poul-Henning Kamp, see \url{http://bikeshed.com/} for more.}.
 Bike shedding is where you discuss minor features of a big complicated project, because it is easier to go into the small simpler details rather than thinking of the overall complicated design.
 The reviews sometimes did think about the overall design, but most of the critique given in reviews would be what we would categorise as bike shedding.
 We would advice future developers on GIRAF to be sure that they are agree on what a code--review is supposed to accomplish, to avoid a situation such as ours.
 Research what a good code--review is, and agree on things to look for when reviewing, such that there will be no opinionated conflicts regarding the code--reviews.
 Another factor in the code--review taking too much time was the fact that the group who should review our code, had fallen very far behind on their report, and therefore did not have time to review; and as such the work was very delayed and was actually not in the master branch by sprint--end, despite being done four days beforehand.
-\todo[inline]{Tilføj linter}
+
+As we mentioned in \myref[name]{subsec:sprint3-retro-multi} we integrated a linter for the REST API, we found this very useful to ease the code--reviews.
 
 \subsubsection*{Giraf Con '16}
 Instead of having a regular Retrospective meeting, we had what was named \textit{Giraf Con}, where we went through everything we had done on GIRAF throughout the entire project across all groups.

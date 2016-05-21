@@ -40,13 +40,15 @@ As we did not finish two of the REST API user stories, we will continue on imple
 \section{Sprint Retrospective}
 This section will be a sprint retrospective separated into two parts, a part for the multi project and one internally in the group.
 
-\subsection*{Multi Project Retrospective}
+\subsection*{Multi Project Retrospective}\label{subsec:sprint3-retro-multi}
 The process of the Multi Project has gone through some changes throughout the project, but now the process seems to work well for us, and therefore changes to the process will be minimal.
 It was discussed that people left too quickly at the weekly Scrum meeting and because of this, sometimes when another group had planned to talk with someone, the someone had left the room before they had a chance to do so.
 Therefore, we decided that having the Scrum master ask if we needed to speak with someone at the Scrum meeting would be great such that they do not leave as soon as possible.
 
 One last thing was that the differentials which are uploaded to Phabricator sometimes became too big \textasciitilde 1000 lines of code, which makes it very difficult to review in a reasonable amount of time.
 To make it easier to grasp what a differential is about we decided that they should be smaller and removed the rule that a differential had to be a fully completed user story, as long as the changes do not break the application.
+We found that a significant amount of comments, and therefore time, was spent on code--style and other elements which a linter can automatically check.
+We decided that we would integrate a linter in the REST API such that we could avoid this issue, this can additionally be integrated with Phabricator to perform a forced check prior to a code--review.
 
 \subsection*{Internal Project Retrospective}
 This sprint we made sure to have a Scrum meeting daily within our group, and we also used the Scrum board at these meetings, which had been neglected in sprint 2.
