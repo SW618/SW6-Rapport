@@ -1,6 +1,10 @@
 \newenvironment{enumberate}{\begin{enumerate}[label=\itshape \arabic*\upshape)]}{\end{enumerate}}
 \newenvironment{enumberate*}{\begin{enumerate*}[label=\itshape \arabic*\upshape)]}{\end{enumerate*}}
 \newenvironment{eletterate}{\begin{enumerate}[label=\itshape \alph*\upshape)]}{\end{enumerate}}
+\newenvironment{eletterate*}{\begin{enumerate*}[label=\itshape \alph*\upshape)]}{\end{enumerate*}}
+
+% 1st param: font style of label, 2nd param: text of longest label
+\newenvironment{dankscription}[2]{\begin{description}[labelindent=\parindent, labelwidth=\widthof{#1#2}, align=parright, font=\normalfont#1]}{\end{description}}
 
 \newcommand{\userstory}[1]{
     \textbf{User story:} \textit{\enquote{#1}} \\
@@ -48,7 +52,7 @@
 
 \newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
 
-\newcommand{\TITLE}{Software Development for the GIRAF Multi--Project}
+\newcommand{\TITLE}{Software Development in the GIRAF Multi--Project}
 \newcommand{\SUBTITLE}{On Developing Software Systems in Multiple Groups}
 
 \makeatletter

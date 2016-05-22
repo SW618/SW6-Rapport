@@ -1,11 +1,10 @@
 \section{Sequence Endpoint --- Service Layer}
 This section will describe the continued work on the Sequence Endpoint, more specifically the service layer, which exposes the sequence endpoint to the outside world.
-It deals with the same user story as the \myref[name]{sec:sequence_endpoint_sprint3}, which is:
+It deals with the same user story as the \myref[name]{sec:sequence}, which is:
 \begin{center}
 \userstory{As a developer I would like an endpoint for Sequences, such that I can retrieve them from the GIRAF REST API.}
 \end{center}
 
-\bigskip
 In sprint 3, we completed the two layers Core and Persistence, and now only need to write the services that use these layers to return JSON data.
 This service layer uses RESTeasy, like the Pictogram service, described in \myref[name]{ssec:pictogram_service}.
 To access any sequence service, a user must go through the department service, hence all services are located at \texttt{/department/\{id\}/sequence}.

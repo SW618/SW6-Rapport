@@ -17,11 +17,13 @@ This section will go through the user stories chosen for this sprint.
 \end{description}
 
 For the remainder of the sprint we will be working on a developer defined user story that solves a number of user stories and issues in GIRAF. 
+\begin{center}
 \userstory{As a developer I would like GIRAF to support synchronisation and increase security such that the quality of the system is enhanced and conforms to danish privacy law} 
 \userstory{As a developer I would like a RESTful API for GIRAF such that synchronisation and security can be developed}
+\end{center}
 
 These two user stories would help to resolve several other user stories currently on the backlog, one of them being pertaining to persistence and information security.
-\textbf{\textit{As a user I would like to have my personal information secure such that other users cannot see my information.}}
+\userstory{As a user I would like to have my personal information secure such that other users cannot see my information.}
 
 Currently all personal information is downloaded when a device starts the GIRAF launcher for the first time.
 This is the only transaction the device will ever have with the server, i.e. all creation of new data is confined to the device it is created on.
@@ -40,18 +42,19 @@ A complete list of the blocked tasks can be found in \myref{app:blockedtasks}.
 As the REST API user story is big compared to other user stories, we define smaller user stories with subsequent tasks in order to attain a better overview of the work to be done.
 The following five user stories is the five REST API related user stories we will be working on.
 
-\begin{itemize}[style=unboxed]
-	\item \userstory{As a developer, I want a design of the model for Sequence and a guideline for implementing this, such that I can concentrate on actually implementing the model.} 
+\begin{description}[style=unboxed, font=\normalfont]
+	\item[\userstory{As a developer, I want a design of the model for Sequence and a guideline for implementing this, such that I can concentrate on actually implementing the model.}]
 	Designing this is estimated at 8 EP.
-	\item \userstory{As a developer, I want a design of the model for WeekSchedule and a guideline for implementing this, such that I can concentrate on actually implementing the model.}
+	\item[\userstory{As a developer, I want a design of the model for WeekSchedule and a guideline for implementing this, such that I can concentrate on actually implementing the model.}]
 	Designing this is estimated at 10 EP.
-	\item \userstory{As a developer I would like an endpoint for Pictograms, such that I can retrieve them from the GIRAF REST API.}
+	\item[\userstory{As a developer I would like an endpoint for Pictograms, such that I can retrieve them from the GIRAF REST API.}]
 	Creating this endpoint is estimated at 7 EP.
-	\item \userstory{As a developer I would like an endpoint for Sequences, such that I can retrieve them from the GIRAF REST API.}
+	\item[\userstory{As a developer I would like an endpoint for Sequences, such that I can retrieve them from the GIRAF REST API.}]
 	Creating this endpoint is estimated at 11 EP.
-	\item \userstory{As a developer I would like an endpoint for Sequences, such that I can retrieve them from the GIRAF REST API.}
+	\item[\userstory{As a developer I would like an endpoint for Sequences, such that I can retrieve them from the GIRAF REST API.}]
 	Creating this endpoint is estimated at 21 EP.
-\end{itemize}
+\end{description}
+
 These estimations are very fragile as we base them on very little knowledge of how much time is needed to test, and design the solutions, while also getting to know the new technologies which will be used for the REST API.
 Each of the user stories above regarding the creation of endpoints, is divided into three tasks that must be resolved for them to be finished, the tasks are as follows for each.
 \begin{itemize}

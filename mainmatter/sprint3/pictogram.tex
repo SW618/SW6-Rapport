@@ -18,30 +18,30 @@ The model that was described in \myref{subsec:model} was the complete model of t
 \todo{Table or description? --- I will make consistent when we decide}
 Here a brief description of the purpose for each field of the classes on the figure will be given.
 \subsubsection*{Frame}
-	\begin{description}
-		\item[id] This is the id of the Frame which is saved in the database.
-		\item[lastEditAt] This is a time stamp of when the Frame was last edited --- auto updated by Hibernate when changes on the object is persisted in the database.
+    \begin{description}[font=\ttfamily\bfseries]
+		\item[id] \hfill \\ This is the id of the Frame which is saved in the database.
+		\item[lastEditAt] \hfill \\ This is a time stamp of when the Frame was last edited --- auto updated by Hibernate when changes on the object is persisted in the database.
 		It is to be used for conflict handling as e.g. pictograms can be altered in the PictoCreator tool, and a need for conflict handling is therefore needed.
-		\item[partofSequences] This is a collection of sequences this frame is used in; why this collection is needed will be further explained in \myref{sec:sequence}.
+		\item[partofSequences] \hfill \\ This is a collection of sequences this frame is used in; why this collection is needed will be further explained in \myref{sec:sequence}.
 	\end{description}
 
 \subsubsection*{PictoFrame}
-	\begin{description}
-		\item[title] Title of the \texttt{PictoFrame}. Is used to search for and also to show what the \texttt{PictoFrame} is called when shown with its title in different parts of GIRAF.
-		\item[owner] The user which owns the \texttt{PictoFrame}, but not necessarily the user whom created it.
+	\begin{description}[font=\ttfamily\bfseries]
+		\item[title] \hfill \\ Title of the \texttt{PictoFrame}. Is used to search for and also to show what the \texttt{PictoFrame} is called when shown with its title in different parts of GIRAF.
+		\item[owner] \hfill \\ The user which owns the \texttt{PictoFrame}, but not necessarily the user whom created it.
 		This is used to accommodate the need for creating private \texttt{Pictograms} and \texttt{Sequences}.
 		Private means that only the user who is owner can access them.
-		\item[accessLevel] This is an Enumeration which specifies whether the \texttt{PictoFrame} is Public, shared on department or private.
-		\item[department] Specifies which department the \texttt{PictoFrame} belongs to, and is used when the accessLevel is specified as shared on department.
-		\item[optionOn] A collection of all \texttt{Choice}s which contain the \texttt{PictoFrame}.
+		\item[accessLevel] \hfill \\ This is an Enumeration which specifies whether the \texttt{PictoFrame} is Public, shared on department or private.
+		\item[department] \hfill \\ Specifies which department the \texttt{PictoFrame} belongs to, and is used when the accessLevel is specified as shared on department.
+		\item[optionOn] \hfill \\ A collection of all \texttt{Choice}s which contain the \texttt{PictoFrame}.
 		This is needed for Hibernate to create the many-to-many relationship between \texttt{PictoFrame} and \texttt{Choice}, and will probably not be used for anything else.
 	\end{description}
 
 \subsubsection*{Pictogram}
-	\begin{description}
-		\item[isTitlePictogramOn] A collection of the \texttt{Sequence}s which this \texttt{Pictogram} is the titlePictogram of.
-		\item[pictogramImage] A reference to the \texttt{PictogramImage} of the \texttt{Pictogram}.
-		\item[weekScheduleThumbnail] Similar to the \texttt{isTitlePictogramOn} but this is for a collection of \texttt{WeekSchedule}s instead.
+    \begin{description}[font=\ttfamily\bfseries]
+		\item[isTitlePictogramOn] \hfill \\ A collection of the \texttt{Sequence}s which this \texttt{Pictogram} is the titlePictogram of.
+		\item[pictogramImage] \hfill \\ A reference to the \texttt{PictogramImage} of the \texttt{Pictogram}.
+		\item[weekScheduleThumbnail] \hfill \\ Similar to the \texttt{isTitlePictogramOn} but this is for a collection of \texttt{WeekSchedule}s instead.
 	\end{description}
 
 \subsubsection*{PictogramImage}
@@ -53,9 +53,9 @@ This class is what all objects that encapsulates image files will inherit from, 
 Originally when we started working on the REST API for Pictogram the \texttt{PersistFileHandle} did not exist and all information on this class was saved directly on the \texttt{UserIcon} class.
 Why and how this new generality is created will be explained in \myref{subsec:persistfilehandle}.
 It contains the following fields:
-\begin{description}
-	\item[id] This field is self explanatory.
-	\item[filePath] A string of the path to the file which the class points to, for the Pictogram endpoint it will be a Pictogram.
+\begin{description}[font=\ttfamily\bfseries]
+	\item[id] \hfill \\ This field is self explanatory.
+	\item[filePath] \hfill \\ A string of the path to the file which the class points to, for the Pictogram endpoint it will be a Pictogram.
 \end{description}
 
 The section above explains what is modelled with the Java classes; the following section will present how this information is stored in the database using the tools mentioned in \myref{sec:techstack}.
@@ -64,7 +64,7 @@ The section above explains what is modelled with the Java classes; the following
 
 As mentioned previously we use an \textbf{ORM} (object--relational mapping) tool to map the models to the database, this section describes how this specifically is done.
 
-\begin{lstlisting}[ caption={Fields with annotations which causes Hibernate to perform the ORM for a \texttt{PictogramImage}.},label={lst:PictoImage}]
+\begin{lstlisting}[float, floatplacement=h, caption={Fields with annotations which causes Hibernate to perform the ORM for a \texttt{PictogramImage}.},label={lst:PictoImage}]
 @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
 private PictogramImage pictogramImage;
 \end{lstlisting}

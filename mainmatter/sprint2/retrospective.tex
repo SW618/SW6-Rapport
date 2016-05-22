@@ -5,7 +5,7 @@ The evaluation of the process, the retrospective, is divided into two parts, one
 
 \section{Sprint Review}
 This section evaluates the work we have done in this sprint and presents the customers opinion on the additions and modifications.
-The next section, \myref{sec:sprint2retro}, will address how we have worked.
+\myref[name]{sec:sprint2retro}, will address how we have worked.
 The user stories in this sprint were all completed, however the tasks were completed faster than anticipated, the reason for which is touched upon in the next section.
 The amount of time estimated and spent on the different user stories can be seen in \myref{sprint_review2}.
 At the sprint review meeting with the customers, they expressed that they were happy with the changes made to GIRAF.
@@ -21,7 +21,9 @@ We ended up having two members do most of the work on the user stories this spri
 We had planned to work on the user stories using pair programming, as explained in \myref{subsubsec:pairprogramming}, but since the work regarding offline mode was done alone, we spent less total time on the tasks as it was done by one person, this is the reason the task required almost half of the estimated points.
 This problem will be addressed further in \myref{internal2}.
 
-\begin{table}[h]
+\begin{table}[t]
+\small
+\centering
     \begin{tabular}{llrr}
         && \multicolumn{2}{c}{Points}\\
         \multicolumn{2}{c}{User Story}		& Estimated & Spent \\
@@ -40,7 +42,6 @@ This problem will be addressed further in \myref{internal2}.
         \midrule
         \multicolumn{2}{l}{Total}    & 31               & 24                \\
     \end{tabular}
-    \centering
     \caption{This table shows the estimated effort points for the different user stories titled with short stories, along with the amount of points we actually spent. Time spent on writing the paper is not included in this table.}\label{sprint_review2}
 \end{table}
 
@@ -51,7 +52,7 @@ This section will evaluate the sprint retrospective meeting with the entire mult
 
 \subsection{Multi-project Retrospective}
 This section evaluates the development process of the multi-project.
-% Documentation - all diffs
+
 \subsubsection{Documentation}
 In this sprint we have had problems with the differentials (the code reviews through Phabricator), as the submitted code was lacking proper documentation in the source code, i.e. Javadocs and comments. 
 We had discussed earlier in the project that each new method made should at least have some Javadocs for it.
@@ -62,7 +63,6 @@ In order to achieve this we used what is called the tool Herald on Phabricator.
 The Herald tool can be used to automatically perform actions based on triggers that occur inside Phabricator.
 We created a Herald rule which would add our group as reviewers to the creation of any new differential on Phabricator.
 This way we will be notified when new differentials are created, and we can quickly scroll through them and see if they fulfill the requirements of proper documentation.
-% Rewrote guide since ppl didn't understand still
 
 \subsubsection{Workflow Guide}
 We wrote in \myref{retro1} that we would rewrite the guide of using our code review process as there were troubles understanding the current process.
@@ -72,8 +72,10 @@ The guide was therefore rewritten, showing more of the commands to be used in th
 We hope this will fix some of the issues and that the proper commands for updating a differential will now be used.
 
 Beside these troubles, the sprint has worked well in the multi-project, we all knew what everyone else were doing and the communication between groups were better than in the first sprint.
+
 \subsection{Internal Retrospective}\label{internal2}
 This section evaluates our internal development process.
+
 \subsubsection{Programming}
 This sprint was relatively short compared to the first sprint, and it overlapped with easter which causeed some problems. 
 Since we had a lot of course activity during the start of the sprint we had little time to do pair programming, and when easter came around we decided that we should try to do some of the tasks at home, such that we could complete them in time. 
@@ -86,5 +88,5 @@ For this reason we would we will during the next sprint try harder to do pair pr
 Because of the problems mentioned above we ended up not following Scrum as well as we could have.
 Daily Scrum was some days neglected completely, and the Scrum board was not used as rigorously as wanted.
 The decision to use most of our time programming when we are grouped at the university should also help in this regard as we are all working on the same type of tasks and thus the daily Scrum seems more natural.
-This is not to say that we did not talk about our tasks during this sprint, but rather that we did not follow the procedure described in \myref{scrum}.
+This is not to say that we did not talk about our tasks during this sprint, but rather that we did not follow the procedure described in \myref[name]{scrum}.
 Therefore in the next sprint we will strive to use the process much more rigid, in order to obtain the benefits of using scrum.

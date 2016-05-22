@@ -31,16 +31,19 @@
 \usepackage{tikzscale}
 \usetikzlibrary{shapes.multipart, arrows, matrix, automata, positioning, shadows, decorations.pathreplacing, calc}
 \usepackage{float}
+\setlength{\floatsep}{4.0pt plus 2.0pt minus 2.0pt}
 \usepackage[off]{auto-pst-pdf}
 \usepackage{wrapfig}
 \usepackage{tcolorbox}
+\tcbuselibrary{skins}
 \usepackage{colortbl}
 \usepackage[inline]{enumitem}
 \SetLabelAlign{parright}{\parbox[t]{\labelwidth}{\raggedleft#1}}
 \usepackage{moreenum}
 \usepackage{setspace}
 \usepackage{multicol}
-\renewcommand{\arraystretch}{1.5}
+\renewcommand{\multicolsep}{\itemsep}
+%\renewcommand{\arraystretch}{1}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Page Layout
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -85,7 +88,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Bibliography
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage[backend=bibtex,natbib=true,sorting=none]{biblatex}
+\usepackage[backend=biber,natbib=true,sorting=none]{biblatex}
 \addbibresource{bibliography/mainbibliography.bib}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Hyperlinks
@@ -100,7 +103,9 @@
 \lstset{
   numbers=left,
   firstnumber=1,
-  numberfirstline=true
+  numberfirstline=true,
+  aboveskip=5pt,
+  belowskip=5pt
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Misc

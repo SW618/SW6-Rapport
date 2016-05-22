@@ -21,18 +21,20 @@ The area which allowed scrolling was so small that it made for an awkward use re
 This resulted in scrolling being difficult since it was hard to avoid accidentally tapping a pictogram, and needed to be changed.
 In order to increase the area that responds to scrolling  it was decided to make it possible to scroll while touching a pictogram.
 As a result of this decision a new way to reorder pictograms is required for the two features not to be controlled by the same action causing one to be removed.
+
 \bigskip \noindent
 At the sprint planning meeting the following tasks were made for this user story:
-\begin{enumberate}
-    \item \subtask{Make the entire day's view scrollable}
-    \item \subtask{Redesign the reordering mode}
-\end{enumberate}
+\begin{eletterate}
+    \item Make the entire day's view scrollable
+    \item Redesign the reordering mode
+\end{eletterate}
 The remainder of this section will be divided into two subsections, the first of which will discuss a possible design and the other on resolving the tasks linked to the user story.
 
 \subsection*{To Button or Not to Button} % That is the question
 Currently the GIRAF application suite has buttons in the top of the screen which are used for actions such as entering modes for deleting or copying and for saving etc.
 One possible solution for dragging is to create yet another button to change the current mode of the week schedule application such that dragging on a pictogram results in dragging a pictogram instead of scrolling.
 However, this solution would still be problematic for when you enter the dragging mode and then want to scroll to the pictogram you want to drag.
+
 Another solution is inspired by how many other applications including the standard Android OS and iOS implement dragging of icons.
 Longpressing\footnote{An extended tap for a given period set by the OS} a button or an icon in order to start dragging an icon is used in both Android OS and iOS mainly on the home screen to move change the position of different apps.
 The same technique can be used in the week schedule, a longpress on a pictogram will cause the application to now drag the pictogram along the movement of the user.
@@ -53,12 +55,12 @@ The code calculating this is shown in \myref{lst:actionmove}, and is part of the
 Line 1 decides if a scroll should happen or not, it should happen if the user dragged more than two pixels.
 In line 3 the distance to scroll is calculated, and in line 5-6 this information is sent to the parent, which in this case is weekday.
 
-\begin{lstlisting}[floatplacement=h, caption={The code executed when someone performs a move action.}, label={lst:actionmove}]
+\begin{lstlisting}[float, floatplacement=h, caption={The code executed when someone performs a move action.}, label={lst:actionmove}]
 if(lastYCoord != -1 && Math.abs(event.getRawY() - lastYCoord) > 2 && !draggable) {
     handler.removeCallbacksAndMessages(null);
     int scrollDistance = (int) (lastYCoord - event.getRawY());
     lastYCoord = event.getRawY();
-    ((ScrollView)this.getParent()).scrollTo(0,((ScrollView)this.getParent())
+    ((ScrollView)this.getParent()).scrollTo(0, ((ScrollView)this.getParent())
             .getScrollY() + scrollDistance);
     scrollTime = new Date();
 
@@ -67,13 +69,12 @@ if(lastYCoord != -1 && Math.abs(event.getRawY() - lastYCoord) > 2 && !draggable)
 \end{lstlisting}
 
 \subsubsection*{Redesign the reordering mode}
-
 Next a presentation of how the longpress is implemented.
 \myref{lst:longpress} shows the code executed upon long pressing.
 It is a function made inside a runnable which means it will be run in its own thread and therefore makes it possible to queue it for execution.
 Lines 3-4 makes it so pictograms can be dragged on the screen and lines 5-7 will if a pictogram is being touched lift it up indicating that the pictogram can be dragged, and the tablet will also vibrate briefly so the user knows they can now drag the pictogram.
 
-\begin{lstlisting}[floatplacement=h, caption={The longpress function which is queued upon a \texttt{MotionEvent\_Down}, i.e. a touch.}, label={lst:longpress}]
+\begin{lstlisting}[float, floatplacement=h, caption={The longpress function which is queued upon a \texttt{MotionEvent\_Down}, i.e. a touch.}, label={lst:longpress}]
 private Runnable mLongPressed = new Runnable() {
     public void run() {
         adapter.setDraggability(true);
@@ -85,8 +86,9 @@ private Runnable mLongPressed = new Runnable() {
     }
 };
 \end{lstlisting}
+
 This function is queued when the initial press begins, and if it lasts for more than 500 milliseconds, then it is executed.
 If the press is shorter then it is canceled as shown on line 2 in \myref{lst:actionmove}.
 
-\bigskip \noindent
+\bigskip
 In conclusion these fairly small changes result in what we believe to be a more intuitive way to navigate the Week Schedule app based on the assumption that the user is familiar with Android OS and iOS standards; hopefully the customers agree that it is a better solution, which will be disclosed at the customer meeting following sprint 2 end.

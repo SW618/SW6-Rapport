@@ -27,8 +27,8 @@ Scrum makes progress visible and helps teams cut through the noise a project cre
 If a problem is big and complex, scrum allows the team to deal with it incrementally.
 The very nature of scrum especially the daily scrum meeting, which will be explained shortly, allows a team to share knowledge with eachother, and discover problems with current assignments, which in turn makes the team more responsive to changes from these appearing problems because everyone is on the same page.
 We want to use Scrum for this project because of the above mentioned reasons, but to sum it up, we want to use Scrum to create a structure and visible progress for a project where we keep getting new knowledge from the already existing codebase, and from the other 8 teams which we are working together with for the multi-project.
-\\ 
 
+\bigskip
 We use parts of the version of Scrum as defined by Sommerville in his book, Software Engineering in chapter three \cite{SEBOOK}.
 The parts used are presented here.
 
@@ -47,14 +47,14 @@ The parts used are presented here.
 	\item[User Story] \hfill \\
 	A user story is a formulation of a requirement. 
 	Each user story has been given a priority by the Product Owner, these are in descending order of priority: \pblocking, \phigh, \pnormal, \plow~and \pwish. 
-	Across the multi-project we have decided upon the format for a user story to be: ``As a <type of user>, I want <some goal> so that <some reason>''.
+	Across the multi-project we have decided upon the format for a user story to be: \enquote{As a <type of user>, I want <some goal> so that <some reason>}.
 	Each user story is estimated to take a period of time.
 	\item[Task] \hfill \\
 	A user story can be split into multiple tasks, as sometimes they can be broken down into separate issues.
 	Each of these can be done by either the same person or different people. 
 	\item[User Story Estimation] \hfill \\
 	Each user story has an estimated amount of effort it will take to complete it. 
-	We use the unit ``Effort Points'' (\textbf{EP}) to evaluate each user story.
+	We use the unit \textit{Effort Points} (\textbf{EP}) to evaluate each user story.
 	Each sprint has a number of EP available; the sum of EP in the stories should be close to the number of EP available in the sprint, although slightly lower to account for time spent on reviewing other user stories and the report. 
 	We determine EP for user stories using a technique called Planning Poker.
 	In Planning Poker, each member of the group selects the number of EP they think a given user story is worth, without the others knowing before everyone has selected a number of EP.
@@ -71,18 +71,22 @@ The parts used are presented here.
 	\item[Product Owner] \hfill \\
 	The product owner is another role, which deals with understanding what the customer wants.
 	The product owner is also in charge of the product backlog, prioritising the tasks and ensures that the tasks are understandable such that it is easy for a developer to proceed with the development of the task.
-	The product owner priotises the tasks after ``what they fell are the best for the project and the customers''. 
+	The product owner priotises the tasks after \enquote{what they fell are the best for the project and the customers}. 
 	\item[Scrum Board] \hfill \\
 	A Scrum board is a board which contains all tasks from the sprint-backlog.
 	These tasks can have different sub-tasks, and these are then moved from different columns depending on where they are currently reside in development.
 	They can be in five different columns:
-	\begin{itemize}
+	\setlength{\multicolsep}{\itemsep}
+	\begin{multicols}{3}
+		\begin{itemize}
 		\item Story
 		\item To-do
 		\item Doing
 		\item Review
 		\item Done
-	\end{itemize}
+	\end{itemize}	
+	\end{multicols}
+
 	\begin{figure}
 	  \begin{center}
 	    \includegraphics[width=0.80\textwidth]{figures/img/scrumboard_compressed.jpg}
