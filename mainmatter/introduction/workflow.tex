@@ -1,49 +1,49 @@
-\subsection*{Workflow}
-In this section we introduce the workflow for collaboration in the Giraf project, under Scrum of Scrum. 
-Groups claim user stories for their sprint backlog at the sprint planning meeting, but it is possible to remove or claim more user stories during the sprint if needed. 
+\subsection{Workflow}
+In this section we introduce the workflow for collaboration in the Giraf project, under Scrum of Scrum.
+Groups claim tasks for their sprint backlog at the sprint planning meeting, but it is possible to remove or claim more tasks during the sprint if needed.
 This is modeled in the \myref{fig:workflow}, the model also reveals that tasks are claimed prior to estimation.
-The ability to remove or claim more user stories is a necessity as not only due to when estimation commences, but also because it is not possible to make exact estimates every time; although it is preferably that it does not happen too often, such that groups are still generally aware of the tasks that will be completed for a given sprint.
+The ability to remove or claim more tasks is a necessity as not only due to when estimation commences, but also because it is not possible to make exact estimates every time; although it is preferably that it does not happen too often, such that groups are still generally aware of the tasks that will be completed for a given sprint.
 Furthermore by claiming a task outside of the sprint planning meeting there will be no chance to discuss how it could be solved in general, making them harder to estimate and less concrete.
-\myref{s1retro} explains how the multiproject reduces the impact of this weakness after the first sprint.
+\myref[name]{s1retro} explains how the multi--project reduces the impact of this weakness after the first sprint.
 
-\bigskip 
-\noindent
+\bigskip
 The remainder of the steps in \myref{fig:workflow} can be kept within the group, although review can be done by anyone not directly involved designing a proposed solution to a user story.
-We have chosen to include a code review process in this years Giraf project. 
-The reason for this is to increase the quality of the code, and its documentation, such as comments and javadocs. 
-This can reduce the speed at which code is introduced, but we have deemed it reasonable due to a lot of the code current is hard to understand, and poorly documented. 
-Code submitted to code review is called a diff, since it is the difference introduced by these changes relative to the current version. 
+We have chosen to include a code review process in this years Giraf project.
+The reason for this is to increase the quality of the code, and its documentation, such as comments and Javadocs.
+This can reduce the speed at which code is introduced, but we have deemed it reasonable due to a lot of the code current is hard to understand, and poorly documented.
+
+Code submitted to code review is called a \textit{diff}, since it is the difference introduced by these changes relative to the current version.
 The person submitting code to review is responsible for finding suitable reviewers.
 Typically one or more people with experience in the application or people who have done similar changes to other applications are asked to review.
-A person can refuse to review a diff if they think they are not suited to review it, or the do not have time. 
+A person can refuse to review a diff if they think they are not suited to review it, or the do not have time.
 A review is over once the one submitting the code for review is confident that what they have made is of a certain quality.
 This quality is hard to define, and is subjective.
 It should be noted that not all changes to the source code repositories strictly must go though the code review process.
-Small insignificant changes, such as correcting spelling, or small graphical bug fixes can be pushed directly. 
+Small insignificant changes, such as correcting spelling, or small graphical bug fixes can be pushed directly to the master branch.
 
-\begin{figure}[H]
+\begin{figure}[p]
+    \footnotesize
 	\centering
 	\begin{tikzpicture}[node distance = 0.5cm, auto]
-	    \footnotesize
 	    \node[wideblock]
 	            (task) at (0,0)
 	            {User story is introduced on Phabricator without a priority, either by a developer or the customer};
-	        
+
 	    \node[wideblock, below = of task]
-	            (triage) {The PO of the multi-project give the user story a priority or discard it};
-	            
+	            (triage) {The PO of the multi--project give the user story a priority or discard it};
+
 	    \node[wideblock, below = of triage]
 	            (planning) {User story is claimed by a project group on Phabricator};
-	            
+
 	    \node[wideblock, below = of planning]
 	            (estimate) {The User Story is estimated by the project group};
-	            
+
 	    \node[wideblock, below = of estimate]
 	            (branch) {A branch is created in git repository involving the user story, which uses the id of the user story};
-	    
+
 	    \node[wideblock, below = of branch]
 	            (work) {The user story is completed and is ready for review, so a diff is created on Phabricator};
-	            
+
 	    \node[wideblock, below = of work]
 	            (review) {A reviewer is chosen for the user story, and he/she reviews the diff and check if the user story is completed.};
 
@@ -52,7 +52,7 @@ Small insignificant changes, such as correcting spelling, or small graphical bug
 
 	    \node[wideblock, below = of ready]
 	            (land) {The diff is applied to the master branch and the task is marked as completed on Phabricator};
-	            
+
 	    \path[line] (task) -- (triage);
 	    \path[line] (triage) -- (planning);
 	    \path[line] (planning) -- (estimate);
@@ -64,7 +64,7 @@ Small insignificant changes, such as correcting spelling, or small graphical bug
 	    \draw[-] (ready) -- node {yes} (cornerthree.center);
 	    \path[line] (cornerthree.center) |- (work);
 	    \path[line] (ready) -- node {no} (land);
-	    
+
 	\end{tikzpicture}
 	\caption{Simplified workflow for the Giraf multi-project.}
 	\label{fig:workflow}

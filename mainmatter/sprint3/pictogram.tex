@@ -1,10 +1,11 @@
 \section{Pictogram Endpoint}\label{sec:pictogramendpoint}
 This section will solve the \userstory{As a developer I would like an endpoint for Pictograms, such that I can retrieve them from GIRAF.}
 
+\kim{I dont understand the problem, all pictograms are downloaded locally before logon. Why would you want to search online?}
 The Pictogram endpoint is used for the PictoSearch library to find different pictograms, as well as to acquire specific pictograms which have not been downloaded yet.
 Currently in the PictoSearch library a user searches for some string, and the local database is queried using \texttt{... LIKE \%searchstring\%} and as such this will also be used for the REST API.
-Therefore a goal of the REST API for pictograms is to provide a search method, such that PictoSearch will return the same results.
-The endpoint will also be used in the case that a user opens e.g. a week schedule which contains a pictogram that the device have not stored locally, the endpoint will then retrieve this single pictogram rather than returning a list of pictograms.
+Therefore a goal of the REST API for pictograms is to provide a search method, such that PictoSearch will return the same results. \kim{Same results for what? If it always resunts the same results then it is a sucky service ;)}
+The endpoint will also be used in the case that a user opens e.g. a week schedule which contains a pictogram that the device have not stored locally, the endpoint will then retrieve this single pictogram rather than returning a list of pictograms. \kim{I think you should make these scenarios even clearer.}
 
 \subsection{Core --- The Model of Pictograms}\label{subsec:pictomodel}
 The model that was described in \myref{subsec:model} was the complete model of the REST API, \myref{fig:pictogramModel} shows the model regarding pictograms along with the fields of these classes.
@@ -16,6 +17,7 @@ The model that was described in \myref{subsec:model} was the complete model of t
 \end{figure}
 
 \todo{Table or description? --- I will make consistent when we decide}
+\kim{It doesnt matter both are good. However, the solution with tables is best ;). If you decide to use tables then your descriptions cannot be so long.}
 Here a brief description of the purpose for each field of the classes on the figure will be given.
 \subsubsection*{Frame}
     \begin{description}[font=\ttfamily\bfseries]
@@ -58,6 +60,7 @@ It contains the following fields:
 	\item[filePath] \hfill \\ A string of the path to the file which the class points to, for the Pictogram endpoint it will be a Pictogram.
 \end{description}
 
+
 The section above explains what is modelled with the Java classes; the following section will present how this information is stored in the database using the tools mentioned in \myref{sec:techstack}.
 
 \subsection{Persistence --- Storing the Model in the Database}\label{subsec:pictomodelstore}
@@ -77,6 +80,7 @@ The other fetch type \texttt{EAGER} would instead retrieve the entity in the sam
 The \texttt{CascadeType.All} means that any change which happens to the \texttt{Pictogram} must cascade to \texttt{PictogramImage} as well.
 The field is set to being optional because when creating the \texttt{Pictogram} using a HTTP POST request, you cannot send the JSON data along with the image file, and as such the requests have to be separated into two.
 The field is therefore optional to allow for the \texttt{Pictogram} to exist without the \texttt{PictogramImage} for a while, as we deemed it better that a \texttt{Pictogram} exists without a \texttt{PictogramImage} than vice versa.
+\kim{To improve this paragraph then you could discuss why you use Lazy instead of Eager}
 
 When creating a One-to-Many a opposite Many-to-One needs to be created on the class the relation is created to.
 
@@ -224,6 +228,7 @@ The factory variable will either be a \texttt{UserIconFactory} or a \texttt{Pict
 In this way the pattern of storing files and the paths to the files is generalised, and can work for virtually any other type of file, as long as they implement a factory which inherit from the abstract factory, and a class which inherits from the abstract class \texttt{PersistFileHandle}.
 
 \subsection{The Service Layer for the Pictogram}\label{ssec:pictogram_service}
+\kim{This is a good section, however it can be a bit hard for the reader to understand why you specially made the rest methods that you did. You could fix that by, somewhere, describe the scenarios that you need to support. e.g. During logon, when a device need to check if it have all pictograms downloaded.}
 This section describes the service layer of the Pictogram endpoint.
 The tool RESTEasy makes it simple to create HTTP Request methods using its annotations such as \texttt{@GET} or \texttt{@PUT}.
 \myref{tbl:pictogramservice} shows a list of all the services provided by the pictogram REST API.
@@ -290,8 +295,8 @@ public Collection<Pictogram> getAllPictograms(@Context User user) {
 }
 \end{lstlisting}
 
-First, the method simply checks if a user is actually received, i.e. is a user logged in or not.
-If this check passes the next if--check on line 13 checks whether the user is in the same department as the department the method will try to get \texttt{Pictogram}s from, if this check fails it also checks whether the user might be a \texttt{SuperUser}, in which case it is also allowed and the if--check will fail.
+First, the method simply checks if a user\kim{What is a user? citizen?} is actually received, i.e. is a user logged in or not.
+If this check passes the next if--check on line 13 checks whether the user is in the same department as the department the method will try to get \texttt{Pictogram}s from, if this check fails it also checks whether the user might be a \texttt{SuperUser}, \kim{You should list the different types of users somewhere.} in which case it is also allowed and the if--check will fail.
 A \texttt{SuperUser} is a user with permissions to do administrative tasks such as create public pictograms.
 
 If both if--checks fail, the method returns what the \texttt{PictogramDao.getAll(user)} method retrieves, which will be all pictograms the user is allowed to see.
@@ -301,7 +306,7 @@ An example of this is the relation between \texttt{Department} and \texttt{Picto
 
 \subsubsection*{PUT--requests}
 A PUT is used to update existing data, and for \texttt{Pictogram} we also need to add the \texttt{PictogramImage} in a PUT--request after it has been posted.
-We create a merge method which simply takes the input retrieved from JSON and swaps the information, such that the new information is set to the data objects in the database.
+We create a merge method which simply takes the input retrieved from JSON and swaps\kim{When you say swap do you mean overwrite? If not then I do see how swapping anything merges the data.} the information, such that the new information is set to the data objects in the database.
 
 \subsubsection*{DELETE-requests}
 A DELETE-request for \texttt{Pictogram} is simple, it finds the \texttt{Pictogram} using the \texttt{PictogramDaoImpl} which also finds the corresponding \texttt{PictogramImage}.

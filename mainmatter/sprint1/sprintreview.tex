@@ -2,11 +2,11 @@
 This section reviews the completion of the tasks and their related user stories solved throughout sprint 1.
 Firstly we will provide a general overview of tasks and the EP estimated in comparison to EP spent, as well as a brief explanation of the discrepancies between the two.
 
-Many of the user stories solved in sprint 1 by our group have low to no effect on the users, as such only two of the changes made are presented for the customer in order to obtain feedback on changes made, these tasks are \textit{Picto Search - No pictograms until you search} and \textit{Picto Search - Reponsive search}.
+Many of the user stories solved in sprint 1 by our group have low to no effect on the users, as such only two of the changes made are presented for the customer in order to obtain feedback on changes made, these tasks are \textit{Picto Search --- No pictograms until you search} and \textit{Picto Search --- Responsive search}.
 
-The remaining tasks that affects the user experience pertain to smaller quality of life changes to the system, e.g., making the wrench in sequence clickable as it is in the other apps. 
-The task \textit{Week Schedule - Scrolling schedule day} was the only claimed task which was not completed, during development it revealed itself to be a larger problem than initially thought, we will be completing this task in the next sprint if it remains a \phigh~priority.
-We will evaluate the results of solving the \pblocking-task which broke the build of libraries. 
+The remaining tasks that affects the user experience pertain to smaller quality of life changes to the system, e.g., making the wrench in sequence clickable as it is in the other apps.
+The task \textit{Week Schedule --- Scrolling schedule day} was the only claimed task which was not completed, during development it revealed itself to be a larger problem than initially thought, we will be completing this task in the next sprint if it remains a \phigh~priority.
+We will evaluate the results of solving the \pblocking-task which broke the build of libraries.
 Lastly this section will discuss the feedback given, by the customers, about the two aforementioned \textit{Picto Search} related tasks and an assessment of the \textit{Week Schedule} task.
 
 \subsection{EP Distribution}
@@ -21,7 +21,7 @@ The table is split into three sections.
 As the table shows most of the Formal Tasks are overestimated.
 The \textit{Update Dependencies} related tasks in particular are overestimated as more errors were expected from an initial inspection of the code.
 The estimations in this sprint were made with a low amount of knowledge about the code in the Giraf project.
-After the first sprint we have gained knowledge about the structure and apps in the Giraf project, about the tools used in it e.g. Gradle and Android Studio and we have gained a deep knowledge of the apps Picto Search, Week Schedule and Sequence.
+After the first sprint we have gained knowledge about the structure and apps in the Giraf project, about the tools used in it e.g. Gradle and Android Studio and we have gained a deep knowledge of the library Picto Search, and the apps Week Schedule and Sequence.
 This knowledge is useful for estimating tasks in the remaining sprints, and will likely make our estimations for tasks in these apps in particular, more accurate.
 
 In order to accommodate for our overestimation of the initial tasks we have taken four extra tasks albeit without estimating them.
@@ -30,21 +30,20 @@ The estimation for those tasks is absent as we thought it better to get them don
 The Informal Tasks section of the table also consumed more time than estimated, although unforeseen support is expected to consume less EP in future sprints as more guides are added to the Wiki.
 Furthermore the issues we have helped resolve should not arise again and were mostly related to issues using the tools like Gradle for the multi-project.
 
-Tallying up and comparing EP estimated with EP spent an 10 point difference reveals itself.
-A variety of factors contribute to this difference, the most significant ones of which we will mention here.
-First and foremost the EP estimated is not some rigid schedule that disallows of from putting in more effort than 81 EP, the 81 EP are derived from how busy are schedule is with courses considering normal working hours and weekends off, i.e. the study regulations ECTS designated time, as such more than the estimated EP can be spent if wished.
+The EP estimated is not some rigid schedule that disallows of from putting in more effort than 93 EP, the 93 EP are derived from how busy are schedule is with courses considering normal working hours and weekends off, i.e. the study regulations ECTS designated time, as such more than the estimated EP can be spent if wished.
 Secondly members do not keep an exact track of EP spent, but rather reckon what they spent after the fact.
-Additionally  we always round up our EP spent, this creates a minimum per task of 1 EP.
-as such exact estimations may not even be possible for some tasks. 
-Lastly when initially estimating with planning poker a formula is chosen to estimate by. 
-For this sprint we used the formula $2^n$, however, this formula might fit neither our best estimate nor the actual time spent, thus decreasing the accuracy of the estimates. 
-Informal tasks such as Report \& Review do not follow the formula allowing for it to ``fill'' the last missing EP and thereby reach the exact estimated amount. 
+Additionally we always round up our EP spent, this creates a minimum per task of 1 EP.
+As such exact estimations may not even be possible for some tasks.
+While the total EP spent might be close to the sum of estimates, each estimate is not precise, which means that we could change how we estimate a single task.
+Lastly when initially estimating with planning poker a formula is chosen to estimate by.
+For this sprint we used the formula $2^n$, however, this formula might fit neither our best estimate nor the actual time spent, thus decreasing the accuracy of the estimates.
+Informal tasks such as Report \& Review do not follow the formula allowing for it to \enquote{fill} the last missing EP and thereby reach the exact estimated amount.
 For the sake of next sprint this may be subject to change and report writing for each task may be considered in task estimation, in doing so it may be influenced less by how many EP estimated are left after estimating tasks and reach a better estimate.
 Obviously more time than simply task documentation is spent on the report and this will have to be contributed to the next sprint if task estimation should include time spent documenting.
 
 \subsection{Gradle}
-During the debugging of the issue, which caused us not being able to build libraries, explained in \myref{sec:breaking}, we gained a lot of insight into how the Gradle build system works, and how the Giraf libaries and applications are connected internally. 
-We have since used this experience to resolve other minor issues and assist other groups in their issues related to Gradle. 
+During the debugging of the issue, which caused us not being able to build libraries, explained in \myref{sec:breaking}, we gained a lot of insight into how the Gradle build system works, and how the Giraf libraries and applications are connected internally.
+We have since used this experience to resolve other minor issues and assist other groups in their issues related to Gradle.
 
 \subsection{Picto Search}
 This subsection pertains to the two tasks \textit{Picto Search - No pictograms until you search} and \textit{Picto Search - Reponsive search}.
@@ -54,11 +53,11 @@ Each build of the Giraf product is dependent on the server, between our completi
 This problem was discovered too late and was therefore not solved before the meeting.
 
 In order to still obtain some feedback on Picto Search, we provided the product owners with the screenshots seen in \myref{untilSearch} \& \myref{RSearch}.
-In doing so some feedback is obtained, although the changes will have to be presented through a demo for the next customer meeting, as such a more complete description of how the changes are received is to be part of sprint 2 review.   
+In doing so some feedback is obtained, although the changes will have to be presented through a demo for the next customer meeting, as such a more complete description of how the changes are received is to be part of sprint 2 review.
 In regard to the changes the customers said that \enquote{The changes seem very intuitive} while being adamant about an intuitive workflow promoting \textit{easy use} which they value highly.
 
 \subsection{Week Schedule}
-In the Week Schedule app we made some minor changes, one is visual and one is a bug-fix. 
+In the Week Schedule app we made some minor changes, one is visual and one is a bug-fix.
 However we did not solve the task of making each day easier to scroll in, as this task proved itself to require more changes than initially thought.
 Adding a scroll function to week days creates conflicts with the already developed functionality as currently the user can change the order of pictograms by dragging them.
 This happens to be implemented in the same way as scroll is commonly implemented, by holding and dragging.
