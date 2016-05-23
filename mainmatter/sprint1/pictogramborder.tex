@@ -3,35 +3,33 @@
     \userstory{As a user, I would like to have pictograms shown with a surrounding border, such that they are clearly distinguished from the background.}
 \end{center}
 
-This task was given a \phigh-priority by the PO. 
-
 In the Week Schedule application it can be hard to distinguish between pictrograms and the background.
-This is primarily an issue when a pictogram has the same background colours as the background in the Week Schedule, e.g. Sunday with its white background can be problematic since a lot of pictograms has a white background. 
+This is primarily an issue when a pictogram has the same background colours as the background in the Week Schedule, e.g. Sunday with its white background can be problematic since a lot of pictograms has a white background.
 An example of this issue is show in  \myref{fig:before-after-borders}.
 
-Changing the background colour of a weekday is not possible since the colours are predefined by the costumer, such that they represent the current physical version of week schedules in use. 
+Changing the background colour of a weekday is not possible since the colours are predefined by the costumer, such that they represent the current physical version of week schedules in use.
 
 To solve this issue a border will be drawn around each pictogram in Week Schedule.
 Currently the pictograms exists as squares, but are rounded with a radius of 10 pixels.
-To draw a border along the edge of the image, it needs to follow the same path as the rounded pictogram. 
-To implement this we add the drawing of this to the \texttt{onDraw()} method of the \texttt{RoundedImageView} class which renders the pictogram inside the Week Schedule application. 
-Since the same border will be needed for each pictogram, we use the singleton pattern to make it once and reuse the same object as argument for the method call which draws the image on the screen. 
-The preexising feature which rounds the corners of the pictograms is implemented in a very similar way, to drawing a border, we therefore refactor its code to use the singleton pattern in much the same way as we have just done for the border. 
+To draw a border along the edge of the image, it needs to follow the same path as the rounded pictogram.
+To implement this we add the drawing of this to the \texttt{onDraw()} method of the \texttt{RoundedImageView} class which renders the pictogram inside the Week Schedule application.
+Since the same border will be needed for each pictogram, we use the singleton pattern to make it once and reuse the same object as argument for the method call which draws the image on the screen.
+The preexising feature which rounds the corners of the pictograms is implemented in a very similar way, to drawing a border, we therefore refactor its code to use the singleton pattern in much the same way as we have just done for the border.
 
-This change will also reduce the number of allocations, and  thusly helps to reduce the number of garbage collection pauses, which can freeze the system\footnote{\url{http://developer.android.com/training/articles/perf-tips.html\#ObjectCreation}}. 
-Since other methods also uses the \texttt{RoundedImageView} class the singleton should change if called with different dimensions as it requires different rounded edges and borders. 
-In this case the objects should be corrected to fit the new dimensions. 
+This change will also reduce the number of allocations, and  thusly helps to reduce the number of garbage collection pauses, which can freeze the system\footnote{\url{http://developer.android.com/training/articles/perf-tips.html\#ObjectCreation}}.
+Since other methods also uses the \texttt{RoundedImageView} class the singleton should change if called with different dimensions as it requires different rounded edges and borders.
+In this case the objects should be corrected to fit the new dimensions.
 
-In \myref{lst:singleton_example} the code for the singleton for the border is given. 
-We first check, on line 12-13, if a singleton object have been instantiated already, such that it could be reused. 
-Then we check, on line 14, if the singleton is being used to draw a border with the same dimensions as it has previously. 
-If this is not the case, then we reset it and redraw the border by setting the properties on the Path \texttt{drawPath}. 
-Lastly we return the path to be drawn as a border. 
+In \myref{lst:singleton_example} the code for the singleton for the border is given.
+We first check, on line 12-13, if a singleton object have been instantiated already, such that it could be reused.
+Then we check, on line 14, if the singleton is being used to draw a border with the same dimensions as it has previously.
+If this is not the case, then we reset it and redraw the border by setting the properties on the Path \texttt{drawPath}.
+Lastly we return the path to be drawn as a border.
 
-The result of these changes is show in \myref{fig:before-after-borders}. 
-This change will be reviewed by the customer at the customer meeting. 
+The result of these changes is show in \myref{fig:before-after-borders}.
+This change will be reviewed by the customer at the customer meeting.
 
-\begin{lstlisting}[float, floatplacement=h, caption={One of the singletons used to solve this task.}, label={lst:singleton_example}] 
+\begin{lstlisting}[float, floatplacement=h, caption={One of the singletons used to solve this task.}, label={lst:singleton_example}]
 private static Path drawPath;
 
 /**
@@ -55,7 +53,7 @@ public static Path getDrawPath(RoundedImageView roundedImageView, float cornerRa
     }
     return drawPath;
 }
-\end{lstlisting} 
+\end{lstlisting}
 
 \begin{figure*}[ht]
     \centering

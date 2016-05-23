@@ -1,79 +1,79 @@
 \section{Update Dependencies}
-In the current state of the Giraf project the individual sub-project, which are applications or libraries for Android, use a series of common libraries made for the Giraf project. 
-The dependencies for each application and library are not all updated to use the newest versions of each other, this might cause bugs that are already fixed in a later version. 
+In the current state of the Giraf project the individual sub--project, which are applications or libraries for Android, use a series of common libraries made for the Giraf project.
+The dependencies for each application and library are not all updated to use the newest versions of each other, this might cause bugs that are already fixed in a later version.
 Consequently since the dependencies are not updates, new bugs may be caused as the newer versions have not been implemented with each other.
 Fixing these bugs is a part of the task to update dependencies and must be fixed when doing so.
-For this reason the first order of business should be updating and configure the dependencies, such that this year's Giraf project will start with the fewest issues regarding the dependencies. 
-Subsequently the Product Owner has given these tasks the priority \phigh. 
-We have estimated these tasks to take 8 EP each for Sequence and Sequence-Viewer, and 16 EP for Picto Search. 
-We have taken three tasks which relate to upgrading the dependencies of the applications: Sequence and the two libraries Sequence-Viewer and Picto Search. 
-We took these as they all had the same versions in common to be upgraded, they are: 
+For this reason the first order of business should be updating and configure the dependencies, such that this year's Giraf project will start with the fewest issues regarding the dependencies.
+Subsequently the Product Owner has given these tasks the priority \phigh.
+We have estimated these tasks to take 8 EP each for Sequence and Sequence-Viewer, and 16 EP for Picto Search.
+We have taken three tasks which relate to upgrading the dependencies of the applications: Sequence and the two libraries Sequence-Viewer and Picto Search.
+We took these tasks as they involved common sub--tasks of versions to be upgraded, they are:
 \begin{dankscription}{\ttfamily}{meta-database}
-    \item[localDB] from version 5.1.2 to 5.1.5 
-    \item[meta-database] from version 3.2.0 to 3.2.3 
-    \item[oasisLib] from version 7.2.0 to 9.0.2 
-\end{dankscription} 
-\texttt{localDB} is a library which is used to store information in a local database, most of the stored data is received from the remote server when the Giraf Launcher is opened for the first time. 
-\texttt{localDB}'s purpose is to reduce the inconvenience of having either a slow or no internet connection, however it also introduces some problems in regards to keeping the remote and the local database in sync.  
-\texttt{meta-database} is used to create the \texttt{localDB}, the changes therein do not affect any of the applications we are tasked with upgrading. 
+    \item[localDB] from version 5.1.2 to 5.1.5
+    \item[meta-database] from version 3.2.0 to 3.2.3
+    \item[oasisLib] from version 7.2.0 to 9.0.2
+\end{dankscription}
+\texttt{localDB} is a library which is used to store information in a local database, most of the stored data is received from the remote server when the Giraf Launcher is opened for the first time.
+\texttt{localDB}'s purpose is to reduce the inconvenience of having either a slow or no internet connection, however it also introduces some problems in regards to keeping the remote and the local database in sync.
+\texttt{meta-database} is used to create the \texttt{localDB}, the changes therein do not affect any of the applications we are tasked with upgrading.
 \texttt{localDB} and \texttt{meta-database} have only had their patch-number updated, this indicates a bugfix or small internal corrections as well as backwards compatibility, as such they should not introduce any issues when upgrading.
-  
+
 \texttt{oasisLib} is the library that handles connection from the tablet to the remote database.
-In the upgrade from 7.2.0 to 9.0.2 some of the methods used in the applications and libraries were deprecated, and subsequently removed. 
-One such method is the one which is responsible for loading pictograms, loading pictograms happens to be done through several methods depending on what instance the pictogram is required in. 
-All uses of these methods have to be replaced with the new method of loading pictograms. 
-This now uses a helper, \texttt{pictogramHelper}, which has replaced the methods used directly on the model. 
-  
-\begin{description} 
-    \item[Sequence--Viewer] \hfill \\ 
-    The Sequence--Viewer used the model directly to get an image, since this method was deprecated when updating \texttt{oasisLib}, it has to be changed. 
-    This method was used to replace a pictogram in a view after selecting an option from a multiple choice. 
+In the upgrade from 7.2.0 to 9.0.2 some of the methods used in the applications and libraries were deprecated, and subsequently removed.
+One such method is the one which is responsible for loading pictograms, loading pictograms happens to be done through several methods depending on what instance the pictogram is required in.
+All uses of these methods have to be replaced with the new method of loading pictograms.
+This now uses a helper, \texttt{pictogramHelper}, which has replaced the methods used directly on the model.
+
+\begin{description}
+    \item[Sequence--Viewer] \hfill \\
+    The Sequence--Viewer used the model directly to get an image, since this method was deprecated when updating \texttt{oasisLib}, it has to be changed.
+    This method was used to replace a pictogram in a view after selecting an option from a multiple choice.
     To resolve this issue the line:
 \begin{lstlisting}[frame=l]
-pictogram.setImage(helper.pictogramHelper.getById(id).getImage()); 
-\end{lstlisting} 
+pictogram.setImage(helper.pictogramHelper.getById(id).getImage());
+\end{lstlisting}
 was changed to:
 \begin{lstlisting}[frame=l]
-if(helper.pictogramHelper.getById(id).getName() == null) { 
-    pictogram.setName("pictogram_name"); 
-} else { 
-    pictogram.setName(helper.pictogramHelper.getById(id).getName()); 
-} 
-helper.pictogramHelper.setImage(pictogram, 
+if(helper.pictogramHelper.getById(id).getName() == null) {
+    pictogram.setName("pictogram_name");
+} else {
+    pictogram.setName(helper.pictogramHelper.getById(id).getName());
+}
+helper.pictogramHelper.setImage(pictogram,
     helper.pictogramHelper.getImage(
-        helper.pictogramHelper.getById(id))); 
-\end{lstlisting} 
+        helper.pictogramHelper.getById(id)));
+\end{lstlisting}
 
-    Additionally a null-check have been added to assure that a name, locally, is never set to \texttt{null}, as this can cause issues in other methods which assumes that every pictogram has a name. 
-    After resolving these issues the application is successfully running as prior to the update. 
-     
-    \item[Sequence] \hfill \\ 
-    After upgrading sequence to use the newest versions of the libraries mentioned above Sequence was unable to build. 
-    This was caused by the use of a deprecated method. 
-    The issue was fixed by changing a single line to use the correct replacement for the deprecated method. 
+    Additionally a null--check have been added to assure that a name, locally, is never set to \texttt{null}, as this can cause issues in other methods which assumes that every pictogram has a name.
+    After resolving these issues the application is successfully running as prior to the update.
+
+    \item[Sequence] \hfill \\
+    After upgrading sequence to use the newest versions of the libraries mentioned above Sequence was unable to build.
+    This was caused by the use of a deprecated method.
+    The issue was fixed by changing a single line to use the correct replacement for the deprecated method.
     The code prior to the fix was:
 \begin{lstlisting}[frame=l]
 pictogram.setImageBitmap(
-    helper.pictogramHelper.getById(id).getImage()); 
-\end{lstlisting} 
+    helper.pictogramHelper.getById(id).getImage());
+\end{lstlisting}
     and the fixed code is:
 \begin{lstlisting}[frame=l]
-pictogram.setImageBitmap( 
+pictogram.setImageBitmap(
     helper.pictogramHelper.getImage(
-        helper.pictogramHelper.getById(id))); 
-\end{lstlisting} 
+        helper.pictogramHelper.getById(id)));
+\end{lstlisting}
 
-    The line in question is responsible for loading the pictograms from the database into the application. 
-    Previously the model had been used directly, however in \texttt{oasisLib} 9.0.2 this is no longer supported. 
-    The method call \texttt{.getById(id)} returns a pictogram object and on that object the \texttt{.getImage()} method is called. 
-    The \texttt{.getImage()} method has been removed from the pictogram model class in \texttt{oasisLib} 9.0.2, which is why the helper should be used instead. 
-    After this replacement was made we informally verified that the application worked identically to the previous version with the old dependencies. 
-    
+    The line in question is responsible for loading the pictograms from the database into the application.
+    Previously the model had been used directly, however in \texttt{oasisLib} 9.0.2 this is no longer supported.
+    The method call \texttt{.getById(id)} returns a pictogram object and on that object the \texttt{.getImage()} method is called.
+    The \texttt{.getImage()} method has been removed from the pictogram model class in \texttt{oasisLib} 9.0.2, which is why the helper should be used instead.
+    After this replacement was made we informally verified that the application worked identically to the previous version with the old dependencies.
+
     \item[Picto Search] \hfill \\
-    After upgrading Picto Search to use the newest dependencies, no issues were found which was not already present in the old version and therefore already on the task list for the multi-project. 
-    Therefore no changes were made to the application itself during the upgrade. 
+    After upgrading Picto Search to use the newest dependencies, no issues were found which was not already present in the old version and therefore already on the task list for the multi--project.
+    Therefore no changes were made to the application itself during the upgrade.
 \end{description}
 
- With the completion of these tasks, it is now possible to start working on the tasks using these three applications. 
- However, we overestimated how much time we would spend on these tasks, we spent a total of 15 EP but had allocated 32 EP for it. 
- This task also gave us a deeper understanding of how the Giraf project is structured and how Android applications are structured and written internally. 
+ With the completion of these tasks, it is now possible to start working on the tasks using these three applications.
+ However, we overestimated how much time we would spend on these tasks, we spent a total of 15 EP but had allocated 32 EP for it.
+ This task also gave us a deeper understanding of how the Giraf project is structured and how Android applications are structured and written internally.
