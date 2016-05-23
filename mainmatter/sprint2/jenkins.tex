@@ -1,15 +1,15 @@
-\section{Assisting in Fixing the Continuous Integration}
-During the course of this sprint, we helped the server group SW611F16 with getting the Continuous Integration  to work again. 
-This was not a task on the backlog, but rather an ad-hoc task in which we used our experience gained during the first sprint.  
+\section{Assisting in Fixing the Continuous--Integration}
+During the course of this sprint, we helped the server group SW611F16 with getting the Continuous Integration to work again.
+This was not an user story on the backlog, but rather an ad--hoc task in which we used our experience gained during the first sprint.
 
-In GIRAF we use Jenkins\footnote{\url{https://jenkins.io}} to automate builds, and Artifactory\footnote{\url{https://www.jfrog.com/artifactory/}} to deliver the internal libraries to all builds, including local builds (On a developers pc). 
-During the first sprint the servers were moved from the old infrastructure to the new and in the process some of the builds were broken. 
-This can severely cause issues for developers as they were unable to properly use Artifactory, and would have to build libraries locally if they wanted to include them.
-The server group had little to no experience with building applications for Android using the Gradle build system (briefly described in \myref{subsec:gradle}). 
+In GIRAF we use Jenkins\footnote{\url{https://jenkins.io}} to automate builds, and Artifactory\footnote{\url{https://www.jfrog.com/artifactory/}} to deliver the internal libraries to all builds, including local builds (on a developers machine).
+During the first sprint the servers were moved from the old infrastructure to the new and in the process some of the builds were broken.
+This can severely cause issues for developers as they were unable to properly use Artifactory, and would have to build libraries locally if they wanted to include them in the apps.
+The server group had little to no experience with building applications for Android using the Gradle build system (briefly described in \myref[name]{subsec:gradle}).
 
 During the previous years of the GIRAF project, a few scripts in Groovy were written to help automate the builds and upload them to Artifactory, such that developers can use the libraries.
-These scripts include some paths to Artifactory and local server directories in which keys to sign the packages lie. 
-Since these paths had changed they needed to be updated, and since the Jenkins server switched to using a Gradle wrapper per project rather a wrapper per machine, i.e. jenkins, a Gradle wrapper needed to be added.
-Additionally the Gradle configuration files needed to be updated, such that they used the newest version of the Android Build Tools and Gradle. 
-We also assisted in debugging the Jenkins configuration and repairing it. 
+These scripts include some paths to Artifactory and local server directories in which keys to sign the packages are located.
+Since these paths had changed they needed to be updated, and since the Jenkins server switched to using a Gradle wrapper per project rather than a Gradle installation per machine, i.e. Jenkins, a Gradle wrapper needed to be added.
+Additionally the Gradle configuration files needed to be updated, such that they used the newest version of the Android Build Tools and Gradle.
+We also assisted in debugging the Jenkins configuration and repairing it.
 This ended up taking some time from development, roughly 3 EP were used supporting the server groups.
