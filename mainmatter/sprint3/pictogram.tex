@@ -5,11 +5,11 @@
 
 The Pictogram endpoint is used for the Picto Search library to find different pictograms, as well as to acquire specific pictograms which have not been downloaded yet.
 Currently in the Picto Search library a user searches for some string, and the local database is queried using \texttt{... LIKE \%searchstring\%} and as such this will also be used for the REST API.
-Therefore a goal of the REST API for pictograms is to provide a search method, such that PictoSearch with the REST API will return the same results as before it started using the REST API. 
+Therefore a goal of the REST API for pictograms is to provide a search method, such that PictoSearch with the REST API will return the same results as before it started using the REST API.
 The endpoint is not only used for the initial synchronisation, but also in other scenarios, for example:
 While a citizen is logged in on a tablet, a guardian could edit a week schedule with a newly created pictogram.
 The tablet the citizen uses does not have this newly created pictogram, so when the citizen opens the week schedule it will have to obtain the pictogram in some way.
-To obtain this pictogram the endpoint is fitted with a service to retrieve a single pictogram, such that this dynamic instantly synchronising work--flow is possible. 
+To obtain this pictogram the endpoint is fitted with a service to retrieve a single pictogram, such that this dynamic instantly synchronising work--flow is possible.
 
 \subsection{Core --- The Model of Pictograms}\label{subsec:pictomodel}
 The model that was described in \myref[name]{subsec:model} was the complete model of the REST API, \myref{fig:pictogramModel} shows the model regarding pictograms along with the fields of these classes.
@@ -240,7 +240,7 @@ It meant that the data was now inherited from a single class.
 When creating a DAO for retrieving the information we did not want to copy--paste as well, as the queries would retrieve the same data just for different kind of objects, therefore the DAO was generalised using Type parameters as shown on \myref{lst:typeparameter}.
 This means that any Type that extends from the class \texttt{PersistFileHandle} is able to be used with this Class, which means that both \texttt{PictogramImage} and \texttt{UserIcon} can now be used.
 
-\begin{lstlisting}[float, floatplacement=h, caption={The \texttt{FileDaoImpl} class header which uses Type Parameters to generalise which types it can be used with. \texttt{[...]} denotes omitted code.},label={lst:typeparameter}]
+\begin{lstlisting}[float, floatplacement=h, caption={The \texttt{FileDaoImpl} class header which uses Type Parameters to generalise which types it can be used with.},label={lst:typeparameter}]
 public abstract class FileDaoImpl<T extends PersistFileHandle> implements FileDao<T> {
     [...]
 }
@@ -251,7 +251,7 @@ Therefore we decided to use the abstract factory pattern, such that the method k
 For further reading on the factory pattern see The Gang of Four's description in their book \textit{Design Patterns: Elements of Reusable Object-oriented Software} \cite{abstractfactorypattern}.
 The \textit{Abstract Factory Pattern} can be shown using our own classes on \myref{fig:asbtractFactory}.
 
-\begin{lstlisting}[float, floatplacement=h, caption={Trying to use a Type Parameter constructor, which Java cannot do. \texttt{[...]} denotes omitted code.},label={lst:TypeParameterConstructor}]
+\begin{lstlisting}[float, floatplacement=h, caption={Trying to use a Type Parameter constructor, which Java cannot do.},label={lst:TypeParameterConstructor}]
 public T add(Readable file) throws IOException {
     [...]
     T fh = new T(uuid.toString());
@@ -270,7 +270,7 @@ When e.g. a \texttt{FileDao<PictogramImage>} is created, an instance of \texttt{
 This instance has a factory field, which will then be one of the non abstract subclasses or subfactories of \texttt{PersistFileHandleFactory} which in this case is the \texttt{PictogramImageFactory}.
 This means that the \texttt{add} function mentioned earlier now knows what object it is working on and thus the line shown in \myref{lst:TypeParameterConstructor} can be changed to the line shown in \myref{lst:TypeParameterConstructorActual}.
 
-\begin{lstlisting}[float, floatplacement=h, caption={Trying to use a Type Parameter constructor, which Java cannot do. \texttt{[...]} denotes omitted code.},label={lst:TypeParameterConstructorActual}]
+\begin{lstlisting}[float, floatplacement=h, caption={Trying to use a Type Parameter constructor, which Java cannot do.},label={lst:TypeParameterConstructorActual}]
 public T add(PersistFileHandleFactory<T> factory, Readable file) throws IOException {
     [...]
     fh = factory.create(uuid.toString());

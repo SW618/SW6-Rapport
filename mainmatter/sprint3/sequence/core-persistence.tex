@@ -6,7 +6,7 @@ A \texttt{Frame} has the field \texttt{partOfSequences} which is created in the 
 The \texttt{@ManyToMany} annotation is what makes Hibernate create the relationship.
 The \texttt{mappedBy = "elements"} argument tells Hibernate that database mapping is done with the \texttt{elements} field on the class the list consists of, namely \texttt{Sequence}.
 
-\begin{lstlisting}[float, floatplacement=H, caption={The field \texttt{partOfSequences} in the \texttt{Frame} class. \texttt{[...]} denotes omitted code.},label={lst:frame-sequence}]
+\begin{lstlisting}[float, floatplacement=H, caption={The field \texttt{partOfSequences} in the \texttt{Frame} class.},label={lst:frame-sequence}]
 public abstract class Frame {
 	[...]
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "elements")
@@ -17,7 +17,7 @@ public abstract class Frame {
 
 Therefore to show how this is mapped, we need to look at the \texttt{elements} field in \texttt{Sequence} which is shown in \myref{lst:sequnce-frame}.
 
-\begin{lstlisting}[float, floatplacement=H, caption={The field elements in the \texttt{Sequence} class. \texttt{[...]} denotes omitted code.},label={lst:sequnce-frame}]
+\begin{lstlisting}[float, floatplacement=H, caption={The field elements in the \texttt{Sequence} class.},label={lst:sequnce-frame}]
 public class Sequence extends PictoFrame implements Iterable<Frame> {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "Sequence__Frame",
