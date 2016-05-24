@@ -1,7 +1,7 @@
 \section{Pictogram Endpoint}\label{sec:pictogramendpoint}
 \begin{center}
    \userstory{As a developer I would like an endpoint for Pictograms, such that I can retrieve them from GIRAF.}
-\end{center} 
+\end{center}
 
 \kim{I dont understand the problem, all pictograms are downloaded locally before logon. Why would you want to search online?}
 The Pictogram endpoint is used for the Picto Search library to find different pictograms, as well as to acquire specific pictograms which have not been downloaded yet.
@@ -19,14 +19,14 @@ The model that was described in \myref[name]{subsec:model} was the complete mode
 \end{figure}
 
 Here a brief description of the purpose for each field of the classes on the figure will be given.
-Significant fields which require further explination, will be elaborated in the following descriptions           
-         
+Significant fields which require further explination, will be elaborated in the following descriptions
+
 \subsubsection*{Frame}
 
 \begin{table}[!h]
     \footnotesize
     \centering
-    \begin{tabularx}{\textwidth}{ l l X }                                                 
+    \begin{tabularx}{\textwidth}{ l l X }
         Field Name    & Type                                & Short Description                                \\
         \midrule
         \texttt{id}              & \texttt{long}                                      & Unique Identifier                                             \\
@@ -41,19 +41,19 @@ Significant fields which require further explination, will be elaborated in the 
 		\item[lastEditAt] \hfill \\ This is a time stamp of when the Frame was last edited --- auto updated by Hibernate when changes on the object is persisted in the database.
 		It is to be used for conflict handling as e.g. pictograms can be altered in the PictoCreator tool, and a need for conflict handling is therefore needed.
 		\item[partofSequences] \hfill \\ This is a collection of sequences this frame is used in; why this collection is needed will be further explained in \myref{sec:sequence}.
-	\end{description}    
+	\end{description}
 
-\subsubsection*{PictoFrame}    
+\subsubsection*{PictoFrame}
 
-\begin{table}[!h] 
+\begin{table}[!h]
     \footnotesize
     \centering
-    \begin{tabularx}{\textwidth}{ l l X }                                                 
+    \begin{tabularx}{\textwidth}{ l l X }
         Field Name    & Type                                & Short Description                                \\
         \midrule
         \texttt{title}        & \texttt{String}       & Title of the \texttt{PictoFrame}, can be searched for\\
         \texttt{owner}        & \texttt{User}         & The owner of the \texttt{PictoFrame}  \\
-        \texttt{accessLecvel} & \texttt{AccessLevel}  & Describes who can access the \texttt{PictoFrame} \\   
+        \texttt{accessLecvel} & \texttt{AccessLevel}  & Describes who can access the \texttt{PictoFrame} \\
         \texttt{department}   & \texttt{Department}  & The \texttt{Department} which the \texttt{PictoFrame} belongs to\\
         \texttt{optionOn} & \texttt{Collection\textless Choice\textgreater}  & The \texttt{Choice}s which the \texttt{PictoFrame} is on\\
     \end{tabularx}
@@ -71,19 +71,19 @@ Significant fields which require further explination, will be elaborated in the 
 		This is needed for Hibernate to create the many-to-many relationship between \texttt{PictoFrame} and \texttt{Choice}; and will be used when deleting elements, to remove the correct references.
 	\end{description}
 
-\subsubsection*{Pictogram} 
-  
+\subsubsection*{Pictogram}
+
 \begin{table}[H]
     \footnotesize
     \centering
-    \begin{tabularx}{\textwidth}{ l l X }                                                 
+    \begin{tabularx}{\textwidth}{ l l X }
         Field Name    & Type                                & Short Description                                \\
         \midrule
         \texttt{pictogramImage}        & \texttt{PictogramImage}       & Reference to the \texttt{PictogramImage} of the \texttt{Pictogram}\\
     \end{tabularx}
     \caption{Table of fields in the \texttt{Pictogram} class.}
     \label{tbl:pictogram_class}
-\end{table}  
+\end{table}
 
 \subsubsection*{PictogramImage}
 The \texttt{PictogramImage} has no fields of its own, but is used to indicate that the image is used for a \texttt{Pictogram} instead of e.g. a UserIcon.
@@ -93,14 +93,14 @@ However it inherits fields for PersistFileHandle.
 This class is what all objects that encapsulates image files will inherit from, this means \texttt{PictogramImage}s and also \texttt{UserIcon}s.
 Originally when we started working on the REST API for Pictogram the \texttt{PersistFileHandle} did not exist and all information on this class was saved directly on the \texttt{UserIcon} class.
 Why and how this new generality is created will be explained in \myref{subsec:persistfilehandle}.
-It contains the following fields:     
+It contains the following fields:
 \begin{table}[!h]
     \footnotesize
     \centering
-    \begin{tabularx}{\textwidth}{ l X X }                                                 
+    \begin{tabularx}{\textwidth}{ l X X }
         Field Name    & Type                                & Short Description                                \\
         \midrule
-        \texttt{id}        & \texttt{Long}       & Unique identifier\\      
+        \texttt{id}        & \texttt{Long}       & Unique identifier\\
         \texttt{filePath}        & \texttt{String}       & Path to the file\\
     \end{tabularx}
     \caption{Table of fields in the \texttt{PersistFileHandle} class.}
