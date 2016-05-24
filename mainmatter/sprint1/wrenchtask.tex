@@ -1,6 +1,6 @@
 \section{Sequence Wrench Should be Clickable}
 \begin{center}
-    \userstory{As a citizen, I want to be able to click on the wrench when editing a Sequence, to edit which pictogram is chosen. (Same function as when the picture is clicked)}\footnote{Note that this is the user story as written by the PO. This is not correct, as citizens cannot edit sequences, guardians can. And they are called pictograms not pictures. This will also be mentioned in \myref[name]{s1retro}.}
+    \userstory{As a citizen, I want to be able to click on the wrench when editing a Sequence, to edit which pictogram is chosen. (Same function as when the picture is clicked)\footnote{Note that this is the user story as written by the PO. This is not correct, as citizens cannot edit sequences, guardians can. And they are called pictograms not pictures. This will also be mentioned in \myref[name]{s1retro}.}}
 \end{center}
 
 \myref{fig:seq_wrench} shows how a guardian using the Sequence tool views a sequence.
@@ -16,8 +16,7 @@ Therefore when the wrench is tapped it should start the events that are included
     \caption{A screenshot of a Sequence thumbnail as viewed by a guardian.}\label{fig:seq_wrench}
     \vspace{-5pt}
 \end{wrapfigure}
-\bigskip
-\noindent
+\\
 In order to solve this problem firstly we go through the code looking for the implementation of both the bin and the wrench realising that these are both implemented as buttons.
 These buttons will henceforth be referred to as the delete and the edit button respectively.
 The method \texttt{setupAdapter(final Sequence seq)}, which creates the button view, also calls and overrides the methods that provide their functionality, however no such method is called for the edit button.
