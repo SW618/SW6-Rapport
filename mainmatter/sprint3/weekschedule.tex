@@ -45,13 +45,10 @@ For some of the fields further details and thoughts behind their creation is pro
 The \texttt{WeekSchedule} class is central to the modelling of week schedules.
 All information about a week schedule can be derived from this class, we will start by presenting this class and then following its fields to find the objects of types \texttt{Weekday}, \texttt{WeekdayFrame} and lastly \texttt{WeekdayFrameProgress}.
 
-\begin{table}[ht]
-\resizebox{\textwidth}{!}{%
+\begin{table}[H]
+    \footnotesize
     \centering
-    \begin{tabular}{lll}
-        \multicolumn{3}{c}{\Large{Class: \texttt{WeekSchedule}}}                                                                                \\
-        \tblgrpsep
-        \tblgrpsep
+    \begin{tabularx}{\textwidth}{ l l X }
         \textbf{Field Name} & \textbf{Type}                                     & \textbf{Short Description}                                    \\
         \midrule
         \texttt{id}         & \texttt{long}                                     & Unique Identifier                                             \\
@@ -61,18 +58,14 @@ All information about a week schedule can be derived from this class, we will st
         \texttt{department} & \texttt{Department}                               & The department that owns the \texttt{WeekSchedule}            \\
         \texttt{users}      & \texttt{Collection\textless User\textgreater}     & All users for whom the \texttt{WeekSchedule} is available     \\
         \texttt{days}       & \texttt{EnumMap\textless Day, Weekday\textgreater}     & The \texttt{weekday}s belonging to the \texttt{WeekSchedule}
-    \end{tabular}}
+    \end{tabularx}
     \caption{Table of fields in the \texttt{WeekSchedule} class.}
     \label{tbl:WeekSchedule}
 \end{table}
-\todo[inline]{Har gjort dem viewable nu, er ikke sikker på om overskriften skal være deri, det er jo captionens job? - Troels}
-
 \noindent
-The fields id, name and thumbnail are fairly straight forward and thus will not be discussed further.
+The fields id, lastedited, name, and thumbnail are fairly straight forward and thus will not be discussed further.
 These kind of self--explanatory fields exist for all the following classes, in general we will not go into detail with id, name and similar simple fields as their names combined with the short description is sufficient for them to be understood, so if a field is omitted from further description it is because we deem it self explanatory.
 \begin{description}
-    \item [\texttt{lastEdit}] \hfill \\
-    The \texttt{lastEdit} field serves the same purpose as \texttt{lastEdit} previously described in \myref{sec:pictogramendpoint}.
     \item [\texttt{department}] \hfill \\
     The \texttt{department} field is used to restrict access such that only users that are part of the \texttt{department} that owns the \texttt{WeekSchedule}, can access that \texttt{WeekSchedule}.
     \item [\texttt{users}] \hfill \\
@@ -90,13 +83,10 @@ A \texttt{WeekSchedule} that has had any pictograms added to any related \texttt
 These \texttt{Weekdays} instances represent a single day of the week and contain information about the activities on a given day.
 \myref{tbl:Weekday} provides an overview of how we model a weekday in the REST API.
 
-\begin{table}[ht]
-\resizebox{\textwidth}{!}{%
+\begin{table}[H]
+    \footnotesize
     \centering
-    \begin{tabular}{lll}
-        \multicolumn{3}{c}{\Large{Class: \texttt{Weekday}}}                                                                                \\
-        \tblgrpsep
-        \tblgrpsep
+    \begin{tabularx}{\textwidth}{ l l X }
         \textbf{Field Name} & \textbf{Type}                                     & \textbf{Short Description}                                    \\
         \midrule
         \texttt{id}           & \texttt{long}                                   & Unique Identifier                                             \\
@@ -104,7 +94,7 @@ These \texttt{Weekdays} instances represent a single day of the week and contain
         \texttt{lastEdit}     & \texttt{Date}                                   & Timestamp for when the \texttt{Weekday} was last edited       \\
         \texttt{weekSchedule} & \texttt{WeekSchedule}                           & The \texttt{WeekSchedule} the \texttt{Weekday} belongs to     \\
         \texttt{frames}       & \texttt{List\textless WeekdayFrame\textgreater} & An ordered list of WeekdayFrames
-    \end{tabular}}
+    \end{tabularx}
     \caption{Table of fields in the \texttt{Weekday} class.}
     \label{tbl:Weekday}
 \end{table}
@@ -130,13 +120,10 @@ It is necessary that we have this intermediary class such that we can add additi
 We also need the class such that we can create a relation from this class to the class \texttt{WeekdayFrameProgress}.
 \myref{tbl:WeekdayFrame} provides an overview of how we model a weekday in the REST API.
 
-\begin{table}[ht]
-\resizebox{\textwidth}{!}{%
+\begin{table}[H]
+    \footnotesize
     \centering
-    \begin{tabular}{lll}
-        \multicolumn{3}{c}{\Large{Class: \texttt{WeekdayFrame}}}                                                                      \\
-        \tblgrpsep
-        \tblgrpsep
+    \begin{tabularx}{ l l X }
         \textbf{Field Name}         & \textbf{Type}         & \textbf{Short Description}                                              \\
         \midrule
         \texttt{id}                 & \texttt{long}         & Unique Identifier                                                       \\
@@ -144,7 +131,7 @@ We also need the class such that we can create a relation from this class to the
         \texttt{frame}              & \texttt{Frame}        & The \texttt{Frame} that should be added to the \texttt{Weekday}         \\
         \texttt{index}              & \texttt{int}          & The order for which \texttt{Frame}s are stored                          \\
         \texttt{frameProgresses}    & \texttt{Map\textless User, WeekdayFrameProgress\textgreater} & \texttt{WeekdayFrameProgress} elements related to this frame
-    \end{tabular}}
+    \end{tabularx}
     \caption{Table that represents the \texttt{WeekdayFrame} class}
     \label{tbl:WeekdayFrame}
 \end{table}
@@ -163,29 +150,22 @@ As the progress is specific to each citizen the \texttt{WeekdayFrameProgress} cr
 This class is the connection in the many--to--many relation between \texttt{User} and a \texttt{WeekdayFrame}.
 In \myref{tbl:WeekdayFrame} we will briefly give an overview of the fields of the \texttt{WeekdayFrameProgress}--class.
 
-\begin{table}[ht]
-\resizebox{\textwidth}{!}{%
+\begin{table}[H]
+    \footnotesize
     \centering
-    \begin{tabular}{lll}
-        \multicolumn{3}{c}{\Large{Class: \texttt{WeekdayFrameProgress}}}                                                                        \\
-        \tblgrpsep
-        \tblgrpsep
+    \begin{tabularx}{\textwidth}{ l l X }
         \textbf{Field Name}   & \textbf{Type}                               & \textbf{Short Description}                                \\
         \midrule
         \texttt{id}           & \texttt{long}                               & Unique Identifier                                         \\
         \texttt{user}         & \texttt{User}                               & The user for which progress is specified                  \\
         \texttt{weekdayFrame} & \texttt{WeekdayFrame}                       & The \texttt{WeekdayFrame} for which progress is specified \\
         \texttt{progress}     & \texttt{Enum\textless Progress\textgreater} & The Progress for the specified \texttt{WeekdayFrame}
-    \end{tabular}}
+    \end{tabularx}
     \caption{Table that represents the \texttt{WeekdayFrameProgress} class}
     \label{tbl:WeekdayFrameProgress}
 \end{table}
 
 \begin{description}
-    \item [\texttt{user}] \hfill \\
-    The \texttt{User}, representing a citizen, for which progress must be tracked.
-    \item [\texttt{weekdayFrame}] \hfill \\
-    The \texttt{WeekdayFrame} for which a \texttt{User} must track their progress on.
     \item [\texttt{progress}] \hfill \\
     The \texttt{Progress} enum can take one of four values, \texttt{NotStarted}, \texttt{Done}, \texttt{Canceled} and \texttt{Active}.
     This field is also nullable and will simply default to NotStarted if any attempt at information retrieval is made for an instance where it has not been set yet.

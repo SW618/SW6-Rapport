@@ -6,7 +6,7 @@ A \texttt{Frame} has the field \texttt{partOfSequences} which is created in the 
 The \texttt{@ManyToMany} annotation is what makes Hibernate create the relationship.
 The \texttt{mappedBy = "elements"} argument tells Hibernate that database mapping is done with the \texttt{elements} field on the class the list consists of, namely \texttt{Sequence}.
 
-\begin{lstlisting}[float, floatplacement=h, caption={The field \texttt{partOfSequences} in the \texttt{Frame} class. \texttt{[...]} denotes omitted code.},label={lst:frame-sequence}]
+\begin{lstlisting}[float, floatplacement=H, caption={The field \texttt{partOfSequences} in the \texttt{Frame} class. \texttt{[...]} denotes omitted code.},label={lst:frame-sequence}]
 public abstract class Frame {
 	[...]
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "elements")
@@ -17,7 +17,7 @@ public abstract class Frame {
 
 Therefore to show how this is mapped, we need to look at the \texttt{elements} field in \texttt{Sequence} which is shown in \myref{lst:sequnce-frame}.
 
-\begin{lstlisting}[float, floatplacement=h, caption={The field elements in the \texttt{Sequence} class. \texttt{[...]} denotes omitted code.},label={lst:sequnce-frame}]
+\begin{lstlisting}[float, floatplacement=H, caption={The field elements in the \texttt{Sequence} class. \texttt{[...]} denotes omitted code.},label={lst:sequnce-frame}]
 public class Sequence extends PictoFrame implements Iterable<Frame> {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "Sequence__Frame",
@@ -37,7 +37,7 @@ The table contains the two join columns \texttt{sequence\_id} and \texttt{frame\
 For this example we use a new column, an \texttt{inverseJoinColumn}, which is simply the column for the entity being joined with \texttt{Sequence} which is \texttt{Frame}.
 Therefore we also need to create this join table and this is simply done as can be seen on \myref{lst:sql-frame-sequence}.
 
-\begin{lstlisting}[float, floatplacement=h, caption={The table creation of the join table between \texttt{Sequence} and \texttt{Frame}.},label={lst:sql-frame-sequence}]
+\begin{lstlisting}[float, floatplacement=H, language=SQL, caption={The table creation of the join table between \texttt{Sequence} and \texttt{Frame}.},label={lst:sql-frame-sequence}]
 CREATE TABLE Sequence__Frame
 (
     id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,

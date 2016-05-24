@@ -10,11 +10,11 @@ Therefore a goal of the REST API for pictograms is to provide a search method, s
 The endpoint will also be used in the case that a user opens e.g. a week schedule which contains a pictogram that the device have not stored locally, the endpoint will then retrieve this single pictogram rather than returning a list of pictograms. \kim{I think you should make these scenarios even clearer.}
 
 \subsection{Core --- The Model of Pictograms}\label{subsec:pictomodel}
-The model that was described in \myref{subsec:model} was the complete model of the REST API, \myref{fig:pictogramModel} shows the model regarding pictograms along with the fields of these classes.
+The model that was described in \myref[name]{subsec:model} was the complete model of the REST API, \myref{fig:pictogramModel} shows the model regarding pictograms along with the fields of these classes.
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.6\textwidth]{figures/pictogrammodel.pdf}
+    \includegraphics[width=0.45\textwidth]{figures/pictogrammodel.pdf}
     \caption{Class--diagram including fields of the classes involved in Pictograms}\label{fig:pictogramModel}
 \end{figure}
 
@@ -24,7 +24,7 @@ Significant fields which require further explination, will be elaborated in the 
 \subsubsection*{Frame}
 
 \begin{table}[!h]
-    \small
+    \footnotesize
     \centering
     \begin{tabularx}{\textwidth}{ l l X }                                                 
         Field Name    & Type                                & Short Description                                \\
@@ -45,8 +45,8 @@ Significant fields which require further explination, will be elaborated in the 
 
 \subsubsection*{PictoFrame}    
 
-\begin{table}[!h]
-    \small
+\begin{table}[!h] 
+    \footnotesize
     \centering
     \begin{tabularx}{\textwidth}{ l l X }                                                 
         Field Name    & Type                                & Short Description                                \\
@@ -74,7 +74,7 @@ Significant fields which require further explination, will be elaborated in the 
 \subsubsection*{Pictogram} 
   
 \begin{table}[H]
-    \small
+    \footnotesize
     \centering
     \begin{tabularx}{\textwidth}{ l l X }                                                 
         Field Name    & Type                                & Short Description                                \\
@@ -95,7 +95,7 @@ Originally when we started working on the REST API for Pictogram the \texttt{Per
 Why and how this new generality is created will be explained in \myref{subsec:persistfilehandle}.
 It contains the following fields:     
 \begin{table}[!h]
-    \small
+    \footnotesize
     \centering
     \begin{tabularx}{\textwidth}{ l X X }                                                 
         Field Name    & Type                                & Short Description                                \\
@@ -110,8 +110,8 @@ It contains the following fields:
 	\item[filePath] \hfill \\ A string of the path on the server to the file which the class points to, for the Pictogram endpoint it will be a Pictogram.
 \end{description}
 
-
-The section above explains what is modelled with the Java classes; the following section will present how this information is stored in the database using the tools mentioned in \myref{sec:techstack}.
+\bigskip \noindent
+The section above explains what is modelled with the Java classes; the following section will present how this information is stored in the database using the tools mentioned in \myref[name]{sec:techstack}.
 
 \subsection{Persistence --- Storing the Model in the Database}\label{subsec:pictomodelstore}
 
