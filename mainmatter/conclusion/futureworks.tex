@@ -46,12 +46,12 @@ However we made a branch in the REST API Git repository for the next years stude
 The conflict handling also still need to fine tuned such that less conflicted copies will be created.
 In \myref{ssec:policy} we mentioned the quite simple offline policy that currently exists, however with timestamps on both week schedules and week days, as described in \myref{sec:restws}, a more refined implementation using the same basic idea can be used in the PUT requests.
 In addition there is no service available that enables searches for pictograms, in a more complete way than: ``\% LIKE \%'' in SQL, and there is currently no ranking amongst the result.
-This solution is quite crude and inefficient, allowing advanced search criteria, limiting results via paging or lazy loading as well implementing a sensible ranking system using statisitcs from GIRAF are all ideas that can provide a faster search and more precise search tool than simply searching for a substring.
+This solution is quite crude and inefficient, allowing advanced search criteria, limiting results via paging or lazy loading as well implementing a sensible ranking system using statistics from GIRAF are all ideas that can provide a faster search and more precise search tool than simply searching for a substring.
 
 
 \subsubsection*{Client--Side Implementation}
 Once all the endpoints are completed, or before that even, client--side implementations must be made in order to utilise the REST API.
-In general one primary concern remains here which for us have not yet been discussed as it has not been important.
+In general one primary concern remains here which we have not discussed as it has not been important.
 Either some module that translates data to GIRAF's current format must be developed, or the apps must be refactored as to use the same models as the REST API.
 An example here would be the Week Schedule model and endpoint that we have developed.
 Our model uses a class \texttt{WeekSchedule} with an \texttt{enummap} to map \texttt{Weekdays}, where the app currently uses nested sequences instead.
@@ -67,8 +67,12 @@ In its current state the only way to add users, departments or any other adminis
 The reason we believe that a web tool would be the way to solve this, is because the customers has asked for this to be available on their computers, and having it as a web application would made it a simple task to adjust the web application to support tablets should they at a later point want access from such devices.
 \kim{This section is going the right direction, try to elaborate on the problem side a bit more. Also add some technical details to the solution part. Describe how it should you the API, what challenges need to be solved etc. }
 
+In developing such a web administration tool one must not only consider what incoming requests much be supported, but how are the tablets affected by changes through the web administration tool.
+One might also want to consider how the web tool should work, and should it have its own endpoint or should each endpoint support web administration services where it is necessary which leads to figuring out when is it necessary.
+\todo[inline]{is this enough?}
+
 \subsection*{Week Schedule}
-Significant progress on Week Schedule have been made during this year, plenty of features to improve quality of life when using the application have been developed, yet it still needs to implement the REST API.
+Significant progress on Week Schedule have been made during this year, our primary involvement is described on \myref{sec:WSScroll}, plenty of features to improve quality of life when using the application have been developed, yet it still needs to implement the REST API.
 As such the goal for Week Schedule in the coming year should be to start using the REST API.
 This also means that perhaps more services for the Week Schedule must be created in the case where the current services prove insufficient.
 As for starting to use the REST API we would suggest a significant refactoring of Week Schedule such that the model more closely resembles that of the REST API, rather than creating a module that translates data as best as it can.
@@ -104,7 +108,7 @@ This section presents our suggestions for the development process for students w
 \begin{description}
 	\item[Pair Programming] \hfill \\
 	We advice that the next year's students will use pair programming especially in the start of the project.
-	There are many different elements to keep track of when starting to use and develop further on a code-base, especially one as GIRAF where a good structure might be missing in some places. \kim{excellent point, maybe you should add a section above where you suggest some architecture changes (Unless you are referring the the sections where you already criticized the models.)}
+	There are many different elements to keep track of when starting to use and develop further on a code-base, especially one as GIRAF where a good structure might be missing in some places as we came to experience in the first two sprints in particular Week Schedule as we elaborated on in \myref{sec:restws}.
 	As mentioned before, we gained a lot from pair programming especially bringing everyone up to speed, and ensuring that everyone in the group was able to develop further on the project.
 
 	\item[Code--Review] \hfill \\
@@ -114,14 +118,16 @@ This section presents our suggestions for the development process for students w
 
 	\item[Phabricator] \hfill \\
 	We strongly advice that they continue to use the tool Phabricator, to have a product backlog, as well as a good tool for code-review, and creating an overview of everyone's progress.
-	Phabricator has proves to be a useful tool for us and it has many more features than what we have used throughout the semester, perhaps there exists more features could help the project.
-	\kim{Would you say that phabricator have worked flawlessly? I guess not, try to discuss how it could be used better. E.g. Is it good to have 600 user stories on the backlog? Since phabricator contains your backlog then please also comment on how it worked out having a common backlog. I imagine that this have been a problem in regards to getting an overview, estimating tasks and/or prioritizing tasks. Please enlighten me.}
-
+	Phabricator has proven a useful tool for us and it has many more features than what we have used throughout the semester, perhaps there exists more features could help the project.
+	The biggest hurdle we have had with Phabricator were in the beginning as practically everyone but a single group was new to it, as such some issues with linking User Stories to code diffs were an issue, although as we ran into these issues the wiki was updates and thus the following semester can have a better knowledge base than us when starting by simply reading the wiki.
+	Furthermore we have had a lot of user stories, which are defined as tasks, on our shared backlog as we simply migrated those that already existed.
+	It may be worthwhile to provide a label for all user stories when starting such that it is clear that they existed the previous semester.
 
 	\item[Progress Tracking] \hfill \\
 	We faced problems ourselves falling behind on the report in sprint 3, as we used all of our time programming the REST API.
-	Other groups were even further behind than us, and we therefore suggest that more focus for the multi--project is put on the report.
-	If a group is behind on the report they should let the project know such that they can have less user stories for their sprint, and perhaps take more user stories later in the sprint if they suddenly catch up. \kim{I quite disagree, I think that it is the groups own responsibility to take the correct number of tasks each sprint. I dont see how the multiproject can help the individual groups handle this. Just FYI.}
+	Other groups were even further behind than us, and we therefore suggest that people consider on a multi-project level that time for the report is also required.
+	This should hopefully reduce how far people get on the paper, another solution would be to say that a given set of the working day one must be available for multi--project work.
+	We suggest this as we were being blocked on REST development due to code review as another group was focusing on their due to them writing just about nothing until the fourth sprint.
 
 	\item[More Evaluation] \hfill \\
 	The project have had some evaluation throughout its lifetime from the customer's, but this year at least, PO did not give very good feedback to the rest of the multi--project from the customers.
@@ -130,7 +136,7 @@ This section presents our suggestions for the development process for students w
 	This could be included in the code--review where an evaluation plan should be given to the code--reviewer, and when the reviewer tests the application the person who implemented the feature would sit with them and talk about the feature to get feedback outside of the group.
 	We do not think this would take much time away from development, and fresh eyes on a problem or feature could only be beneficial.
 
-	\item[Focussed Projects] \hfill \\
+	\item[Focused Projects] \hfill \\
 	We decided to all be very mixed in what we worked on this semester, where they last year had a very designated field of work.
 	This was great in the fact that we all know much about the different parts of GIRAF, but it sadly affects the project reports written to lack a sort of structure, which we felt that ours did until we partook in the REST API.
 	We advice that every group gets a focus area of GIRAF rather than only of the project, like being in charge of everyone writing proper documentation, or in charge of social events of which we have had none.
