@@ -10,19 +10,19 @@ We present the fields of the classes \texttt{Choice} and \texttt{Sequence} as th
     \caption{Class--diagram including fields of the classes involved in Sequence}\label{fig:sequencemodel}
 \end{figure}
 
-\subsubsection{Sequence} 
+\subsubsection{Sequence}
 \begin{table}[H]
     \footnotesize
     \centering
-    \begin{tabularx}{\textwidth}{ l X X }                                                 
+    \begin{tabularx}{\textwidth}{ l X X }
         Field Name    & Type                                & Short Description                                \\
         \midrule
-        \texttt{elements}        & \texttt{List\textless Frame\textgreater} & List of \texttt{Frame}s which are on the \texttt{Sequence} \\      
+        \texttt{elements}        & \texttt{List\textless Frame\textgreater} & List of \texttt{Frame}s which are on the \texttt{Sequence} \\
         \texttt{thumbnail}        & \texttt{Pictogram}       & The \texttt{Pictogram} used as thumbnail\\
     \end{tabularx}
     \caption{Table of fields in the \texttt{Sequence} class.}
     \label{tbl:sequence_class}
-\end{table} 
+\end{table}
 \begin{description}
 	\item[elements] \hfill \\
     A list of \texttt{Frame}s stored on a \texttt{Sequence}.
@@ -32,18 +32,18 @@ We present the fields of the classes \texttt{Choice} and \texttt{Sequence} as th
 	This is simply a \texttt{Pictogram} with a \texttt{Many-To-One} relation.
 \end{description}
 
-\subsubsection{Choice}  
+\subsubsection{Choice}
 \begin{table}[H]
     \footnotesize
     \centering
-    \begin{tabularx}{\textwidth}{ l X X }                                                 
+    \begin{tabularx}{\textwidth}{ l X X }
         Field Name    & Type                                & Short Description                                \\
         \midrule
-        \texttt{options}        & List of the \texttt{PictoFrame}s which are options on the \texttt{Choice}\\      
+        \texttt{options}        & List of the \texttt{PictoFrame}s which are options on the \texttt{Choice}\\
     \end{tabularx}
-    \caption{Table of fields in the \texttt{Sequence} class.}
-    \label{tbl:sequence_class}
-\end{table} 
+    \caption{Table of fields in the \texttt{Choice} class.}
+    \label{tbl:choice_class}
+\end{table}
 \begin{description}
 	\item[options] Like in a \texttt{Sequence} a \texttt{Choice} needs a list of elements, but unlike \texttt{Sequence} the list is made up of \texttt{PictoFrame}s which means a \texttt{Choice} cannot have nested \texttt{Choice}s.
     In order to retain the same behavior every time a \texttt{Choice} is used, the \texttt{options} list is ordered.
