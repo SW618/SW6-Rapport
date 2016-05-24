@@ -127,53 +127,52 @@ private PictogramImage pictogramImage;
 The short snippet in \myref{lst:PictoImage} shows how the relation to the \texttt{PictogramImage} is created in the \texttt{Pictogram} class.
 It simply uses the \texttt{@OneToOne} annotation to create the One-to-One relation between these two objects.
 This is only done on the \texttt{Pictogram} and not on the side of the \texttt{PictogramImage}.
-The property \texttt{fetch} is sat to \texttt{LAZY} which means that the \texttt{PictogramImage} is not retrieved in the same transaction as when the \texttt{Pictogram} is retrieved, but is instead retrieved when the \texttt{PictogramImage} is accessed through the \texttt{Pictogram} object.
+The property \texttt{fetch} is set to \texttt{LAZY} which means that the \texttt{PictogramImage} is not retrieved in the same transaction as when the \texttt{Pictogram} is retrieved, but is instead retrieved when the \texttt{PictogramImage} is accessed through the \texttt{Pictogram} object.
 The other fetch type \texttt{EAGER} would instead retrieve the entity in the same transaction as the \texttt{Pictogram}.
+We use \texttt{LAZY} here because the \texttt{PictogramImage} should be fetched using its own \texttt{HTTP}--Request.
 The \texttt{CascadeType.All} means that any change which happens to the \texttt{Pictogram} must cascade to \texttt{PictogramImage} as well.
 The field is set to being optional because when creating the \texttt{Pictogram} using a HTTP POST request, you cannot send the JSON data along with the image file, and as such the requests have to be separated into two.
 The field is therefore optional to allow for the \texttt{Pictogram} to exist without the \texttt{PictogramImage} for a while, as we deemed it better that a \texttt{Pictogram} exists without a \texttt{PictogramImage} than vice versa.
-\kim{To improve this paragraph then you could discuss why you use Lazy instead of Eager}
 
 When creating a One-to-Many a opposite Many-to-One needs to be created on the class the relation is created to.
 
-This needs to be done for the field \texttt{isTitlePictogramOn} as can be seen on \myref{lst:titlePictogram}.
+This needs to be done for the field \texttt{thumbnailOn} as can be seen on \myref{lst:titlePictogram}.
 \begin{figure}[!htb]
-\begin{lstlisting}
+\begin{lstlisting}[caption={Fields with annotations which causes Hibernate to perfrm the ORM.}, label={lst:titlePictogram}]
 //The relation on the side of Sequence
 public class Sequence extends PictoFrame implements Iterable<Frame> {
     [...]
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "titlePictogram_id")
-    private Pictogram titlePictogram;
+    @JoinColumn(name = "thumnail_id")
+    private Pictogram thumbnail;
     [...]
 }
 // The relation on the side of Pictogram
 public class Pictogram extends PictoFrame {
     [...]
     @OneToMany(fetch = FetchType.LAZY)(*@\label{lst:tp_rel_on_pictog1}@*)
-    private Collection<Sequence> titlePictogramOn;(*@\label{lst:tp_rel_on_pictog2}@*)
+    private Collection<Sequence> thumbnailOn;(*@\label{lst:tp_rel_on_pictog2}@*)
     [...]
 }
 
 \end{lstlisting}
-\begin{lstlisting}[language=SQL]
+\begin{lstlisting}[language=SQL,caption={The SQL save the keys for thumbnails for sequences.},label={lst:sqltitlepictogram}]
 CREATE TABLE Sequence
 (
     frame_id BIGINT NOT NULL PRIMARY KEY,
-    titlePictogram_id BIGINT NOT NULL(*@\label{lst:tp_sql_meme}@*)
+    thumbnail_id BIGINT NOT NULL(*@\label{lst:tp_sql_meme}@*)
 );
 \end{lstlisting}
-\caption{Fields with annotations which causes Hibernate to perform the ORM for \texttt{titlePictogram}. \texttt{[...]} denotes omitted code.}\label{lst:titlePictogram}
 \end{figure}
 
 On line 5 the \texttt{@JoinColumn} Hibernate annotation is used to specify which column the two tables \texttt{Pictogram} and \texttt{Sequence} will join on.
 Lines~\ref{lst:tp_rel_on_pictog1}--\ref{lst:tp_rel_on_pictog2} shows the relation needed on the side of \texttt{Pictogram} to create the opposite One-to-Many side to the Many-to-One relationship on \texttt{Sequence}.
-Line~\ref{lst:tp_sql_meme} shows the SQL where the column to be joined on is created in the SQL.
+Line~\ref{lst:tp_sql_meme} on \myref{lst:sqltitlepictogram} shows the SQL where the column to be joined on is created in the SQL.
 
 \subsection{Persistence --- Querying the Database}
 As explained in \myref{subsec:general} the database is queried using a DAO, this section will present the \texttt{PictogramDaoImpl} class.
 
-\begin{lstlisting}[float, floatplacement=h, caption={The class header of the \texttt{PictogramDao}, along with its annotations. \texttt{[...]} denotes omitted code.},label={lst:pictogramDaoImpl}]
+\begin{lstlisting}[float, floatplacement=h, caption={The class header of the \texttt{PictogramDao}, along with its annotations.},label={lst:pictogramDaoImpl}]
 @Transactional
 @Repository
 @Primary
@@ -187,7 +186,7 @@ It has the annotation \texttt{@Transactional} which is a Spring annotation all D
 It allows Spring to inject behaviours around method calls like transaction management.
 The \texttt{@Reposity} annotation is also a Spring annotation used for all DAOs in the REST API, which tells spring that the class is used for encapsulating storage, retrieval and search behaviour for a collection of objects.
 The last annotation \texttt{@Primary} is also a Spring annotation used by all DAOs in the REST API, and is used to tell Spring that the Java Bean containing this class should be given preference when multiple beans are candidates to be autowired.
-Autowire means that you do not have to specify the bean's properties or constructor arguments explicitly.
+Autowire means that you do not have to specify the properties of the bean or its constructor arguments explicitly.
 This is used in the Service layer where the proper DAOs are retrieved as Beans and the auto wiring makes this easier.
 
 \bigskip
@@ -274,7 +273,7 @@ This means that the \texttt{add} function mentioned earlier now knows what objec
 \begin{lstlisting}[float, floatplacement=h, caption={Trying to use a Type Parameter constructor, which Java cannot do. \texttt{[...]} denotes omitted code.},label={lst:TypeParameterConstructorActual}]
 public T add(PersistFileHandleFactory<T> factory, Readable file) throws IOException {
     [...]
-      fh = factory.create(uuid.toString());
+    fh = factory.create(uuid.toString());
     [...]
 }
 \end{lstlisting}
@@ -284,11 +283,11 @@ The factory variable will either be a \texttt{UserIconFactory} or a \texttt{Pict
 In this way the pattern of storing files and the paths to the files is generalised, and can work for virtually any other type of file, as long as they implement a factory which inherit from the abstract factory, and a class which inherits from the abstract class \texttt{PersistFileHandle}.
 
 \subsection{The Service Layer for the Pictogram}\label{ssec:pictogram_service}
-\kim{This is a good section, however it can be a bit hard for the reader to understand why you specially made the rest methods that you did. You could fix that by, somewhere, describe the scenarios that you need to support. e.g. During logon, when a device need to check if it have all pictograms downloaded.}
 This section describes the service layer of the Pictogram endpoint.
-The tool RESTEasy makes it simple to create HTTP Request methods using its annotations such as \texttt{@GET} or \texttt{@PUT}.
+The tool RESTEasy makes it simple to create \texttt{HTTP}--Request methods using its annotations such as \texttt{@GET} or \texttt{@PUT}.
 \myref{tbl:pictogramservice} shows a list of all the services provided by the pictogram REST API.
-All the services are located in the path \texttt{/publicpictogram} and \texttt{/department/\{id\}/pictogram}.
+All the services are located in the path \texttt{/publicpictogram} and \texttt{/department/\{id\}/pictogram}, as mentioned in \myref[name]{sec:securitycollab} the public pictograms will be retrieved upon the initial login.
+For the initial login, the \texttt{getAllPictograms} is used, where the \texttt{getPictogram} is used when opening something that uses a pictogram which has not been downloaded yet, as explained in \myref{sec:pictogramendpoint}.
 This separation has been made because the public pictograms are all given by the GIRAF application, while the other pictograms are pictograms that will be created by a department.
 
 \begin{table}[!htbp]
@@ -325,7 +324,6 @@ However it takes the information which the client would send i.e. the ids of the
 An integral part of a \texttt{Pictogram} is the \texttt{PictogramImage}s, but this has to be attached with a PUT--request, as the \texttt{PictogramImage} is uploaded in its own request.
 
 \subsubsection*{GET--requests}
-
 \myref{lst:getallPictograms} shows the method which handles a GET request on the root path which is seen from the annotations \texttt{@GET} and \texttt{@Path("/")}.
 Since a \texttt{PictogramService} is only created through the \texttt{DepartmentService} on the path \texttt{"/pictogram"} the full path to activate this method is \\ \texttt{"department/\{id\}/pictogram/"}.
 The annotation on line 8 simply states which representation a resource can produce in this case it means that this method can produce JSON as output.
