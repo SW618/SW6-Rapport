@@ -11,7 +11,7 @@ First a presentation of the steps involved in developing the different layers fo
 This is followed by the design of the model as a class diagram.
 
 \subsection{Developing an Endpoint and its Constituents}\label{subsec:general}
-As stated in \myref{sec:architecture} a single endpoint consists of three layers.
+As stated in \myref[name]{sec:architecture} a single endpoint consists of three layers.
 A core layer which is where the classes of the model are implemented and tested.
 A persistence layer which is where the tables for the model, defined in the core, are created; the annotations from hibernate used in the core relates the data in the two layers.
 The persistence layer for each of the endpoints, also consists of a Data Access Object(DAO) class which is used to gain access to the objects in the database.
@@ -95,13 +95,13 @@ With this in mind we created a super class which all these can inherit from, and
 We can also encapsulate common data in this super class.
 We made a distinction between \texttt{Choice}s, \texttt{Sequence}s, and \texttt{Pictogram}s, because a \texttt{Choice} in GIRAF does not contain as much of this common information as \texttt{Pictogram}s and \texttt{Sequence}s like a title or an owner.
 Therefore \texttt{Sequence}s and \texttt{Pictogram}s inherit from yet another superclass called \texttt{PictoFrame}, that inherits from \texttt{Frame}, which encapsulate the common data between \texttt{Sequence}s and \texttt{Pictogram}s.
-This also solves the problem of directly nested choices because a \texttt{Choice} can then have one-to-many of these \texttt{PictoFrame}s.
-A \texttt{Sequence} has an ordered one-to-many relation to \texttt{Frame} and a \texttt{Pictogram} has a \texttt{PictogramImage} that separates a \texttt{Pictogram} from its associated image.
+This also solves the problem of directly nested choices because a \texttt{Choice} can then have one--to--many of these \texttt{PictoFrame}s.
+A \texttt{Sequence} has an ordered one--to--many relation to \texttt{Frame} and a \texttt{Pictogram} has a \texttt{PictogramImage} that separates a \texttt{Pictogram} from its associated image.
 All these classes are very intertwined and rely on each other which makes the implementation somewhat difficult to work on in parallel in the group.
 A \texttt{WeekSchedule} is owned by one or many \texttt{User}s, and it also belongs to a single department which the users also belong to.
 All \texttt{PictoFrame}s are owned by a \texttt{User} and/or a \texttt{Department}.
 
-The \texttt{weekday} has a relationship-class: \texttt{weekdayFrame} to bind these \texttt{Frame}s together with a weekday which preserves the order of frames on a weekday as well as being able to save the progress of a weekschedule.
-The progress is saved in another relationship-class: \texttt{weekdayFrameProgress} as the progress depends on the user because this new model of GIRAF weekschedules allows a weekschedule to be shared between users, which might be used for when an institution goes on a trip.
+The \texttt{weekday} has a relationship--class: \texttt{weekdayFrame} to bind these \texttt{Frame}s together with a weekday which preserves the order of frames on a weekday as well as being able to save the progress of a week schedule.
+The progress is saved in another relationship--class: \texttt{weekdayFrameProgress} as the progress depends on the user because this new model of GIRAF week schedules allows a week schedule to be shared between users, which might be used for when an institution goes on a trip.
 
 With the model described the following sections goes into more detail about the specific endpoints.

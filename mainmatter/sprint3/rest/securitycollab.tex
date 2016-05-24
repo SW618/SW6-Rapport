@@ -79,15 +79,15 @@ After the initial set--up, the \textit{Select Department} step is skipped, and t
         % Right column
         \coordinate (startinvis) at ($(start)!0.5!(selectdep)$);
         \node [signs, right =7em of startinvis] (syncpublic) {Sync Public Data};
-        \draw [memearrow,<->] (startinvis) -- (syncpublic);
+        \draw [memearrow] (startinvis) -- (syncpublic);
 
         \coordinate (startinvis2) at ($(authed)!0.5!(normaluse)$);
         \node [signs, right =7em of startinvis2] (syncdep) {Sync Deparment Data};
-        \draw [memearrow,<->] (startinvis2) -- (syncdep);
+        \draw [memearrow] (startinvis2) -- (syncdep);
 
         \coordinate (startinvis3) at ($(normaluse)!0.5!(givetouser)$);
         \node [signs, right =7em of startinvis3] (syncuserdata) {Sync Private Data};
-        \draw [memearrow,<->] (startinvis3) -- (syncuserdata);
+        \draw [memearrow] (startinvis3) -- (syncuserdata);
     \end{tikzpicture}
     \caption{The suggested initial set--up of GIRAF with the REST API.}
     \label{fig:loginworkflowrest}

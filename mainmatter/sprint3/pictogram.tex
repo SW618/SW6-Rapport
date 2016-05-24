@@ -1,25 +1,27 @@
 \section{Pictogram Endpoint}\label{sec:pictogramendpoint}
 \begin{center}
-   \userstory{As a developer I would like an endpoint for Pictograms, such that I can retrieve them from GIRAF.}
+   \userstory{As a developer I would like an endpoint for Pictograms, such that I can retrieve them from the GIRAF REST API.}
 \end{center}
 
-\kim{I dont understand the problem, all pictograms are downloaded locally before logon. Why would you want to search online?}
 The Pictogram endpoint is used for the Picto Search library to find different pictograms, as well as to acquire specific pictograms which have not been downloaded yet.
 Currently in the Picto Search library a user searches for some string, and the local database is queried using \texttt{... LIKE \%searchstring\%} and as such this will also be used for the REST API.
-Therefore a goal of the REST API for pictograms is to provide a search method, such that PictoSearch will return the same results. \kim{Same results for what? If it always resunts the same results then it is a sucky service ;)}
-The endpoint will also be used in the case that a user opens e.g. a week schedule which contains a pictogram that the device have not stored locally, the endpoint will then retrieve this single pictogram rather than returning a list of pictograms. \kim{I think you should make these scenarios even clearer.}
+Therefore a goal of the REST API for pictograms is to provide a search method, such that PictoSearch with the REST API will return the same results as before it started using the REST API. 
+The endpoint is not only used for the initial synchronisation, but also in other scenarios, for example:
+While a citizen is logged in on a tablet, a guardian could edit a week schedule with a newly created pictogram.
+The tablet the citizen uses does not have this newly created pictogram, so when the citizen opens the week schedule it will have to obtain the pictogram in some way.
+To obtain this pictogram the endpoint is fitted with a service to retrieve a single pictogram, such that this dynamic instantly synchronising work--flow is possible. 
 
 \subsection{Core --- The Model of Pictograms}\label{subsec:pictomodel}
 The model that was described in \myref[name]{subsec:model} was the complete model of the REST API, \myref{fig:pictogramModel} shows the model regarding pictograms along with the fields of these classes.
 
 \begin{figure}[!htb]
     \centering
-    \includegraphics[width=0.45\textwidth]{figures/pictogrammodel.pdf}
+    \includegraphics[width=0.50\textwidth]{figures/pictogrammodel.pdf}
     \caption{Class--diagram including fields of the classes involved in Pictograms}\label{fig:pictogramModel}
 \end{figure}
 
 Here a brief description of the purpose for each field of the classes on the figure will be given.
-Significant fields which require further explination, will be elaborated in the following descriptions
+Significant fields which require further explanation, will be elaborated in the following descriptions
 
 \subsubsection*{Frame}
 
@@ -38,10 +40,10 @@ Significant fields which require further explination, will be elaborated in the 
 \end{table}
 
     \begin{description}[font=\ttfamily\bfseries]
-		\item[lastEditAt] \hfill \\ This is a time stamp of when the Frame was last edited --- auto updated by Hibernate when changes on the object is persisted in the database.
-		It is to be used for conflict handling as e.g. pictograms can be altered in the PictoCreator tool, and a need for conflict handling is therefore needed.
-		\item[partofSequences] \hfill \\ This is a collection of sequences this frame is used in; why this collection is needed will be further explained in \myref{sec:sequence}.
-	\end{description}
+        \item[lastEditAt] \hfill \\ This is a time stamp of when the Frame was last edited --- auto updated by Hibernate when changes on the object is persisted in the database.
+        It is to be used for conflict handling as e.g. pictograms can be altered in the PictoCreator tool, and a need for conflict handling is therefore needed.
+        \item[partofSequences] \hfill \\ This is a collection of sequences this frame is used in; why this collection is needed will be further explained in \myref{sec:sequence}.
+    \end{description}
 
 \subsubsection*{PictoFrame}
 
@@ -61,15 +63,15 @@ Significant fields which require further explination, will be elaborated in the 
     \label{tbl:pictoframe_class}
 \end{table}
 
-	\begin{description}[font=\ttfamily\bfseries]
-		\item[owner] \hfill \\ The user which owns the \texttt{PictoFrame}, but not necessarily the user whom created it.
-		This is used to accommodate the need for creating private \texttt{Pictograms} and \texttt{Sequences}.
-		Private means that only the user who is owner can access them.
-		\item[accessLevel] \hfill \\ This is an Enumeration which specifies whether the \texttt{PictoFrame} is Public, shared on department or private.
-		\item[department] \hfill \\ Specifies which department the \texttt{PictoFrame} belongs to, and is used when the accessLevel is specified as shared on department.
-		\item[optionOn] \hfill \\ A collection of all \texttt{Choice}s which contain the \texttt{PictoFrame}.
-		This is needed for Hibernate to create the many-to-many relationship between \texttt{PictoFrame} and \texttt{Choice}; and will be used when deleting elements, to remove the correct references.
-	\end{description}
+    \begin{description}[font=\ttfamily\bfseries]
+        \item[owner] \hfill \\ The user which owns the \texttt{PictoFrame}, but not necessarily the user whom created it.
+        This is used to accommodate the need for creating private \texttt{Pictograms} and \texttt{Sequences}.
+        Private means that only the user who is owner can access them.
+        \item[accessLevel] \hfill \\ This is an Enumeration which specifies whether the \texttt{PictoFrame} is Public, shared on department or private.
+        \item[department] \hfill \\ Specifies which department the \texttt{PictoFrame} belongs to, and is used when the accessLevel is specified as shared on department.
+        \item[optionOn] \hfill \\ A collection of all \texttt{Choice}s which contain the \texttt{PictoFrame}.
+        This is needed for Hibernate to create the many-to-many relationship between \texttt{PictoFrame} and \texttt{Choice}; and will be used when deleting elements, to remove the correct references.
+    \end{description}
 
 \subsubsection*{Pictogram}
 
@@ -107,7 +109,7 @@ It contains the following fields:
     \label{tbl:persistfilehandle_class}
 \end{table}
 \begin{description}[font=\ttfamily\bfseries]
-	\item[filePath] \hfill \\ A string of the path on the server to the file which the class points to, for the Pictogram endpoint it will be a Pictogram.
+    \item[filePath] \hfill \\ A string of the path on the server to the file which the class points to, for the Pictogram endpoint it will be a Pictogram.
 \end{description}
 
 \bigskip \noindent
@@ -135,30 +137,34 @@ The field is therefore optional to allow for the \texttt{Pictogram} to exist wit
 When creating a One-to-Many a opposite Many-to-One needs to be created on the class the relation is created to.
 
 This needs to be done for the field \texttt{isTitlePictogramOn} as can be seen on \myref{lst:titlePictogram}.
-
-\begin{lstlisting}[float, floatplacement=h, caption={Fields with annotations which causes Hibernate to perform the ORM for \texttt{titlePictogram}. \texttt{[...]} denotes omitted code.},label={lst:titlePictogram}]
+\begin{figure}[!htb]
+\begin{lstlisting}
 //The relation on the side of Sequence
 public class Sequence extends PictoFrame implements Iterable<Frame> {
-	[...]
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "titlePictogram_id")
-	private Pictogram titlePictogram;
-	[...]
+    [...]
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "titlePictogram_id")
+    private Pictogram titlePictogram;
+    [...]
 }
 // The relation on the side of Pictogram
 public class Pictogram extends PictoFrame {
-	[...]
+    [...]
     @OneToMany(fetch = FetchType.LAZY)(*@\label{lst:tp_rel_on_pictog1}@*)
-	private Collection<Sequence> titlePictogramOn;(*@\label{lst:tp_rel_on_pictog2}@*)
-	[...]
+    private Collection<Sequence> titlePictogramOn;(*@\label{lst:tp_rel_on_pictog2}@*)
+    [...]
 }
-// SQL for the Sequence Schema
+
+\end{lstlisting}
+\begin{lstlisting}[language=SQL]
 CREATE TABLE Sequence
 (
     frame_id BIGINT NOT NULL PRIMARY KEY,
     titlePictogram_id BIGINT NOT NULL(*@\label{lst:tp_sql_meme}@*)
 );
 \end{lstlisting}
+\caption{Fields with annotations which causes Hibernate to perform the ORM for \texttt{titlePictogram}. \texttt{[...]} denotes omitted code.}\label{lst:titlePictogram}
+\end{figure}
 
 On line 5 the \texttt{@JoinColumn} Hibernate annotation is used to specify which column the two tables \texttt{Pictogram} and \texttt{Sequence} will join on.
 Lines~\ref{lst:tp_rel_on_pictog1}--\ref{lst:tp_rel_on_pictog2} shows the relation needed on the side of \texttt{Pictogram} to create the opposite One-to-Many side to the Many-to-One relationship on \texttt{Sequence}.
@@ -172,7 +178,7 @@ As explained in \myref{subsec:general} the database is queried using a DAO, this
 @Repository
 @Primary
 public class PictogramDaoImpl extends BaseDaoImpl<Pictogram> implements PictogramDao {
-	[...]
+    [...]
 }
 \end{lstlisting}
 
@@ -218,12 +224,12 @@ public void testPictogramByTitle() throws Exception {
 
     Assert.assertFalse(pictogramlist.isEmpty());(*@\label{lst:tpbt_2love}@*)
     Assert.assertTrue(pictogramlist.stream()
-    	.anyMatch(p -> p.getId() == 1L));
+        .anyMatch(p -> p.getId() == 1L));
 
     Assert.assertTrue(pictogramlist.stream()
-    	.anyMatch(p -> p.getPictogramImage().getFilePath().equals("jeff")));
+        .anyMatch(p -> p.getPictogramImage().getFilePath().equals("jeff")));
     Assert.assertTrue(pictogramlist.stream()
-    	.anyMatch(p -> p.getPictogramImage().getId() == 1L));(*@\label{lst:tpbt_3love}@*)
+        .anyMatch(p -> p.getPictogramImage().getId() == 1L));(*@\label{lst:tpbt_3love}@*)
 }
 \end{lstlisting}
 
@@ -237,7 +243,7 @@ This means that any Type that extends from the class \texttt{PersistFileHandle} 
 
 \begin{lstlisting}[float, floatplacement=h, caption={The \texttt{FileDaoImpl} class header which uses Type Parameters to generalise which types it can be used with. \texttt{[...]} denotes omitted code.},label={lst:typeparameter}]
 public abstract class FileDaoImpl<T extends PersistFileHandle> implements FileDao<T> {
-	[...]
+    [...]
 }
 \end{lstlisting}
 
@@ -300,7 +306,7 @@ POST            &/              & \texttt{CreatePictogram}      \\
 PUT             &/\{pid\}/image & \texttt{uploadPictogramImage} \\
 PUT             &/\{pid\}       & \texttt{updatePictogram}      \\
 \tblgrpsep
-DELETE          &/\{pid\}	    & \texttt{deletePictogram}	    \\
+DELETE          &/\{pid\}       & \texttt{deletePictogram}      \\
 \end{tabular}
 \caption{List of Pictogram endpoints, they all exist at \texttt{/department/\{id\}/pictogram} or at \texttt{/publicpictogram}.}\label{tbl:pictogramservice}
 \end{table}
