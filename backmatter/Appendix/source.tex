@@ -1,0 +1,124 @@
+%Strange branch stuff
+\makeatletter
+\newcommand{\setbranch}[3]{%
+  \phantomsection
+  \unexpanded{#1}\def\@currentlabel{\unexpanded{#2} repo on branch
+  \unexpanded{#1}}\label{#3}%
+}
+\makeatother
+
+\chapter{Source tags}\label{app:source}
+This is a list of the hashes for the GIRAF project, which is relevant for us, at the time of completion of our semester.
+In order to view time files view our git repositories at \url{http://git.giraf.cs.aau.dk/Giraf/}.
+
+\section{pictosearch}
+
+\begin{tabular}{rl}
+\toprule
+Tag & Hash\\
+\midrule
+\setbranch{end2016-1953.2}{pictosearch}{branch:pictosearch:end2016-1953.2} & a762d9832b0737e3e775c164e8fa4dce147bb5d6\\
+\setbranch{end2016-exit\_notification}{pictosearch}{branch:pictosearch:end2016-exit_notification} & 8bb53b8cbf37da517b5f2e0028a15e13341d2b99\\
+\setbranch{end2016-master}{pictosearch}{branch:pictosearch:end2016-master} & 35ccac281bbe6cd3a41bb543ae0e856f5ac91baa\\
+\setbranch{end2016-showcase}{pictosearch}{branch:pictosearch:end2016-showcase} & 36d0caa64e7d788bfd049ea1d274218ec904ffe0\\
+\setbranch{end2016-update\_sorting}{pictosearch}{branch:pictosearch:end2016-update_sorting} & 100947dc0c8adb475a84325a6497c24578895c4c\\
+\bottomrule
+\end{tabular}
+
+
+\section{rest-api}
+
+\begin{tabular}{rl}
+\toprule
+Tag & Hash\\
+\midrule
+\setbranch{end2016-feature-search}{rest-api}{branch:rest-api:end2016-feature-search} & 891f1ea217d67d9713f680ab1d1263569c939d45\\
+\setbranch{end2016-feature-weekscheduleendpoint}{rest-api}{branch:rest-api:end2016-feature-weekscheduleendpoint} & 7f9153d8bc97bac42a414688bcc61e46aef25861\\
+\setbranch{end2016-master}{rest-api}{branch:rest-api:end2016-master} & 3a3a10fad9e89f3420f81b509a752540c63a9e8c\\
+\bottomrule
+\end{tabular}
+
+\section{ugeplan}
+
+\begin{tabular}{rl}
+\toprule
+Tag & Hash\\
+\midrule
+\setbranch{end2016-dependencyLayouts}{ugeplan}{branch:ugeplan:end2016-dependencyLayouts} & a6b98031386328502afe92b39077f4a71e0c0315\\
+\setbranch{end2016-master}{ugeplan}{branch:ugeplan:end2016-master} & 9e2bf73a4501e24fdbf7c7ef88c92476495465ab\\
+\setbranch{end2016-monkey}{ugeplan}{branch:ugeplan:end2016-monkey} & 0cf692fe23acae1c04e58a3695535c133fb02c44\\
+\setbranch{end2016-PictoSearchLib}{ugeplan}{branch:ugeplan:end2016-PictoSearchLib} & ee751fa4d1a4fe58c77be8b1b00e3d00caf7602d\\
+\setbranch{end2016-profileSelectorFix}{ugeplan}{branch:ugeplan:end2016-profileSelectorFix} & f016e00110d45dadebb9b6e3fafb32b31764f38c\\
+\setbranch{end2016-SequencesAndFrames}{ugeplan}{branch:ugeplan:end2016-SequencesAndFrames} & a6b98031386328502afe92b39077f4a71e0c0315\\
+\bottomrule
+\end{tabular}
+
+\section{auto-deploy-gradle-plugin}
+
+\begin{tabular}{rl}
+\toprule
+Tag & Hash\\
+\midrule
+\setbranch{end2016-master}{auto-deploy-gradle-plugin}{branch:auto-deploy-gradle-plugin:end2016-master} & bc837e9e75b415f491a6af43ee8ba07abdb3fed0\\
+\bottomrule
+\end{tabular}
+
+\section{android-lib}
+
+\begin{tabular}{rl}
+\toprule
+Tag & Hash\\
+\midrule
+\setbranch{end2016-1706}{android-lib}{branch:android-lib:end2016-1706} & d3b4bc4c009036a3807ae920cffabcaf859a249a\\
+\setbranch{end2016-master}{android-lib}{branch:android-lib:end2016-master} & ae78814c8b1809b9326a1d7b1d617508c5e1aba4\\
+\bottomrule
+\end{tabular}
+
+\section{sequence-viewer}
+
+\begin{tabular}{rl}
+\toprule
+Tag & Hash\\
+\midrule
+\setbranch{end2016-master}{sequence-viewer}{branch:sequence-viewer:end2016-master} & 211ec66c7a958874c5fea2147d87a6000b624326\\
+\bottomrule
+\end{tabular}
+
+\section{sequence}
+
+\begin{tabular}{rl}
+\toprule
+Tag & Hash\\
+\midrule
+\setbranch{end2016-master}{sequence}{branch:sequence:end2016-master} & 2524424538751996f669259e80437bca077ca00b\\
+\bottomrule
+\end{tabular}
+
+\section{launcher}
+
+\begin{tabular}{rl}
+\toprule
+Tag & Hash\\
+\midrule
+\setbranch{end2016-CoreBranch}{launcher}{branch:launcher:end2016-CoreBranch} & 8d07f1a47ff3a5538dd77ecfc0316a597066a303\\
+\setbranch{end2016-master}{launcher}{branch:launcher:end2016-master} & a5d37844f8473381c4f2eea3be2c2ec5f0748a51\\
+\setbranch{end2016-New\_Login\_System}{launcher}{branch:launcher:end2016-New_Login_System} & 385e5742d00a239e4e6d2000973ac08d57ed3316\\
+\setbranch{end2016-timings\_after\_submodules}{launcher}{branch:launcher:end2016-timings_after_submodules} & 26ed5aa79cb959c3d6bfcf3eac14eeee082f0627\\
+\setbranch{end2016-timings}{launcher}{branch:launcher:end2016-timings} & caf97cefca20910eef1f30744edf2620d74d22e5\\
+\bottomrule
+\end{tabular}
+
+\section{pictoreader}
+
+\begin{tabular}{rl}
+\toprule
+Tag & Hash\\
+\midrule
+\setbranch{end2016-1993}{pictoreader}{branch:pictoreader:end2016-1993} & 47c92f2093ddde2fe4aa59c4e03e7f2e620cd3e2\\
+\setbranch{end2016-busywaitfix}{pictoreader}{branch:pictoreader:end2016-busywaitfix} & 942a15041848fe0b6687773a85c94644a3b885db\\
+\setbranch{end2016-halp}{pictoreader}{branch:pictoreader:end2016-halp} & b4c29cb43a898a5d82bc3193be1964adecab8255\\
+\setbranch{end2016-lgui}{pictoreader}{branch:pictoreader:end2016-lgui} & f24096dbec148c8f00d058aff495a34f0114f57e\\
+\setbranch{end2016-master}{pictoreader}{branch:pictoreader:end2016-master} & 27f8b81a5944f79a54139269a072fadfd660256b\\
+\setbranch{end2016-renaming}{pictoreader}{branch:pictoreader:end2016-renaming} & e257d37bed9b4ff667417b82455b7e0dbbfe204e\\
+\bottomrule
+\end{tabular}
