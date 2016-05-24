@@ -34,9 +34,9 @@ The first annotation describes the HTTP request used to access the method, and w
 \end{itemize}
 
 \subsubsection{Path}
-The \texttt{@Path} annotation defines the URL to access the method on. E.g. \texttt{@Path("/department")} will point to \texttt{http://\{giraf-something\}/department}.
+The \texttt{@Path} annotation defines the URL to access the method on. E.g. \texttt{@Path(``/department'')} will point to \texttt{http://\{giraf-something\}/department}.
 The path is appended when a service returns another service, see sequence service in the DepartmentService file for an example.
-Moreover parameters can be sent to a method using the path. This is done by writing \texttt{\{var\_name\}}within the path and then \texttt{@PathParam("var\_name") Type name} in the argument list for the method.
+Moreover parameters can be sent to a method using the path. This is done by writing \texttt{\{var\_name\}}within the path and then \texttt{@PathParam(``var\_name'') Type name} in the argument list for the method.
 
 \newpage
 \noindent
@@ -55,9 +55,9 @@ In an URL the stuff after the \texttt{?} is key-value pairs of parameters.
 
 E.g. \texttt{http://\{giraf-something\}/department/2/sequence?title=something}, here \texttt{title} is \textit{something}.
 These parameters can be retrieved with an annotation similar to the \texttt{@PathParam}annotation.
-In the methods arguments, you must write \texttt{@QueryParam("var\_name") Type name}.
+In the methods arguments, you must write \texttt{@QueryParam(``var\_name'') Type name}.
 
 
 \subsubsection{Produce / Consume}
-Normally a method in any service in the GIRAF REST API will produce and consume JSON data. This is denoted by using \texttt{@Produces("application/json")} and \texttt{@Consumes("application/json")} annotations above a method.
+Normally a method in any service in the GIRAF REST API will produce and consume JSON data. This is denoted by using \texttt{@Produces(``application/json'')} and \texttt{@Consumes(``application/json'')} annotations above a method.
 However some methods such as the ones used to delete objects, should not produce or consume JSON, but just use \texttt{Response} as the return type.

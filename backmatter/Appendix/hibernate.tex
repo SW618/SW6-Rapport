@@ -13,8 +13,8 @@ First up however, any class which you want modelled in the database, needs to ha
 We have a One-to-One in the class: Pictogram, which has a single PictogramImage.
 You simply write:  \texttt{@OneToOne(<fillWithFields>)}.
 In Pictogram it looks like this:
-    
-\begin{lstlisting}[caption={A One-to-One relationship using \texttt{PictogramImage}, on \texttt{Pictogram}.}] 
+
+\begin{lstlisting}[caption={A One-to-One relationship using \texttt{PictogramImage}, on \texttt{Pictogram}.}]
 @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
 private PictogramImage pictogramImage;
 \end{lstlisting}
@@ -22,11 +22,11 @@ private PictogramImage pictogramImage;
 
 \begin{itemize}
 \item Cascade means that if a Pictogram is deleted or created, the action will cascade so PictogramImage will know of e.g. the delete, and will also be deleted. Please see the Hibernate Documentation for more information on the CascadeTypes.
-\item FetchType.LAZY means that the object will not be loaded in the same transaction as the pictogram is loaded, the opposite will be .EAGER and this will load it in the same transaction.
-\item optional means that the field is not requried.
+\item FetchType.LAZY means that the object will not be loaded in the same transaction as the pictogram is loaded, the opposite is FetchType.EAGER and this will load it in the same transaction.
+\item optional means that the field is not required.
 \end{itemize}
 
-In the SQL a simple foreign key constraint is set on the table. The table Pictogram contains the property aslong with its constraint:
+In the SQL a simple foreign key constraint is set on the table. The table Pictogram contains the property as long with its constraint:
 
 
 \begin{lstlisting}[caption={The SQL to create the required}, language=sql]
@@ -47,7 +47,7 @@ The new thing here is that a \texttt{JoinColumn} has to be set which specifies w
 
 \begin{lstlisting}[ caption={The Annotations required for a \texttt{Many-to-One}}, language=sql]
 @ManyToOne(fetch = FetchType.EAGER, optional = true)
-@JoinColumn(name = "department_id", nullable = true) 
+@JoinColumn(name = "department_id", nullable = true)
 protected Department department;
 \end{lstlisting}
 
@@ -69,7 +69,7 @@ Simply adding the department\_id as specified in the annotation to the SQL, and 
 
 \subsubsection*{A Many-to-Many relationship}
 
-A many-to-many is created in two different ways in the REST-API.
+A many-to-many is created in two different ways in the REST API.
 With an extra class to model more data which is not just an index, and without an extra class.
 
 \textbf{The first will be without the extra class which happens in the class Sequence.}
@@ -145,7 +145,7 @@ But you only need to create the \textbf{@many-to-one} for both classes on their 
 \end{lstlisting}
 
 
-Finally you create the SQL as you would normally: 
+Finally you create the SQL as you would normally:
 
 
 \begin{lstlisting}[caption={The SQL needed for the relationship class to create the \texttt{Many-to-Many}.}, language=sql]
