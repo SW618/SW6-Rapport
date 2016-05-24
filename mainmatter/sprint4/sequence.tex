@@ -10,7 +10,7 @@ This service layer uses RESTeasy, like the Pictogram service, described in \myre
 To access any sequence service, a user must go through the department service, hence all services are located at \texttt{/department/\{id\}/sequence}.
 The following table (\myref{tbl:sequence_eps}) shows how and where the sequence endpoint can be accessed.
 
-\begin{table}[]
+\begin{table}[!htbp]
 \footnotesize
 \centering
 \begin{tabular}{rll}
@@ -38,7 +38,7 @@ In the method body it is first checked if the user making the request is of the 
 Moreover it is checked if the parameter is not a string containing zero characters, since a search for such a title would be meaningless.
 If the \texttt{title} parameter is usable a collection of sequences matching the search query is returned using the sequence DAO.
 The method used for this return can be seen in \myref{lst:seqdao_search}.
-However if no query parameter or the empty string was given, all sequences available for the department are returned --- again using the sequence DAO.  
+However if no query parameter or the empty string was given, all sequences available for the department are returned --- again using the sequence DAO.
 
 \begin{lstlisting}[float, floatplacement=h, caption={The method which returns a list of sequences; and it can be filtered using a query parameter.}, label={lst:seq_serviceget}]
 @GET
@@ -53,7 +53,7 @@ public Collection<Sequence> getDepartmentSequences(@Context User user, @QueryPar
     if (title != null && title.length() > 0)(*@\label{lst:seq_searchif}@*)
         return sequenceDao.searchByUserAndTitle(user, title);(*@\label{lst:seq_searchdao}@*)
     return sequenceDao.byDepartment(department);
-}	
+}
 \end{lstlisting}
 
 \subsection{Updating a Sequence}

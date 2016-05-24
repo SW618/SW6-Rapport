@@ -15,8 +15,7 @@ test: clean
 
 pdflatex: master.tex
 	pdflatex  --shell-escape --synctex=1 master.tex
-	makeglossaries master
-	bibtex master
+	biber master
 	pdflatex --shell-escape --synctex=1 master.tex
 	pdflatex --shell-escape --synctex=1 master.tex
 	pdflatex --shell-escape --synctex=1 master.tex

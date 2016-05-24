@@ -1,9 +1,11 @@
 \section{Pictogram Endpoint}\label{sec:pictogramendpoint}
-This section will solve the \userstory{As a developer I would like an endpoint for Pictograms, such that I can retrieve them from GIRAF.}
+\begin{center}
+   \userstory{As a developer I would like an endpoint for Pictograms, such that I can retrieve them from GIRAF.}
+\end{center} 
 
 \kim{I dont understand the problem, all pictograms are downloaded locally before logon. Why would you want to search online?}
-The Pictogram endpoint is used for the PictoSearch library to find different pictograms, as well as to acquire specific pictograms which have not been downloaded yet.
-Currently in the PictoSearch library a user searches for some string, and the local database is queried using \texttt{... LIKE \%searchstring\%} and as such this will also be used for the REST API.
+The Pictogram endpoint is used for the Picto Search library to find different pictograms, as well as to acquire specific pictograms which have not been downloaded yet.
+Currently in the Picto Search library a user searches for some string, and the local database is queried using \texttt{... LIKE \%searchstring\%} and as such this will also be used for the REST API.
 Therefore a goal of the REST API for pictograms is to provide a search method, such that PictoSearch will return the same results. \kim{Same results for what? If it always resunts the same results then it is a sucky service ;)}
 The endpoint will also be used in the case that a user opens e.g. a week schedule which contains a pictogram that the device have not stored locally, the endpoint will then retrieve this single pictogram rather than returning a list of pictograms. \kim{I think you should make these scenarios even clearer.}
 
@@ -16,33 +18,72 @@ The model that was described in \myref{subsec:model} was the complete model of t
     \caption{Class--diagram including fields of the classes involved in Pictograms}\label{fig:pictogramModel}
 \end{figure}
 
-\todo{Table or description? --- I will make consistent when we decide}
-\kim{It doesnt matter both are good. However, the solution with tables is best ;). If you decide to use tables then your descriptions cannot be so long.}
 Here a brief description of the purpose for each field of the classes on the figure will be given.
+Significant fields which require further explination, will be elaborated in the following descriptions           
+         
 \subsubsection*{Frame}
+
+\begin{table}[!h]
+    \small
+    \centering
+    \begin{tabularx}{\textwidth}{ l l X }                                                 
+        Field Name    & Type                                & Short Description                                \\
+        \midrule
+        \texttt{id}              & \texttt{long}                                      & Unique Identifier                                             \\
+        \texttt{lastEdit}        & \texttt{Date}                                      & Timestamp for when the \texttt{Frame} was last edited  \\
+        \texttt{partOfSequences} & \texttt{Collection\textless Sequence\textgreater}  & The \texttt{Seqeunce}s which the \texttt{Frame} is part of \\
+    \end{tabularx}
+    \caption{Table of fields in the \texttt{Frame} class.}
+    \label{tbl:frame_class}
+\end{table}
+
     \begin{description}[font=\ttfamily\bfseries]
-		\item[id] \hfill \\ This is the id of the Frame which is saved in the database.
 		\item[lastEditAt] \hfill \\ This is a time stamp of when the Frame was last edited --- auto updated by Hibernate when changes on the object is persisted in the database.
 		It is to be used for conflict handling as e.g. pictograms can be altered in the PictoCreator tool, and a need for conflict handling is therefore needed.
 		\item[partofSequences] \hfill \\ This is a collection of sequences this frame is used in; why this collection is needed will be further explained in \myref{sec:sequence}.
-	\end{description}
+	\end{description}    
 
-\subsubsection*{PictoFrame}
+\subsubsection*{PictoFrame}    
+
+\begin{table}[!h]
+    \small
+    \centering
+    \begin{tabularx}{\textwidth}{ l l X }                                                 
+        Field Name    & Type                                & Short Description                                \\
+        \midrule
+        \texttt{title}        & \texttt{String}       & Title of the \texttt{PictoFrame}, can be searched for\\
+        \texttt{owner}        & \texttt{User}         & The owner of the \texttt{PictoFrame}  \\
+        \texttt{accessLecvel} & \texttt{AccessLevel}  & Describes who can access the \texttt{PictoFrame} \\   
+        \texttt{department}   & \texttt{Department}  & The \texttt{Department} which the \texttt{PictoFrame} belongs to\\
+        \texttt{optionOn} & \texttt{Collection\textless Choice\textgreater}  & The \texttt{Choice}s which the \texttt{PictoFrame} is on\\
+    \end{tabularx}
+    \caption{Table of fields in the \texttt{PictoFrame} class.}
+    \label{tbl:pictoframe_class}
+\end{table}
+
 	\begin{description}[font=\ttfamily\bfseries]
-		\item[title] \hfill \\ Title of the \texttt{PictoFrame}. Is used to search for and also to show what the \texttt{PictoFrame} is called when shown with its title in different parts of GIRAF.
 		\item[owner] \hfill \\ The user which owns the \texttt{PictoFrame}, but not necessarily the user whom created it.
 		This is used to accommodate the need for creating private \texttt{Pictograms} and \texttt{Sequences}.
 		Private means that only the user who is owner can access them.
 		\item[accessLevel] \hfill \\ This is an Enumeration which specifies whether the \texttt{PictoFrame} is Public, shared on department or private.
 		\item[department] \hfill \\ Specifies which department the \texttt{PictoFrame} belongs to, and is used when the accessLevel is specified as shared on department.
 		\item[optionOn] \hfill \\ A collection of all \texttt{Choice}s which contain the \texttt{PictoFrame}.
-		This is needed for Hibernate to create the many-to-many relationship between \texttt{PictoFrame} and \texttt{Choice}, and will probably not be used for anything else.
+		This is needed for Hibernate to create the many-to-many relationship between \texttt{PictoFrame} and \texttt{Choice}; and will be used when deleting elements, to remove the correct references.
 	\end{description}
 
-\subsubsection*{Pictogram}
-    \begin{description}[font=\ttfamily\bfseries]
-		\item[pictogramImage] \hfill \\ A reference to the \texttt{PictogramImage} of the \texttt{Pictogram}.
-	\end{description}
+\subsubsection*{Pictogram} 
+  
+\begin{table}[H]
+    \small
+    \centering
+    \begin{tabularx}{\textwidth}{ l l X }                                                 
+        Field Name    & Type                                & Short Description                                \\
+        \midrule
+        \texttt{pictogramImage}        & \texttt{PictogramImage}       & Reference to the \texttt{PictogramImage} of the \texttt{Pictogram}\\
+    \end{tabularx}
+    \caption{Table of fields in the \texttt{Pictogram} class.}
+    \label{tbl:pictogram_class}
+\end{table}  
 
 \subsubsection*{PictogramImage}
 The \texttt{PictogramImage} has no fields of its own, but is used to indicate that the image is used for a \texttt{Pictogram} instead of e.g. a UserIcon.
@@ -52,10 +93,21 @@ However it inherits fields for PersistFileHandle.
 This class is what all objects that encapsulates image files will inherit from, this means \texttt{PictogramImage}s and also \texttt{UserIcon}s.
 Originally when we started working on the REST API for Pictogram the \texttt{PersistFileHandle} did not exist and all information on this class was saved directly on the \texttt{UserIcon} class.
 Why and how this new generality is created will be explained in \myref{subsec:persistfilehandle}.
-It contains the following fields:
+It contains the following fields:     
+\begin{table}[!h]
+    \small
+    \centering
+    \begin{tabularx}{\textwidth}{ l X X }                                                 
+        Field Name    & Type                                & Short Description                                \\
+        \midrule
+        \texttt{id}        & \texttt{Long}       & Unique identifier\\      
+        \texttt{filePath}        & \texttt{String}       & Path to the file\\
+    \end{tabularx}
+    \caption{Table of fields in the \texttt{PersistFileHandle} class.}
+    \label{tbl:persistfilehandle_class}
+\end{table}
 \begin{description}[font=\ttfamily\bfseries]
-	\item[id] \hfill \\ This field is self explanatory.
-	\item[filePath] \hfill \\ A string of the path to the file which the class points to, for the Pictogram endpoint it will be a Pictogram.
+	\item[filePath] \hfill \\ A string of the path on the server to the file which the class points to, for the Pictogram endpoint it will be a Pictogram.
 \end{description}
 
 
@@ -65,7 +117,7 @@ The section above explains what is modelled with the Java classes; the following
 
 As mentioned previously we use an \textbf{ORM} (object--relational mapping) tool to map the models to the database, this section describes how this specifically is done.
 
-\begin{lstlisting}[float, floatplacement=h, caption={Fields with annotations which causes Hibernate to perform the ORM for a \texttt{PictogramImage}.},label={lst:PictoImage}]
+\begin{lstlisting}[caption={Fields with annotations which causes Hibernate to perform the ORM for a \texttt{PictogramImage}.},label={lst:PictoImage}]
 @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
 private PictogramImage pictogramImage;
 \end{lstlisting}
@@ -233,7 +285,7 @@ The tool RESTEasy makes it simple to create HTTP Request methods using its annot
 All the services are located in the path \texttt{/publicpictogram} and \texttt{/department/\{id\}/pictogram}.
 This separation has been made because the public pictograms are all given by the GIRAF application, while the other pictograms are pictograms that will be created by a department.
 
-\begin{table}[]
+\begin{table}[!htbp]
 \footnotesize
 \centering
 \begin{tabular}{rll}
@@ -264,7 +316,7 @@ Therefore there is only one POST method in the part of the REST API.
 To implement this we make a builder to create the \texttt{Pictogram}-object.
 The builder--class \texttt{PictogramBuilder} contains the information which is required to construct a \texttt{Pictogram}.
 However it takes the information which the client would send i.e. the ids of the users which are supposed to be attached to it, and not the \texttt{User}-objects as JSON.
-An integral part of a \texttt{Pictogram} is the \texttt{PictogramImage}s, but this has to be attached with a PUT--request, as the \texttt{PictogramImage} is uploaded in its own request. 
+An integral part of a \texttt{Pictogram} is the \texttt{PictogramImage}s, but this has to be attached with a PUT--request, as the \texttt{PictogramImage} is uploaded in its own request.
 
 \subsubsection*{GET--requests}
 
