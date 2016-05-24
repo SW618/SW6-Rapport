@@ -1,6 +1,6 @@
 \section{Technologies and Tools}\label{sec:techstack}
-In this section the technologies used for making the GIRAF REST API, will be introduced
-In the first and second sprint, group SW615F16 worked on the REST API and they had decided on most of the technology stack to be used, however a few were introduced while we also are working on it.
+In this section the technologies used for making the GIRAF REST API, will be introduced.
+In the first and second sprint, group SW615F16 worked on the REST API and they had decided on most of the technologies to be used, however a few were introduced while we also are working on it.
 Below, we briefly introduce the technologies and tools used to develop and run the REST API:
 \subsubsection{Technologies}
 \begin{description}
@@ -14,7 +14,7 @@ Below, we briefly introduce the technologies and tools used to develop and run t
         Hibernate\footnote{\url{http://hibernate.org/}} is a framework for object-relational mapping (ORM) which allows us to utilise high level objects while also storing them in a relational database.
         It is used in the core and persistence layer of the REST API.
         We use Java annotations to configure this mapping on a, per variable, and class base, this will be showcased with examples when they are used in e.g. \myref[name]{sec:pictogramendpoint}.
-        Hibernate can also create the database tables for you, but we choose not to do this so we have more control over the database, aswell as making it easier to map the old data to the new database.
+        Hibernate can also create the database tables for you, but we choose not to do this so we have more control over the database, as well as making it easier to map the old data to the new database.
 
     \item[Jackson] \hfill \\
         Jackson\footnote{\url{http://wiki.fasterxml.com/JacksonHome}} is a Java library for processing JSON.
@@ -47,7 +47,7 @@ Below, we briefly introduce the technologies and tools used to develop and run t
     \item[Wildfly] \hfill \\
         WildFly\footnote{\url{http://wildfly.org/}} is the application server which will run the REST API.
         It can also be run on a development machine to test the API endpoints.
-        It is lightweight and has a fast startup speed, which is especially useful during development.
+        It is lightweight and has a fast launch speed, which is especially useful during development.
         When it is run on a development machine it can either use a local or a remote database, such as the development database for the REST API.
         This configuration is what is specified in the configuration files and then injected during runtime using Spring.
 

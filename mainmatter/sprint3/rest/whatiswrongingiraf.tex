@@ -7,9 +7,9 @@ An instance of GIRAF currently uses two databases; a remote database hosted by I
 When the GIRAF launcher is opened with an empty local database it will download the contents of the remote database into its local database.
 The local database is made by the \textit{meta-database}--library, and the content is downloaded by the \textit{local-db}--library.
 
-During last semester one of the project groups, SW610F15, attempted to setup SymmetricDS\footnote{More details at: \url{http://www.symmetricds.org/}} to synchronise the remote- and local--databases.
+During last semester one of the project groups, SW610F15, attempted to set--up SymmetricDS\footnote{More details at: \url{http://www.symmetricds.org/}} to synchronise the remote- and local--databases.
 They claim to implement this, however they note some serious problems; since SymmetricDS is a bi-directional database replication tool, used to synchronise row-wise, any deletion on one device will delete on every device which can cause conflicts, the same kind that we explained in \myref{sec:offline_giraf}
-Their prototype using SymmetricDS was never enabled in GIRAF because of the dificulties of conflict handling when using the tool on multiple devices.
+Their prototype using SymmetricDS was never enabled in GIRAF because of the difficulties of conflict handling when using the tool on multiple devices.
 So currently there is only a one way transfer from the remote database to the local database and no transfer the other way.
 
 \bigskip
@@ -23,12 +23,12 @@ The previous solution additionally required a database user with read/write perm
 
 Yet another issue is that logic is not contained to some definite area, e.g. for most of the system the logic is coupled closely with the view providing high coupling, despite the existence of an MVC type structure with view, model and helper classes acting as controllers.
 An example of where this causes a problem is in the WeekSchedule app.
-Progressionof a week schedule; whether an activity has been completed, is currently being worked on,is yet to be done, or canceled; is saved on a local file controlled by the view, meaning that even if synchronisation were to be implemented atop the current system, progress would not be synchronised as it has no relation to the model.
+Progression of a week schedule; whether an activity has been completed, is currently being worked on,is yet to be done, or cancelled; is saved on a local file controlled by the view, meaning that even if synchronisation were to be implemented atop the current system, progress would not be synchronised as it has no relation to the model.
 
 For the new database we will consider how each application is used such that we can model the relevant data, and therefore not end up lacking a way to keep track of progress in Week Schedule.
 This means that a new database system will need to adhere to the following requirements:
 \begin{itemize}
-	\item Adhere to the requirements of ``Persondataloven'' such that the system adheres to danish law and by extension may eventually be hosted by danish institutions.
+	\item Adhere to the requirements of ``Persondataloven'' such that the system adheres to Danish law and by extension may eventually be hosted by Danish institutions.
 	\item A user may only receive data which is either publicly available, available to the institution they are a part of, or their own private information.
 	\item Have a two-way connection such that the server's database can be altered, thus allowing synchronisation.
 	\item Modelling and synchronising all relevant data for each application, such that a user can use an arbitrary tablet without losing data.

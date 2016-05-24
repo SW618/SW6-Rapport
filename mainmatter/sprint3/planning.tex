@@ -10,8 +10,8 @@ This section will go through the user stories chosen for this sprint.
 
 \begin{description}[style=unboxed]
     \item[{[}\pmedhigh{]} As a guardian I would like the launcher to tell me how to add applications if none are active, such that it is easier to add applications for beginners.] \hfill \\ 
-    Currently there is no help in GIRAF to gain knowledge of how to add an application such that it is usable, whether it be for oneself or other users into the GIRAF launcher.
-    When you first open GIRAF you are faced with an empty screen where you hopefully figure out that you need to go into settings and add these applications such that they are available to the guardian or citizen being managed.
+    Currently there is no help in GIRAF to gain knowledge of how to add an application such that it is usable, whether it be for oneself or other users in the GIRAF launcher.
+    When you first open GIRAF you are faced with an empty screen, where you hopefully figure out that you need to go into settings and add these applications, such that they are available to the guardian or citizen being managed.
     This can be changed in a number of ways, e.g. adding applications to guardians on start up and/or creating a tutorial which shows the users how to add applications.
     The user story has been estimated to take 5 EP.
 \end{description}
@@ -29,8 +29,8 @@ Currently all personal information is downloaded when a device starts the GIRAF 
 This is the only transaction the device will ever have with the server, i.e. all creation of new data is confined to the device it is created on.
 We know from the customers that the citizens do not always use the same tablet which makes this minimal server transaction a major problem.
 It was decided by the multi project in sprint 1 that a REST API can help with the privacy issues by implementing a different login system, as well as creating a way to synchronise the data on the tablets.
-Group SW615 started developent of the REST API in sprint 1.
-Developing the API is no simple task and as such our group will for this sprint work on the API aswell.
+Group SW615 started development of the REST API in sprint 1.
+Developing the API is no simple task and as such our group will for this sprint work on the API as well.
 Beyond the API itself it is also decides that a new database is set up to support the new model of the system that we will be developing.
 There is a lot of data in the old system and rather than working with the old models and restricting the design of the API to this model, we want to rethink the model and have the freedom to easily redo what has been done previous years.
 Why a REST API is created is explained further in \myref{sec:current}.
@@ -40,7 +40,7 @@ We present some examples to show that the REST API needs to be finished as quick
 A complete list of the blocked tasks can be found in \myref{app:blockedtasks}. 
 
 As the REST API user story is big compared to other user stories, we define smaller user stories with subsequent tasks in order to attain a better overview of the work to be done.
-The following five user stories is the five REST API related user stories we will be working on.
+The following five user stories is the five REST API related user stories we will be working on this sprint.
 
 \begin{description}[style=unboxed, font=\normalfont]
 	\item[\userstory{As a developer, I want a design of the model for Sequence and a guideline for implementing this, such that I can concentrate on actually implementing the model.}]
@@ -56,7 +56,7 @@ The following five user stories is the five REST API related user stories we wil
 \end{description}
 
 These estimations are very fragile as we base them on very little knowledge of how much time is needed to test, and design the solutions, while also getting to know the new technologies which will be used for the REST API.
-Each of the user stories above regarding the creation of endpoints, is divided into three tasks that must be resolved for them to be finished, the tasks are as follows for each.
+Each of the user stories above regarding the creation of endpoints, is divided into three tasks that must be resolved for them to be finished, the tasks are as follows:
 \begin{itemize}
     \item Create Core layer of the endpoint.
     \item Create Persistence layer of the endpoint.
@@ -67,7 +67,7 @@ More detail on the endpoints themselves will also follow in their individual sec
 
 As aforementioned SW615 has already started development on the REST API as such we will be working in collaboration with them throughout the sprint.
 While we have made a split of work areas, we focus mainly on endpoints and they focus mainly on login, collaboration will still take place.
-The collaborative parts will be focused mainly on the overall design ideas, modeling of the system, code conduct, technologies used and how access levels for users should work, while also reviewing each others code.
+The collaborative parts will be focused mainly on the overall design ideas, modelling of the system, code conduct, technologies used and how access levels for users should work, while also reviewing each others code.
 
 In total we have estimated that 62 EP will be spend on the REST API leaving 6 to write our paper.
 However, between sprint end and sprint 4 start we have 20 EP, which will be spend mainly on tying up loose ends if any remain, and the paper.

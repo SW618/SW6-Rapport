@@ -1,46 +1,47 @@
-\section{Sprint Retrospective}\label{sec:S4retro}
+\section{Sprint Retrospective}
 
 Like other Sprint retrospectives first a retrospective of the multi--project will be given, followed by an internal retrospective.
 
-\subsection{Multi--Project Retrospective}
+\subsection*{Multi--Project Retrospective}
 This section describes the retrospective of our multi--project for sprint 4, we will discuss code--review, \textit{Giraf Con}, and a disconnection of our group with the multi--project.
 
 \subsubsection*{Code--Review}
-We decided before sprint 1, that every diff on Phabricator would need to be reviewed and this was also the case for the REST API of course.
-We agreed that we would review across the two groups SW615F16 and SW618F16, but it was mostly just one person from SW615F16 who would review our code.
-It turned out that the reviewer in group SW615, was very rigid, and went in to details we would deem unnecessary, e.g. the complexity $O(n^2)$ of a method rarely used and most often with fewer than 10 elements as its input.
-The review phase ended up taking more time than the actual implementation of the functionality, which was a frustrating way of developing.
-We advise that a review should not chase perfect as long as what is already there is good, as the throughput of code is heavily reduced, and we would end up \textit{bike shedding}\footnote{As popularised by Poul-Henning Kamp, see \url{http://bikeshed.com/} for more.}.
+We decided before sprint 1, that every differential on Phabricator would need to be reviewed and this was also the case for the REST API of course.
+We agreed that we would review across the two groups SW615 and SW618, but it was mostly just one person from SW615 who would review our code.
+It turned out that the reviewer in group SW615, was very rigid, and went in to details we would deem unnecessary, e.g. having a space between a \texttt{while} and its parentheses.
+The review phase ended up taking more time than the actual implementation of the functionality, which seems like way too much time.
+We advise that a review should not chase perfect as long as what is already there is good, as the throughput of code is heavily reduced, and we end up \textit{bike shedding}\footnote{http://bikeshed.com/}.
 Bike shedding is where you discuss minor features of a big complicated project, because it is easier to go into the small simpler details rather than thinking of the overall complicated design.
-The reviews sometimes did think about the overall design, but most of the critique given in reviews would be what we would categorise as bike shedding.
-We would advice future developers on GIRAF to be sure that they are agree on what a code--review is supposed to accomplish, to avoid a situation such as ours.
-Research what a good code--review is, and agree on things to look for when reviewing, such that there will be no opinionated conflicts regarding the code--reviews.
-Another factor in the code--review taking too much time was the fact that the group who should review our code, had fallen very far behind on their report, and therefore did not have time to review; and as such the work was very delayed and was actually not in the master branch by sprint--end, despite being done four days beforehand.
+The reviews sometimes did think about the overall design, but most of it is what we would categorise as bike shedding.
+We would advice future developers on GIRAF to be sure that they are agree on what a code-review is supposed to review, to avoid a situation such as ours.
+Research what a good code-review is, and agree on things to look for when reviewing, such that there will be no conflicts regarding the code-reviews.
+Another factor in the code-review taking up much time was the fast that the group who should review our code, had fallen very far behind on their report, and therefore did not have time to review, and as such the work was very delayed and was actually not in the master by sprint-end, despite being done 4 days beforehand.
 
-As we mentioned in \myref[name]{subsec:sprint3-retro-multi} we integrated a linter for the REST API, we found this very useful to ease the code--reviews.
 
-\subsubsection*{Giraf Con '16}
-Instead of having a regular Retrospective meeting, we had what was named \textit{Giraf Con}, where we went through everything we had done on GIRAF throughout the entire project across all groups.
-We discussed our goals for the different applications; e.g. making the Voice Game stand--alone, meaning that you can download it from Google Play and use it without having to install  any other GIRAF application.
-We performed the meeting as a \textit{World Café}\footnote{\url{http://www.theworldcafe.com/key-concepts-resources/world-cafe-method/}}, where there was a table for each application which was part of the goals for the semester.
+\subsubsection*{\textit{Giraf Con}}
+Instead of having a regular Retrospective meeting, we had what we called Giraf Con, where we went through everything we had done on GIRAF throughout the entire project.
+We discussed our goals for the different application e.g. making the Voice Game stand--alone, i.e. you can download it from Google play without downloading any other application and have it working. 
+We performed the meeting as a \textit{World Café}\footnote{http://www.theworldcafe.com/key-concepts-resources/world-cafe-method/}, where there was a table for each application which was part of the goals for the semester.
 A host would lead the discussion at each table, and bring everyone talking, and make sure points were written down to be remembered.
 Each application from the set of goals have therefore been evaluated, to get a grasp of how well the goals have been met, and what future work needs to be done for each application.
 We had one group member in charge of the discussion of the REST-API and the GIRAF Launcher.
 
-The \textit{World Café} resulted in everyone knowing what had been done for each application, and ensured that we were all on the same page when writing each of our \textit{Future Work} chapters for our reports.
+The world cafe resulted in everyone knowing what had been done for each application, and ensured that we were all on the same page when writing each of our \textit{Future Works} chapters for our reports. 
 For the REST API we did not get much new information, but rather we spread the knowledge of how it worked and this sparked discussions of how it would be used.
-For other applications, remaining functionality was agreed upon, like the PictoSearch library being able to search in sequences, such that these could be returned and used for the week schedule, as this is not possible in the current version.
+For other applications remaining functionality was agreed upon, like the PictoSearch library being able to search in sequences, such that these could be returned and used for the week schedule, as this is not possible now.
 
-\subsubsection*{Disconnection of our group with the multi–project}
-Doing the last two sprints we have felt somewhat disconnected from the multi--project as we did not have much communication with other groups besides SW615F16, whom were also working on the REST API.
-We think that cooperation together with the developers of GIRAF application such as Week Schedule could have been beneficial both to test the endpoints and to discuss the design.
+\subsubsection*{}
+Doing the last two sprints we have felt somewhat disconnected from the multi--project as we did not have much communication with other groups besides SW615, whom were also working on the REST API.
+We think that cooperation together with the developers of GIRAF application such as WeekSchedule could have been beneficial both to test the end-points and to discuss the design.
 A development process where the other developers of the application would be our customers for what their applications needed could have shed another light on the REST API, and perhaps have resulted in a simpler grasp of each feature of the API, as it might have been more easily separated into smaller tasks.
 
-\subsection{Internal Retrospective}
+
+\subsection*{Internal Retrospective}
 This section will discuss the internal retrospective of sprint 4.
 
-We continued to utilize SCRUM and once again proved its effectiveness, by the amount of work we managed to get done.
+We continued utilize SCRUM and once again proved its effectiveness, of the amount of work we did.
 We had an overview of what we needed to do, our progress on these tasks, and it made us able to work harder when we noticed we were falling a bit behind.
-The line between sprint 3 and sprint 4 became blurred since our tasks were overlapping, and due to the fact that  we were separate from the rest of the multi--project.
+Sprint 3, and 4 were very merged into one, because our work was so separate from the rest of the multi--project, and because the tasks that were not finished in sprint 3 were almost the only user stories we finished this sprint.
+This was possible due to the shortened sprint, as if it was longer we would have taken more user stories.
 We pair programmed for the most part to try and get through the review phase faster, as such more of the details would be caught early on.
 This was somewhat effective but the delay from the reviewer, due to their own report, still made the whole process very slow.

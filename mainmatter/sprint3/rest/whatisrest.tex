@@ -19,7 +19,7 @@ Next we will present each of the constraints and how they relate to the aforemen
 
 \begin{description}
     \item [Client-Server\label{client-server-rest}] \hfill \\
-    The first constraint we will discuss is derived from the hierarchical client-server architechture.
+    The first constraint we will discuss is derived from the hierarchical client-server architecture.
     Separation of concern is the underlying concept for the client-server architecture, in essence the client serves as a trigger process, and the server as a reactive process.
     As the reactive process, the server is more often than not a non-terminating process waiting for a request from a trigger.
     When one of the multiple clients requests data, the client cares not for how the data is acquired, nor for how it is stored, as long as it is received in the agreed upon format.
@@ -27,7 +27,7 @@ Next we will present each of the constraints and how they relate to the aforemen
     This separation of concern affects three of the aforementioned non-functional properties.
     \begin{description}
         \item[Simplicity:] By not having to consider client specific data, components are easier to represent.
-        \item[Scalability:] By simplifying the server components, the server components becomes scalable by allowing them to evolve independantly.
+        \item[Scalability:] By simplifying the server components, the server components becomes scalable by allowing them to evolve independently.
         \item[Portability:] By removing concerns between server and client specific details, significantly improving the portability of client side code, as only the language between the two is important.
     \end{description}
     %Scalability, Simplicity, Portability
@@ -42,14 +42,14 @@ Next we will present each of the constraints and how they relate to the aforemen
         \item[Scalability] is improved by not having to store information regarding temporary states.
     \end{description}
     %Performance, Scalability, Simplicity, Visibility, Reliability
-    \item [Cacheable] \hfill \\
-    In order to increase efficiency the constraint of cacheable data is added.
-    The constraint requires that when a response to a request specifies whether the data is cacheable or non-cacheable which may remove the need for computing a later request.
-    When a response is noted as cacheable, a timeout is also required which the client must adhere to.
-    This constraint may slightly reduce reliability if the data in the cache becomes outdated before timeout, however for GIRAF this should only rarely if ever be an issue as two users working in parallel will rarely affect each other and in that case it is only at the point of synchronising.
+    \item [Cache--able] \hfill \\
+    In order to increase efficiency the constraint of cache--able data is added.
+    The constraint requires that when a response to a request specifies whether the data is cache--able or non--cache--able which may remove the need for computing a later request.
+    When a response is noted as cache--able, a time--out is also required which the client must adhere to.
+    This constraint may slightly reduce reliability if the data in the cache becomes outdated before time--out, however for GIRAF this should only rarely if ever be an issue as two users working in parallel will rarely affect each other and in that case it is only at the point of synchronising.
     Other non-functional properties that are instead positively affected are scalability and performance.
     \begin{description}
-        \item[Scalability:] By clients not having to always request, the server can handlre more requests from more clients within a given time frame.
+        \item[Scalability:] By clients not having to always request, the server can handler more requests from more clients within a given time frame.
         \item[Performance:] With some requests not needing a results which is computed by the server but can be partially or completely handled through the cache, average latency is improved.
     \end{description}
     %Performance, Scalability, Reliability
@@ -58,7 +58,7 @@ Next we will present each of the constraints and how they relate to the aforemen
     Applying the principle of generality to the interface between server and client achieves low coupling between components allowing components to evolve independently, as long as the interface persists.
     The interface itself follows four main principles.
     Firstly it uses resource identifiers to request resources from the server, the resources themselves are represented differently in requests than the way they are stored, e.g. for GIRAF we represent our data using the JSON format, but the data is not stored in this format.
-    Secondly clients must be able to manipulate resources through representations, this means that when a client has a representation of a resource, the representation contains enough data such that the client can and may alter or delete the resource, given the client is allowed to do so.
+    Secondly clients must be able to manipulate resources through representations, this means that when a client has a representation of a resource, the representation contains enough data such that the client can and may alter or delete the resource, given that the client is allowed to do so.
     Thirdly messages must be self-descriptive such that a process can be executed as intended without further inquiry.
     The last principle is Hypermedia as the Engine of Application State (HATEOAS), simply put interaction by the client with a network application is through hypermedia provided by the server.
     The client needs no knowledge of available actions on any given data, as the server will only provide hypermedia for actions that are available in the state the resource is in.
@@ -71,10 +71,10 @@ Next we will present each of the constraints and how they relate to the aforemen
     \end{description}
     %Simplicity, Visibility
     \item [Layered System\label{layeredsystem}] \hfill \\
-    The fifth constraint of having a layered system adds hierarchical layers to the architecture, encapsulates the behavior of a layer to itself and its immediately used layers.
+    The fifth constraint of having a layered system adds hierarchical layers to the architecture, encapsulates the behaviour of a layer to itself and its immediately used layers.
     By layering the system we acquire low coupling while also keeping the overall complexity of the system low.
     Layers can serve a variety of purposes from protecting legacy services to simplifying components by isolating less used services.
-    Combined with the system being cacheable, shared caches can also be used to gain positive effect.
+    Combined with the system being cache--able, shared caches can also be used to gain positive effect.
     \begin{description}
         \item[Performance:] While the layers themselves increase overhead and thus increasing latency, shared caches can be used to counter this by reducing latency.
         \item[Scalability:] Intermediary layers can be used for load balancing thus improving scalability.
