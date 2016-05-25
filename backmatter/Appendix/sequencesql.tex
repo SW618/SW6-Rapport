@@ -1,0 +1,177 @@
+\chapter{Frame - SQL}\label{app:frames}
+This is the full SQL--code used to generate the tables related to Frames and the classes which inherit from it. 
+This has been done in three steps and in three different files, because we did it incrementally and realised our mistakes.
+
+\begin{lstlisting}[language=sql]
+CREATE TABLE PictogramImage
+(
+    id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    filepath VARCHAR(255) NOT NULL
+);
+CREATE UNIQUE INDEX UK_PictogramImageFilePath ON PictogramImage (filePath);
+
+CREATE TABLE Pictogram
+(
+    id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    lasteditat TIMESTAMP NOT NULL,
+    accesslevel INT NOT NULL,
+    owner_id BIGINT,
+    pictogramimage_id BIGINT,
+    department_id BIGINT,
+    CONSTRAINT Pictogram__id_PictogramImage FOREIGN KEY (pictogramimage_id) REFERENCES PictogramImage (id),
+    CONSTRAINT Pictogram__id_department FOREIGN KEY (department_id) REFERENCES Department (id),
+    CONSTRAINT Pictogram__id_owner FOREIGN KEY (owner_id) REFERENCES User (id)
+);
+\end{lstlisting}
+
+
+\begin{lstlisting}[language=sql]
+CREATE TABLE Frame
+(
+    id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    lastEditAt TIMESTAMP NOT NULL
+);
+
+CREATE TABLE Choice
+(
+    frame_id BIGINT PRIMARY KEY
+);
+
+CREATE TABLE Choice__PictoFrame
+(
+    placement INT NOT NULL,
+    choice_id BIGINT NOT NULL,
+    pictoFrame_id BIGINT NOT NULL,
+    PRIMARY KEY (choice_id, pictoFrame_id)
+);
+
+CREATE TABLE PictoFrame
+(
+    frame_id BIGINT NOT NULL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    accesslevel INT NOT NULL,
+    department_id BIGINT,
+    owner_id BIGINT
+);
+
+CREATE TABLE Sequence
+(
+    frame_id BIGINT NOT NULL PRIMARY KEY,
+    titlePictogram_id BIGINT NOT NULL
+);
+
+CREATE TABLE Sequence__Frame
+(
+    id BIGINT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    placement INT NOT NULL,
+    sequence_id BIGINT NOT NULL,
+    frame_id BIGINT NOT NULL
+);
+
+INSERT INTO Frame (id, lastEditAt)
+    SELECT id, lastEditAt
+        FROM Pictogram;
+
+INSERT INTO PictoFrame (frame_id, title, accesslevel, department_id, owner_id)
+    SELECT id, title, accesslevel, department_id, owner_id
+        FROM Pictogram;
+
+ALTER TABLE Pictogram
+    DROP FOREIGN KEY Pictogram__id_department;
+
+ALTER TABLE Pictogram
+    DROP FOREIGN KEY Pictogram__id_owner;
+
+ALTER TABLE Pictogram
+    CHANGE id frame_id BIGINT;
+
+ALTER TABLE Pictogram
+    DROP COLUMN title;
+
+ALTER TABLE Pictogram
+    DROP COLUMN accesslevel;
+
+ALTER TABLE Pictogram
+    DROP COLUMN department_id;
+
+ALTER TABLE Pictogram
+    DROP COLUMN owner_ID;
+
+ALTER TABLE Pictogram
+    DROP COLUMN lastEditAt;
+
+/* Foreign key galore */
+ALTER TABLE Pictogram
+    ADD CONSTRAINT Pictogram__frame_id
+        FOREIGN KEY (frame_id) REFERENCES Frame (id);
+
+ALTER TABLE Choice
+    ADD CONSTRAINT Choice__frame_id
+        FOREIGN KEY (frame_id) REFERENCES Frame (id);
+
+ALTER TABLE Choice__PictoFrame
+    ADD CONSTRAINT Choice__PictoFrame__choice_id
+        FOREIGN KEY (choice_id) REFERENCES Choice (frame_id);
+
+ALTER TABLE Choice__PictoFrame
+    ADD CONSTRAINT Choice__PictoFrame__pictoFrame_id
+        FOREIGN KEY (pictoFrame_id) REFERENCES PictoFrame (frame_id);
+
+ALTER TABLE PictoFrame
+    ADD CONSTRAINT PictoFrame__frame_id
+        FOREIGN KEY (frame_id) REFERENCES Frame (id);
+
+ALTER TABLE PictoFrame
+    ADD CONSTRAINT PictoFrame__department_id
+        FOREIGN KEY (department_id) REFERENCES Department (id);
+
+ALTER TABLE PictoFrame
+    ADD CONSTRAINT PictoFrame__owner_id
+        FOREIGN KEY (owner_id) REFERENCES User (id);
+
+ALTER TABLE Sequence
+    ADD CONSTRAINT Sequence__frame_id
+        FOREIGN KEY (frame_id) REFERENCES Frame (id);
+
+ALTER TABLE Sequence
+    ADD CONSTRAINT Sequence__titlePictogram_id
+        FOREIGN KEY (titlePictogram_id) REFERENCES Pictogram (frame_id);
+
+ALTER TABLE Sequence__Frame
+    ADD CONSTRAINT Sequence__Frame__choice_id
+        FOREIGN KEY (sequence_id) REFERENCES Sequence (frame_id);
+
+ALTER TABLE Sequence__Frame
+    ADD CONSTRAINT Sequence__Frame__pictoFrame_id
+        FOREIGN KEY (frame_id) REFERENCES Frame (id);
+\end{lstlisting}
+
+\begin{lstlisting}[language=sql]
+ALTER TABLE Sequence
+    DROP CONSTRAINT Sequence__titlePictogram_id;
+
+ALTER TABLE Sequence
+    CHANGE titlePictogram_id thumbnail_id BIGINT NOT NULL;
+
+ALTER TABLE Sequence
+    ADD CONSTRAINT Sequence__thumbnail_id
+        FOREIGN KEY (thumbnail_id) REFERENCES Pictogram (frame_id)
+        ON DELETE CASCADE;
+
+ALTER TABLE Sequence__Frame
+    DROP CONSTRAINT Sequence__Frame__choice_id;
+
+ALTER TABLE Sequence__Frame
+    ADD CONSTRAINT Sequence__Frame__sequence_id
+        FOREIGN KEY (sequence_id) REFERENCES Sequence (frame_id)
+        ON DELETE CASCADE;
+
+ALTER TABLE Sequence__Frame
+    DROP CONSTRAINT Sequence__Frame__pictoFrame_id;
+
+ALTER TABLE Sequence__Frame
+    ADD CONSTRAINT Sequence__Frame__pictoFrame_id
+        FOREIGN KEY (frame_id) REFERENCES Frame (id)
+        ON DELETE CASCADE;
+\end{lstlisting}

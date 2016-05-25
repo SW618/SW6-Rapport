@@ -349,8 +349,8 @@ public Collection<Pictogram> getAllPictograms(@Context User user) {
 }
 \end{lstlisting}
 
-First, the method simply checks if a user\kim{What is a user? citizen?} is actually received, i.e. is a user logged in or not.
-If this check passes the next if--check on line 13 checks whether the user is in the same department as the department the method will try to get \texttt{Pictogram}s from, if this check fails it also checks whether the user might be a \texttt{SuperUser}, \kim{You should list the different types of users somewhere.} in which case it is also allowed and the if--check will fail.
+First, the method simply checks if a user is actually received, i.e. is a user logged in or not, a user on the REST API is both a guardian and a citizen.
+If this check passes the next if--check on line 13 checks whether the user is in the same department as the department the method will try to get \texttt{Pictogram}s from, if this check fails it also checks whether the user might be a \texttt{SuperUser}, in which case it is also allowed and the if--check will fail.
 A \texttt{SuperUser} is a user with permissions to do administrative tasks such as create public pictograms.
 
 If both if--checks fail, the method returns what the \texttt{PictogramDao.getAll(user)} method retrieves, which will be all pictograms the user is allowed to see.
@@ -360,11 +360,11 @@ An example of this is the relation between \texttt{Department} and \texttt{Picto
 
 \subsubsection*{PUT--requests}
 A PUT is used to update existing data, and for \texttt{Pictogram} we also need to add the \texttt{PictogramImage} in a PUT--request after it has been posted.
-We create a merge method which simply takes the input retrieved from JSON and swaps\kim{When you say swap do you mean overwrite? If not then I do see how swapping anything merges the data.} the information, such that the new information is set to the data objects in the database.
+We create a merge method which simply takes the input retrieved from JSON and overwrite the information on the object we call merge on, such that the new information is set to the data objects in the database.
+If any fields of the object being send as the input parameter to the merge are null, the old data values are simply left unchanged.
 
 \subsubsection*{DELETE-requests}
 A DELETE-request for \texttt{Pictogram} is simple, it finds the \texttt{Pictogram} using the \texttt{PictogramDaoImpl} which also finds the corresponding \texttt{PictogramImage}.
-First the \texttt{PictogramImage} is deleted, followed by deleteing the \texttt{Pictogram}, this deletion cascades throughout the entire database, and any entity using the \texttt{Pictogram} in some way will be updated, such that it knows the \texttt{Pictogram} no longer exists.
-
+First the \texttt{PictogramImage} is deleted, followed by deleting the \texttt{Pictogram}, this deletion cascades throughout the entire database, and any entity using the \texttt{Pictogram} in some way will be updated, such that it knows the \texttt{Pictogram} no longer exists.
 
 This concludes the \texttt{Pictogram} endpoint showcase; the next section will cover how the REST API for \texttt{Sequence} was progressed for this sprint, it will skip details already covered in this section about the \texttt{Pictogram} endpoint.

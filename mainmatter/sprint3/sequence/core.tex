@@ -39,7 +39,7 @@ We present the fields of the classes \texttt{Choice} and \texttt{Sequence} as th
     \begin{tabularx}{\textwidth}{ l X X }
         Field Name    & Type                                & Short Description                                \\
         \midrule
-        \texttt{options}        & List of the \texttt{PictoFrame}s which are options on the \texttt{Choice}\\
+        \texttt{options}  & List<PictoFrame>      & List of the \texttt{PictoFrame}s which are options on the \texttt{Choice}\\
     \end{tabularx}
     \caption{Table of fields in the \texttt{Choice} class.}
     \label{tbl:choice_class}
@@ -48,3 +48,6 @@ We present the fields of the classes \texttt{Choice} and \texttt{Sequence} as th
 	\item[options] Like in a \texttt{Sequence} a \texttt{Choice} needs a list of elements, but unlike \texttt{Sequence} the list is made up of \texttt{PictoFrame}s which means a \texttt{Choice} cannot have nested \texttt{Choice}s.
     In order to retain the same behavior every time a \texttt{Choice} is used, the \texttt{options} list is ordered.
 \end{description}
+\bigskip
+The full SQL for creating the sequence and choice Schemas can be found in \myref{app:frames}.
+

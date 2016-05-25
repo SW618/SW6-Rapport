@@ -3,6 +3,7 @@ This section pertains to the following user story:
 \begin{center}
 \userstory{As a developer I would like an endpoint for Week Schedules, such that I can retrieve them from GIRAF.}
 \end{center}
+This section is written to document the completed core and persistence layer of the week schedule REST API, however some corrections were implemented after sprint end as the review process depended on another group which ended up delaying us, see more in \myref{sec:sprintreview3}.
 Specifically the two sub tasks regarding the core layer and the persistence layer, as they are done first, and we wont have time in this sprint to develop the service layer.
 
 \noindent
@@ -23,7 +24,7 @@ Each frame in a week schedule additionally have a number of boolean values that 
 The booleans that currently exist denote the progress are: Complete, Active, NotComplete and Cancelled.
 As mentioned this progress is not stored on the server, but on a locally saved file.
 Since the progress information is personal, each user needs to separately have this information stored.
-As we believed some of the design choices to be odd, for our own design choices, we decided to base it upon how the Week Schedule app is used, and disregard the current model. \kim{What model? you lost me in the end.}
+As we believed some of the design choices to be odd, for our own design choices, we decided to base it upon how the Week Schedule app is used, and disregard the current model in the GIRAF week Schedule app.
 
 \begin{figure}[!htb]
     \centering
@@ -31,14 +32,13 @@ As we believed some of the design choices to be odd, for our own design choices,
     \caption{The Class Diagram without their fields of classes involved with \texttt{WeekSchedule}.}\label{fig:weekscheduleclassdiagram}
 \end{figure}
 
-\myref{fig:weekscheduleclassdiagram} shows the class diagram of the classes involved with \texttt{WeekSchedule}. \kim{As mentioned earlier then I think this way of illustrating the fields on a class is very good. I propose you make such tables every time you explain a class. I also like the more detailed explanations in the description list below.}
+\myref{fig:weekscheduleclassdiagram} shows the class diagram of the classes involved with \texttt{WeekSchedule}. 
 A \texttt{WeekSchdule} has many \texttt{Weekday}s, although we allow no more than 7, and these are assigned an enum \texttt{Day} which indicates which day of the week the \texttt{Weekday} belongs to.
 A \texttt{Weekday} have a number of \texttt{Frame}s as seen by the join-table \texttt{WeekdayFrame}.
 These \texttt{WeekdayFrame}s are then involved with a \texttt{User} and each \texttt{User} has their own \texttt{Progress} which is all joined in the join-table \texttt{WeekdayFrameProgress}.
 And then of course a \texttt{User} is able to have many \texttt{WeekSchedule}s which is also the case for a \texttt{Department}.
 The following sections will introduce the fields of the classes created for modelling \texttt{WeekSchedule}.
 
-\todo[inline]{Måske vi skal snakke om primary keys her med henblik på database senere eller skal vi det der? - Troels --- Er ikke med på hvad du mener? Nævne at Id er primary key ? - Søren}
 \subsubsection{Week Schedule}
 \myref{tbl:WeekSchedule} provides an overview of how we model a \texttt{WeekSchedule} in the REST API.
 For some of the fields further details and thoughts behind their creation is provided.
@@ -207,14 +207,13 @@ public Collection<WeekSchedule> getAll(User user) {
 \end{lstlisting}
 
 \bigskip
-We have put the full SQL code used to generate the schema related to week schedule in \myref{app:weekschedulesql}.\todo{Skal vi gøre det Kim?}
-\kim{Ja det er en god ide.}
+We have put the full SQL code used to generate the schema related to week schedule in \myref{app:weekschedulesql}.
 We have also written a small amount of SQL to generate some initial data for use in testing during development.
 
 \subsubsection{Tests}
 To ensure the durability and validity of our design of the week schedules we made a series of integration tests using JUnit.
 We test all the methods in the DAO and ensure that the SQL relations and the mapping from Java--classes to the database is working as intended.
-Both the methods in the \texttt{WeekScheduleDao} are tested, which results in a code--coverage of 100~\%. \kim{What kind of code coverage is this? Statement coverage? Branch coverage?}
-This alone does not necessarily mean that their behaviour is fully tested.
+Both the methods in the \texttt{WeekScheduleDao} are tested with various input, however, this alone does not necessarily mean that their behaviour is fully tested.
+As we have tested the methods using a broad range of parameters, and this gives us confidence in their correctness.
 
 To ensure that the relations are created, we also test that the \texttt{WeekSchedule} can access its fields through the getters and receive the correct information as defined in the initial data described previously as well as testing if a change to an object is registered correctly.

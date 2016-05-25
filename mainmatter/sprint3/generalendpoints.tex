@@ -78,7 +78,7 @@ We will start by discussing week schedule and then go on to discuss the rest of 
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/fullclassdiagram.pdf}
-    \caption{Classdiagram of the new model user in the REST API}\label{fig:fullmodelclassdiagram}
+    \caption{Classdiagram of the new model used in the REST API}\label{fig:fullmodelclassdiagram}
 \end{figure}
 
 A week schedule consists of seven week days, one for each day of the week, which creates a relation from a \texttt{weekSchedule} to several \texttt{weekDay}s.
@@ -100,6 +100,7 @@ A \texttt{Sequence} has an ordered one--to--many relation to \texttt{Frame} and 
 All these classes are very intertwined and rely on each other which makes the implementation somewhat difficult to work on in parallel in the group.
 A \texttt{WeekSchedule} is owned by one or many \texttt{User}s, and it also belongs to a single department which the users also belong to.
 All \texttt{PictoFrame}s are owned by a \texttt{User} and/or a \texttt{Department}.
+There exists 3 kinds of users in the REST API, User which is the base level that all other users have, this includes citizens; Guardians which is used for the guardians at the institutions, and SuperUser which is an administration level user, that can administrate public pictograms.
 
 The \texttt{weekday} has a relationship--class: \texttt{weekdayFrame} to bind these \texttt{Frame}s together with a weekday which preserves the order of frames on a weekday as well as being able to save the progress of a week schedule.
 The progress is saved in another relationship--class: \texttt{weekdayFrameProgress} as the progress depends on the user because this new model of GIRAF week schedules allows a week schedule to be shared between users, which might be used for when an institution goes on a trip.

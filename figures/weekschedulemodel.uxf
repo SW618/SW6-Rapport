@@ -147,6 +147,7 @@ m2=0..*</panel_attributes>
     <panel_attributes>User
 --
 [...]
+id
 department     
 userprogress      
 weekSchedules                                   </panel_attributes>
@@ -188,7 +189,8 @@ m2=0..*</panel_attributes>
     </coordinates>
     <panel_attributes>Department
 --
-[...]                        
+[...]     
+id                   
 members   
 </panel_attributes>
     <additional_attributes/>
