@@ -11,20 +11,23 @@ While a citizen is logged in on a tablet, a guardian could edit a week schedule 
 The tablet the citizen uses does not have this newly created pictogram, so when the citizen opens the week schedule it will have to obtain the pictogram in some way.
 To obtain this pictogram the endpoint is fitted with a service to retrieve a single pictogram, such that this dynamic instantly synchronising work--flow is possible.
 
-\subsection{Core --- The Model of Pictograms}\label{subsec:pictomodel}
+\subsection{Core --- The Model of Pictograms}\label{subsec:pictomodel}   
+\begin{wrapfigure}{r}{0.5\textwidth}
+    \centering
+    \includegraphics[width=0.45\textwidth]{figures/pictogrammodel.pdf}
+    \caption{Class--diagram including fields of the classes involved in Pictograms}\label{fig:pictogramModel}
+\end{wrapfigure} 
 The model that was described in \myref[name]{subsec:model} was the complete model of the REST API, \myref{fig:pictogramModel} shows the model regarding pictograms along with the fields of these classes.
 
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width=0.50\textwidth]{figures/pictogrammodel.pdf}
-    \caption{Class--diagram including fields of the classes involved in Pictograms}\label{fig:pictogramModel}
-\end{figure}
-
 Here a brief description of the purpose for each field of the classes on the figure will be given.
-Significant fields which require further explanation, will be elaborated in the following descriptions
+Significant fields which require further explanation, will be elaborated in descriptions.
 
 \subsubsection*{Frame}
-
+    \begin{description}[font=\ttfamily\bfseries]
+        \item[lastEditAt] \hfill \\ This is a time stamp of when the Frame was last edited --- auto updated by Hibernate when changes on the object is persisted in the database.
+        It is to be used for conflict handling as e.g. pictograms can be altered in the PictoCreator tool, and a need for conflict handling is therefore needed.
+        \item[partofSequences] \hfill \\ This is a collection of sequences this frame is used in; why this collection is needed will be further explained in \myref{sec:sequence}.
+    \end{description}  
 \begin{table}[!h]
     \footnotesize
     \centering
@@ -37,13 +40,7 @@ Significant fields which require further explanation, will be elaborated in the 
     \end{tabularx}
     \caption{Table of fields in the \texttt{Frame} class.}
     \label{tbl:frame_class}
-\end{table}
-
-    \begin{description}[font=\ttfamily\bfseries]
-        \item[lastEditAt] \hfill \\ This is a time stamp of when the Frame was last edited --- auto updated by Hibernate when changes on the object is persisted in the database.
-        It is to be used for conflict handling as e.g. pictograms can be altered in the PictoCreator tool, and a need for conflict handling is therefore needed.
-        \item[partofSequences] \hfill \\ This is a collection of sequences this frame is used in; why this collection is needed will be further explained in \myref{sec:sequence}.
-    \end{description}
+\end{table}  
 
 \subsubsection*{PictoFrame}
 

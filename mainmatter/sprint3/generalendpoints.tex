@@ -77,18 +77,19 @@ We will start by discussing week schedule and then go on to discuss the rest of 
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/fullclassdiagram.pdf}
+    \includegraphics[width=0.75\textwidth]{figures/fullclassdiagram.pdf}
     \caption{Classdiagram of the new model used in the REST API}\label{fig:fullmodelclassdiagram}
 \end{figure}
 
 A week schedule consists of seven week days, one for each day of the week, which creates a relation from a \texttt{weekSchedule} to several \texttt{weekDay}s.
 We acknowledge that a weekday is supposed to be able to use the following in its schedule: 
-
+\begin{multicols}{3}
 \begin{itemize}
 	\item \texttt{Sequence}s
 	\item \texttt{Pictogram}s
 	\item \texttt{Choice}s
-\end{itemize}
+\end{itemize}     
+\end{multicols}
 
 With this in mind we created a super class which all these can inherit from, and from this we can make it so a week schedule for each day has a list of this super class, which we call \texttt{Frame}.
 \myref{fig:fullmodelclassdiagram} shows how the only connection from these three elements of a weekday is through the \texttt{Frame} class.

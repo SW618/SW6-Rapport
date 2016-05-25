@@ -11,7 +11,7 @@ Below, we briefly introduce the technologies and tools used to develop and run t
         Java has many tools and frameworks etc. which makes it a good candidate for writing a REST API.
 
     \item[Hibernate] \hfill \\
-        Hibernate\footnote{\url{http://hibernate.org/}} is a framework for object-relational mapping (ORM) which allows us to utilise high level objects while also storing them in a relational database.
+        Hibernate\footnote{\url{http://hibernate.org/}} is a framework for object--relational mapping (ORM) which allows us to utilise high level objects while also storing them in a relational database.
         It is used in the core and persistence layer of the REST API.
         We use Java annotations to configure this mapping on a, per variable, and class base, this will be showcased with examples when they are used in e.g. \myref[name]{sec:pictogramendpoint}.
         Hibernate can also create the database tables for you, but we choose not to do this so we have more control over the database, as well as making it easier to map the old data to the new database.
@@ -27,14 +27,14 @@ Below, we briefly introduce the technologies and tools used to develop and run t
         Spring uses the serialisable Java class \texttt{bean}, which are classes that encapsulate many objects into a single object.
 
     \item[RESTEasy] \hfill \\
-        RESTEasy\footnote{\url{http://resteasy.jboss.org/}} is JBoss' (which also makes Wildfly) implementation of the JAX-RS 2.0 standard, which is a Java API used to make RESTful Web Services.
-        RESTEasy implements annotations for methods, which gives meaning to the methods in the service layer, according to the JAX.RS 2.0 standard.
-        Examples of these are: \texttt{@GET}, \texttt{@POST} and \texttt{@Produces}, these will be further explained when we use them in \myref{sec:pictogramendpoint}.
+        RESTEasy\footnote{\url{http://resteasy.jboss.org/}} is JBoss' (which also makes Wildfly) implementation of the JAX--RS 2.0 standard, which is a Java API used to make RESTful Web Services.
+        RESTEasy implements annotations for methods, which gives meaning to the methods in the service layer, according to the JAX--RS 2.0 standard.
+        Examples of these are: \texttt{@GET}, \texttt{@POST} and \texttt{@Produces}, these will be further explained when we use them in \myref[name]{sec:pictogramendpoint}.
     
     \item[JUnit] \hfill \\
         In order to verify the correctness of the code we use unit tests.
         We have decided to use JUnit\footnote{\url{http://junit.org}} as our unit testing framework.
-        JUnit is the de-facto standard for unit testing in Java\footnote{\url{http://www.methodsandtools.com/tools/tools.php?junit}}, and thus it has good support within most IDEs and tools.
+        JUnit is the de--facto standard for unit testing in Java, and thus it has good support within most IDEs and tools.
 
 \end{description}
 \subsubsection{Tools}
@@ -42,7 +42,7 @@ Below, we briefly introduce the technologies and tools used to develop and run t
     \item[Gradle] \hfill \\
         We use the Gradle Build system\footnote{\url{http://gradle.org/}} to automate our builds.
         As with the rest of the GIRAF project Gradle is used for build automation.
-        We have previously explained what Gradle is in \myref{subsec:gradle}.
+        We have previously explained what Gradle is in \myref[name]{subsec:gradle}.
 
     \item[Wildfly] \hfill \\
         WildFly\footnote{\url{http://wildfly.org/}} is the application server which will run the REST API.
@@ -57,16 +57,16 @@ Below, we briefly introduce the technologies and tools used to develop and run t
         The documentation is based on the code and the JavaDocs comments which are written in the code, thus this documentation is generated with minimal effort from the REST API developers.
 
     \item[MariaDB] \hfill \\
-        MariaDB\footnote{\url{https://mariadb.org/}} is a drop-in replacement for MySQL and was started as a fork of MySQL by its original developer when Oracle acquired MySQL.
-        We use MariaDB on the database server as the back-end of the REST API environment (the \enquote{Database} as seen in \myref{fig:rest-architecture}).
+        MariaDB\footnote{\url{https://mariadb.org/}} is a drop--in replacement for MySQL and was started as a fork of MySQL by its original developer when Oracle acquired MySQL.
+        We use MariaDB on the database server as the back--end of the REST API environment (the \enquote{Database} as seen in \myref{fig:rest-architecture}).
         This is where the persistent data of GIRAF will be stored in production.
 
     \item[H2 Database Engine] \hfill \\
         The H2 Database Engine\footnote{\url{http://www.h2database.com/html/main.html}} is a low footprint local database written in Java.
-        We use it as a local database for testing, in its in-memory mode, which means that after each run all data of the database is deleted.
+        We use it as a local database for testing, in its in--memory mode, which means that after each run all data of the database is deleted.
         It has a MySQL compatibility mode which means that it is reasonable to assume that any SQL executed onto it will do the same as if it was executed on MySQL.
 
     \item[FlyWay] \hfill \\
-        FlyWay\footnote{\url{https://flywaydb.org/}} is used to automatically apply the database migrations, both the schemas and the data, on start-up, both on the H2 database during development and on the production server.
+        FlyWay\footnote{\url{https://flywaydb.org/}} is used to automatically apply the database migrations, both the schemas and the data, on start--up, both on the H2 database during development and on the production server.
         As we develop incrementally, this allows us to add migrations incrementally as well which makes sure no old data will be lost when new features are developed.
 \end{description}
