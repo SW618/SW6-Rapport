@@ -35,7 +35,7 @@ The screenshot also shows the view of the application as it is opened, completel
 \end{figure}
 
 In the new version, a search is made whenever the text in the searchfield is changed.
-Instead of the big slow search spinner, which blackened out and locked the screen, shown on \myref{fig:screenshot_searchspinner}, a new smaller text message is instead displayed which tells the user that the application is searching and what is is searching for.
+Instead of the big slow search spinner, which blackened out and locked the screen, shown on \myref{fig:screenshot_searchspinner}, a new smaller text message is instead displayed which tells the user that the application is searching and what it is searching for.
 The current version would also remove the on--screen keyboard when it would search, this only happens in the new version whenever the search button is pressed or the user taps somewhere else, i.e. not on the keyboard.
 The application can take input while searching because it is implemented as an async task, i.e. in its own thread.
 Because of this any new search is queued behind the current search query, and as such the results of the latest search will be waiting for the results of the previous searches.
@@ -69,7 +69,7 @@ another.}\cite[p.~51]{DESIGNBOOK}
 Therefore using a familiar position of the button is a better fit than placing it in the middle of the screen as in the current version.
 
 Another thing we noticed was that the clear search field button was visible all the time even though no text was in the search--field.
-This has been removed and it is now only visible when there is text in the search--field i.e. when the actoion is available, as can be seen on \myref{fig:screenshot_newstartup} and it it still there on \myref{fig:screenshot_newsearch}.
+This has been removed and it is now only visible when there is text in the search--field i.e. when the actoion is available, as can be seen on \myref{fig:screenshot_newstartup} and it is still there on \myref{fig:screenshot_newsearch}.
 This has been done because of another design pricinple by Constantine and Lockwood:
 
 \begin{displayquote}

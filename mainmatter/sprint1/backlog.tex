@@ -53,7 +53,7 @@ For the sake of our use, we use EP as our time unit.
         This task is estimated at 16 EP, 2 of which should be spent on setting up the new structure and 14 of which should be spent on migrating old data and converting it to the markup language used in Phabricator.
 
     \item[{[}\pblocking{]} Gradle --- Custom plug-in dk.giraf.lib for gradle breaks build] \hfill \\
-        \userstory{As a developer I would like the libraries to be be build-able.}
+        \userstory{As a developer I would like the libraries to be build-able.}
         Attempting to build using Gradle, an automated build tool, for Picto Search provides the error, \enquote{Cannot configure the 'publishing' extension after it has been accessed.}.
         The error has been identified to originate from the \texttt{dk.giraf.lib}--library and this must be fixed before any library in the GIRAF project can be built using Gradle.
         This task is an unforeseen complication found while working on \enquote{Picto Search - Update Dependencies}
