@@ -1,12 +1,12 @@
 \section{REST API: Week Schedule Endpoint}\label{sec:weekscheduleendpoint}
 This section will describe our progress in developing the service layer of the Week Schedule part of the REST API.
-The userstory is as follows:
+The user story is as follows:
 \begin{center}
 \userstory{As a developer I would like an endpoint for Week Schedules, such that I can retrieve them from the GIRAF REST API.}
 \end{center}
 
-We estimated this userstory at 6 EP, unfortunately this was too little time, and we did not solve all the sub-tasks involved in the user story, as unforseen problems arose when deleting different objects, and we needed to spend more time on the report.
-First we will explain what endpoints we will make, then we will explain how the PUT should work for \texttt{Weekschedule}s.
+We estimated this user story at 6 EP, unfortunately this was not enough time, and we did not solve all the sub-tasks involved in the user story, as unforeseen problems arose when deleting different objects, the review was late on the two earlier layers, and the report was falling behind.
+First we will explain what endpoints we will make, then we will explain how the \texttt{PUT}--request should work for \texttt{Weekschedule}s.
 \subsection{Endpoints}
 \myref{tbl:weekscheduleservice} contains the endpoints which are involved in the Week Schedule part of the REST API.
 
@@ -32,7 +32,7 @@ First we will explain what endpoints we will make, then we will explain how the 
 \end{table}
 
 Generally for all these are that the DAOs are used to retrieve, update, store and delete information from the persistence layer.
-Most important here is the \texttt{WeekScheduleDao}, which were introduced in~\myref{subsec:weekschedulepersistence}.
+Most important here is the \texttt{WeekScheduleDao}, which were introduced in~\myref[name]{subsec:weekschedulepersistence}.
 
 \subsection{POST--requests}
 POST--requests for \texttt{WeekSchedule} are more complex 
@@ -44,18 +44,18 @@ We also check that the \texttt{WeekSchedule} to be created has a thumbnail which
 
 \subsection{PUT--requests}
 There are two different PUT--requests which can be made, one will update a \texttt{WeekSchedule} and one will update the progress information for a given \texttt{User} on a given \texttt{WeekSchedule}.
-The PUT--requests can quickly get complicated, since they have to deal with synchronisation and conflicts, we have previously discussed this when we in sprint 2 allowed for Giraf to be started offline see \myref{sec:offline_giraf} for more.
+The PUT--requests can quickly get complicated, since they have to deal with synchronisation and conflicts, we have previously discussed this when we in sprint 2 allowed for GIRAF to be started offline see \myref{sec:offline_giraf} for more.
 In \myref{sec:restws} we describe the \texttt{lastEdit}--variables, we use these to keep track of when the entity was last edited.
 
 We have implemented but not completely tested, the way of synchronisation which goes as follows:
 If the local device have had the newest version, and wants to update, then update the data on the server.
-If the local device did not have the newest version, and wants to update, then create a copy, and perpend ``Conflicted Copy: '' to its title.
+If the local device did not have the newest version, and wants to update, then create a copy, and prepend \textit{Conflicted Copy:} to its title.
 We previously mentioned this method, which is inspired by Dropbox in \myref{ssec:policy}.
 
 This was supposed to be implemented, such that a conflicted copy would only be created if the two different versions of the \texttt{WeekSchedule}s has changed the same \texttt{WeekDays}, but this is where we stopped development due to time-constraints and as such this will be a future development for next years students.
 
 The PUT--request which was meant to update the progress of a user on a given \texttt{WeekSchedule} have not been implemented due to time constraints.
-However the code which is responsible for this behavior have been thoughly tested in the unittests.
+However the code which is responsible for this behaviour have been thoroughly tested in the unit tests.
 
 \subsection{DELETE--requests}
 We have not implemented the DELETE--requests due to time constraints.

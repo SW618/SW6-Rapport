@@ -5,8 +5,8 @@ It deals with the same user story as the \myref[name]{sec:sequence}, which is:
 \userstory{As a developer I would like an endpoint for Sequences, such that I can retrieve them from the GIRAF REST API.}
 \end{center}
 
-In sprint 3, we completed the two layers Core and Persistence, and now only need to write the services that use these layers to return JSON data.
-This service layer uses RESTeasy, like the Pictogram service, described in \myref[name]{ssec:pictogram_service}.
+In sprint 3, we completed the two layers: Core and Persistence, and now only need to write the services that use these layers to return JSON data.
+This service layer uses RESTEasy, like the Pictogram service, described in \myref[name]{ssec:pictogram_service}.
 To access any sequence service, a user must go through the department service, hence all services are located at \texttt{/department/\{id\}/sequence}.
 The following table (\myref{tbl:sequence_eps}) shows how and where the sequence endpoint can be accessed.
 
@@ -33,12 +33,12 @@ DELETE          &/\{pid\}	    & \texttt{deleteSequence}	    \\
 By providing the optional query parameter \texttt{title}, the sequences returned can be filtered by title.
 The URL used to make such a request will then be: \texttt{/department/\{id\}/sequence?title=\{searchstring\}}.
 In \myref{lst:seq_serviceget} the method used for this search is shown.
-On line~\ref{lst:seq_methodheader} the query parameter by the name of \texttt{title} is created using the RESTeasy annotation \texttt{@QueryParam("title")}, which enables the query parameter to be extracted from the request URL and used by the method.
+On line~\ref{lst:seq_methodheader} the query parameter by the name of \texttt{title} is created using the RESTEasy annotation \texttt{@QueryParam("title")}, which enables the query parameter to be extracted from the request URL and used by the method.
 In the method body it is first checked if the user making the request is of the given department specified in the URL, and after that on line~\ref{lst:seq_searchif}, it is checked whether or not the optional query parameter was given.
-Moreover it is checked if the parameter is not a string containing zero characters, since a search for such a title would be meaningless.
+Moreover it is checked if the parameter is not the \texttt{EmptyString}, since a search for such a title would be meaningless.
 If the \texttt{title} parameter is usable a collection of sequences matching the search query is returned using the sequence DAO.
 The method used for this return can be seen in \myref{lst:seqdao_search}.
-However if no query parameter or the empty string was given, all sequences available for the department are returned --- again using the sequence DAO.
+However if no query parameter or the \texttt{EmptyString} was given, all sequences available for the department are returned --- again using the sequence DAO.
 
 \begin{lstlisting}[float, floatplacement=h, caption={The method which returns a list of sequences; and it can be filtered using a query parameter.}, label={lst:seq_serviceget}]
 @GET
@@ -50,7 +50,7 @@ public Collection<Sequence> getDepartmentSequences(@Context User user, @QueryPar
 {
     if (!(user.getDepartment().equals(department)))
         throw new NotFoundException("User is not allowed in the Department");
-    if (title != null && title.length() > 0)(*@\label{lst:seq_searchif}@*)
+    if (title != null && !title.isEmpty()(*@\label{lst:seq_searchif}@*)
         return sequenceDao.searchByUserAndTitle(user, title);(*@\label{lst:seq_searchdao}@*)
     return sequenceDao.byDepartment(department);
 }
