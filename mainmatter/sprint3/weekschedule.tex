@@ -34,8 +34,8 @@ As we believed some of the design choices to be odd, for our own design choices,
 
 \myref{fig:weekscheduleclassdiagram} shows the class diagram of the classes involved with \texttt{WeekSchedule}. 
 A \texttt{WeekSchdule} has many \texttt{Weekday}s, although we allow no more than 7, and these are assigned an enum \texttt{Day} which indicates which day of the week the \texttt{Weekday} belongs to.
-A \texttt{Weekday} have a number of \texttt{Frame}s as seen by the join-table \texttt{WeekdayFrame}.
-These \texttt{WeekdayFrame}s are then involved with a \texttt{User} and each \texttt{User} has their own \texttt{Progress} which is all joined in the join-table \texttt{WeekdayFrameProgress}.
+A \texttt{Weekday} have a number of \texttt{Frame}s as seen by the join--table \texttt{WeekdayFrame}.
+These \texttt{WeekdayFrame}s are then involved with a \texttt{User} and each \texttt{User} has their own \texttt{Progress} which is all joined in the join--table \texttt{WeekdayFrameProgress}.
 And then of course a \texttt{User} is able to have many \texttt{WeekSchedule}s which is also the case for a \texttt{Department}.
 The following sections will introduce the fields of the classes created for modelling \texttt{WeekSchedule}.
 
@@ -174,7 +174,7 @@ In \myref{tbl:WeekdayFrame} we will briefly give an overview of the fields of th
 \end{description}
 
 \subsection{Persistence}\label{subsec:weekschedulepersistence}
-As mentioned in \myref{sec:generalEP} the persistence layer contains the DAOs, SQL migrations and unit-tests.%*Salute* General EndPoint!
+As mentioned in \myref{sec:generalEP} the persistence layer contains the DAOs, SQL migrations and unit--tests.%*Salute* General EndPoint!
 A \texttt{Department} has a list of \texttt{WeekSchedules}, as does a \texttt{User}, therefore the DAO needs no methods to retrieve by \texttt{User} or by \texttt{Department} which reduces the number of methods to a total of two methods for the entire Week Schedule model, both methods are used to retrieve \texttt{WeekSchedule}s.
 There are no methods for retrieving \texttt{WeekdayFrame}, \texttt{WeekdayFrameProgress} nor \texttt{Weekday}.
 The first two are not relevant without the \texttt{Weekday} they refer to, and as we are working with objects by having the \texttt{WeekSchedule} we have access to all related \texttt{Weekday}s and thereby all relevant \texttt{WeekdayFrame}s and by extension \texttt{WeekdayFrameProgress}.

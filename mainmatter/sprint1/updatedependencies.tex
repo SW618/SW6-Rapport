@@ -5,8 +5,8 @@ Consequently since the dependencies are not updates, new bugs may be caused as t
 Fixing these bugs is a part of the task to update dependencies and must be fixed when doing so.
 For this reason the first order of business should be updating and configure the dependencies, such that this year's GIRAF project will start with the fewest issues regarding the dependencies.
 Subsequently the Product Owner has given these tasks the priority \phigh.
-We have estimated these tasks to take 8 EP each for Sequence and Sequence-Viewer, and 16 EP for Pictosearch.
-We have taken three tasks which relate to upgrading the dependencies of the applications: Sequence and the two libraries Sequence-Viewer and Pictosearch.
+We have estimated these tasks to take 8 EP each for Sequence and Sequence--Viewer, and 16 EP for Pictosearch.
+We have taken three tasks which relate to upgrading the dependencies of the applications: Sequence and the two libraries Sequence--Viewer and Pictosearch.
 We took these tasks as they involved common sub--tasks of versions to be upgraded, they are:
 \begin{dankscription}{\ttfamily}{meta-database}
     \item[localDB] from version 5.1.2 to 5.1.5
@@ -16,7 +16,7 @@ We took these tasks as they involved common sub--tasks of versions to be upgrade
 \texttt{localDB} is a library which is used to store information in a local database, most of the stored data is received from the remote server when the GIRAF Launcher is opened for the first time.
 \texttt{localDB}'s purpose is to reduce the inconvenience of having either a slow or no internet connection, however it also introduces some problems in regards to keeping the remote and the local database in sync.
 \texttt{meta-database} is used to create the \texttt{localDB}, the changes therein do not affect any of the applications we are tasked with upgrading.
-\texttt{localDB} and \texttt{meta-database} have only had their patch-number updated, this indicates a bugfix or small internal corrections as well as backwards compatibility, as such they should not introduce any issues when upgrading.
+\texttt{localDB} and \texttt{meta-database} have only had their patch--number updated, this indicates a bugfix or small internal corrections as well as backwards compatibility, as such they should not introduce any issues when upgrading.
 
 \texttt{oasisLib} is the library that handles connection from the tablet to the remote database.
 In the upgrade from 7.2.0 to 9.0.2 some of the methods used in the applications and libraries were deprecated, and subsequently removed.

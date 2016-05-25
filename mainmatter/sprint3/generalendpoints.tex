@@ -28,7 +28,7 @@ Implementing this layer is done in two steps:
 	The methods created on the classes should be methods which will be used in GIRAF applications on the object, like adding another pictogram to a week schedule.
 	\item[Unit testing the classes] \hfill \\
 	There must be unit tests which creates some objects of the class and use the methods implemented on them.
-	There should be enough unit tests such that all non-simple methods like a simple add, or getters and setter have 100\% code coverage.
+	There should be enough unit tests such that all non--simple methods like a simple add, or getters and setter have 100\% code coverage.
 	We do not want to test methods which are simply adding an element to a Java list implementation, Java's methods are thoroughly tested and more tests are therefore unnecessary. 
 \end{description}
 
@@ -40,7 +40,7 @@ The persistence layer consists of four steps
 	\item[Creating the Tables from the Core] \hfill \\
 	The first task is to create the tables specified in the core layer as SQL.
 	Any class annotated with \texttt{@Entity} and \texttt{@Table(name = "name")} needs to have a corresponding table created for them.
-	If a class has a many-to-many relation with another class the SQL needs to create the relationship-table, or the join-table, you can also add extra properties on these join-tables as e.g. an index.
+	If a class has a many--to--many relation with another class the SQL needs to create the relationship--table, or the join--table, you can also add extra properties on these join--tables as e.g. an index.
 	As we are developing incrementally on the REST API any alterations to a class may require subsequent alterations to the related tables, this should also be done in this step.
 	If we perform any alterations to a table the already existing data is migrated to fit in the new tables such that no information is lost.
 	\item[Creating Data] \hfill \\
@@ -62,7 +62,7 @@ The persistence layer consists of four steps
 The final layer to create for an endpoint is the service layer and consists of a single step:
 \begin{description}
 	\item[Creating HTTP Request Response Methods]\hfill \\
-	Here we have to think about the context the endpoint will be used in and create methods for any requests that might occur in this context, these methods are annotated with JAX-RS annotations which RESTEasy will use, as mentioned in \myref{sec:techstack}.
+	Here we have to think about the context the endpoint will be used in and create methods for any requests that might occur in this context, these methods are annotated with JAX--RS annotations which RESTEasy will use, as mentioned in \myref{sec:techstack}.
 	The methods will use the DAOs from the persistence layer to retrieve the requested data and send this data back as JSON which is serialised by Jackson which is also described in\myref{sec:techstack}.
 	We do not have any automatic tests for this as they use methods which are already tested and because the Jackson library is heavily tested.
 	Instead the way we test the service layer is to manually test whether the methods behaves in the intended way.

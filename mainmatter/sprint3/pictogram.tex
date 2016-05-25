@@ -67,7 +67,7 @@ Significant fields which require further explanation, will be elaborated in desc
         \item[accessLevel] \hfill \\ This is an Enumeration which specifies whether the \texttt{PictoFrame} is Public, shared on department or private.
         \item[department] \hfill \\ Specifies which department the \texttt{PictoFrame} belongs to, and is used when the accessLevel is specified as shared on department.
         \item[optionOn] \hfill \\ A collection of all \texttt{Choice}s which contain the \texttt{PictoFrame}.
-        This is needed for Hibernate to create the many-to-many relationship between \texttt{PictoFrame} and \texttt{Choice}; and will be used when deleting elements, to remove the correct references.
+        This is needed for Hibernate to create the many--to--many relationship between \texttt{PictoFrame} and \texttt{Choice}; and will be used when deleting elements, to remove the correct references.
     \end{description}
 
 \subsubsection*{Pictogram}
@@ -122,7 +122,7 @@ private PictogramImage pictogramImage;
 \end{lstlisting}
 
 The short snippet in \myref{lst:PictoImage} shows how the relation to the \texttt{PictogramImage} is created in the \texttt{Pictogram} class.
-It simply uses the \texttt{@OneToOne} annotation to create the One-to-One relation between these two objects.
+It simply uses the \texttt{@OneToOne} annotation to create the One--to--One relation between these two objects.
 This is only done on the \texttt{Pictogram} and not on the side of the \texttt{PictogramImage}.
 The property \texttt{fetch} is set to \texttt{LAZY} which means that the \texttt{PictogramImage} is not retrieved in the same transaction as when the \texttt{Pictogram} is retrieved, but is instead retrieved when the \texttt{PictogramImage} is accessed through the \texttt{Pictogram} object.
 The other fetch type \texttt{EAGER} would instead retrieve the entity in the same transaction as the \texttt{Pictogram}.
@@ -131,7 +131,7 @@ The \texttt{CascadeType.All} means that any change which happens to the \texttt{
 The field is set to being optional because when creating the \texttt{Pictogram} using a HTTP POST request, you cannot send the JSON data along with the image file, and as such the requests have to be separated into two.
 The field is therefore optional to allow for the \texttt{Pictogram} to exist without the \texttt{PictogramImage} for a while, as we deemed it better that a \texttt{Pictogram} exists without a \texttt{PictogramImage} than vice versa.
 
-When creating a One-to-Many a opposite Many-to-One needs to be created on the class the relation is created to.
+When creating a One--to--Many a opposite Many--to--One needs to be created on the class the relation is created to.
 
 This needs to be done for the field \texttt{thumbnailOn} as can be seen on \myref{lst:titlePictogram}.
 \begin{figure}[!htb]
@@ -163,7 +163,7 @@ CREATE TABLE Sequence
 \end{figure}
 
 On line 5 the \texttt{@JoinColumn} Hibernate annotation is used to specify which column the two tables \texttt{Pictogram} and \texttt{Sequence} will join on.
-Lines~\ref{lst:tp_rel_on_pictog1}--\ref{lst:tp_rel_on_pictog2} shows the relation needed on the side of \texttt{Pictogram} to create the opposite One-to-Many side to the Many-to-One relationship on \texttt{Sequence}.
+Lines~\ref{lst:tp_rel_on_pictog1}--\ref{lst:tp_rel_on_pictog2} shows the relation needed on the side of \texttt{Pictogram} to create the opposite One--to--Many side to the Many--to--One relationship on \texttt{Sequence}.
 Line~\ref{lst:tp_sql_meme} on \myref{lst:sqltitlepictogram} shows the SQL where the column to be joined on is created in the SQL.
 
 \subsection{Persistence --- Querying the Database}
@@ -211,7 +211,7 @@ Line~\ref{lst:pictogrambt_tq3} then sets \texttt{:title} to be any string concat
 As mentioned in \myref{subsec:general}, the persistence layer is tested, which means that the method \texttt{SearchByTitle} is also tested --- the test for this method can be seen on \myref{lst:pictogramByTitleTest}.
 It starts by assigning what is returned by the \texttt{searchByTitle} method to an \texttt{ArrayList} on line~\ref{lst:tpbt_1love}.
 lines~\ref{lst:tpbt_2love}--\ref{lst:tpbt_3love} asserts first if the results is empty, followed by asserting whether the \texttt{ArrayList} contains a specific \texttt{Pictogram}.
-The rest of the asserts check whether the \texttt{PictogramImage} is also as expected, which essentially tests whether Hibernate retrieves the \texttt{Pictogram}'s one-to-one relation correctly.
+The rest of the asserts check whether the \texttt{PictogramImage} is also as expected, which essentially tests whether Hibernate retrieves the \texttt{Pictogram}'s one--to--one relation correctly.
 
 \begin{lstlisting}[float, floatplacement=h, caption={The test method which tests the method \texttt{SearchByTitle}.},label={lst:pictogramByTitleTest}]
 @Test
@@ -245,7 +245,7 @@ public abstract class FileDaoImpl<T extends PersistFileHandle> implements FileDa
 
 As we started to generalise the methods in \texttt{FileDaoImpl} we faced a problem in the \texttt{add} method as we created a new object using a constructor, which would now be the type parameter \texttt{T} as seen on \myref{lst:TypeParameterConstructor}.
 Therefore we decided to use the abstract factory pattern, such that the method knows exactly what object it needs to use.
-For further reading on the factory pattern see The Gang of Four's description in their book \textit{Design Patterns: Elements of Reusable Object-oriented Software} \cite{abstractfactorypattern}.
+For further reading on the factory pattern see The Gang of Four's description in their book \textit{Design Patterns: Elements of Reusable Object--oriented Software} \cite{abstractfactorypattern}.
 The \textit{Abstract Factory Pattern} can be shown using our own classes on \myref{fig:asbtractFactory}.
 
 \begin{lstlisting}[float, floatplacement=h, caption={Trying to use a Type Parameter constructor, which Java cannot do.},label={lst:TypeParameterConstructor}]
@@ -353,15 +353,15 @@ A \texttt{SuperUser} is a user with permissions to do administrative tasks such 
 If both if--checks fail, the method returns what the \texttt{PictogramDao.getAll(user)} method retrieves, which will be all pictograms the user is allowed to see.
 Developing this also required us to go back to the model and use the annotations \texttt{@JsonProperty} and \texttt{@JsonIgnore} which are provided by Jackson.
 We need to \texttt{@JsonIgnore} some information to avoid circular references, since this will lead to infinite recursion when trying to serialize the objects.
-An example of this is the relation between \texttt{Department} and \texttt{Pictogram}, since they both contain a reference to each-other, requesting one week schedule would yield it and its department, this is turn would yield all that departments week schedules and so on.
+An example of this is the relation between \texttt{Department} and \texttt{Pictogram}, since they both contain a reference to each--other, requesting one week schedule would yield it and its department, this is turn would yield all that departments week schedules and so on.
 
 \subsubsection*{PUT--requests}
 A PUT is used to update existing data, and for \texttt{Pictogram} we also need to add the \texttt{PictogramImage} in a PUT--request after it has been posted.
 We create a merge method which simply takes the input retrieved from JSON and overwrite the information on the object we call merge on, such that the new information is set to the data objects in the database.
 If any fields of the object being send as the input parameter to the merge are null, the old data values are simply left unchanged.
 
-\subsubsection*{DELETE-requests}
-A DELETE-request for \texttt{Pictogram} is simple, it finds the \texttt{Pictogram} using the \texttt{PictogramDaoImpl} which also finds the corresponding \texttt{PictogramImage}.
+\subsubsection*{DELETE--requests}
+A DELETE--request for \texttt{Pictogram} is simple, it finds the \texttt{Pictogram} using the \texttt{PictogramDaoImpl} which also finds the corresponding \texttt{PictogramImage}.
 First the \texttt{PictogramImage} is deleted, followed by deleting the \texttt{Pictogram}, this deletion cascades throughout the entire database, and any entity using the \texttt{Pictogram} in some way will be updated, such that it knows the \texttt{Pictogram} no longer exists.
 
 This concludes the \texttt{Pictogram} endpoint showcase; the next section will cover how the REST API for \texttt{Sequence} was progressed for this sprint, it will skip details already covered in this section about the \texttt{Pictogram} endpoint.

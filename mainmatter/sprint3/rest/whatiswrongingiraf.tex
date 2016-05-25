@@ -8,7 +8,7 @@ When the GIRAF launcher is opened with an empty local database it will download 
 The local database is made by the \textit{meta-database}--library, and the content is downloaded by the \textit{local-db}--library.
 
 During last semester one of the project groups, SW610F15, attempted to set--up SymmetricDS\footnote{\url{http://www.symmetricds.org/}} to synchronise the remote- and local--databases.
-They claim to implement this, however they note some serious problems; since SymmetricDS is a bi-directional database replication tool, used to synchronise row-wise, any deletion on one device will delete on every device which can cause conflicts, the same kind that we explained in \myref[name]{sec:offline_giraf}
+They claim to implement this, however they note some serious problems; since SymmetricDS is a bi--directional database replication tool, used to synchronise row--wise, any deletion on one device will delete on every device which can cause conflicts, the same kind that we explained in \myref[name]{sec:offline_giraf}
 Their prototype using SymmetricDS was never enabled in GIRAF because of the difficulties of conflict handling when using the tool on multiple devices.
 So currently there is only a one way transfer from the remote database to the local database and no transfer the other way.
 
@@ -16,7 +16,7 @@ So currently there is only a one way transfer from the remote database to the lo
 There are significant issues with the aforementioned solution, most importantly for us is the issues the system causes for security and synchronisation as they directly relate to current user stories.
 Since the customer of the GIRAF project are institutions in Aalborg Municipality, there are rather strict confidentiality and security measures which must be met.
 These measures are encryption of files, password protection, strict privacy, encryption of all out going communication, which are part of ``Persondataloven''\footnote{\url{https://www.retsinformation.dk/forms/r0710.aspx?id=828}}.
-The biggest points for GIRAF is that all users must have a log-in, all communication has to be encrypted, and the data saved locally must also be encrypted.
+The biggest points for GIRAF is that all users must have a log--in, all communication has to be encrypted, and the data saved locally must also be encrypted.
 This means that GIRAF cannot be allowed synchronise the entire database to each client which downloads it from the Google Play Store, as this would breach the privacy of our users.
 Furthermore as there currently is no encryption the server host will have access to the files which are owned by the other clients, which is not allowed.
 The previous solution additionally required a database user with read/write permissions to be included in the GIRAF Launcher which is downloadable from the Google Play Store, allowing the average user access to what should be restricted information.

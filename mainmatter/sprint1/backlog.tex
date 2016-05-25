@@ -29,7 +29,7 @@ For the sake of our use, we use EP as our time unit.
     \item[{[}\phigh{]} General --- Use consistent file encoding] \hfill \\
         \userstory{As a Developer I would like all files to use UTF-8 encoding, to insure that no conflicts occur.}
         Using different file encodings (charsets) can lead to issues\footnote{\url{http://tools.android.com/knownissues/encoding}}.
-        Currently many files are in \enquote{us-ascii} aka. windows-1252, but some files (in the same repository) are of UTF-8, i.e. \enquote{ugeplan} contains 107 files of \enquote{us-ascii} and 5 files of \enquote{UTF-8}.
+        Currently many files are in \enquote{us--ascii} aka. windows-1252, but some files (in the same repository) are of UTF-8, i.e. \enquote{ugeplan} contains 107 files of \enquote{us--ascii} and 5 files of \enquote{UTF-8}.
 
         This task is estimated at 1 EP, doing this for every repository is bound to give conflicts with other groups working in overlapping repository, as such this task is derived to writing a guide such that others can change the encoding of a file when they access a file that is not using UTF-8 encoding.
     \item[{[}\phigh{]} SequenceViewer --- Update dependencies] \hfill \\
@@ -52,8 +52,8 @@ For the sake of our use, we use EP as our time unit.
         However many groups recommended that we should not use Redmine any more, after switching to Phabricator it is wanted that we preserve the content of the old wiki, and set up a structure such that other developers can easily add more content.
         This task is estimated at 16 EP, 2 of which should be spent on setting up the new structure and 14 of which should be spent on migrating old data and converting it to the markup language used in Phabricator.
 
-    \item[{[}\pblocking{]} Gradle --- Custom plug-in dk.giraf.lib for gradle breaks build] \hfill \\
-        \userstory{As a developer I would like the libraries to be be build-able.}
+    \item[{[}\pblocking{]} Gradle --- Custom plug--in dk.giraf.lib for gradle breaks build] \hfill \\
+        \userstory{As a developer I would like the libraries to be be build--able.}
         Attempting to build using Gradle, an automated build tool, for Pictosearch provides the error, \enquote{Cannot configure the 'publishing' extension after it has been accessed.}.
         The error has been identified to originate from the \texttt{dk.giraf.lib}--library and this must be fixed before any library in the GIRAF project can be built using Gradle.
         This task is an unforeseen complication found while working on \enquote{Pictosearch - Update Dependencies}

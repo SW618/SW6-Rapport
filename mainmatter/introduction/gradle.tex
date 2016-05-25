@@ -2,10 +2,10 @@
 In order to automate and introduce similar workflow when building the different parts of the GIRAF project, a build automation system is integrated into all parts of the GIRAF project --- \textbf{Gradle}\footnote{\url{http://www.gradle.org/}}.
 Gradle is open source and builds upon the strengths and concepts of older build systems, e.g. Apache Ant\footnote{\url{http://ant.apache.org/}} and Apache Maven\footnote{\url{https://maven.apache.org/}}.
 Moreover Gradle's syntax for project configurations is based on the JVM scripting language Groovy\footnote{\url{http://groovy-lang.org/}}.
-Gradle is intended to be used in large projects and multi-part projects which contains numerous dependencies.
-The tool determines which parts of the project already is up-to-date; this ensures that tasks dependent upon said parts does not need to be run again to build the entire project.
+Gradle is intended to be used in large projects and multi--part projects which contains numerous dependencies.
+The tool determines which parts of the project already is up--to--date; this ensures that tasks dependent upon said parts does not need to be run again to build the entire project.
 
-By nature Gradle is plug-in focused, which enables it to be tailored to almost any type of build automation.
+By nature Gradle is plug--in focused, which enables it to be tailored to almost any type of build automation.
 The main build configuration file of a project using Gradle is named \texttt{build.gradle}, and it contains information about dependencies, versions of said dependencies, and any tasks that are relevant for the given project.
 
 Alternatives to using Gradle as build automation system are for example the aforementioned Maven and Ant tools, however these tools are dependent on writing build scripts in XML which is a markup language not suited for implementing logic into the automation process.

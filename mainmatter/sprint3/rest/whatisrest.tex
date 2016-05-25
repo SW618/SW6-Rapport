@@ -1,8 +1,8 @@
 \section{What Is REST}
 REST is an architectural style for distributed hypermedia systems.
-REST is also defined as a hybrid style due to its constraints being derived from several other network-based architectural styles.
+REST is also defined as a hybrid style due to its constraints being derived from several other network--based architectural styles.
 The idea is that rather than using complex protocols such as Remote Procedure Calls (\textbf{RPC}) to connect between entities, the simpler HTTP requests are used instead.
-Originally defined in 2000 by Roy Fielding in his doctoral dissertation, \citep{fielding2000rest}, REST establishes a set of constraints that positively impacts the following set of non-functional properties.
+Originally defined in 2000 by Roy Fielding in his doctoral dissertation, \citep{fielding2000rest}, REST establishes a set of constraints that positively impacts the following set of non--functional properties.
 
 \begin{multicols}{3}
 \begin{itemize}
@@ -15,16 +15,16 @@ Originally defined in 2000 by Roy Fielding in his doctoral dissertation, \citep{
 \end{itemize}
 \end{multicols}
 An application that adheres to the constraints of REST is considered to be RESTful.
-Next we will present each of the constraints and how they relate to the aforementioned non-functional properties.
+Next we will present each of the constraints and how they relate to the aforementioned non--functional properties.
 
 \begin{description}
     \item [Client-Server\label{client-server-rest}] \hfill \\
-    The first constraint we will discuss is derived from the hierarchical client-server architecture.
-    Separation of concern is the underlying concept for the client-server architecture, in essence the client serves as a trigger process, and the server as a reactive process.
-    As the reactive process, the server is more often than not a non-terminating process waiting for a request from a trigger.
+    The first constraint we will discuss is derived from the hierarchical client--server architecture.
+    Separation of concern is the underlying concept for the client--server architecture, in essence the client serves as a trigger process, and the server as a reactive process.
+    As the reactive process, the server is more often than not a non--terminating process waiting for a request from a trigger.
     When one of the multiple clients requests data, the client cares not for how the data is acquired, nor for how it is stored, as long as it is received in the agreed upon format.
     Likewise the server cares not for how the client represents the data, nor for which state the client is in as long as requests are made in the agreed upon format.
-    This separation of concern affects three of the aforementioned non-functional properties.
+    This separation of concern affects three of the aforementioned non--functional properties.
     \begin{description}
         \item[Simplicity:] By not having to consider client specific data, components are easier to represent.
         \item[Scalability:] By simplifying the server components, the server components becomes scalable by allowing them to evolve independently.
@@ -47,19 +47,19 @@ Next we will present each of the constraints and how they relate to the aforemen
     The constraint requires that when a response to a request specifies whether the data is cache--able or non--cache--able which may remove the need for computing a later request.
     When a response is noted as cache--able, a time--out is also required which the client must adhere to.
     This constraint may slightly reduce reliability if the data in the cache becomes outdated before time--out, however for GIRAF this should only rarely if ever be an issue as two users working in parallel will rarely affect each other and in that case it is only at the point of synchronising.
-    Other non-functional properties that are instead positively affected are scalability and performance.
+    Other non--functional properties that are instead positively affected are scalability and performance.
     \begin{description}
         \item[Scalability:] By clients not having to always request, the server can handler more requests from more clients within a given time frame.
         \item[Performance:] With some requests not needing a results which is computed by the server but can be partially or completely handled through the cache, average latency is improved.
     \end{description}
     %Performance, Scalability, Reliability
     \item [Uniform Interface] \hfill \\
-    The fourth constraint Uniform Interface is expressed by Fielding as \enquote{The central feature that distinguishes the REST architectural style from other network-based styles}\citep{fielding2000rest}.
+    The fourth constraint Uniform Interface is expressed by Fielding as \enquote{The central feature that distinguishes the REST architectural style from other network--based styles}\citep{fielding2000rest}.
     Applying the principle of generality to the interface between server and client achieves low coupling between components allowing components to evolve independently, as long as the interface persists.
     The interface itself follows four main principles.
     Firstly it uses resource identifiers to request resources from the server, the resources themselves are represented differently in requests than the way they are stored, e.g. for GIRAF we represent our data using the JSON format, but the data is not stored in this format.
     Secondly clients must be able to manipulate resources through representations, this means that when a client has a representation of a resource, the representation contains enough data such that the client can and may alter or delete the resource, given that the client is allowed to do so.
-    Thirdly messages must be self-descriptive such that a process can be executed as intended without further inquiry.
+    Thirdly messages must be self--descriptive such that a process can be executed as intended without further inquiry.
     The last principle is Hypermedia as the Engine of Application State (HATEOAS), simply put interaction by the client with a network application is through hypermedia provided by the server.
     The client needs no knowledge of available actions on any given data, as the server will only provide hypermedia for actions that are available in the state the resource is in.
 
@@ -81,9 +81,9 @@ Next we will present each of the constraints and how they relate to the aforemen
         \item[Simplicity:] Layers can be used to simplify components by separating less frequently used functionality from often used functionality, and also by encapsulating certain functionality in layers such that a logical separation of functionality is achieved.
     \end{description}
     %Performance, Scalability, Simplicity
-    \item [Code-On-Demand] \hfill \\
+    \item [Code--On--Demand] \hfill \\
     This is the last constraint and is also the only constraint that can be considered optional.
-    Since this constraint will not be used for this project, it will not be further described here, for more information on Code-On-Demand we refer to Fieldings doctoral dissertation \citep{fielding2000rest}.
+    Since this constraint will not be used for this project, it will not be further described here, for more information on Code--On--Demand we refer to Fieldings doctoral dissertation \citep{fielding2000rest}.
 \end{description}
 
 These constraints is what will make an API RESTful, which means that the API for GIRAF will also adhere to these constraints.

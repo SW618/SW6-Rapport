@@ -5,7 +5,7 @@ The user story is as follows:
 \userstory{As a developer I would like an endpoint for Week Schedules, such that I can retrieve them from the GIRAF REST API.}
 \end{center}
 
-We estimated this user story at 6 EP, unfortunately this was not enough time, and we did not solve all the sub-tasks involved in the user story, as unforeseen problems arose when deleting different objects, the review was late on the two earlier layers, and the report was falling behind.
+We estimated this user story at 6 EP, unfortunately this was not enough time, and we did not solve all the sub--tasks involved in the user story, as unforeseen problems arose when deleting different objects, the review was late on the two earlier layers, and the report was falling behind.
 First we will explain what endpoints we will make, then we will explain how the \texttt{PUT}--request should work for \texttt{Weekschedule}s.
 \subsection{Endpoints}
 \myref{tbl:weekscheduleservice} contains the endpoints which are involved in the Week Schedule part of the REST API.
@@ -52,7 +52,7 @@ If the local device have had the newest version, and wants to update, then updat
 If the local device did not have the newest version, and wants to update, then create a copy, and prepend \textit{Conflicted Copy:} to its title.
 We previously mentioned this method, which is inspired by Dropbox in \myref{ssec:policy}.
 
-This was supposed to be implemented, such that a conflicted copy would only be created if the two different versions of the \texttt{WeekSchedule}s has changed the same \texttt{WeekDays}, but this is where we stopped development due to time-constraints and as such this will be a future development for next years students.
+This was supposed to be implemented, such that a conflicted copy would only be created if the two different versions of the \texttt{WeekSchedule}s has changed the same \texttt{WeekDays}, but this is where we stopped development due to time--constraints and as such this will be a future development for next years students.
 
 The PUT--request which was meant to update the progress of a user on a given \texttt{WeekSchedule} have not been implemented due to time constraints.
 However the code which is responsible for this behaviour have been thoroughly tested in the unit tests.

@@ -1,9 +1,9 @@
 \section{Documentation}
 This section will describe how the following user story was resolved and why: \userstory{As a future developer I would like a guide for developing on the REST API, along with a plan for what has been created for the API and what still needs to be implemented, such that I can quickly get an overview and set up my work environment at the start of the project.} 
 
-The REST-API was a rather late addition to GIRAF being introduced this year, as such our semester has been in charge of the design, tools and technologies used in its development.
+The REST API was a rather late addition to GIRAF being introduced this year, as such our semester has been in charge of the design, tools and technologies used in its development.
 Our group and SW615, have followed a rigid set of design and project management guidelines to ensure a certain quality, or at the very least structure in the code.
-In order to provide a guide and ease the next years developers into the REST API part of GIRAF and the guidelines that follows, each of the following sections have had a wiki page written, explaining how and when each subject is used in the REST-API, the content of these wiki pages can be found in \myref{app:guides}.
+In order to provide a guide and ease the next years developers into the REST API part of GIRAF and the guidelines that follows, each of the following sections have had a wiki page written, explaining how and when each subject is used in the REST API, the content of these wiki pages can be found in \myref{app:guides}.
 We also added \myref{subsec:general} as a guide because it gives a great overview of what developing on the GIRAF REST API entails.
 The plan which the user story requests, is also a guide on the wiki page, but this entails parts of \myref{chp:futureworks} and is therefore not found in the \myref{app:guides}.
 Aside from these guides two guides were written by SW615, regarding the Linting tool, and the SQL migrations.
@@ -14,17 +14,17 @@ Since this time could be better spent otherwise, we decided to make a guide whic
 This should substantially decrease the time it takes to get set--up, and allow new developers to quickly get up and running.
 
 \subsection{Javadocs}
-The Javadocs wiki page explains when and where to use Javadocs, a guideline for this is written specifically for the REST-API as Enunciate also depends on Javadocs.
-Aside from Javadocs providing a quicker way to read the purpose, effect and use of code when looking at it as well as providing an overview through the web documentation it provides, for REST-API it helps provide us with even better endpoint documentation through Enunciate.
-It is important that we ensure the Javadocs is consistent such that Enunciate can efficiently provide client-side developers with the information they require about the REST-API endpoints.
-Javadocs provides greater detail for the entirety of the project and is useful for working on the REST-API, however for any instance where a developer needs to work with the REST-API, enunciate creates a far superior way of presenting the required information.
+The Javadocs wiki page explains when and where to use Javadocs, a guideline for this is written specifically for the REST API as Enunciate also depends on Javadocs.
+Aside from Javadocs providing a quicker way to read the purpose, effect and use of code when looking at it as well as providing an overview through the web documentation it provides, for REST API it helps provide us with even better endpoint documentation through Enunciate.
+It is important that we ensure the Javadocs is consistent such that Enunciate can efficiently provide client--side developers with the information they require about the REST API endpoints.
+Javadocs provides greater detail for the entirety of the project and is useful for working on the REST API, however for any instance where a developer needs to work with the REST API, enunciate creates a far superior way of presenting the required information.
 
 \subsection{Testing}
 A wiki page has also been constructed for testing, in order to explain where, when and what type of tests are created as well as how to use the proper notations when testing.
 The tests that we use are both unit tests and integration tests.
 The obvious reason for having tests is to test correctness, however, even more beneficial is the regression testing acquired through having all methods, and the interconnected modules tested together through integration tests.
 These integration tests, are the only tests for the ORM created by Hibernate, these tests are beneficial when refactoring to make sure that the changes did not break the any functionality.
-This guideline exists to ensure that while GIRAF may not have tests, the REST-API will be tested such that future development can occur without breaking the old functionality.
+This guideline exists to ensure that while GIRAF may not have tests, the REST API will be tested such that future development can occur without breaking the old functionality.
 
 \subsection{Hibernate Annotations}
 We spent a lot of time figuring out how to make relationships between classes using Hibernate.
