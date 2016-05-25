@@ -9,7 +9,6 @@ Aside from these features we also suggest what development processes we would us
 
 \section{Feature Suggestions}
 This section discuss the different features that still need to be implemented or changed in GIRAF, to give an idea of what still requires work.
-\kim{You should not only point out the problems but also suggest solution, where it make sense. for each problem that you discuss then I would like an analysis of what features/qualities a solution should have and a proposal of a design that conforms to these requirements.}\todo[inline]{This note has been considered, do consider it while reading again tho}
 
 \subsection*{REST API}
 Once the REST API is implemented in GIRAF, synchronisation between both client and server but also between clients themselves, will be possible.
@@ -26,9 +25,6 @@ The areas that yet need to be worked on for the REST API are
 \item Web administration
 \end{itemize}
 Our group has not been involved in developing the new login system and thus we will not discuss that further, web administration is yet untouched so for that we will simply explain why it is needed and how it relates to the REST API.
-
-\kim{I dont understand why there is not a login section, I understand that you have not worked with it this semester, but you havent worked on the web adimistration interface either, however it have a subsub section explain the problem.}
-\todo[inline]{Jeg ved ikke rigtig noget om login så tænker vi enten sletter Web admin subsub eller snakker med Jespers gruppe så vi kan skrive lidt om login}
 
 \subsubsection*{Endpoints}
 While a number of endpoints and their corresponding models have been finished this year, more remain undone before the current applications can rely solely on the REST API for data.
@@ -62,14 +58,24 @@ As for choosing between one or the other, refactoring may take longer and be the
 As aforementioned some Client--Side implementation may need to consider a secondary storage, like local, in the case they at some point become standalone apps which do not use the login system.
 
 \subsubsection*{Web Administration}
-Once a working REST API has been established, web administration should be implemented concurrently with the client--side implementations.
-In its current state the only way to add users, departments or any other administrative information is by database access, this should be changed such that the department can add new citizens or guardians when needed.
-The reason we believe that a web tool would be the way to solve this, is because the customers has asked for this to be available on their computers, and having it as a web application would made it a simple task to adjust the web application to support tablets should they at a later point want access from such devices.
-\kim{This section is going the right direction, try to elaborate on the problem side a bit more. Also add some technical details to the solution part. Describe how it should you the API, what challenges need to be solved etc. }
+There is currently a PHP--based web administration interface which can be used to add users etc. in the old database prior to the REST API.
+None of the functionality that this tool provides is present in the GIRAF application suite, and it is not intended to be included.
+In order to make this functionality work with the REST API, this tool either needs to be updated to fit with the REST API, or remade from scratch.
+Most of the functionality required for this tool have already been implemented in the REST API.
 
-In developing such a web administration tool one must not only consider what incoming requests much be supported, but how are the tablets affected by changes through the web administration tool.
-Furthermore changes may be required to the endpoints in the case that some service required for the web administration tool was not considered originally.
-\todo[inline]{is this enough?}
+During this semester this tool have been left completely untouched, and therefore we have no experience working with it.
+This tool is required for the customer to be left alone in using GIRAF and should therefore be completed before the project can be declared completed.
+Developing this could be done completely independently of most of the other development on GIRAF, given that no changes are made to the REST API, which breaks how department and user works.
+
+\subsubsection*{Login System}
+In \myref[name]{sec:securitycollab} we discussed our thoughts in regards to how the new login system should interact with the REST API.
+The core concept is that everything revolves around departments, which means that each normal user, i.e. not a SuperUser, is also associated with a single department.
+Another difference from the current system is the method of authentication, previously a QR--code was used to login as a user, we have changed this to a password.
+This is to be in accordance with the Act on the Processing of Personal Data.
+We will not require the citizens to have a password, since they are unlikely to remember this, instead a guarding will login and log into the citizens user for them when handing over the tablet.
+
+The new login system is partly implemented into the Launcher and the REST API Client, however it is not finished.
+In order to complete this the hashing algorithm used has to be fully implemented and tested on the REST API.
 
 \subsection*{Week Schedule}
 Significant progress on Week Schedule have been made during this year, our primary involvement is described on \myref{sec:WSScroll}, plenty of features to improve quality of life when using the application have been developed, yet it still needs to implement the REST API.
@@ -95,7 +101,7 @@ The login part is closely connected with the aforementioned login part of the RE
 For Pictosearch the immediate work to be done is less reliant on the REST API than most of the other areas we have been included in, although REST API will still affect it slightly.
 The goals for Pictosearch was to make it more responsive and faster, while making it more responsive and changing how to initialise the search creates the experience that it is faster, it still searches as slow as before.
 For this reason in regards to the Pictosearch app one should look at perhaps improving the search algorithm.
-Beyond improving the search algorithm a variety of other improvements come to mind, examples of better search algorithms would be Boyer-Moore and Knuth-Morris-Pratt \citep{BoyerMoore} \citep{KnuthMorrisPratt}.
+Beyond improving the search algorithm a variety of other improvements come to mind, examples of better search algorithms would be Boyer-Moore and Knuth-Morris-Pratt, for more on these see \cite{BoyerMoore} and \cite{KnuthMorrisPratt}.
 Through either lazy loading or pagination the search experience could also be improved, this however leads us to a second problem that should be fixed in regards to the search.
 The results of a search are ordered by their internal ID, when in reality it should be ordered by how closely it resembles the search string, e.g. a search for apple, should have apple to be the first shown pictogram, not pineapple or apple juice.
 Here one could also return frequently used pictograms first etc.
