@@ -68,7 +68,7 @@ The reason we believe that a web tool would be the way to solve this, is because
 \kim{This section is going the right direction, try to elaborate on the problem side a bit more. Also add some technical details to the solution part. Describe how it should you the API, what challenges need to be solved etc. }
 
 In developing such a web administration tool one must not only consider what incoming requests much be supported, but how are the tablets affected by changes through the web administration tool.
-One might also want to consider how the web tool should work, and should it have its own endpoint or should each endpoint support web administration services where it is necessary which leads to figuring out when is it necessary.
+Furthermore changes may be required to the endpoints in the case that some service required for the web administration tool was not considered originally.
 \todo[inline]{is this enough?}
 
 \subsection*{Week Schedule}
@@ -85,9 +85,9 @@ These choices are a result of continuously making quick fixes each semester and 
 Refactoring the progress system alongside implementing the REST API may solve issues that are caused as a result of degraded code.
 
 \subsection*{Launcher}
-While our involvement in the Launcher largely related to enabling offline mode, these changes, discussed in \myref{ssec:policy}, are irrelevant without synchronisation, and when the REST API starts to be implementing, version control can be handled by the API PUT requests as aforementioned.
-For version control policy when using the REST API in the apps, the REST API should handle the version control instead of the apps.
-Beyond maintaining offline availability, security and login should be the primary aspects considered for the Launcher.
+While our involvement in the Launcher largely relates to enabling offline mode, as discussed in \myref{ssec:policy}, these changes are for the most part irrelevant without synchronisation as technically there is no difference between online and offline mode.
+As for the handling of conflicts and merging, this should be handled by the REST API PUT requests rather than the apps, and as such must be considered when developing endpoints.
+Beyond ensuring offline availability, security and login should be the primary aspects considered for the Launcher.
 Security refers not only to access levels of data, but also how long data is stored as well as the encryption of data.
 The login part is closely connected with the aforementioned login part of the REST API, which we have not been a part of and thus our knowledge of it is limited.
 
@@ -95,7 +95,7 @@ The login part is closely connected with the aforementioned login part of the RE
 For Pictosearch the immediate work to be done is less reliant on the REST API than most of the other areas we have been included in, although REST API will still affect it slightly.
 The goals for Pictosearch was to make it more responsive and faster, while making it more responsive and changing how to initialise the search creates the experience that it is faster, it still searches as slow as before.
 For this reason in regards to the Pictosearch app one should look at perhaps improving the search algorithm.
-Beyond improving the search algorithm a variety of other improvements come to mind. \kim{Please list one or two of these search algorithms and explain why that would improve the current solution.}
+Beyond improving the search algorithm a variety of other improvements come to mind, examples of better search algorithms would be Boyer-Moore and Knuth-Morris-Pratt \citep{BoyerMoore} \citep{KnuthMorrisPratt}.
 Through either lazy loading or pagination the search experience could also be improved, this however leads us to a second problem that should be fixed in regards to the search.
 The results of a search are ordered by their internal ID, when in reality it should be ordered by how closely it resembles the search string, e.g. a search for apple, should have apple to be the first shown pictogram, not pineapple or apple juice.
 Here one could also return frequently used pictograms first etc.
@@ -119,14 +119,14 @@ This section presents our suggestions for the development process for students w
 	\item[Phabricator] \hfill \\
 	We strongly advice that they continue to use the tool Phabricator, to have a product backlog, as well as a good tool for code-review, and creating an overview of everyone's progress.
 	Phabricator has proven a useful tool for us and it has many more features than what we have used throughout the semester, perhaps there exists more features could help the project.
-	The biggest hurdle we have had with Phabricator were in the beginning as practically everyone but a single group was new to it, as such some issues with linking User Stories to code diffs were an issue, although as we ran into these issues the wiki was updates and thus the following semester can have a better knowledge base than us when starting by simply reading the wiki.
+	The biggest hurdle we have had with Phabricator were in the beginning as practically everyone but a single group was new to it, as such some issues with linking user stories to code diffs were an issue, although as we ran into these issues the wiki was updates and thus the following semester can have a better knowledge base than us when starting by simply reading the wiki.
 	Furthermore we have had a lot of user stories, which are defined as tasks, on our shared backlog as we simply migrated those that already existed.
 	It may be worthwhile to provide a label for all user stories when starting such that it is clear that they existed the previous semester.
 
 	\item[Progress Tracking] \hfill \\
 	We faced problems ourselves falling behind on the report in sprint 3, as we used all of our time programming the REST API.
 	Other groups were even further behind than us, and we therefore suggest that people consider on a multi-project level that time for the report is also required.
-	This should hopefully reduce how far people get on the paper, another solution would be to say that a given set of the working day one must be available for multi--project work.
+	This should hopefully reduce how far people get on the report, another solution would be to say that a given set of the working day one must be available for multi--project work.
 	We suggest this as we were being blocked on REST development due to code review as another group was focusing on their due to them writing just about nothing until the fourth sprint.
 
 	\item[More Evaluation] \hfill \\
@@ -154,7 +154,6 @@ This section will briefly cover the points we thought to be most important for S
 	The Product Owners have had internal problems this semester which sadly shined through in some aspects.
 	The user stories were poorly written, and the communication from the customers to the multi--project fell short of our expectations.
 	Therefore we advice that the product owner should be a group which is known to be a resourceful group, and a group which thinks that the task of being product owner is interesting, such that they will put in the required effort.
-	\todo[inline]{er det for meget ? }
 
 	\item[Scrumboard] \hfill \\
 	Internally we gained much from using the Scrumboard, as it gave us an overview of where our user stories currently stood, and also sparked the conversation at the daily Scrum meeting.
