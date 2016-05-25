@@ -2,8 +2,8 @@
 Throughout GIRAF different file encodings occur, and while this does not impose any problems at the moment, future use of some specific non standard ASCII\footnote{American Standard Code for Information Interchange} text, e.g. Hebraic, can cause build errors and bugs.
 The recommended practice by Google is to use UTF-8 encoding on all files to avoid know issues related to other file encodings \footnote{\url{http://tools.android.com/knownissues/encoding}}.
 
-As the files of GIRAF are mostly created on Windows computers, and using older versions of Android Studio, the predominant file encoding across the multi project is Windows-1252 --- an extended version of standard ASCII encoding, including the entire Latin alphabet.
-However as GIRAF only uses plain ASCII characters this does not inflict errors, and a full conversion of every file in GIRAF is too severe and intrusive, given the agile nature of the workflow used in the multi project.
+As the files of GIRAF are mostly created on Windows computers, and using older versions of Android Studio, the predominant file encoding across the multi--project is Windows-1252 --- an extended version of standard ASCII encoding, including the entire Latin alphabet.
+However as GIRAF only uses plain ASCII characters this does not inflict errors, and a full conversion of every file in GIRAF is too severe and intrusive, given the agile nature of the workflow used in the multi--project.
 This is because rectifying the file encodings, could cause issues such as merge conflicts or unexpected errors.
 We therefore propose that changing file encodings to UTF-8 is done as a refactoring step, i.e. when a developer works on a file, he or she checks the encoding and changes it if necessary.
 To avoid different practices and inform everybody that they should enforce this change, we write a Wiki entrance describing the process and importance of converting files to UTF-8.
