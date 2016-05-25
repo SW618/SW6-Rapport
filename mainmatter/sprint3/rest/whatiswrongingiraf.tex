@@ -3,12 +3,12 @@
 As previously mentioned it was decided at a multi group meeting that we would replace the current database connection with a REST API for GIRAF.
 This section will explain the motivation behind this decision by highlighting some of the issues currently present in GIRAF.
 
-An instance of GIRAF currently uses two databases; a remote database hosted by ITS (AAU IT-Services) and a local database hosted on the device in use.
+An instance of GIRAF currently uses two databases; a remote database hosted by ITS (AAU IT--Services) and a local database hosted on the device in use.
 When the GIRAF launcher is opened with an empty local database it will download the contents of the remote database into its local database.
 The local database is made by the \textit{meta-database}--library, and the content is downloaded by the \textit{local-db}--library.
 
-During last semester one of the project groups, SW610F15, attempted to set--up SymmetricDS\footnote{More details at: \url{http://www.symmetricds.org/}} to synchronise the remote- and local--databases.
-They claim to implement this, however they note some serious problems; since SymmetricDS is a bi-directional database replication tool, used to synchronise row-wise, any deletion on one device will delete on every device which can cause conflicts, the same kind that we explained in \myref{sec:offline_giraf}
+During last semester one of the project groups, SW610F15, attempted to set--up SymmetricDS\footnote{\url{http://www.symmetricds.org/}} to synchronise the remote- and local--databases.
+They claim to implement this, however they note some serious problems; since SymmetricDS is a bi-directional database replication tool, used to synchronise row-wise, any deletion on one device will delete on every device which can cause conflicts, the same kind that we explained in \myref[name]{sec:offline_giraf}
 Their prototype using SymmetricDS was never enabled in GIRAF because of the difficulties of conflict handling when using the tool on multiple devices.
 So currently there is only a one way transfer from the remote database to the local database and no transfer the other way.
 
@@ -30,7 +30,7 @@ This means that a new database system will need to adhere to the following requi
 \begin{itemize}
 	\item Adhere to the requirements of ``Persondataloven'' such that the system adheres to Danish law and by extension may eventually be hosted by Danish institutions.
 	\item A user may only receive data which is either publicly available, available to the institution they are a part of, or their own private information.
-	\item Have a two-way connection such that the server's database can be altered, thus allowing synchronisation.
+	\item Have a two--way connection such that the server's database can be altered, thus allowing synchronisation.
 	\item Modelling and synchronising all relevant data for each application, such that a user can use an arbitrary tablet without losing data.
 \end{itemize}
 To resolve these issues, we deem it necessary to replace the current solution entirely.
