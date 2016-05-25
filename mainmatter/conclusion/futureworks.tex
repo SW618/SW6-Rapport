@@ -35,11 +35,11 @@ Depending on which launch method is used, the data available in the app should c
 For the sake of being launched as a standalone app no data can be retrieved from the API, as such one might consider using local storage, as it does currently, for when the app is launched standalone, however for when it is launched through the launcher and thus is related to a user and a department, it may retrieve data from the REST API.
 All of these must be constructed before GIRAF can fully migrate to use the REST API rather than the current database.
 
-Of the endpoints that we have been developing, started on \myref{chap:s3task} and continued at \myref{chap:s4task} a few services have yet to be constructed.
+Of the endpoints that we have been developing, started on \myref[name]{chap:s3task} and continued at \myref[name]{chap:s4task} a few services have yet to be constructed.
 For Week Schedule the services to delete a Week Schedule and to update user progress are not available.
 However we made a branch in the REST API Git repository for the next years students to continue working in.
 The conflict handling also still need to be fine tuned such that less conflicted copies will be created.
-In \myref[name]{ssec:policy} we mentioned the quite simple offline policy that currently exists, however with timestamps on both week schedules and week days, as described in \myref{sec:restws}, a more refined implementation as was also described in \myref[name]{ssec:policy} using the same basic idea can be used in the PUT requests.
+In \myref[name]{ssec:policy} we mentioned the quite simple offline policy that currently exists, however with timestamps on both week schedules and week days, as described in \myref[name]{sec:restws}, a more refined implementation as was also described in \myref{ssec:policy} using the same basic idea can be used in the PUT requests.
 In addition there is no service available that enables searches for pictograms, in a more complete way than: ``\% LIKE \%'' in SQL, and there is currently no ranking amongst the result.
 This solution is quite crude and inefficient, allowing advanced search criteria, limiting results via paging or lazy loading as well implementing a sensible ranking system using statistics from GIRAF are all ideas that can provide a faster search and more precise search tool than simply searching for a substring.
 The search through pictograms using the REST API might not be so useful for the tablets as they store the pictograms locally, but it can be used for other applications, such as the web administration tool where the pictograms are probably not saved locally.
@@ -74,7 +74,7 @@ This is in accordance with the Act on the Processing of Personal Data.
 We will not require the citizens to have a password, since they are unlikely to remember this, instead a guardian will login and log into the citizens user for them when handing over the tablet to the citizen.
 
 The new login system is partly implemented into the Launcher and the REST API Client, however it is not completely finished yet.
-In order to complete this the hashing algorithm used has to be fully implemented and tested on the REST API as well as the download of pictograms etc, through the initial set--up as explained in \myref[name]{sec:securitycollab} has to be initiated.
+In order to complete this the hashing algorithm used has to be fully implemented and tested on the REST API as well as the download of pictograms etc, through the initial set--up as explained in \myref{sec:securitycollab} has to be initiated.
 
 \subsection*{Week Schedule}
 Significant progress on Week Schedule has been made during this year, our primary involvement is described in \myref[name]{sec:WSScroll} and \myref[name]{sec:borders}, plenty of features to improve quality of life when using the application have been developed, yet it still needs to use the REST API.
@@ -83,7 +83,7 @@ This also means that perhaps more services for the Week Schedule must be created
 As for starting to use the REST API we would suggest a significant refactoring of Week Schedule such that the model more closely resembles that of the REST API, rather than creating a module that translates the data as best as it can.
 This opinion is based on our experience with Week Schedule from which it is very clear that the model was not entirely thought through when it was originally established, and has since then just had components added as separate developers sought fit.
 
-Refactoring this would create a significantly better overview of the model, and make it far easier to make small adjustments when Week Schedule enters a try--out phase, which is what we believe should be prioritised after implemeting the REST API.
+Refactoring this would create a significantly better overview of the model, and make it far easier to make small adjustments when Week Schedule enters a try--out phase, which is what we believe should be prioritised after implementing the REST API.
 With the REST API an opportunity to fix some of the issues that currently exist also presents itself, in particular this relates to the progress of a citizen on a week schedule.
 When we inherited GIRAF, progress was saved to a local file on the tablet, not even to the local database, furthermore the states a frame can be in is presented as booleans whereas an enum would make more sense, e.g. a frame could in the old model be canceled and finished at the same time.
 These choices are a result of continuously making quick fixes each semester and have resulted in the whole progress feature not fully working and having odd interactions causing bugs that have not been fixed.
@@ -114,7 +114,7 @@ This section presents our suggestions for the development process for students w
 \begin{description}
 	\item[Pair Programming] \hfill \\
 	We advice that the next year's students will use pair programming especially in the start of the project.
-	There are many different elements to keep track of when starting to use and develop further on a code-base, especially one as GIRAF where a good structure might be missing in some places as we came to experience in the first two sprints, in particular Week Schedule as we elaborated on in \myref{sec:restws}.
+    There are many different elements to keep track of when starting to use and develop further on a code--base, especially one as GIRAF where a good structure might be missing in some places as we came to experience in the first two sprints.
 	As mentioned before, we gained a lot from pair programming, especially bringing everyone up to speed and ensuring that everyone in the group was able to develop further on the project.
 
 	\item[Code--Review] \hfill \\
