@@ -3,9 +3,9 @@
    \userstory{As a developer I would like an endpoint for Pictograms, such that I can retrieve them from the GIRAF REST API.}
 \end{center}
 
-The Pictogram endpoint is used for the Picto Search library to find different pictograms, as well as to acquire specific pictograms which have not been downloaded yet.
-Currently in the Picto Search library a user searches for some string, and the local database is queried using \texttt{... LIKE \%searchstring\%} and as such this will also be used for the REST API.
-Therefore a goal of the REST API for pictograms is to provide a search method, such that PictoSearch with the REST API will return the same results as before it started using the REST API.
+The Pictogram endpoint is used for the Pictosearch library to find different pictograms, as well as to acquire specific pictograms which have not been downloaded yet.
+Currently in the Pictosearch library a user searches for some string, and the local database is queried using \texttt{... LIKE \%searchstring\%} and as such this will also be used for the REST API.
+Therefore a goal of the REST API for pictograms is to provide a search method, such that Pictosearch with the REST API will return the same results as before it started using the REST API.
 The endpoint is not only used for the initial synchronisation, but also in other scenarios, for example:
 While a citizen is logged in on a tablet, a guardian could edit a week schedule with a newly created pictogram.
 The tablet the citizen uses does not have this newly created pictogram, so when the citizen opens the week schedule it will have to obtain the pictogram in some way.

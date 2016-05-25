@@ -5,8 +5,8 @@ Consequently since the dependencies are not updates, new bugs may be caused as t
 Fixing these bugs is a part of the task to update dependencies and must be fixed when doing so.
 For this reason the first order of business should be updating and configure the dependencies, such that this year's GIRAF project will start with the fewest issues regarding the dependencies.
 Subsequently the Product Owner has given these tasks the priority \phigh.
-We have estimated these tasks to take 8 EP each for Sequence and Sequence-Viewer, and 16 EP for Picto Search.
-We have taken three tasks which relate to upgrading the dependencies of the applications: Sequence and the two libraries Sequence-Viewer and Picto Search.
+We have estimated these tasks to take 8 EP each for Sequence and Sequence-Viewer, and 16 EP for Pictosearch.
+We have taken three tasks which relate to upgrading the dependencies of the applications: Sequence and the two libraries Sequence-Viewer and Pictosearch.
 We took these tasks as they involved common sub--tasks of versions to be upgraded, they are:
 \begin{dankscription}{\ttfamily}{meta-database}
     \item[localDB] from version 5.1.2 to 5.1.5
@@ -69,8 +69,8 @@ pictogram.setImageBitmap(
     The \texttt{.getImage()} method has been removed from the pictogram model class in \texttt{oasisLib} 9.0.2, which is why the helper should be used instead.
     After this replacement was made we informally verified that the application worked identically to the previous version with the old dependencies.
 
-    \item[Picto Search] \hfill \\
-    After upgrading Picto Search to use the newest dependencies, no issues were found which was not already present in the old version and therefore already on the task list for the multi--project.
+    \item[Pictosearch] \hfill \\
+    After upgrading Pictosearch to use the newest dependencies, no issues were found which was not already present in the old version and therefore already on the task list for the multi--project.
     Therefore no changes were made to the application itself during the upgrade.
 \end{description}
 

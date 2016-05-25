@@ -14,16 +14,16 @@ Once all participants have voted the same time estimation one a task, the task h
 For the sake of our use, we use EP as our time unit.
 
 \begin{description}[style=unboxed]
-    \item[{[}\phigh{]} Picto Search --- It looks like there are no pictograms, until you search for them] \hfill \\
-        \userstory{As a user I would like to have some information when I open Picto Search, such that it does not look like there is nothing there.}
-        As of now, it looks like there are no pictograms in the Picto Search library upon opening it.
+    \item[{[}\phigh{]} Pictosearch --- It looks like there are no pictograms, until you search for them] \hfill \\
+        \userstory{As a user I would like to have some information when I open Pictosearch, such that it does not look like there is nothing there.}
+        As of now, it looks like there are no pictograms in the Pictosearch library upon opening it.
         A suggestion could be a list of \enquote{latest used} or \enquote{recommended} pictograms, just to show some content, indicating that some pictograms already exists.
-        Or maybe simply adding information about what/how to use Picto Search.
+        Or maybe simply adding information about what/how to use Pictosearch.
 
         This task is estimated at 8 EP, the primary concern here lies in not only showing something, but implementing it in a meaningful way such as \enquote{Frequently Used} or similar ideas.
-    \item[{[}\phigh{]} Picto Search --- Responsive Search] \hfill \\
-        \userstory{As a User I would like the Picto Search application to feel more responsive when I search for pictograms, such that I don't feel like nothing happens when I type in the search field}
-        As of right now the Picto Search tool can seem slow and one might think it is not working, a search on each keyboard input could be implemented or simply just improve the speed of the search.
+    \item[{[}\phigh{]} Pictosearch --- Responsive Search] \hfill \\
+        \userstory{As a User I would like the Pictosearch application to feel more responsive when I search for pictograms, such that I don't feel like nothing happens when I type in the search field}
+        As of right now the Pictosearch tool can seem slow and one might think it is not working, a search on each keyboard input could be implemented or simply just improve the speed of the search.
 
         This task is estimated at 8 EP, the task includes changing what triggers the search method as well as changing the GUI to be more intuitive.
     \item[{[}\phigh{]} General --- Use consistent file encoding] \hfill \\
@@ -42,7 +42,7 @@ For the sake of our use, we use EP as our time unit.
         This component is reliant on other components for which it is using outdated versions that may not be backwards compatible.
 
         This task is estimated at 8 EP similarly for SequenceViewer.
-    \item[{[}\phigh{]} Picto Search --- Update dependencies] \hfill \\
+    \item[{[}\phigh{]} Pictosearch --- Update dependencies] \hfill \\
         \userstory{As a developer I want all components to use the newest versions of its dependencies.}
         This component is reliant on other components for which it is using outdated versions that may not be backwards compatible.
         This task is estimated at 16 EP, while having the same reasoning as the former update dependencies tasks, for this a complication with retrieving pictograms is already known to be a conflict in the updated version of a dependency, thus it has more time set aside.
@@ -53,10 +53,10 @@ For the sake of our use, we use EP as our time unit.
         This task is estimated at 16 EP, 2 of which should be spent on setting up the new structure and 14 of which should be spent on migrating old data and converting it to the markup language used in Phabricator.
 
     \item[{[}\pblocking{]} Gradle --- Custom plug-in dk.giraf.lib for gradle breaks build] \hfill \\
-        \userstory{As a developer I would like the libraries to be build-able.}
-        Attempting to build using Gradle, an automated build tool, for Picto Search provides the error, \enquote{Cannot configure the 'publishing' extension after it has been accessed.}.
+        \userstory{As a developer I would like the libraries to be be build-able.}
+        Attempting to build using Gradle, an automated build tool, for Pictosearch provides the error, \enquote{Cannot configure the 'publishing' extension after it has been accessed.}.
         The error has been identified to originate from the \texttt{dk.giraf.lib}--library and this must be fixed before any library in the GIRAF project can be built using Gradle.
-        This task is an unforeseen complication found while working on \enquote{Picto Search - Update Dependencies}
+        This task is an unforeseen complication found while working on \enquote{Pictosearch - Update Dependencies}
 \end{description}
 The combined point value of the tasks for sprint 1 sum to 65 points leaving 15 points for review and report.
 

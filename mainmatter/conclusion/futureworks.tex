@@ -1,6 +1,6 @@
 \chapter{Future Work on GIRAF}\label{chp:futureworks}
 In this chapter we present the immediate work that we believe would benefit GIRAF the most.
-This chapter will not be a complete list of all the work to be done, rather it will be contained to the areas of GIRAF where we have been involved the most throughout the projects; this means we will discuss improvements in regards to PictoSearch, the Week Schedule App, the GIRAF Launcher and of course the REST API.
+This chapter will not be a complete list of all the work to be done, rather it will be contained to the areas of GIRAF where we have been involved the most throughout the projects; this means we will discuss improvements in regards to Pictosearch, the Week Schedule App, the GIRAF Launcher and of course the REST API.
 The REST API affects the future of most apps including the ones we already mentioned, as such we will start by explaining what is missing from the REST API as well as argue why we believe that the REST API should be prioritised.
 
 This list is not solely compiled from our point of view, as it is the result of a final meeting with representatives from each group at which we spoke of the degree to which we had achieved our goals as well as what we believed would be best for the development of GIRAF to continue with.
@@ -84,10 +84,10 @@ Beyond maintaining offline availability, security and login should be the primar
 Security refers not only to access levels of data, but also how long data is stored as well as the encryption of data.
 The login part is closely connected with the aforementioned login part of the REST API, which we have not been a part of and thus our knowledge of it is limited.
 
-\subsection*{PictoSearch}
-For PictoSearch the immediate work to be done is less reliant on the REST API than most of the other areas we have been included in, although REST API will still affect it slightly.
-The goals for PictoSearch was to make it more responsive and faster, while making it more responsive and changing how to initialise the search creates the experience that it is faster, it still searches as slow as before.
-For this reason in regards to the PictoSearch app one should look at perhaps improving the search algorithm.
+\subsection*{Pictosearch}
+For Pictosearch the immediate work to be done is less reliant on the REST API than most of the other areas we have been included in, although REST API will still affect it slightly.
+The goals for Pictosearch was to make it more responsive and faster, while making it more responsive and changing how to initialise the search creates the experience that it is faster, it still searches as slow as before.
+For this reason in regards to the Pictosearch app one should look at perhaps improving the search algorithm.
 Beyond improving the search algorithm a variety of other improvements come to mind. \kim{Please list one or two of these search algorithms and explain why that would improve the current solution.}
 Through either lazy loading or pagination the search experience could also be improved, this however leads us to a second problem that should be fixed in regards to the search.
 The results of a search are ordered by their internal ID, when in reality it should be ordered by how closely it resembles the search string, e.g. a search for apple, should have apple to be the first shown pictogram, not pineapple or apple juice.
